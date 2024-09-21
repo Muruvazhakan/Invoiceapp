@@ -1,0 +1,22 @@
+.generaldetails{
+    display: flex;
+    align-items: center;
+    text-align: justify;
+    justify-content: space-between;
+    margin: 2px;
+    font-size: small;
+}
+
+.details{
+   
+    list-style-type: none;
+    /* margin-top: -1px; */
+
+}
+.invoicedetails{
+    margin-right: 20px;
+}
+.companyname{
+    font-size: larger;
+    font-weight: bolder;
+}

@@ -1,0 +1,19 @@
+.table-body{
+    padding: 2%;
+}
+.table-header{
+    background-color: rgb(197 197 197 / 59%);
+    font-weight: bold;
+}
+.table-header-td{
+    padding: 5px;
+    border-radius: 5px;
+}
+.table{
+    margin: 10px;
+}
+.tablegrey{
+    background-color: rgb(227 227 227 / 59%);
+    border-radius: 100%;
+   
+}
