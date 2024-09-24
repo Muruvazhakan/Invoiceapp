@@ -5,8 +5,10 @@ import ReactToPrint from 'react-to-print';
 
 import Header from './Component/Header/Header';
 import GeneralDetails from './Component/GeneralDetails/GeneralDetails';
-import Table from './Component/Table/Table';
+import Tables from './Component/Table/Table';
 import TableForm from './Component/TableForm/TableForm';
+import TableFooters from './Component/Table/TableFooter';
+import YourDetails from './Component/YourDetails/YourDetails';
 
 
 function App() {
@@ -24,9 +26,12 @@ function App() {
       <div ref={componentRef}> 
       <Header/>
       <GeneralDetails />
-      <Table />
-      <TableForm />
+      <Tables />
+    
+      <TableFooters/>
       </div>
+      <YourDetails />
+      <TableForm />
     </div>
   );
 }

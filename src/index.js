@@ -4,10 +4,19 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+import CompanyDetailContext from './Component/Context/companyDetailContext';
+import AllStateContext from './Component/Context/allStateContext';
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
+   
+    <CompanyDetailContext>
+    <AllStateContext>
     <App />
+    </AllStateContext>
+    </CompanyDetailContext>
+   
   </React.StrictMode>
 );
 

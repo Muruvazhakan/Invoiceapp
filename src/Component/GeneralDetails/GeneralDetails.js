@@ -1,50 +1,63 @@
-import React from "react";
+import React,{useContext} from "react";
 
 
 import './GeneralDetails.css';
+import { CompanyDetail } from "../Context/companyDetailContext";
 const GeneralDetails = () =>{
 
+    const companydet=useContext(CompanyDetail);
     return <div className="generaldetails">
         <ul className="details">
-            <li>
-                Client name
+            <div className="companyname">Buyer:
+            <li> 
+                {companydet.clientName}               
+            </li>
+            <li> 
+                {companydet.clientPhno}               
             </li>
             <li>
-                Phone number
+                {companydet.clientAdd} 
             </li>
-
+            </div>
         </ul>
+       
         <ul className="details">
             <li className="companyname">
-                JR Enter
+                {companydet.companyName}
             </li>
             <li>
-                Tag line
+            {companydet.companyTagLine}
             </li>
             <li>
-                Address
+            {companydet.companyAddress}
             </li>
             <li>
-                Phone number
+            {companydet.companyName}
             </li>
             <li>
-                GSTIN/UIN
+            {companydet.companyPhno}
+            </li>
+            <li>
+             {companydet.companyGstin ? 'Gstin: '+companydet.companyGstin:null }
+            </li>
+            <li>
+             {companydet.companyGstinStatename ? 'StateName: '+companydet.companyGstinStatename:null }
             </li>
 
         </ul>
-
+       
         <ul className="details invoicedetails">
             <li>
-                Invoice id
+            Invoice ID: {companydet.invoiceid}
             </li>
             <li>
-            Invoice date
+            Invoice date: {companydet.invoicedate}
             </li>
             <li>
-            Payment mode
+            Payment mode: {companydet.paymentmode}
             </li>
             <li>
-            Payment Date
+            Payment Date: {companydet.paymentdate}
             </li>
         </ul>
     </div>
