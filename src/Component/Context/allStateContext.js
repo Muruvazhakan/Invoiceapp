@@ -56,18 +56,16 @@ const AllStateContext = ({ children }) => {
   const [hsnlist, sethsnList] = useState([]);
   const [totalhsnamtwords, settotalhsnamtwords] = useState('');
   const [isinstallationcharge,setisinstallationcharge]=useState(false);
-  const [installationchargeamt,setinstallationchargeamt]=useState(0);
+  const [otherchargedetail,setOtherchargedetail]=useState([]);
   const calculateTotal = () => {
     if(list.length >0){
       const allItems = list.map((item) => item.amount);
-      
-      // console.log('calculate');
-      // console.log(grpby);
+     
       // setsinglehsnitem({
       //   ...singlehsnitem,
 
       // })
-      setsubtotalamt(collect(allItems).sum());
+      setsubtotalamt(collect(allItems).sum().toFixed(2));
     //   setgstCgstitem({
     //     amount:collect(allItems).sum()});
     }
@@ -82,16 +80,12 @@ const AllStateContext = ({ children }) => {
     let stamt=0,ctamt=0;
     if(hsnlist.length>0){
       
-      // id: 1,
-      // hsndesc: '',
-      // taxvalue: 0,
-      // ctrate: 0,
-      // ctamount: 0,
-      // strate: 0,
-      // stamount: 0,
-      // amount: 0
-      console.log(" hsnlist before "+hsnlist);
+    
+      // console.log(" hsnlist before "+hsnlist);
      hsnlist.map((item)=>{
+      // otheritemdesc: otherdesc,
+      // otherdescamt: otherdescamt,
+      // ischargedinhsn:ischargedinhsn
       item.hsndesc= item.hsndesc;
       item.taxvalue=item.taxvalue ;
       item.ctrate=ctrate;
@@ -103,12 +97,42 @@ const AllStateContext = ({ children }) => {
         item.amount=((((item.taxvalue*1)*ctrate*1 )/100 ) + (((item.taxvalue*1)*strate*1 )/100)).toFixed(2)
       
       });
-      console.log(" hsnlist after "+hsnlist);
-      settotalamt(((collect(hsnlist.map((item) => item.amount)).sum())+(collect(list.map((item) => item.amount)).sum())).toFixed(2));
-      settotalhsnamt((collect(hsnlist.map((item) => item.amount)).sum()));
-      settotalcentaxamt((collect(hsnlist.map((item) => item.ctamount)).sum()));
-      settotalstatetaxamt((collect(hsnlist.map((item) => item.stamount)).sum()));
-      settotaltaxvalueamt((collect(hsnlist.map((item) => item.taxvalue)).sum()));
+      // console.log(" hsnlist after "+hsnlist);
+
+      console.log(" otherchargedetail before "+otherchargedetail);
+     otherchargedetail.map((item)=>{
+    
+
+        item.otheritemdesc= item.otheritemdesc;
+      item.otherdesctaxamt=item.otherdesctaxamt ;
+      item.ctrate=ctrate;
+      
+        item.ctamount= (((item.otherdesctaxamt*1)*ctrate*1 )/100).toFixed(2);
+        item.strate=strate;
+        item.stamount= (((item.otherdesctaxamt*1)*strate*1 )/100).toFixed(2);
+        
+        item.otherdescamt=((((item.otherdesctaxamt*1)*ctrate*1 )/100 ) + (((item.otherdesctaxamt*1)*strate*1 )/100)).toFixed(2)
+      
+      
+      });
+      console.log(" otherchargedetail after "+otherchargedetail);
+
+      const allItemsexclueshsn = otherchargedetail.map((item) => item.otherdescamt);
+      const allItemsinclueshsn = otherchargedetail.filter((item)=> item.ischargedinhsn).map((item) => item.otherdescamt);
+      console.log(" allItemsinclues  "+allItemsinclueshsn);
+      console.log(" allItemsexclueshsn  "+allItemsexclueshsn);
+     
+      settotalhsnamt((collect(hsnlist.map((item) => item.amount)).sum()).toFixed(2));
+      settotalcentaxamt((collect(hsnlist.map((item) => item.ctamount)).sum()).toFixed(2));
+      settotalstatetaxamt((collect(hsnlist.map((item) => item.stamount)).sum()).toFixed(2));
+      settotaltaxvalueamt(((collect(hsnlist.map((item) => item.taxvalue)).sum())+(collect(allItemsinclueshsn).sum())).toFixed(2));
+       settotalamt(((collect(hsnlist.map((item) => item.amount)).sum())+(collect(list.map((item) => item.amount)).sum())+(collect(allItemsexclueshsn).sum())).toFixed(2));
+      // settotalamt(((collect(hsnlist.map((item) => item.amount)).sum())+(collect(list.map((item) => item.amount)).sum())+(collect(allItemsexclueshsn).sum())).toFixed(2));
+      // settotalhsnamt(((collect(hsnlist.map((item) => item.amount)).sum())+(collect(allItemsinclueshsn.map((item) => item.taxvalue)).sum())).toFixed(2));
+      // settotalcentaxamt(((collect(hsnlist.map((item) => item.ctamount)).sum())+(collect(allItemsinclueshsn.map((item) => item.ctamount)).sum())).toFixed(2));
+      // settotalstatetaxamt(((collect(hsnlist.map((item) => item.ctamount)).sum())+(collect(allItemsinclueshsn.map((item) => item.ctamount)).sum())).toFixed(2));
+      // settotaltaxvalueamt(((collect(hsnlist.map((item) => item.taxvalue)).sum())+(collect(allItemsinclueshsn.map((item) => item.taxvalue)).sum())).toFixed(2));
+      // settotalamt(((totalhsnamt)+(totalsubamt)+(collect(allOtheritem).sum())).toFixed(2));
       console.log(" value "+totalsubamt);
       console.log(totalamt+ " "+" totalhsnamt "+totalhsnamt+" totalcentaxamt "+totalcentaxamt + " totalstatetaxamt "+totalstatetaxamt);
     }
@@ -116,12 +140,12 @@ const AllStateContext = ({ children }) => {
 
   useEffect(() => {
     calculateHsn();
-  },[list]);
+  },[list,otherchargedetail]);
   const context = {
     singleitem, setsingleitem, list, setList, totalamt, settotalamt, totalamtwords, settotalamtwords, singlehsnitem, setsinglehsnitem,
     totalhsnamt, settotalhsnamt,  hsnlist, sethsnList, totalhsnamtwords, settotalhsnamtwords, totalsubamt, 
     setsubtotalamt,gstCgstitem, setgstCgstitem, ctrate, setctrate,strate, setstrate,ctatm, setctatm,statm, setstatm,totaltaxvalueamt, settotaltaxvalueamt,
-    totalcentaxamt, settotalcentaxamt,totalstatetaxamt, settotalstatetaxamt ,isinstallationcharge,setisinstallationcharge,installationchargeamt,setinstallationchargeamt
+    totalcentaxamt, settotalcentaxamt,totalstatetaxamt, settotalstatetaxamt ,isinstallationcharge,setisinstallationcharge,otherchargedetail,setOtherchargedetail
   };
   return <AllState.Provider value={context}>{children}</AllState.Provider>;
 }

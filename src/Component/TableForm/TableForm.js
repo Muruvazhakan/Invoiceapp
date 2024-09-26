@@ -8,7 +8,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 const TableForm = () => {
 
-    const [singleDesc, setSingleDesc] = useState();
+    // const [singleDesc, setSingleDesc] = useState();
     const tabledet = useContext(AllState);
 
     const [desc, setdesc] = useState('');
@@ -22,6 +22,7 @@ const TableForm = () => {
     const [otherdesc, setotherdesc] = useState('');
     const [ischargedinhsn, setischargedinhsn] = useState(true);
     const [otherdescamt, setotherdescamt] = useState(0);
+
 
     const setval = (e, fun) => {
         fun(e.target.value);
@@ -60,8 +61,28 @@ const TableForm = () => {
         // console.log(rate + " rate " + val);
     }, [rate, quantity])
 
-    const updatetax = (val) => {
+    const addOtherItems = (opt) => {
+        if (otherdesc.length > 0 && otherdescamt > 0) {
+            if (opt === 'Update') {
+                toast.success("Item updated");
+            } else {
+                let singleOtherItem = {
+                    id: uuidv4(),
+                    otheritemdesc: otherdesc,
+                    otherdescamt: otherdescamt,
+                    otherdesctaxamt: otherdescamt,
+                    ischargedinhsn:ischargedinhsn
+                };
 
+                tabledet.setOtherchargedetail([
+                    ...tabledet.otherchargedetail,
+                    singleOtherItem
+                ])
+            }
+        }
+        else {
+            toast.error("Please fill in all inputs in Other details");
+        }
     }
     const addOrUpdateItemHandler = (opt) => {
         if (desc.length !== 0 && hsn.length !== 0 && quantity > 0 && rateinctax > 0 && rate > 0 && per.length !== 0 && disc > 0 && amount > 0 && tabledet.ctrate > 0 && tabledet.strate > 0) {
@@ -159,29 +180,23 @@ const TableForm = () => {
                         singlehsn
                     ])
                 }
-
-                //   singlehsnitem, setsinglehsnitem
-
-
-                // const allItems = list.map((item) => item.amount);
-                // setsubtotalamt(collect(allItems).sum());
-                // const allItems1 = tabledet.list.map((item) => item.amount);
-
-                // console.log(collect(allItems1).sum());
-                // const groupedTimesheetMap = Map.groupBy(allItems, entry => {
-
-                //     return hoursWorked >= 7 ? longHours : shortHours;
-                //   });
-
                 // console.log(singlehsn);
                 toast.success("Item added");
-                // console.log(tabledet);
-                // console.log(tabledet.hsnlist);
+
+                setdesc('');
+                sethsn(0);
+                setquantity(0);
+                setrateinctax(0);
+                setrate(0);
+                setper('');
+                setdisc(1);
+                setamount(0);
+
             }
 
         }
         else {
-            toast.error("Please fill in all inputs");
+            toast.error("Please fill in all inputs in HSN and Add Goods tab");
         }
     }
 
@@ -304,7 +319,7 @@ totalhsnamt,settotalhsnamt,totalhsnamt,settotalhsnamt,hsnlist, sethsnList,totalh
                         <div>
                             <FormControlLabel
                                 control={
-                                    <Switch checked={tabledet.isinstallationcharge} onChange={() => tabledet.setisinstallationcharge(!tabledet.isinstallationcharge)} name="gilad" />
+                                    <Switch checked={tabledet.isinstallationcharge} onChange={() => tabledet.setisinstallationcharge(!tabledet.isinstallationcharge)} name="Othercharges" />
                                 }
                                 label="Add Other charges?"
                             />
@@ -320,7 +335,7 @@ totalhsnamt,settotalhsnamt,totalhsnamt,settotalhsnamt,hsnlist, sethsnList,totalh
                                     error={setboxColors(otherdesc, 'error')}
                                 />
 
-                                <TextField required id="outlined-required" label="Other item Chargeable" value={otherdescamt}
+                                <TextField required id="outlined-required" label="Other item Chargeable" value={otherdescamt} type="number"
                                     onChange={(e) => setval(e, setotherdescamt)}
                                     color={setboxColors(otherdescamt, 'color')}
                                     error={setboxColors(otherdescamt, 'error')}
@@ -328,13 +343,13 @@ totalhsnamt,settotalhsnamt,totalhsnamt,settotalhsnamt,hsnlist, sethsnList,totalh
 
                                 <FormControlLabel
                                     control={
-                                        <Switch checked={ischargedinhsn} onChange={() => tabledet.setisinstallationcharge(!tabledet.isinstallationcharge)} name="gilad" />
+                                        <Switch checked={ischargedinhsn} onChange={() => setischargedinhsn(!ischargedinhsn)} name="includehsn" />
                                     }
                                     label="Can include in HSN/Tax"
                                 />
 
                                 <div>
-                                    <Button variant="contained" color="success" size="medium" onClick={() => addOrUpdateItemHandler('Add')}>Add Other Item</Button>
+                                    <Button variant="outlined" color="success" size="medium" onClick={() => addOtherItems('Add')}>Add Other Item</Button>
                                 </div>
                             </>
                         }

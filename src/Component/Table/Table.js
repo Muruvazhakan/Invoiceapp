@@ -82,7 +82,7 @@ const Tables = () =>{
                     <TableCell sx={{fontWeight:700}}>Disc.%</TableCell>
                      <TableCell sx={{fontWeight:700}}>Rate</TableCell>
                      <TableCell sx={{fontWeight:700}}>Per</TableCell>
-                     <TableCell sx={{fontWeight:700}}>Amount</TableCell>
+                     <TableCell sx={{fontWeight:700}}>Amount (₹)</TableCell>
                 </TableRow>   
         </TableHead>
         <TableBody>
@@ -124,6 +124,26 @@ const Tables = () =>{
             
        </TableRow>
 
+       {tabledetails.otherchargedetail.map((item,index) => {
+           
+           return (
+              <TableRow className= {index%2==0 ? "table-body tablegrey" :  "table-body"} key={item.id}
+              // sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+              >
+              <TableCell ></TableCell>
+              <TableCell >{item.otheritemdesc}</TableCell>
+              <TableCell ></TableCell>
+              <TableCell  ></TableCell>
+              
+              <TableCell ></TableCell>
+              <TableCell ></TableCell>
+              <TableCell ></TableCell>
+              <TableCell ></TableCell>         
+              <TableCell >{item.otherdesctaxamt}</TableCell>
+         </TableRow>
+            )
+          
+          })}
        <TableRow  key="OUTPUTCGST9"
             // sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
@@ -210,15 +230,15 @@ const Tables = () =>{
                     <TableCell sx={{fontWeight:700}}>S.No</TableCell>
                     <TableCell sx={{fontWeight:700}}>HSN/SAC</TableCell>
                      <TableCell sx={{fontWeight:700}}>Taxable Value </TableCell>
-                     <TableCell sx={{fontWeight:700}}>Central Tax Rate  </TableCell>
+                     <TableCell sx={{fontWeight:700}}>Central Tax Rate %</TableCell>
                      {/* <TableCell sx={{fontWeight:700}}>Rate</TableCell> */}
                      <TableCell sx={{fontWeight:700}}>Central Tax Amount</TableCell>
                    
-                    <TableCell sx={{fontWeight:700}}>State Tax Rate  </TableCell>
+                    <TableCell sx={{fontWeight:700}}>State Tax Rate %</TableCell>
                     
                      <TableCell sx={{fontWeight:700}}>State Tax Amount</TableCell>
                    
-                     <TableCell sx={{fontWeight:700}}>Total Tax Amount</TableCell>
+                     <TableCell sx={{fontWeight:700}}>Total Tax Amount (₹)</TableCell>
                 </TableRow>   
         </TableHead>
         <TableBody>
@@ -236,6 +256,28 @@ const Tables = () =>{
             <TableCell className="table-header-td">{item.amount}</TableCell>
        </TableRow>
           ))}
+
+{tabledetails.otherchargedetail.map((item,key) => {
+   return (
+    <>
+    {item.ischargedinhsn &&
+     
+            <TableRow className= {key%2==0 ? "table-body tablegrey" :  "table-body"} key={item.id}
+            // sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+            >
+            <TableCell></TableCell>
+            <TableCell>{item.otheritemdesc}</TableCell>
+            <TableCell >{item.otherdesctaxamt}</TableCell>
+            <TableCell >{item.ctrate}</TableCell>
+            <TableCell >{item.ctamount}</TableCell>
+            <TableCell >{item.strate}</TableCell>
+            <TableCell >{item.stamount}</TableCell>
+            <TableCell>{item.otherdescamt}</TableCell>
+       </TableRow>}
+       </>
+      )} 
+          )}
+
         <TableRow className=  "table-total "  key="1"
             // sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
