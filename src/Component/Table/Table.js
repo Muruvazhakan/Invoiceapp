@@ -45,6 +45,7 @@ const Tables = () =>{
         amount:"1000"
     }];
 
+    
     const hsnlist=[{
         sno:1,
         hsn:2000,
@@ -66,21 +67,22 @@ const Tables = () =>{
     sx={{ border: 0 }}
   />
 </Paper> */}
-
-    <TableContainer >
-      <Table sx={{ minWidth: 650 }} aria-label="simple table">
-        <TableHead>
+<Paper sx={{ width: '98%', overflow: 'hidden' ,padding:'5px', borderRadius:'10px' }}>
+    <TableContainer  sx={{ minWidth: 650,borderRadius:'10px' }}>
+      <Table aria-label="simple table">
+        <TableHead  sx={{ fontWeight:1130,color:"white"}}>
         <TableRow className="table-header">
-                    <TableCell className="table-header-td">S.No</TableCell>
-                    <TableCell className="table-header-td">Description of Goods </TableCell>
-                    <TableCell className="table-header-td">HSN/SAC</TableCell>
-                     <TableCell className="table-header-td">Quantity</TableCell>
-                     <TableCell className="table-header-td">Rate
+                    <TableCell sx={{fontWeight:700}}>S.No</TableCell>
+                    <TableCell sx={{fontWeight:700}}>Description of Goods </TableCell>
+                    <TableCell sx={{fontWeight:700}}>HSN/SAC</TableCell>
+                     <TableCell sx={{fontWeight:700}}>Quantity</TableCell>
+                    
+                     <TableCell sx={{fontWeight:700}}>Rate
                     (Incl.of tax)</TableCell>
-                     <TableCell className="table-header-td">Rate</TableCell>
-                     <TableCell className="table-header-td">per</TableCell>
-                     <TableCell className="table-header-td">Disc.%</TableCell>
-                     <TableCell className="table-header-td">Amount</TableCell>
+                    <TableCell sx={{fontWeight:700}}>Disc.%</TableCell>
+                     <TableCell sx={{fontWeight:700}}>Rate</TableCell>
+                     <TableCell sx={{fontWeight:700}}>Per</TableCell>
+                     <TableCell sx={{fontWeight:700}}>Amount</TableCell>
                 </TableRow>   
         </TableHead>
         <TableBody>
@@ -94,87 +96,129 @@ const Tables = () =>{
                 <TableCell className="table-header-td">{item.desc}</TableCell>
                 <TableCell className="table-header-td">{item.hsn}</TableCell>
                 <TableCell align='center' className="table-header-td">{item.quantity}</TableCell>
+                
                 <TableCell className="table-header-td">{item.rateinctax}</TableCell>
+                <TableCell className="table-header-td">{item.disc}</TableCell>
                 <TableCell className="table-header-td">{item.rate}</TableCell>
                 <TableCell className="table-header-td">{item.per}</TableCell>
-                <TableCell className="table-header-td">{item.disc}</TableCell>
+               
                 <TableCell className="table-header-td">{item.amount}</TableCell>
            </TableRow>
               )
             
             })}
 
-{/* id:1,
-    desc:'',
-    hsn:'',
-    quantity:0,
-    rateinctax:0,
-    rate:0,
-    per:'',
-    disc:1,
-    amount:0
-     */}
       <TableRow  key="subtotal"
             // sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
-            <TableCell align='center'  className="table-header-td"></TableCell>
-            <TableCell className="table-header-td"></TableCell>
-            <TableCell className="table-header-td"></TableCell>
-            <TableCell align='center' className="table-header-td"></TableCell>
-            <TableCell className="table-header-td"></TableCell>
-            <TableCell className="table-header-td"></TableCell>
-            <TableCell className="table-header-td"></TableCell>
-            <TableCell className="table-header-td"></TableCell>
-            <TableCell className="table-header-td">{tabledetails.totalsubamt}</TableCell>
+            <TableCell  ></TableCell>
+            <TableCell ></TableCell>
+            <TableCell ></TableCell>
+            <TableCell ></TableCell>
+            <TableCell ></TableCell>
+            <TableCell ></TableCell>
+            <TableCell ></TableCell>
+            <TableCell ></TableCell>
+            <TableCell sx={{fontWeight:700}} >{tabledetails.totalsubamt}</TableCell>
+
+            
        </TableRow>
-          {tabledetails.gstCgstitem.map((item) => (
+
+       <TableRow  key="OUTPUTCGST9"
+            // sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+            >
+            <TableCell  ></TableCell>
+            <TableCell sx={{fontWeight:700}}>OUTPUTCGST9%</TableCell>
+            <TableCell ></TableCell>
+            <TableCell ></TableCell>
+            <TableCell ></TableCell>
+            <TableCell ></TableCell>
+            <TableCell ></TableCell>
+            <TableCell ></TableCell>
+            <TableCell sx={{fontWeight:700}} >{tabledetails.totalcentaxamt}</TableCell>
+
+            
+       </TableRow>
+
+       <TableRow  key="OUTPUTSGST9"
+            // sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+            >
+            <TableCell  ></TableCell>
+            <TableCell sx={{fontWeight:700}}> OUTPUTSGST9%</TableCell>
+            <TableCell ></TableCell>
+            <TableCell ></TableCell>
+            <TableCell ></TableCell>
+            <TableCell ></TableCell>
+            <TableCell ></TableCell>
+            <TableCell ></TableCell>
+            <TableCell sx={{fontWeight:700}} >{tabledetails.totalstatetaxamt}</TableCell>
+
+            
+       </TableRow>
+          {/* {tabledetails.gstCgstitem.map((item) => (
             <TableRow className= {item.sno%2==0 ? "table-body tablegrey" :  "table-body"} key={item.sno}
             // sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
-            <TableCell align='center'  className="table-header-td"></TableCell>
-            <TableCell className="table-header-td">{item.desc}</TableCell>
-            <TableCell className="table-header-td"></TableCell>
-            <TableCell align='center' className="table-header-td"></TableCell>
-            <TableCell className="table-header-td"></TableCell>
-            <TableCell className="table-header-td"></TableCell>
-            <TableCell className="table-header-td"></TableCell>
-            <TableCell className="table-header-td"></TableCell>
-            <TableCell className="table-header-td">{item.amount}</TableCell>
+            <TableCell ></TableCell>
+            <TableCell sx={{fontWeight:700}}>{item.desc}</TableCell>
+            <TableCell ></TableCell>
+            <TableCell  ></TableCell>
+            <TableCell ></TableCell>
+            <TableCell ></TableCell>
+            <TableCell ></TableCell>
+            <TableCell ></TableCell>
+            <TableCell sx={{fontWeight:700}}>{item.amount}</TableCell>
        </TableRow>
-          ))}
-           
+          ))} */}
+           <TableRow className= "table-total"  key="2"
+            // sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+            >
+            <TableCell></TableCell>
+            <TableCell sx={{fontSize:18,fontWeight:700}} >Total</TableCell>
+            <TableCell ></TableCell>
+            <TableCell  ></TableCell>
+            <TableCell ></TableCell>
+            <TableCell ></TableCell>
+            <TableCell ></TableCell>
+            <TableCell ></TableCell>
+            <TableCell sx={{fontSize:18,fontWeight:700}} className="table-amount">₹{tabledetails.totalamt}</TableCell>
+       </TableRow>
         </TableBody>
       </Table>
+    
+    
     </TableContainer>
+
+    </Paper >
           <div className="tabletotal-final ">
           <div className="tabletotal-final word" >
-           Amount Chargeable  (in words):   
+          Total Amount Chargeable  (in words):   
           <div className="words">
           {tabledetails.totalamtwords}
           </div>
-          </div>
-          <div className="tabletotal-final amount ">
+          </div> 
+          {/* <div className="tabletotal-final amount ">
           {tabledetails.totalamt}
-            </div>
+            </div> */}
           </div>
          
-
-          <TableContainer >
-      <Table sx={{ minWidth: 650 }} aria-label="simple table">
+          <Paper sx={{ width: '98%', overflow: 'hidden',padding:'5px', borderRadius:'10px' }}>
+          <TableContainer  sx={{ minWidth: 650,borderRadius:'10px' }}>
+      <Table aria-label="simple table">
         <TableHead>
         <TableRow className="table-header">
-                    <TableCell className="table-header-td">S.No</TableCell>
-                    <TableCell className="table-header-td">HSN/SAC</TableCell>
-                     <TableCell className="table-header-td">Taxable Value </TableCell>
-                     <TableCell className="table-header-td">Central Tax Rate  </TableCell>
-                     {/* <TableCell className="table-header-td">Rate</TableCell> */}
-                     <TableCell className="table-header-td">Central Tax Amount</TableCell>
+                    <TableCell sx={{fontWeight:700}}>S.No</TableCell>
+                    <TableCell sx={{fontWeight:700}}>HSN/SAC</TableCell>
+                     <TableCell sx={{fontWeight:700}}>Taxable Value </TableCell>
+                     <TableCell sx={{fontWeight:700}}>Central Tax Rate  </TableCell>
+                     {/* <TableCell sx={{fontWeight:700}}>Rate</TableCell> */}
+                     <TableCell sx={{fontWeight:700}}>Central Tax Amount</TableCell>
                    
-                    <TableCell className="table-header-td">State Tax Rate  </TableCell>
+                    <TableCell sx={{fontWeight:700}}>State Tax Rate  </TableCell>
                     
-                     <TableCell className="table-header-td">State Tax Amount</TableCell>
+                     <TableCell sx={{fontWeight:700}}>State Tax Amount</TableCell>
                    
-                     <TableCell className="table-header-td">Total Tax Amount</TableCell>
+                     <TableCell sx={{fontWeight:700}}>Total Tax Amount</TableCell>
                 </TableRow>   
         </TableHead>
         <TableBody>
@@ -192,24 +236,35 @@ const Tables = () =>{
             <TableCell className="table-header-td">{item.amount}</TableCell>
        </TableRow>
           ))}
-       
+        <TableRow className=  "table-total "  key="1"
+            // sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+            >
+            <TableCell ></TableCell>
+            <TableCell sx={{fontSize:18,fontWeight:700}}>Total</TableCell>
+            <TableCell sx={{fontSize:18,fontWeight:700}}>{tabledetails.totaltaxvalueamt}</TableCell>
+            <TableCell ></TableCell>
+            <TableCell sx={{fontSize:18,fontWeight:700}}>{tabledetails.totalcentaxamt}</TableCell>
+            <TableCell ></TableCell>
+            <TableCell sx={{fontSize:18,fontWeight:700}}>{tabledetails.totalstatetaxamt}</TableCell>
+            <TableCell sx={{fontSize:18,fontWeight:700}}>₹{tabledetails.totalhsnamt}</TableCell>
+       </TableRow>
         </TableBody>
       </Table>
     </TableContainer>
-
+    </Paper >
     <div className="tabletotal-final ">
           <div className="tabletotal-final word" >
-           Amount Chargeable  (in words):   
+           Tax Amount (in words):   
           <div >
           
            </div>
           <div className="words">
-            One Thousand
+           {tabledetails.totalhsnamtwords}
           </div>
           </div>
-          <div className="tabletotal-final amount ">
-            Total: ₹ 1000
-            </div>
+          {/* <div className="tabletotal-final amount ">
+          {tabledetails.totalhsnamt}
+            </div> */}
           </div>
     </>
 }

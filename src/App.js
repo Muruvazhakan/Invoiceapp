@@ -9,6 +9,7 @@ import Tables from './Component/Table/Table';
 import TableForm from './Component/TableForm/TableForm';
 import TableFooters from './Component/Table/TableFooter';
 import YourDetails from './Component/YourDetails/YourDetails';
+import { Button } from '@mui/material';
 
 
 function App() {
@@ -17,9 +18,10 @@ function App() {
     <div className="App">
       <ReactToPrint
             trigger={() => (
-              <button className="bg-blue-500 ml-5 text-white font-bold py-2 px-8 rounded hover:bg-blue-600 hover:text-white transition-all duration-150 hover:ring-4 hover:ring-blue-400">
-                Print / Download
-              </button>
+              <Button variant="outlined" color="success" >
+              Print / Download
+            
+              </Button>
             )}
             content={() => componentRef.current}
           />

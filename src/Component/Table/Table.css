@@ -1,10 +1,21 @@
 .table-body{
     /* padding: 2%; */
 }
+.table-total{
+    background-color: rgba(237, 233, 233, 0.614);
+    font-weight: 900;
+}
+.table-style{
+    width: '98%'; overflow: 'hidden';margin:'5px 0px 5px 5px' ;padding:'10px'; borderRadius:'10px' 
+}
+.table-amount{
+    font-weight: 900;
+    font-size: 20;
+}
 .table-header{
     background-color: rgb(197 197 197 / 59%);
-    font-weight: 800;
-    margin: 5px;
+   
+   
 }
 
 .tablegrey{
