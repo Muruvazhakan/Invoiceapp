@@ -170,7 +170,7 @@ const TableForm = () => {
                 <FormControl>
                     <Card>
                     <h3>HSN Tax Rate</h3>
-                    <Box component="form" sx={{ '& .MuiTextField-root': { m: 1, width: '25ch' } }}>
+                    <Box component="form" sx={{ '& .MuiTextField-root': { m: 1, width: '15ch' } }}>
                         <TextField required id="outlined-required" label="Central Tax Rate %" value={tabledet.ctrate} type="number"
                             onChange={(e) => setval(e, tabledet.setctrate)}
                             color={setboxColors(tabledet.ctrate, 'color')}
@@ -188,7 +188,7 @@ const TableForm = () => {
                     </Box>
                    
                     <h3>Add Goods details below</h3>
-                    <Box component="form" sx={{ '& .MuiTextField-root': { m: 1, width: '25ch' } }}>
+                    <Box component="form" sx={{ '& .MuiTextField-root': { m: 1, width: '15ch' } }}>
 
                         <TextField required id="outlined-required" label="Item description" value={tabledet.desc}
                             onChange={(e) => setval(e, tabledet.setdesc)}
@@ -264,7 +264,7 @@ totalhsnamt,settotalhsnamt,totalhsnamt,settotalhsnamt,hsnlist, sethsnList,totalh
                     <Card>
                     <h3>Other items need to add?</h3>
                     
-                    <Box component="form" sx={{ '& .MuiTextField-root': { m: 1, width: '25ch' } }}>
+                    <Box component="form" sx={{ '& .MuiTextField-root': { m: 1, width: '20ch' } }}>
                   
                         <div>
                             <FormControlLabel
@@ -297,6 +297,7 @@ totalhsnamt,settotalhsnamt,totalhsnamt,settotalhsnamt,hsnlist, sethsnList,totalh
                                     }
                                     label="Can include in HSN/Tax"
                                 />
+                              {!tabledet.ischargedinhsn &&  <div className="notcharge">Items will not be added in the Tax List</div>  }
 
                                 <div>
                                     <Button variant="outlined" color="success" size="medium" onClick={() => tabledet.addOrEditOtherItems("",'add')}>Add Other Item</Button>

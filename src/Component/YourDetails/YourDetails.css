@@ -15,7 +15,11 @@
     color: green;
     text-decoration: solid;
     font-weight: bold;
+   
 }
 .gen-invoice{
     margin-right:25px;
+    margin-right: 5px;
+    margin: 1%;
+    padding: 1%;
 }

@@ -25,7 +25,7 @@ const AllStateContext = ({ children }) => {
   const [totalsubamt, setsubtotalamt] = useState(0);
   const [totalamt, settotalamt] = useState(0);
   const [totaltaxvalueamt, settotaltaxvalueamt] = useState(0);
-  const [totalamtwords, settotalamtwords] = useState('words');
+  const [totalamtwords, settotalamtwords] = useState('');
   const [desc, setdesc] = useState('');
   const [hsn, sethsn] = useState(0);
   const [quantity, setquantity] = useState(0);
@@ -69,6 +69,7 @@ const AllStateContext = ({ children }) => {
   const [otherdesc, setotherdesc] = useState('');
   const [ischargedinhsn, setischargedinhsn] = useState(true);
   const [otherdescamt, setotherdescamt] = useState(0);
+  
   const calculateTotal = () => {
     if (list.length > 0) {
       const allItems = list.map((item) => item.amount);
@@ -169,7 +170,8 @@ const AllStateContext = ({ children }) => {
 
     }
     else if (type === 'add') {
-      if (otherdesc.length > 0 && otherdescamt > 0) {
+     
+      if (otherdesc.length > 0 && otherdescamt > 0 && ctrate>0 && strate >0) {
         let singleOtherItem = {
           id: uuidv4(),
           otheritemdesc: otherdesc,
@@ -182,8 +184,14 @@ const AllStateContext = ({ children }) => {
           ...otherchargedetail,
           singleOtherItem
         ]);
+        setotherdesc('');
+        setotherdescamt(0);
+        setischargedinhsn(true);
 
         toast.success("Other Item added");
+      }
+      else if(ctrate <=0 && strate <=0){
+        toast.error("Please fill HSN Tax rate");
       }
       else {
         toast.error("Please fill in all inputs in Other details");
