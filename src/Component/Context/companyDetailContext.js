@@ -22,6 +22,7 @@ export const CompanyDetail = createContext();
     const[paymentmode,setpaymentmode]=useState('');
     const[paymentdate,setpaymentdate]=useState('');
     const [companyDeleration,setcompanyDeleration] = useState('We declare that the invoice details are the actual price of the goods');
+    const[cleardetailoption,setcleardetailoption]=useState(true);
 //     Invoice id
 // Invoice date
 // Payment mode
@@ -29,7 +30,8 @@ export const CompanyDetail = createContext();
 
     const compDet={clientName,setclientName,clientPhno,setclientPhno,clientAdd,setclientAdd,companyName,setcompanyName,
         companyTagLine,setcompanyTagLine,companyAddress,setcompanyAddress,companyPhno,setcompanyPhno,companyGstin,setcompanyGstin,companyGstinStatename,setcompanyGstinStatename,
-        invoiceid,setinvoiceid,invoicedate,setinvoicedate,paymentmode,setpaymentmode,paymentdate,setpaymentdate,invoiceidcount,setinvoiceidount,companyDeleration,setcompanyDeleration
+        invoiceid,setinvoiceid,invoicedate,setinvoicedate,paymentmode,setpaymentmode,paymentdate,setpaymentdate,invoiceidcount,setinvoiceidount,
+        companyDeleration,setcompanyDeleration,cleardetailoption,setcleardetailoption
     };
 
 

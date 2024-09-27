@@ -1,18 +1,19 @@
 import React, { useState, useContext, useEffect } from "react";
-import { AllState } from "../Context/allStateContext";
-import { Box, Button,  FormControl, FormControlLabel, FormGroup, Switch, TextField } from "@mui/material";
+
+import { Box, Button, FormControl, FormControlLabel, FormGroup, Switch, TextField } from "@mui/material";
 import { ToastContainer, toast } from "react-toastify";
 import { v4 as uuidv4 } from "uuid";
 import collect from "collect.js";
 import "react-toastify/dist/ReactToastify.css";
 import Card from "../Card/Card";
-
+import { AllState } from "../Context/allStateContext";
+import { CompanyDetail } from "../Context/companyDetailContext";
 import './TableForm.css';
 const TableForm = () => {
 
     // const [singleDesc, setSingleDesc] = useState();
     const tabledet = useContext(AllState);
-
+    const compayDet = useContext(CompanyDetail);
     const setval = (e, fun) => {
         fun(e.target.value);
     }
@@ -146,8 +147,11 @@ const TableForm = () => {
                         singlehsn
                     ])
                 }
-              
+
                 toast.success("Item added");
+                if (compayDet.cleardetailoption) {
+                    clearlistcontent();
+                }
 
 
             }
@@ -158,7 +162,27 @@ const TableForm = () => {
         }
     }
 
-   
+const clearlistcontent = () =>{
+    tabledet.setdesc('');
+    tabledet.sethsn('');
+    tabledet.setquantity(0);
+    tabledet.setrateinctax('');
+    tabledet.setrate(0);
+    tabledet.setper('');
+    tabledet.setdisc(15);
+    tabledet.setamount(0);
+}
+const addOtherItems = ()=>{
+    tabledet.addOrEditOtherItems("", 'add');
+    if(compayDet.cleardetailoption){
+        clearOtherDetails();
+    }
+}
+const  clearOtherDetails =() =>{
+    tabledet.setotherdesc('');
+    tabledet.setotherdescamt(0);
+    tabledet.setischargedinhsn(true);
+}
     return <>
         <Card >
             <ToastContainer position="top-center" theme="colored" />
@@ -169,143 +193,155 @@ const TableForm = () => {
             <FormGroup>
                 <FormControl>
                     <Card>
-                    <h3>HSN Tax Rate</h3>
-                    <Box component="form" sx={{ '& .MuiTextField-root': { m: 1, width: '15ch' } }}>
-                        <TextField required id="outlined-required" label="Central Tax Rate %" value={tabledet.ctrate} type="number"
-                            onChange={(e) => setval(e, tabledet.setctrate)}
-                            color={setboxColors(tabledet.ctrate, 'color')}
-                            error={setboxColors(tabledet.ctrate, 'error')} />
+                        <h3>HSN Tax Rate</h3>
+                        <Box component="form" sx={{ '& .MuiTextField-root': { m: 1, width: '15ch' } }}>
+                            <TextField required id="outlined-required" label="Central Tax Rate %" value={tabledet.ctrate} type="number"
+                                onChange={(e) => setval(e, tabledet.setctrate)}
+                                color={setboxColors(tabledet.ctrate, 'color')}
+                                error={setboxColors(tabledet.ctrate, 'error')} />
 
 
 
-                        <TextField required id="outlined-required" label="State Tax Rate %" value={tabledet.strate} type="number"
-                            onChange={(e) => setval(e, tabledet.setstrate)}
-                            color={setboxColors(tabledet.strate, 'color')}
-                            error={setboxColors(tabledet.strate, 'error')} />
+                            <TextField required id="outlined-required" label="State Tax Rate %" value={tabledet.strate} type="number"
+                                onChange={(e) => setval(e, tabledet.setstrate)}
+                                color={setboxColors(tabledet.strate, 'color')}
+                                error={setboxColors(tabledet.strate, 'error')} />
 
 
 
-                    </Box>
-                   
-                    <h3>Add Goods details below</h3>
-                    <Box component="form" sx={{ '& .MuiTextField-root': { m: 1, width: '15ch' } }}>
+                        </Box>
 
-                        <TextField required id="outlined-required" label="Item description" value={tabledet.desc}
-                            onChange={(e) => setval(e, tabledet.setdesc)}
-                            color={setboxColors(tabledet.desc, 'color')}
-                            error={setboxColors(tabledet.desc, 'error')}
-                        />
+                        <h3>Add Goods details below</h3>
+                        <Box component="form" sx={{ '& .MuiTextField-root': { m: 1, width: '15ch' } }}>
 
-                        <TextField required id="outlined-required" label="HSN" value={tabledet.hsn}
-                            onChange={(e) => setval(e, tabledet.sethsn)}
-                            color={setboxColors(tabledet.hsn, 'color')}
-                            error={setboxColors(tabledet.hsn, 'error')}
-                        />
-
-                        <TextField required id="outlined-required" label="Quantity" value={tabledet.quantity} type="number"
-                            onChange={(e) => setval(e, tabledet.setquantity)}
-                            color={setboxColors(tabledet.quantity, 'color')}
-                            error={setboxColors(tabledet.quantity, 'error')}
-                        />
-
-                        <TextField required id="outlined-required" label="Rate inc Tax" value={tabledet.rateinctax} type="number"
-                            onChange={(e) => setval(e, tabledet.setrateinctax)}
-                            color={setboxColors(tabledet.rateinctax, 'color')}
-                            error={setboxColors(tabledet.rateinctax, 'error')}
-                        />
-
-                        <TextField required id="outlined-required" label="Rate" value={tabledet.rate} type="number"
-                            onChange={(e) => setval(e, tabledet.setrate)}
-                            color={setboxColors(tabledet.rate, 'color')}
-                            error={setboxColors(tabledet.rate, 'error')}
-                        />
-
-                        <TextField required id="outlined-required" label="Per" value={tabledet.per}
-                            onChange={(e) => setval(e, tabledet.setper)}
-                            color={setboxColors(tabledet.per, 'color')}
-                            error={setboxColors(tabledet.per, 'error')}
-                        />
-
-                        <TextField required id="outlined-required" label="Discount" value={tabledet.disc} type="number"
-                            onChange={(e) => setval(e, tabledet.setdisc)}
-                            color={setboxColors(tabledet.disc, 'color')}
-                            error={setboxColors(tabledet.disc, 'error')}
-                        />
-
-                        <TextField required id="outlined-required" label="Amount" value={tabledet.amount} type="number"
-                            onChange={(e) => setval(e, tabledet.setamount)}
-                            color={setboxColors(tabledet.amount, 'color')}
-                            error={setboxColors(tabledet.amount, 'error')}
-                        />
-
-                        {/* singleitem,setsingleitem,list, setList,totalamt,settotalamt,totalamtwords,settotalamtwords,singlehsnitem,setsinglehsnitem,
-totalhsnamt,settotalhsnamt,totalhsnamt,settotalhsnamt,hsnlist, sethsnList,totalhsnamtwords,settotalhsnamtwords */}
-                        <div>
-                            <Button variant="contained" color="success" size="medium" onClick={() => addOrUpdateItemHandler('Add')}>Add Item</Button>
-                        </div>
-
-                    </Box>
-                    <h3>Value in Words</h3>
-                    <Box component="form" sx={{ '& .MuiTextField-root': { m: 1, width: '25ch' } }}>
-
-                        <TextField required id="outlined-required" label="Total Amount Chargeable" value={tabledet.totalamtwords}
-                            onChange={(e) => setval(e, tabledet.settotalamtwords)}
-                            color={setboxColors(tabledet.totalamtwords, 'color')}
-                            error={setboxColors(tabledet.totalamtwords, 'error')}
-                        />
-
-                        <TextField required id="outlined-required" label="Total Tax Amount" value={tabledet.totalhsnamtwords}
-                            onChange={(e) => setval(e, tabledet.settotalhsnamtwords)}
-                            color={setboxColors(tabledet.totalhsnamtwords, 'color')}
-                            error={setboxColors(tabledet.totalhsnamtwords, 'error')}
-                        />
-                    </Box>
-                    </Card>
-                    <Card>
-                    <h3>Other items need to add?</h3>
-                    
-                    <Box component="form" sx={{ '& .MuiTextField-root': { m: 1, width: '20ch' } }}>
-                  
-                        <div>
-                            <FormControlLabel
-                                control={
-                                    <Switch checked={tabledet.isinstallationcharge} onChange={() => tabledet.setisinstallationcharge(!tabledet.isinstallationcharge)} name="Othercharges" />
-                                }
-                                label="Add Other charges?"
+                            <TextField required id="outlined-required" label="Item description" value={tabledet.desc}
+                                onChange={(e) => setval(e, tabledet.setdesc)}
+                                color={setboxColors(tabledet.desc, 'color')}
+                                error={setboxColors(tabledet.desc, 'error')}
                             />
-                            This section is to add Installation or Labour or Other charge which will not be add Quantity, Rate, PCS, Discount
-                        </div>
-                        {tabledet.isinstallationcharge &&
-                            <>
 
+                            <TextField required id="outlined-required" label="HSN" value={tabledet.hsn}
+                                onChange={(e) => setval(e, tabledet.sethsn)}
+                                color={setboxColors(tabledet.hsn, 'color')}
+                                error={setboxColors(tabledet.hsn, 'error')}
+                            />
 
-                                <TextField required id="outlined-required" label="Other item Description" value={tabledet.otherdesc}
-                                    onChange={(e) => setval(e, tabledet.setotherdesc)}
-                                    color={setboxColors(tabledet.otherdesc, 'color')}
-                                    error={setboxColors(tabledet.otherdesc, 'error')}
-                                />
+                            <TextField required id="outlined-required" label="Quantity" value={tabledet.quantity} type="number"
+                                onChange={(e) => setval(e, tabledet.setquantity)}
+                                color={setboxColors(tabledet.quantity, 'color')}
+                                error={setboxColors(tabledet.quantity, 'error')}
+                            />
 
-                                <TextField required id="outlined-required" label="Other item Chargeable" value={tabledet.otherdescamt} type="number"
-                                    onChange={(e) => setval(e, tabledet.setotherdescamt)}
-                                    color={setboxColors(tabledet.otherdescamt, 'color')}
-                                    error={setboxColors(tabledet.otherdescamt, 'error')}
-                                />
+                            <TextField required id="outlined-required" label="Rate inc Tax" value={tabledet.rateinctax} type="number"
+                                onChange={(e) => setval(e, tabledet.setrateinctax)}
+                                color={setboxColors(tabledet.rateinctax, 'color')}
+                                error={setboxColors(tabledet.rateinctax, 'error')}
+                            />
 
+                            <TextField required id="outlined-required" label="Rate" value={tabledet.rate} type="number"
+                                onChange={(e) => setval(e, tabledet.setrate)}
+                                color={setboxColors(tabledet.rate, 'color')}
+                                error={setboxColors(tabledet.rate, 'error')}
+                            />
+
+                            <TextField required id="outlined-required" label="Per" value={tabledet.per}
+                                onChange={(e) => setval(e, tabledet.setper)}
+                                color={setboxColors(tabledet.per, 'color')}
+                                error={setboxColors(tabledet.per, 'error')}
+                            />
+
+                            <TextField required id="outlined-required" label="Discount" value={tabledet.disc} type="number"
+                                onChange={(e) => setval(e, tabledet.setdisc)}
+                                color={setboxColors(tabledet.disc, 'color')}
+                                error={setboxColors(tabledet.disc, 'error')}
+                            />
+
+                            <TextField required id="outlined-required" label="Amount" value={tabledet.amount} type="number"
+                                onChange={(e) => setval(e, tabledet.setamount)}
+                                color={setboxColors(tabledet.amount, 'color')}
+                                error={setboxColors(tabledet.amount, 'error')}
+                            />
+
+                            <div>
                                 <FormControlLabel
                                     control={
-                                        <Switch checked={tabledet.ischargedinhsn} onChange={() => tabledet.setischargedinhsn(!tabledet.ischargedinhsn)} name="includehsn" />
+                                        <Switch checked={compayDet.cleardetailoption} onChange={() => compayDet.setcleardetailoption(!compayDet.cleardetailoption)} name="Othercharges" />
                                     }
-                                    label="Can include in HSN/Tax"
+                                    label="Clear Form Details?"
                                 />
-                              {!tabledet.ischargedinhsn &&  <div className="notcharge">Items will not be added in the Tax List</div>  }
+                                
+                                {compayDet.cleardetailoption ?<div className="notcharge"> "Form will be cleared after adding" </div> : "This section is to avoid the clearing the details in the form"}
+                            </div>
 
-                                <div>
-                                    <Button variant="outlined" color="success" size="medium" onClick={() => tabledet.addOrEditOtherItems("",'add')}>Add Other Item</Button>
-                                </div>
-                            </>
-                        }
-                        
-                    </Box>
+                            <div className="button-warn">
+                                <Button variant="contained" color="success" size="medium" onClick={() => addOrUpdateItemHandler('Add')}>Add Item</Button>
+                                
+                            </div>
+                            <Button  variant="contained" color="warning" size="medium" onClick={clearlistcontent}>Clear Form</Button>
+                        </Box>
+                        <h3>Value in Words</h3>
+                        <Box component="form" sx={{ '& .MuiTextField-root': { m: 1, width: '25ch' } }}>
+
+                            <TextField required id="outlined-required" label="Total Amount Chargeable" value={tabledet.totalamtwords}
+                                onChange={(e) => setval(e, tabledet.settotalamtwords)}
+                                color={setboxColors(tabledet.totalamtwords, 'color')}
+                                error={setboxColors(tabledet.totalamtwords, 'error')}
+                            />
+
+                            <TextField required id="outlined-required" label="Total Tax Amount" value={tabledet.totalhsnamtwords}
+                                onChange={(e) => setval(e, tabledet.settotalhsnamtwords)}
+                                color={setboxColors(tabledet.totalhsnamtwords, 'color')}
+                                error={setboxColors(tabledet.totalhsnamtwords, 'error')}
+                            />
+                        </Box>
+                    </Card>
+                    <Card>
+                        <h3>Other items need to add?</h3>
+
+                        <Box component="form" sx={{ '& .MuiTextField-root': { m: 1, width: '20ch' } }}>
+
+                            <div>
+                                <FormControlLabel
+                                    control={
+                                        <Switch checked={tabledet.isinstallationcharge} onChange={() => tabledet.setisinstallationcharge(!tabledet.isinstallationcharge)} name="Othercharges" />
+                                    }
+                                    label="Add Other charges?"
+                                />
+                                This section is to add Installation or Labour or Other charge which will not be add Quantity, Rate, PCS, Discount
+                            </div>
+                            {tabledet.isinstallationcharge &&
+                                <>
+
+
+                                    <TextField required id="outlined-required" label="Other item Description" value={tabledet.otherdesc}
+                                        onChange={(e) => setval(e, tabledet.setotherdesc)}
+                                        color={setboxColors(tabledet.otherdesc, 'color')}
+                                        error={setboxColors(tabledet.otherdesc, 'error')}
+                                    />
+
+                                    <TextField required id="outlined-required" label="Other item Chargeable" value={tabledet.otherdescamt} type="number"
+                                        onChange={(e) => setval(e, tabledet.setotherdescamt)}
+                                        color={setboxColors(tabledet.otherdescamt, 'color')}
+                                        error={setboxColors(tabledet.otherdescamt, 'error')}
+                                    />
+
+                                    <FormControlLabel
+                                        control={
+                                            <Switch checked={tabledet.ischargedinhsn} onChange={() => tabledet.setischargedinhsn(!tabledet.ischargedinhsn)} name="includehsn" />
+                                        }
+                                        label="Can include in HSN/Tax"
+                                    />
+                                    {!tabledet.ischargedinhsn && <div className="notcharge">Items will not be added in the Tax List</div>}
+                                    
+                                    {compayDet.cleardetailoption ?<div className="notcharge"> "Form will be cleared after adding" </div> : null}
+                                    <div className="button-warn">
+                                        <Button variant="outlined" color="success" size="medium" onClick={addOtherItems}>Add Other Item</Button>
+                                    </div>
+                                    <Button  variant="contained" color="warning" size="medium" onClick={clearOtherDetails}>Clear Form</Button>
+                                </>
+                            }
+
+                        </Box>
                     </Card>
                 </FormControl>
             </FormGroup>

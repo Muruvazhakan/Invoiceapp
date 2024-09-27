@@ -184,9 +184,7 @@ const AllStateContext = ({ children }) => {
           ...otherchargedetail,
           singleOtherItem
         ]);
-        setotherdesc('');
-        setotherdescamt(0);
-        setischargedinhsn(true);
+       
 
         toast.success("Other Item added");
       }
@@ -202,6 +200,7 @@ const AllStateContext = ({ children }) => {
   useEffect(() => {
     calculateTotal();
   });
+
 
   useEffect(() => {
     if (hsnlist.length == 0 && list.length == 0 && otherchargedetail.length == 0) {
