@@ -50,29 +50,6 @@ const TableForm = () => {
         // console.log(rate + " rate " + val);
     }, [tabledet.rate, tabledet.quantity])
 
-    const addOtherItems = (opt) => {
-        if (tabledet.otherdesc.length > 0 && tabledet.otherdescamt > 0) {
-            if (opt === 'Update') {
-                toast.success("Item updated");
-            } else {
-                let singleOtherItem = {
-                    id: uuidv4(),
-                    otheritemdesc: tabledet.otherdesc,
-                    otherdescamt: tabledet.otherdescamt,
-                    otherdesctaxamt: tabledet.otherdescamt,
-                    ischargedinhsn:tabledet.ischargedinhsn
-                };
-
-                tabledet.setOtherchargedetail([
-                    ...tabledet.otherchargedetail,
-                    singleOtherItem
-                ]);
-            }
-        }
-        else {
-            toast.error("Please fill in all inputs in Other details");
-        }
-    }
     const addOrUpdateItemHandler = (opt) => {
         if (tabledet.desc.length !== 0 && tabledet.hsn.length !== 0 && tabledet.quantity > 0 && tabledet.rateinctax > 0 && tabledet.rate > 0 && tabledet.per.length !== 0 && tabledet.disc > 0 && tabledet.amount > 0 && tabledet.ctrate > 0 && tabledet.strate > 0) {
             if (opt === 'Update') {
@@ -169,17 +146,9 @@ const TableForm = () => {
                         singlehsn
                     ])
                 }
-                // console.log(singlehsn);
+              
                 toast.success("Item added");
 
-                // tabledet.setdesc('');
-                // tabledet.sethsn(0);
-                // tabledet.setquantity(0);
-                // tabledet.setrateinctax(0);
-                // tabledet.setrate(0);
-                // tabledet.setper('');
-                // tabledet.setdisc(1);
-                // tabledet.setamount(0);
 
             }
 
@@ -189,21 +158,7 @@ const TableForm = () => {
         }
     }
 
-    // useEffect(()=>{
-    //     const res=Object.groupBy(tabledet.list,({hsn})=>hsn);
-    //     console.log('res ');
-    //     console.log( res);
-    //     if(res){
-    //         // res.212.map((item)=>{
-    //         //     console.log( item + 'item');
-    //         // })
-    //     }
-
-    //     // let val=res.map((item,ind)=>{
-    //     //     console.log( item);
-    //     //     (collect(item).sum());
-    //     // })
-    // },tabledet.list)
+   
     return <>
         <Card >
             <ToastContainer position="top-center" theme="colored" />
@@ -344,7 +299,7 @@ totalhsnamt,settotalhsnamt,totalhsnamt,settotalhsnamt,hsnlist, sethsnList,totalh
                                 />
 
                                 <div>
-                                    <Button variant="outlined" color="success" size="medium" onClick={() => addOtherItems('Add')}>Add Other Item</Button>
+                                    <Button variant="outlined" color="success" size="medium" onClick={() => tabledet.addOrEditOtherItems("",'add')}>Add Other Item</Button>
                                 </div>
                             </>
                         }

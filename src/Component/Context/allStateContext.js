@@ -1,4 +1,5 @@
 import React, { createContext, useState, useEffect } from "react";
+import { ToastContainer, toast } from "react-toastify";
 
 import { v4 as uuidv4 } from "uuid";
 import collect from "collect.js";
@@ -84,8 +85,8 @@ const AllStateContext = ({ children }) => {
   };
 
   const editListRows = (item, type) => {
-    console.log("item " );
-    console.log(item);
+    // console.log("item ");
+    // console.log(item);
     const removedist = list.filter((alllist) => {
       return alllist.id != item.id;
     })
@@ -96,11 +97,13 @@ const AllStateContext = ({ children }) => {
     const otherhsn = hsnlist.filter((hsnlist) => {
       return hsnlist.hsndesc !== item.hsn;
     });
-    let diff = (selected[0].taxvalue)*1 - (item.amount)*1;
-    console.log("diff " + diff);
-    console.log(removedist);
-    console.log(selected[0].taxvalue + " item.taxvalue " + item.amount);
-    console.log(selected);
+    let diff = (selected[0].taxvalue) * 1 - (item.amount) * 1;
+    // console.log("diff " + diff);
+    // console.log(removedist);
+    // console.log(selected[0].taxvalue + " item.taxvalue " + item.amount);
+    // console.log(selected);
+    // console.log("otherhsn");
+    // console.log(otherhsn);
     if (type === "update") {
       setdesc(item.desc);
       sethsn(item.hsn);
@@ -110,43 +113,106 @@ const AllStateContext = ({ children }) => {
       setper(item.per);
       setdisc(item.disc);
       setamount(item.amount);
-
+      toast.info("Item is added in edit section");
     }
     if (diff > 0) {
-      console.log("inside diff");
-      let singlehsn = {
-        id: selected[0].id,
-        hsndesc: selected[0].hsndesc,
-        taxvalue: diff,
-        ctrate: (selected[0].ctrate)*1,
-        ctamount: (selected[0].ctamount)*1 - (item.ctamount)*1,
-        strate: (selected[0].strate)*1,
-        stamount: (selected[0].stamount)*1 - (item.stamount)*1,
-        amount: (selected[0].amount)*1 - (item.amount)*1,
-      };
-      let finallist = {...otherhsn,...singlehsn};
-     
-      // sethsnList(finallist);
-    //   sethsnList({...otherhsn,
-          
-    //     ...singlehsn
-    // });
+      // console.log("inside diff");
+      let currentsinglehsnitem = selected[0];
+      // console.log("currentsinglehsnitem"); console.log(currentsinglehsnitem);
+
+      if (currentsinglehsnitem.hsndesc == item.hsn) {
+        // console.log("before inside" + currentsinglehsnitem.taxvalue + " item.amount : " + item.amount);
+        let ingvalue = item.amount;
+        currentsinglehsnitem.taxvalue = (currentsinglehsnitem.taxvalue) * 1 - (ingvalue) * 1;
+        // currentsinglehsnitem.taxvalue = 4 +currentsinglehsnitem.taxvalue;
+        // console.log("after inside" + currentsinglehsnitem.taxvalue + " item.amount : " + item.amount);
+        // currentsinglehsnitem[i].ctrate
+      }
     }
-    else {
+    else if (otherhsn.length > 0) {
       sethsnList(
         otherhsn,
       );
+    } else {
+      sethsnList([]);
     }
     setList(removedist);
+    if (type === "delete") {
+      toast.warning("Item Deleted");
+    }
+    // console.log(hsnlist.length + "list.length " +list.length + "otherchargedetail " + otherchargedetail.length );
+
   };
+
+
+  const addOrEditOtherItems = (item, type) => {
+
+    const removedist = otherchargedetail.filter((alllist) => {
+      return alllist.id != item.id;
+    });
+
+    if (type === 'update') {
+      // console.log("addOrEditOtherItems ");
+
+      // console.log("removalitem ");
+
+      // console.log(item);
+      // setotherdesc()
+      setotherdesc(item.otheritemdesc);
+      setotherdescamt(item.otherdesctaxamt);
+      setischargedinhsn(item.ischargedinhsn);
+      setOtherchargedetail(removedist);
+      toast.info("Other Item added to edit section");
+    } else if (type === 'delete') {
+      setOtherchargedetail(removedist);
+      toast.success("Other Item Deleted");
+
+    }
+    else if (type === 'add') {
+      if (otherdesc.length > 0 && otherdescamt > 0) {
+        let singleOtherItem = {
+          id: uuidv4(),
+          otheritemdesc: otherdesc,
+          otherdescamt: otherdescamt,
+          otherdesctaxamt: otherdescamt,
+          ischargedinhsn: ischargedinhsn
+        };
+
+        setOtherchargedetail([
+          ...otherchargedetail,
+          singleOtherItem
+        ]);
+
+        toast.success("Other Item added");
+      }
+      else {
+        toast.error("Please fill in all inputs in Other details");
+      }
+    }
+  }
 
   useEffect(() => {
     calculateTotal();
   });
 
+  useEffect(() => {
+    if (hsnlist.length == 0 && list.length == 0 && otherchargedetail.length == 0) {
+      settotalamt(0);
+      setsubtotalamt(0);
+      settotalcentaxamt(0);
+      settotalhsnamt(0);
+      settotalstatetaxamt(0);
+      settotaltaxvalueamt(0);
+      settotalamtwords('');
+      settotalhsnamtwords('');
+    }
+    if (list.length == 0) {
+      setsubtotalamt(0);
+    }
+  }, [list, otherchargedetail]);
+
   const calculateHsn = () => {
-    let stamt = 0, ctamt = 0;
-    if (hsnlist.length > 0) {
+    if (hsnlist.length > 0 || otherchargedetail.length > 0) {
 
 
       // console.log(" hsnlist before "+hsnlist);
@@ -167,7 +233,7 @@ const AllStateContext = ({ children }) => {
       });
       // console.log(" hsnlist after "+hsnlist);
 
-      console.log(" otherchargedetail before " + otherchargedetail);
+      // console.log(" otherchargedetail before " + otherchargedetail);
       otherchargedetail.map((item) => {
 
 
@@ -183,7 +249,7 @@ const AllStateContext = ({ children }) => {
 
 
       });
-      console.log(" otherchargedetail after " + otherchargedetail);
+      // console.log(" otherchargedetail after " + otherchargedetail);
 
       const allItemsexclueshsn = otherchargedetail.map((item) => item.otherdescamt);
       const allItemamount = otherchargedetail.map((item) => item.otherdesctaxamt);
@@ -192,8 +258,8 @@ const AllStateContext = ({ children }) => {
       const allItemscentralinclueshsn = otherchargedetail.filter((item) => item.ischargedinhsn).map((item) => item.ctamount);
       const allItemsstateinclueshsn = otherchargedetail.filter((item) => item.ischargedinhsn).map((item) => item.stamount);
 
-      console.log(" allItemsinclues  " + allItemsinclueshsn);
-      console.log(" allItemsexclueshsn  " + allItemsexclueshsn);
+      // console.log(" allItemsinclues  " + allItemsinclueshsn);
+      // console.log(" allItemsexclueshsn  " + allItemsexclueshsn);
 
       settotalhsnamt(((collect(hsnlist.map((item) => item.amount)).sum()) + (collect(allItemsinclueshsn).sum())).toFixed(2));
       settotalcentaxamt((collect(hsnlist.map((item) => item.ctamount)).sum() + (collect(allItemscentralinclueshsn).sum())).toFixed(2));
@@ -207,8 +273,8 @@ const AllStateContext = ({ children }) => {
       // settotalstatetaxamt(((collect(hsnlist.map((item) => item.ctamount)).sum())+(collect(allItemsinclueshsn.map((item) => item.ctamount)).sum())).toFixed(2));
       // settotaltaxvalueamt(((collect(hsnlist.map((item) => item.taxvalue)).sum())+(collect(allItemsinclueshsn.map((item) => item.taxvalue)).sum())).toFixed(2));
       // settotalamt(((totalhsnamt)+(totalsubamt)+(collect(allOtheritem).sum())).toFixed(2));
-      console.log(" value " + totalsubamt);
-      console.log(totalamt + " " + " totalhsnamt " + totalhsnamt + " totalcentaxamt " + totalcentaxamt + " totalstatetaxamt " + totalstatetaxamt);
+      // console.log(" value " + totalsubamt);
+      // console.log(totalamt + " " + " totalhsnamt " + totalhsnamt + " totalcentaxamt " + totalcentaxamt + " totalstatetaxamt " + totalstatetaxamt);
     }
   }
 
@@ -220,7 +286,7 @@ const AllStateContext = ({ children }) => {
     desc, setdesc, hsn, sethsn, quantity, setquantity, rateinctax, setrateinctax, rate, setrate, per, setper, disc, setdisc, amount, setamount, otherdesc, setotherdesc, ischargedinhsn, setischargedinhsn, otherdescamt, setotherdescamt,
     totalhsnamt, settotalhsnamt, hsnlist, sethsnList, totalhsnamtwords, settotalhsnamtwords, totalsubamt,
     setsubtotalamt, gstCgstitem, setgstCgstitem, ctrate, setctrate, strate, setstrate, ctatm, setctatm, statm, setstatm, totaltaxvalueamt, settotaltaxvalueamt,
-    totalcentaxamt, settotalcentaxamt, totalstatetaxamt, settotalstatetaxamt, isinstallationcharge, setisinstallationcharge, otherchargedetail, setOtherchargedetail, editListRows
+    totalcentaxamt, settotalcentaxamt, totalstatetaxamt, settotalstatetaxamt, isinstallationcharge, setisinstallationcharge, otherchargedetail, setOtherchargedetail, editListRows, addOrEditOtherItems
   };
   return <AllState.Provider value={context}>{children}</AllState.Provider>;
 }

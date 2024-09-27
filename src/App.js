@@ -1,6 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
-import React,{useRef} from 'react';
+import React, { useRef } from 'react';
 import ReactToPrint from 'react-to-print';
 
 import Header from './Component/Header/Header';
@@ -16,7 +16,7 @@ import InvoiceDeatilsEdit from './Component/InvoiceDetails/InvoiceDeatilsEdit';
 
 
 function App() {
-  const componentRef =useRef();
+  const componentRef = useRef();
   return (
     <div className="App">
       <main className=""
@@ -24,27 +24,25 @@ function App() {
           maxWidth: "1920px",
           margin: "auto",
         }}>
-       <section>
-      <Card>
+        <section>
+          <Card>
+            <ReactToPrint
+              trigger={() => (
+                <Button variant="outlined" color="success" >
+                  Print / Download
+                </Button>
+              )}
+              content={() => componentRef.current}
+            />
+            <div ref={componentRef}>
+              <InvoiceDetails screen="display" />
 
-      <ReactToPrint
-            trigger={() => (
-              <Button variant="outlined" color="success" >
-              Print / Download
-            
-              </Button>
-            )}
-            content={() => componentRef.current}
-          />
-      <div ref={componentRef}> 
-      <InvoiceDetails screen="display" />
-      
-      </div>
-      </Card>
-      </section>
-      <div className="invoice__preview bg-white p-5 rounded-2xl border-4 border-blue-200">
-      <InvoiceDeatilsEdit />
-      </div>
+            </div>
+          </Card>
+        </section>
+        <div >
+          <InvoiceDeatilsEdit />
+        </div>
       </main>
     </div>
   );

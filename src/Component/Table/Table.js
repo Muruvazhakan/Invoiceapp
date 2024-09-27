@@ -6,8 +6,8 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { AiOutlineDelete, AiOutlineEdit } from "react-icons/ai";
 import { FiEdit } from "react-icons/fi";
+import { MdDelete } from "react-icons/md";
 import './Table.css';
 
 
@@ -88,9 +88,14 @@ const Tables = (props) =>{
                      <TableCell sx={{fontWeight:700}}>Per</TableCell>
                      <TableCell sx={{fontWeight:700}}>Amount (₹)</TableCell>
                      { props.screen ==="update" &&
-                     <TableCell >Edit rows
+                     <>
+                     <TableCell sx={{fontWeight:700}} >Edit rows
                       
                      </TableCell>
+                     <TableCell sx={{fontWeight:700}} >Delete rows
+                      
+                      </TableCell>
+                     </>
                     }
                 </TableRow>   
         </TableHead>
@@ -113,11 +118,18 @@ const Tables = (props) =>{
                
                 <TableCell className="table-header-td">{item.amount}</TableCell>
                 { props.screen ==="update" && 
+                <>
                 <TableCell className="table-edit" onClick={() =>tabledetails.editListRows(item,"update")} >
                 
                     <FiEdit size={18}  />
-                 
-                </TableCell>}
+                    
+                </TableCell>
+                <TableCell className="table-edit" onClick={() =>tabledetails.editListRows(item,"delete")} >
+                
+                <MdDelete size={18}  />
+                
+            </TableCell>
+                </>}
            </TableRow>
               )
             
@@ -155,6 +167,19 @@ const Tables = (props) =>{
               <TableCell ></TableCell>
               <TableCell ></TableCell>         
               <TableCell >{item.otherdesctaxamt}</TableCell>
+              { props.screen ==="update" && 
+                <>
+                <TableCell className="table-edit" onClick={() =>tabledetails.addOrEditOtherItems(item,"update")} >
+                
+                    <FiEdit size={18}  />
+                    
+                </TableCell>
+                <TableCell className="table-edit" onClick={() =>tabledetails.addOrEditOtherItems(item,"delete")} >
+                
+                <MdDelete size={18}  />
+                
+            </TableCell>
+                </>}
          </TableRow>
             )
           
