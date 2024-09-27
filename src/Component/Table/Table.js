@@ -6,10 +6,14 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import { AiOutlineDelete, AiOutlineEdit } from "react-icons/ai";
+import { FiEdit } from "react-icons/fi";
 import './Table.css';
+
+
 import { AllState } from "../Context/allStateContext";
 
-const Tables = () =>{
+const Tables = (props) =>{
 
   const tabledetails=useContext(AllState);
     
@@ -83,6 +87,11 @@ const Tables = () =>{
                      <TableCell sx={{fontWeight:700}}>Rate</TableCell>
                      <TableCell sx={{fontWeight:700}}>Per</TableCell>
                      <TableCell sx={{fontWeight:700}}>Amount (₹)</TableCell>
+                     { props.screen ==="update" &&
+                     <TableCell >Edit rows
+                      
+                     </TableCell>
+                    }
                 </TableRow>   
         </TableHead>
         <TableBody>
@@ -103,6 +112,12 @@ const Tables = () =>{
                 <TableCell className="table-header-td">{item.per}</TableCell>
                
                 <TableCell className="table-header-td">{item.amount}</TableCell>
+                { props.screen ==="update" && 
+                <TableCell className="table-edit" onClick={() =>tabledetails.editListRows(item,"update")} >
+                
+                    <FiEdit size={18}  />
+                 
+                </TableCell>}
            </TableRow>
               )
             

@@ -1,28 +1,17 @@
 import React, { useState, useContext, useEffect } from "react";
 import { AllState } from "../Context/allStateContext";
-import { Box, Button, FormControl, FormControlLabel, FormGroup, Switch, TextField } from "@mui/material";
+import { Box, Button,  FormControl, FormControlLabel, FormGroup, Switch, TextField } from "@mui/material";
 import { ToastContainer, toast } from "react-toastify";
 import { v4 as uuidv4 } from "uuid";
 import collect from "collect.js";
 import "react-toastify/dist/ReactToastify.css";
+import Card from "../Card/Card";
 
+import './TableForm.css';
 const TableForm = () => {
 
     // const [singleDesc, setSingleDesc] = useState();
     const tabledet = useContext(AllState);
-
-    const [desc, setdesc] = useState('');
-    const [hsn, sethsn] = useState(0);
-    const [quantity, setquantity] = useState(0);
-    const [rateinctax, setrateinctax] = useState(0);
-    const [rate, setrate] = useState(0);
-    const [per, setper] = useState('');
-    const [disc, setdisc] = useState(15);
-    const [amount, setamount] = useState(0);
-    const [otherdesc, setotherdesc] = useState('');
-    const [ischargedinhsn, setischargedinhsn] = useState(true);
-    const [otherdescamt, setotherdescamt] = useState(0);
-
 
     const setval = (e, fun) => {
         fun(e.target.value);
@@ -43,41 +32,41 @@ const TableForm = () => {
         // console.log('tabledet');
         // console.log(tabledet);
         let val;
-        if (quantity !== 0 || rateinctax !== 0 || disc !== 0) {
-            val = (rateinctax - ((disc * rateinctax) / 100));
-            setrate(val.toFixed(2));
+        if (tabledet.quantity !== 0 || tabledet.rateinctax !== 0 || tabledet.disc !== 0) {
+            val = (tabledet.rateinctax - ((tabledet.disc * tabledet.rateinctax) / 100));
+            tabledet.setrate(val.toFixed(2));
         }
         // console.log(rate + " rate " + val);
-    }, [disc, rateinctax]);
+    }, [tabledet.disc, tabledet.rateinctax]);
 
     useEffect(() => {
         // console.log('amount');
         // console.log(tabledet);
         let val;
-        if (quantity !== 0 || rateinctax !== 0 || disc !== 0 || rate !== 0) {
-            val = (rate * quantity);
-            setamount(val.toFixed(2));
+        if (tabledet.quantity !== 0 || tabledet.rateinctax !== 0 || tabledet.disc !== 0 || tabledet.rate !== 0) {
+            val = (tabledet.rate * tabledet.quantity);
+            tabledet.setamount(val.toFixed(2));
         }
         // console.log(rate + " rate " + val);
-    }, [rate, quantity])
+    }, [tabledet.rate, tabledet.quantity])
 
     const addOtherItems = (opt) => {
-        if (otherdesc.length > 0 && otherdescamt > 0) {
+        if (tabledet.otherdesc.length > 0 && tabledet.otherdescamt > 0) {
             if (opt === 'Update') {
                 toast.success("Item updated");
             } else {
                 let singleOtherItem = {
                     id: uuidv4(),
-                    otheritemdesc: otherdesc,
-                    otherdescamt: otherdescamt,
-                    otherdesctaxamt: otherdescamt,
-                    ischargedinhsn:ischargedinhsn
+                    otheritemdesc: tabledet.otherdesc,
+                    otherdescamt: tabledet.otherdescamt,
+                    otherdesctaxamt: tabledet.otherdescamt,
+                    ischargedinhsn:tabledet.ischargedinhsn
                 };
 
                 tabledet.setOtherchargedetail([
                     ...tabledet.otherchargedetail,
                     singleOtherItem
-                ])
+                ]);
             }
         }
         else {
@@ -85,21 +74,21 @@ const TableForm = () => {
         }
     }
     const addOrUpdateItemHandler = (opt) => {
-        if (desc.length !== 0 && hsn.length !== 0 && quantity > 0 && rateinctax > 0 && rate > 0 && per.length !== 0 && disc > 0 && amount > 0 && tabledet.ctrate > 0 && tabledet.strate > 0) {
+        if (tabledet.desc.length !== 0 && tabledet.hsn.length !== 0 && tabledet.quantity > 0 && tabledet.rateinctax > 0 && tabledet.rate > 0 && tabledet.per.length !== 0 && tabledet.disc > 0 && tabledet.amount > 0 && tabledet.ctrate > 0 && tabledet.strate > 0) {
             if (opt === 'Update') {
                 toast.success("Item updated");
             } else {
 
                 let singleitem = {
                     id: uuidv4(),
-                    desc: desc,
-                    hsn: hsn,
-                    quantity: quantity,
-                    rateinctax: rateinctax,
-                    rate: rate,
-                    per: per,
-                    disc: disc,
-                    amount: amount
+                    desc: tabledet.desc,
+                    hsn: tabledet.hsn,
+                    quantity: tabledet.quantity,
+                    rateinctax: tabledet.rateinctax,
+                    rate: tabledet.rate,
+                    per: tabledet.per,
+                    disc: tabledet.disc,
+                    amount: tabledet.amount
                 };
                 tabledet.setList([
                     ...tabledet.list,
@@ -183,14 +172,14 @@ const TableForm = () => {
                 // console.log(singlehsn);
                 toast.success("Item added");
 
-                setdesc('');
-                sethsn(0);
-                setquantity(0);
-                setrateinctax(0);
-                setrate(0);
-                setper('');
-                setdisc(1);
-                setamount(0);
+                // tabledet.setdesc('');
+                // tabledet.sethsn(0);
+                // tabledet.setquantity(0);
+                // tabledet.setrateinctax(0);
+                // tabledet.setrate(0);
+                // tabledet.setper('');
+                // tabledet.setdisc(1);
+                // tabledet.setamount(0);
 
             }
 
@@ -216,7 +205,7 @@ const TableForm = () => {
     //     // })
     // },tabledet.list)
     return <>
-        <form >
+        <Card >
             <ToastContainer position="top-center" theme="colored" />
             <h3>
                 Invoice Data
@@ -224,6 +213,7 @@ const TableForm = () => {
             </h3>
             <FormGroup>
                 <FormControl>
+                    <Card>
                     <h3>HSN Tax Rate</h3>
                     <Box component="form" sx={{ '& .MuiTextField-root': { m: 1, width: '25ch' } }}>
                         <TextField required id="outlined-required" label="Central Tax Rate %" value={tabledet.ctrate} type="number"
@@ -241,55 +231,56 @@ const TableForm = () => {
 
 
                     </Box>
+                   
                     <h3>Add Goods details below</h3>
                     <Box component="form" sx={{ '& .MuiTextField-root': { m: 1, width: '25ch' } }}>
 
-                        <TextField required id="outlined-required" label="Item description" value={desc}
-                            onChange={(e) => setval(e, setdesc)}
-                            color={setboxColors(desc, 'color')}
-                            error={setboxColors(desc, 'error')}
+                        <TextField required id="outlined-required" label="Item description" value={tabledet.desc}
+                            onChange={(e) => setval(e, tabledet.setdesc)}
+                            color={setboxColors(tabledet.desc, 'color')}
+                            error={setboxColors(tabledet.desc, 'error')}
                         />
 
-                        <TextField required id="outlined-required" label="HSN" value={hsn}
-                            onChange={(e) => setval(e, sethsn)}
-                            color={setboxColors(hsn, 'color')}
-                            error={setboxColors(hsn, 'error')}
+                        <TextField required id="outlined-required" label="HSN" value={tabledet.hsn}
+                            onChange={(e) => setval(e, tabledet.sethsn)}
+                            color={setboxColors(tabledet.hsn, 'color')}
+                            error={setboxColors(tabledet.hsn, 'error')}
                         />
 
-                        <TextField required id="outlined-required" label="Quantity" value={quantity} type="number"
-                            onChange={(e) => setval(e, setquantity)}
-                            color={setboxColors(quantity, 'color')}
-                            error={setboxColors(quantity, 'error')}
+                        <TextField required id="outlined-required" label="Quantity" value={tabledet.quantity} type="number"
+                            onChange={(e) => setval(e, tabledet.setquantity)}
+                            color={setboxColors(tabledet.quantity, 'color')}
+                            error={setboxColors(tabledet.quantity, 'error')}
                         />
 
-                        <TextField required id="outlined-required" label="Rate inc Tax" value={rateinctax} type="number"
-                            onChange={(e) => setval(e, setrateinctax)}
-                            color={setboxColors(rateinctax, 'color')}
-                            error={setboxColors(rateinctax, 'error')}
+                        <TextField required id="outlined-required" label="Rate inc Tax" value={tabledet.rateinctax} type="number"
+                            onChange={(e) => setval(e, tabledet.setrateinctax)}
+                            color={setboxColors(tabledet.rateinctax, 'color')}
+                            error={setboxColors(tabledet.rateinctax, 'error')}
                         />
 
-                        <TextField required id="outlined-required" label="Rate" value={rate} type="number"
-                            onChange={(e) => setval(e, setrate)}
-                            color={setboxColors(rate, 'color')}
-                            error={setboxColors(rate, 'error')}
+                        <TextField required id="outlined-required" label="Rate" value={tabledet.rate} type="number"
+                            onChange={(e) => setval(e, tabledet.setrate)}
+                            color={setboxColors(tabledet.rate, 'color')}
+                            error={setboxColors(tabledet.rate, 'error')}
                         />
 
-                        <TextField required id="outlined-required" label="Per" value={per}
-                            onChange={(e) => setval(e, setper)}
-                            color={setboxColors(per, 'color')}
-                            error={setboxColors(per, 'error')}
+                        <TextField required id="outlined-required" label="Per" value={tabledet.per}
+                            onChange={(e) => setval(e, tabledet.setper)}
+                            color={setboxColors(tabledet.per, 'color')}
+                            error={setboxColors(tabledet.per, 'error')}
                         />
 
-                        <TextField required id="outlined-required" label="Discount" value={disc} type="number"
-                            onChange={(e) => setval(e, setdisc)}
-                            color={setboxColors(disc, 'color')}
-                            error={setboxColors(disc, 'error')}
+                        <TextField required id="outlined-required" label="Discount" value={tabledet.disc} type="number"
+                            onChange={(e) => setval(e, tabledet.setdisc)}
+                            color={setboxColors(tabledet.disc, 'color')}
+                            error={setboxColors(tabledet.disc, 'error')}
                         />
 
-                        <TextField required id="outlined-required" label="Amount" value={amount} type="number"
-                            onChange={(e) => setval(e, setamount)}
-                            color={setboxColors(amount, 'color')}
-                            error={setboxColors(amount, 'error')}
+                        <TextField required id="outlined-required" label="Amount" value={tabledet.amount} type="number"
+                            onChange={(e) => setval(e, tabledet.setamount)}
+                            color={setboxColors(tabledet.amount, 'color')}
+                            error={setboxColors(tabledet.amount, 'error')}
                         />
 
                         {/* singleitem,setsingleitem,list, setList,totalamt,settotalamt,totalamtwords,settotalamtwords,singlehsnitem,setsinglehsnitem,
@@ -314,8 +305,12 @@ totalhsnamt,settotalhsnamt,totalhsnamt,settotalhsnamt,hsnlist, sethsnList,totalh
                             error={setboxColors(tabledet.totalhsnamtwords, 'error')}
                         />
                     </Box>
+                    </Card>
+                    <Card>
                     <h3>Other items need to add?</h3>
+                    
                     <Box component="form" sx={{ '& .MuiTextField-root': { m: 1, width: '25ch' } }}>
+                  
                         <div>
                             <FormControlLabel
                                 control={
@@ -329,21 +324,21 @@ totalhsnamt,settotalhsnamt,totalhsnamt,settotalhsnamt,hsnlist, sethsnList,totalh
                             <>
 
 
-                                <TextField required id="outlined-required" label="Other item Description" value={otherdesc}
-                                    onChange={(e) => setval(e, setotherdesc)}
-                                    color={setboxColors(otherdesc, 'color')}
-                                    error={setboxColors(otherdesc, 'error')}
+                                <TextField required id="outlined-required" label="Other item Description" value={tabledet.otherdesc}
+                                    onChange={(e) => setval(e, tabledet.setotherdesc)}
+                                    color={setboxColors(tabledet.otherdesc, 'color')}
+                                    error={setboxColors(tabledet.otherdesc, 'error')}
                                 />
 
-                                <TextField required id="outlined-required" label="Other item Chargeable" value={otherdescamt} type="number"
-                                    onChange={(e) => setval(e, setotherdescamt)}
-                                    color={setboxColors(otherdescamt, 'color')}
-                                    error={setboxColors(otherdescamt, 'error')}
+                                <TextField required id="outlined-required" label="Other item Chargeable" value={tabledet.otherdescamt} type="number"
+                                    onChange={(e) => setval(e, tabledet.setotherdescamt)}
+                                    color={setboxColors(tabledet.otherdescamt, 'color')}
+                                    error={setboxColors(tabledet.otherdescamt, 'error')}
                                 />
 
                                 <FormControlLabel
                                     control={
-                                        <Switch checked={ischargedinhsn} onChange={() => setischargedinhsn(!ischargedinhsn)} name="includehsn" />
+                                        <Switch checked={tabledet.ischargedinhsn} onChange={() => tabledet.setischargedinhsn(!tabledet.ischargedinhsn)} name="includehsn" />
                                     }
                                     label="Can include in HSN/Tax"
                                 />
@@ -353,11 +348,13 @@ totalhsnamt,settotalhsnamt,totalhsnamt,settotalhsnamt,hsnlist, sethsnList,totalh
                                 </div>
                             </>
                         }
+                        
                     </Box>
+                    </Card>
                 </FormControl>
             </FormGroup>
 
-        </form>
+        </Card>
     </>
 }
 

@@ -17,6 +17,9 @@
    
    
 }
+.table-edit{
+    cursor: pointer;
+}
 
 .tablegrey{
     background-color: rgb(227 227 227 / 59%);

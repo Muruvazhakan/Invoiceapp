@@ -10,12 +10,23 @@ import TableForm from './Component/TableForm/TableForm';
 import TableFooters from './Component/Table/TableFooter';
 import YourDetails from './Component/YourDetails/YourDetails';
 import { Button } from '@mui/material';
+import Card from './Component/Card/Card';
+import InvoiceDetails from './Component/InvoiceDetails/InvoiceDetails';
+import InvoiceDeatilsEdit from './Component/InvoiceDetails/InvoiceDeatilsEdit';
 
 
 function App() {
   const componentRef =useRef();
   return (
     <div className="App">
+      <main className=""
+        style={{
+          maxWidth: "1920px",
+          margin: "auto",
+        }}>
+       <section>
+      <Card>
+
       <ReactToPrint
             trigger={() => (
               <Button variant="outlined" color="success" >
@@ -26,14 +37,15 @@ function App() {
             content={() => componentRef.current}
           />
       <div ref={componentRef}> 
-      <Header/>
-      <GeneralDetails />
-      <Tables />
-    
-      <TableFooters/>
+      <InvoiceDetails screen="display" />
+      
       </div>
-      <YourDetails />
-      <TableForm />
+      </Card>
+      </section>
+      <div className="invoice__preview bg-white p-5 rounded-2xl border-4 border-blue-200">
+      <InvoiceDeatilsEdit />
+      </div>
+      </main>
     </div>
   );
 }

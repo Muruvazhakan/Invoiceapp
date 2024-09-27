@@ -5,6 +5,7 @@ import { FormGroup, FormControl, TextField, Box, Button } from '@mui/material';
 
 import { CompanyDetail } from "../Context/companyDetailContext";
 import './YourDetails.css';
+import Card from "../Card/Card";
 
 
 const YourDetails = () => {
@@ -46,7 +47,7 @@ const YourDetails = () => {
     </h3>
     <FormGroup>
       <FormControl>
-
+        <Card>
         <h4>Client Details</h4>
 
         <Box component="form" sx={{ '& .MuiTextField-root': { m: 1, width: '25ch' } }} >
@@ -127,6 +128,7 @@ const YourDetails = () => {
 
 
         </Box>
+        </Card>
       </FormControl>
 
     </FormGroup>
