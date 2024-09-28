@@ -44,34 +44,7 @@ const YourDetails = () => {
     <FormGroup>
       <FormControl>
         <Card>
-          <h3>
-            Other Main Details
-          </h3>
-          <h4>Client Details</h4>
-
-          <Box component="form" sx={{ '& .MuiTextField-root': { m: 1, width: '25ch' } }} >
-            <TextField required id="outlined-required" label="Client Name" value={compayDet.clientName}
-              // onChange={(e)=>compayDet.setclientName(e.target.value)}
-              onChange={(e) => setval(e, compayDet.setclientName)}
-              color={setboxColors(compayDet.clientName, 'color')}
-              error={setboxColors(compayDet.clientName, 'error')}
-
-            // error={compayDet.clientName.length ==0?'true':'false'} 
-            />
-            <TextField id="outlined-required" label="Client Phone Number"
-              onChange={(e) => setval(e, compayDet.setclientPhno)}
-              color={setboxColors(compayDet.clientPhno, 'color')}
-            //  error={setboxColors(compayDet.clientPhno,'error')} 
-            />
-
-            <TextField id="outlined-required" label="Client Address" multiline
-              onChange={(e) => setval(e, compayDet.setclientAdd)}
-              color={setboxColors(compayDet.clientAdd, 'color')}
-            //  error={setboxColors(compayDet.clientAdd,'error')} 
-            />
-
-          </Box>
-          <h4>Company Details</h4>
+          <h3>Company Details</h3>
           <Box component="form" sx={{ '& .MuiTextField-root': { m: 1, width: '25ch' } }} >
 
             <TextField required id="outlined-required" label="Company Name"
@@ -104,33 +77,15 @@ const YourDetails = () => {
             //  color ={setboxColors(compayDet.companyGstinStatename,'color')}
             //  error={setboxColors(compayDet.companyGstinStatename,'error')}
             />
-           
-           <TextField id="outlined-required" label="Company Declaration" value={compayDet.companyDeleration} multiline rows={4} 
+
+            <TextField id="outlined-required" label="Company Declaration" value={compayDet.companyDeleration} multiline rows={4}
               onChange={(e) => setval(e, compayDet.setcompanyDeleration)}
-             color ={setboxColors(compayDet.companyDeleration,'color')}
-             error={setboxColors(compayDet.companyDeleration,'error')}
+              color={setboxColors(compayDet.companyDeleration, 'color')}
+              error={setboxColors(compayDet.companyDeleration, 'error')}
             />
-
-          </Box>
-
-          <Box component="form" sx={{ '& .MuiTextField-root': { m: 1, width: '15ch',  height:'5ch'} }} >
-            <h4>Invoice Details</h4>
-            {compayDet.invoiceid.length == 0 ?
-             <div><Button className="gen-invoice" variant="outlined" onClick={dateHandler}>Generate Invoice</Button> </div> : <div className="invoicegen"> Invoice Id Generated</div>}
-            Invoice date:
-            <input type="date" className="date-field" onChange={(e) => setval(e, compayDet.setinvoicedate)} title="payement" size={210} id="dateDefault" value={compayDet.invoicedate} aria-label="invoice" />
-            Payment date:
-            <input type="date" className="date-field" onChange={(e) => setval(e, compayDet.setpaymentdate)} value={compayDet.paymentdate} title="payement" size={210} />
-
-            <TextField id="outlined-required" label="Payment Mode" value={compayDet.paymentmode}
-              onChange={(e) => setval(e, compayDet.setpaymentmode)}
-              color={setboxColors(compayDet.paymentmode, 'color')}
-            //  error={setboxColors(compayDet.paymentmode,'error')} 
-            />
-
-           
-
-
+            <h5>
+              System will automatically update..
+            </h5>
           </Box>
         </Card>
       </FormControl>

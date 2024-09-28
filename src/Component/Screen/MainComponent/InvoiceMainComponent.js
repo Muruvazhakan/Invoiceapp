@@ -9,7 +9,7 @@ import InvoiceDetails from "../InvoiceDetails/InvoiceDetails";
 import InvoiceDeatilsEdit from "../InvoiceDetails/InvoiceDeatilsEdit";
 import Tables from "../Table/InvoiceTable/Table";
 
-const MainComponent = (props) => {
+const InvoiceMainComponent = (props) => {
     const componentRef = useRef();
     return <>
         <Box sx={{ flexGrow: 1 }}>
@@ -24,7 +24,6 @@ const MainComponent = (props) => {
                 <Grid item xs={5}>
                     < >
                         <InvoiceDeatilsEdit />
-
                     </>
                 </Grid>
 
@@ -47,4 +46,4 @@ const MainComponent = (props) => {
     </>
 }
 
-export default MainComponent;
+export default InvoiceMainComponent;

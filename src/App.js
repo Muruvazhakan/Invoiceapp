@@ -2,7 +2,8 @@ import React from 'react';
 
 import './App.css';
 
-import MainComponent from './Component/Screen/MainComponent/MainComponent';
+import MainComponent from './Component/Screen/MainComponent/InvoiceMainComponent';
+import ScreenRoute from './Component/Router/ScreenRoute';
 
 
 function App() {
@@ -11,7 +12,7 @@ function App() {
     <div className="App">
       
         
-         <MainComponent />
+         <ScreenRoute />
       
     </div>
   );

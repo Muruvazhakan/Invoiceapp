@@ -1,0 +1,17 @@
+.displayscreenname{
+    cursor: pointer;
+    border-radius: 20px;
+    /* display: flex; */
+    width:200px;
+    align-items: center;
+    background-color: #4f4f4f;
+    color: aliceblue;
+    /* height: 100px; */
+  }
+
+  .displayelements{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1%;
+}
