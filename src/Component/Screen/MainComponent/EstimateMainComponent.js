@@ -1,3 +1,4 @@
+
 import React, { useRef } from "react";
 import Card from "../../Style/Card/Card";
 import ReactToPrint from "react-to-print";
@@ -5,26 +6,28 @@ import { Button } from "@mui/material";
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 
-import InvoiceDetails from "../InvoiceDetails/InvoiceDetails";
-import InvoiceDeatilsEdit from "../InvoiceDetails/InvoiceDeatilsEdit";
-import Tables from "../Table/InvoiceTable/Table";
 
-const InvoiceMainComponent = (props) => {
+import EstimateDetailEdit from "../EditScreen/Estimate/EstimateDetail/EstimateDetailEdit";
+import EstimateDetail from "../EditScreen/Estimate/EstimateDetail/EstimateDetail";
+import EstimateTable from "../EditScreen/Estimate/EstimateTable/EstimateTable";
+
+
+const EstimateMainComponent = (props) => {
     const componentRef = useRef();
     return <>
-    <h2>Generate Invoice</h2>
+     <h2>Estimate Generator</h2>
         <Box sx={{ flexGrow: 1 }}>
             <Grid container spacing={2}>
                 <Grid item xs={7}>
 
                     <Card >
                         <h2>Edit/Preview Section</h2>
-                        <Tables screen="update" />
+                        <EstimateTable screen="update" />
                     </Card>
                 </Grid>
                 <Grid item xs={5}>
                     < >
-                        <InvoiceDeatilsEdit />
+                        <EstimateDetailEdit />
                     </>
                 </Grid>
 
@@ -39,7 +42,7 @@ const InvoiceMainComponent = (props) => {
                     content={() => componentRef.current}
                 />
                 <div ref={componentRef}>
-                    <InvoiceDetails screen="display" />
+                    <EstimateDetail screen="display" />
 
                 </div>
             </Card>
@@ -47,4 +50,4 @@ const InvoiceMainComponent = (props) => {
     </>
 }
 
-export default InvoiceMainComponent;
+export default EstimateMainComponent;

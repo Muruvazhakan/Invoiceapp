@@ -6,17 +6,18 @@ import reportWebVitals from './reportWebVitals';
 
 import CompanyDetailContext from './Component/Context/companyDetailContext';
 import AllStateContext from './Component/Context/allStateContext';
+import EstimatestateContext from './Component/Context/EstimatestateContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-   
-    <CompanyDetailContext>
-    <AllStateContext>
-    <App />
-    </AllStateContext>
-    </CompanyDetailContext>
-   
+    <EstimatestateContext>
+      <CompanyDetailContext>
+        <AllStateContext>
+          <App />
+        </AllStateContext>
+      </CompanyDetailContext>
+    </EstimatestateContext>
   </React.StrictMode>
 );
 

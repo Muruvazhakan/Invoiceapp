@@ -6,7 +6,8 @@ import NoData from "../Screen/NoData/NoData";
 import YourDetails from "../Screen/EditScreen/Invoice/YourDetails/YourDetails";
 import NavigationBar from "../Screen/NavigationBar/NavigationBar";
 import DisplayAllComponent from "../Screen/MainComponent/DisplayAllComponent";
-import EstimateTableForm from "../Screen/EditScreen/Estimate/EstimateTableForm/EstimateTableForm";
+
+import EstimateMainComponent from "../Screen/MainComponent/EstimateMainComponent";
 
 const ScreenRoute = (props) => {
 
@@ -19,7 +20,7 @@ const ScreenRoute = (props) => {
                     <Route exact path='/' Component={DisplayAllComponent} /> 
                     <Route path='/yourdetail' Component={YourDetails} />
                     <Route  path='/geninvoice' Component={InvoiceMainComponent} /> 
-                    <Route  path='/genestimate' Component={EstimateTableForm} /> 
+                    <Route  path='/genestimate' Component={EstimateMainComponent} /> 
                     <Route path='/' Component={NoData} />
                 </Routes>
                 {/* <MainComponent/> */}
