@@ -8,10 +8,10 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { FiEdit } from "react-icons/fi";
 import { MdDelete } from "react-icons/md";
-import './Table.css';
+import '../Table.css';
 
 
-import { AllState } from "../Context/allStateContext";
+import { AllState } from "../../../Context/allStateContext";
 
 const Tables = (props) =>{
 

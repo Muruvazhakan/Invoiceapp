@@ -5,9 +5,9 @@ import { ToastContainer, toast } from "react-toastify";
 import { v4 as uuidv4 } from "uuid";
 import collect from "collect.js";
 import "react-toastify/dist/ReactToastify.css";
-import Card from "../Card/Card";
-import { AllState } from "../Context/allStateContext";
-import { CompanyDetail } from "../Context/companyDetailContext";
+import Card from "../../../../Style/Card/Card";
+import { AllState } from "../../../../Context/allStateContext";
+import { CompanyDetail } from "../../../../Context/companyDetailContext";
 import './TableForm.css';
 const TableForm = () => {
 
@@ -337,7 +337,7 @@ const  clearOtherDetails =() =>{
                                     <div className="button-warn">
                                         <Button variant="outlined" color="success" size="medium" onClick={addOtherItems}>Add Other Item</Button>
                                     </div>
-                                    <Button  variant="contained" color="warning" size="medium" onClick={clearOtherDetails}>Clear Form</Button>
+                                    <Button  variant="outlined" color="warning" size="medium" onClick={clearOtherDetails}>Clear Form</Button>
                                 </>
                             }
 

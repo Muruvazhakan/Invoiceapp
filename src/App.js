@@ -2,7 +2,7 @@ import React from 'react';
 
 import './App.css';
 
-import MainComponent from './Component/MainComponent/MainComponent';
+import MainComponent from './Component/Screen/MainComponent/MainComponent';
 
 
 function App() {

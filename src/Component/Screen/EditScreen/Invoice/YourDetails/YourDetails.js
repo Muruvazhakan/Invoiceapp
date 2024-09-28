@@ -3,9 +3,9 @@ import React, { useContext } from "react";
 import { FormGroup, FormControl, TextField, Box, Button } from '@mui/material';
 
 
-import { CompanyDetail } from "../Context/companyDetailContext";
+import { CompanyDetail } from "../../../../Context/companyDetailContext";
 import './YourDetails.css';
-import Card from "../Card/Card";
+import Card from "../../../../Style/Card/Card";
 
 
 const YourDetails = () => {

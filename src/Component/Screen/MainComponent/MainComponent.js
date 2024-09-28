@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import Card from "../Card/Card";
+import Card from "../../Style/Card/Card";
 import ReactToPrint from "react-to-print";
 import { Button } from "@mui/material";
 import Grid from '@mui/material/Grid';
@@ -7,7 +7,7 @@ import Box from '@mui/material/Box';
 
 import InvoiceDetails from "../InvoiceDetails/InvoiceDetails";
 import InvoiceDeatilsEdit from "../InvoiceDetails/InvoiceDeatilsEdit";
-import Tables from "../Table/Table";
+import Tables from "../Table/InvoiceTable/Table";
 
 const MainComponent = (props) => {
     const componentRef = useRef();

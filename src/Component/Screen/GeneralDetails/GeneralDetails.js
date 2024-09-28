@@ -2,7 +2,7 @@ import React,{useContext} from "react";
 
 
 import './GeneralDetails.css';
-import { CompanyDetail } from "../Context/companyDetailContext";
+import { CompanyDetail } from "../../Context/companyDetailContext";
 const GeneralDetails = () =>{
 
     const companydet=useContext(CompanyDetail);

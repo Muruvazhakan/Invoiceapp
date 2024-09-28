@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { CompanyDetail } from "../Context/companyDetailContext";
+import { CompanyDetail } from "../../../Context/companyDetailContext";
 const TableFooters = () =>{
     const compayDet = useContext(CompanyDetail);
     return <>
