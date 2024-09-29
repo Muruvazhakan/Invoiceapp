@@ -113,12 +113,12 @@ const EstimateTable = (props) => {
 
                                             {props.screen === "update" &&
                                                 <>
-                                                    <TableCell className="table-edit" onClick={() => estdetail.editEstimateListRows(item.id, subitem, "update")} >
+                                                    <TableCell className="table-edit" onClick={() => estdetail.addOrUpdateEstimateItemHandler(item.id, subitem, "update")} >
 
                                                         <FiEdit size={18} />
 
                                                     </TableCell>
-                                                    <TableCell className="table-edit" onClick={() => estdetail.editEstimateListRows(item.id, subitem, "delete")} >
+                                                    <TableCell className="table-edit" onClick={() => estdetail.addOrUpdateEstimateItemHandler(item.id, subitem, "delete")} >
 
                                                         <MdDelete size={18} />
 
@@ -135,10 +135,10 @@ const EstimateTable = (props) => {
                                     <TableCell ></TableCell>
                                     <TableCell ></TableCell>
                                     <TableCell ></TableCell>
-                                    <TableCell align='center'>{item.sumtotalpvscost}</TableCell>
+                                    <TableCell align='center'>{item.sumtotalpvccost}</TableCell>
                                     {upvcisisvisible.display === true && <>
                                         <TableCell ></TableCell>
-                                        <TableCell align='center'>{item.sumtotalupvscost}</TableCell></>}
+                                        <TableCell align='center'>{item.sumtotalupvccost}</TableCell></>}
                                     {woodisisvisible.display === true &&
                                         <>
                                             <TableCell ></TableCell>
