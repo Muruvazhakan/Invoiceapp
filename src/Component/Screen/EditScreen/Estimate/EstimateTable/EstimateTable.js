@@ -23,7 +23,9 @@ const EstimateTable = (props) => {
         // console.log(upvcisisvisible); 
 
     }, [])
-
+    let upvcisisvisible = estdetail.columns[8];
+    let woodisisvisible = estdetail.columns[10];
+    let remarks = estdetail.columns[12];
 
     return <>
         <Paper sx={{ width: '98%', overflow: 'hidden', padding: '5px', borderRadius: '10px' }}>
@@ -36,24 +38,39 @@ const EstimateTable = (props) => {
 
                                 return (<>
                                     {item.display === true &&
-                                        <TableCell sx={{fontWeight:700}} >{item.columnname}</TableCell>
+                                        <TableCell sx={{ fontWeight: 700 }} align='center' >{item.columnname}</TableCell>
                                     }
+
                                 </>)
                             })}
+                            {props.screen === "update" &&
+                                <>
+                                    <TableCell sx={{ fontWeight: 700 }} >Edit rows
+
+                                    </TableCell>
+                                    <TableCell sx={{ fontWeight: 700 }} >Delete rows
+
+                                    </TableCell>
+                                </>
+                            }
                         </TableRow>
                     </TableHead>
                     <TableBody>
                         {estdetail.rows.map((item, index) => {
-                            let upvcisisvisible = estdetail.columns[8];
-                            let woodisisvisible = estdetail.columns[10];
-                            let remarks = estdetail.columns[12];
+
+                            // if (props.screen ==='update'  ){
+                            //     upvcisisvisible.display = true;
+                            //     woodisisvisible.display = true;
+                            //     remarks.display = true;
+                            // };
+
                             return (<>
 
-                                <TableRow className={"table-body tablegrey"} key={item.id}
+                                <TableRow className={"table-body tableblue"} key={item.id}
                                 // sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                                 >
-                                    <TableCell align='center' sx={{fontWeight:700}}>{index + 1}</TableCell>
-                                    <TableCell align='center'sx={{fontWeight:700}}>{item.title}</TableCell>
+                                    <TableCell align='center' sx={{ fontWeight: 700 }}>{index + 1}</TableCell>
+                                    <TableCell align='center' sx={{ fontWeight: 700 }}>{item.title}</TableCell>
                                     <TableCell ></TableCell>
                                     <TableCell ></TableCell>
                                     <TableCell ></TableCell>
@@ -93,14 +110,67 @@ const EstimateTable = (props) => {
                                                     <TableCell align='center' >{subitem.totalwoodcost}</TableCell></>}
                                             {remarks.display === true &&
                                                 <TableCell align='center' >{subindex.remarks}</TableCell>}
+
+                                            {props.screen === "update" &&
+                                                <>
+                                                    <TableCell className="table-edit" onClick={() => estdetail.editEstimateListRows(item.id, subitem, "update")} >
+
+                                                        <FiEdit size={18} />
+
+                                                    </TableCell>
+                                                    <TableCell className="table-edit" onClick={() => estdetail.editEstimateListRows(item.id, subitem, "delete")} >
+
+                                                        <MdDelete size={18} />
+
+                                                    </TableCell>
+                                                </>}
                                         </TableRow>
                                     )
                                 })}
+                                <TableRow className={"table-body tablegrey"} key={item.sumtotalpvscost*Math.round}>
+                                    <TableCell ></TableCell>
+                                    <TableCell align='center' sx={{ fontWeight: 700 }}> Total</TableCell>
+                                    <TableCell ></TableCell>
+                                    <TableCell ></TableCell>
+                                    <TableCell ></TableCell>
+                                    <TableCell ></TableCell>
+                                    <TableCell ></TableCell>
+                                    <TableCell align='center'>{item.sumtotalpvscost}</TableCell>
+                                    {upvcisisvisible.display === true && <>
+                                        <TableCell ></TableCell>
+                                        <TableCell align='center'>{item.sumtotalupvscost}</TableCell></>}
+                                    {woodisisvisible.display === true &&
+                                        <>
+                                            <TableCell ></TableCell>
+                                            <TableCell align='center'>{item.sumtotalwoodcost}</TableCell></>}
+                                    {remarks.display === true &&
+                                        <TableCell ></TableCell>}
 
+                                </TableRow>
 
                             </>
                             )
                         })}
+                        <TableRow className={"table-body tableyellow"}>
+                            <TableCell ></TableCell>
+                            <TableCell align='center' sx={{ fontWeight: 700 }}>Grand Total</TableCell>
+                            <TableCell ></TableCell>
+                            <TableCell ></TableCell>
+                            <TableCell ></TableCell>
+                            <TableCell ></TableCell>
+                            <TableCell ></TableCell>
+                            <TableCell align='center' sx={{ fontWeight: 700 }}>{estdetail.grandtotalpvccost}</TableCell>
+                            {upvcisisvisible.display === true && <>
+                                <TableCell ></TableCell>
+                                <TableCell align='center' sx={{ fontWeight: 700 }}>{estdetail.grandtotalupvccost}</TableCell></>}
+                            {woodisisvisible.display === true &&
+                                <>
+                                    <TableCell ></TableCell>
+                                    <TableCell align='center' sx={{ fontWeight: 700 }}>{estdetail.grandtotalwoodcost}</TableCell></>}
+                            {remarks.display === true &&
+                                <TableCell ></TableCell>}
+
+                        </TableRow>
                     </TableBody>
                 </Table>
             </TableContainer>
