@@ -10,6 +10,7 @@ import Box from '@mui/material/Box';
 import EstimateDetailEdit from "../EditScreen/Estimate/EstimateDetail/EstimateDetailEdit";
 import EstimateDetail from "../EditScreen/Estimate/EstimateDetail/EstimateDetail";
 import EstimateTable from "../EditScreen/Estimate/EstimateTable/EstimateTable";
+import EstimateTableForm from "../EditScreen/Estimate/EstimateTableForm/EstimateTableForm";
 
 
 const EstimateMainComponent = (props) => {
@@ -27,11 +28,13 @@ const EstimateMainComponent = (props) => {
                 </Grid>
                 <Grid item xs={5}>
                     < >
-                        <EstimateDetailEdit />
+                    <EstimateTableForm />
+                       
                     </>
                 </Grid>
 
             </Grid>
+            <EstimateDetailEdit />
             <Card>
                 <ReactToPrint
                     trigger={() => (

@@ -3,15 +3,20 @@ import React from "react";
 import Header from "../../../Header/Header";
 
 import EstimateTable from "../EstimateTable/EstimateTable";
+import EstimateHeader from "../../../ViewScreen/EstimateComponent/EstimateHeader";
+import CompanyotherDetail from "../../../ViewScreen/CompanyotherDetail/CompanyotherDetail";
+import CompanyBankDetail from "../../../ViewScreen/CompanyotherDetail/CompanyBankDetail";
 
 
 const EstimateDetail = (props) =>{
 
     return(<>
-        <Header name="Estimate App"/>
-        {/* <GeneralDetails /> */}
+        
+        <EstimateHeader />
+        <Header name="Estimation"/>
       <EstimateTable screen="new" />
-    
+        <CompanyotherDetail/>
+        <CompanyBankDetail/>
       {/* <TableFooters/> */}
       </>
     )

@@ -171,7 +171,7 @@ const EstimatestateContext = ({ children }) => {
                 //console.log(subtableava);
                 //console.log('othersubtableava');
                 //console.log(othersubtableava);
-                if(type === 'update') {
+                if (type === 'update') {
                     settitle(available1[0].title);
                     setsubdesc(subtableava[0].desc);
                     setlength(subtableava[0].length);
@@ -187,10 +187,10 @@ const EstimatestateContext = ({ children }) => {
                     setremarks(subtableava[0].remarks);
                     toast.info("Estimation Item is added in edit section");
                 }
-                else{
+                else {
                     toast.warning("Estimation Item Deleted");
                 }
-               
+
 
                 if (othersubtableava.length > 0) {
 
@@ -215,7 +215,7 @@ const EstimatestateContext = ({ children }) => {
                             available1[0]
                         ]);
                     }
-                } else{
+                } else {
                     if (other1.length > 0) {
                         setrows([
                             ...other1
@@ -229,17 +229,17 @@ const EstimatestateContext = ({ children }) => {
                 // setrows([
                 //     ...other1,
                 // ]);
-            } 
+            }
 
             //console.log('rows')
             //console.log(rows);
         }
     };
 
-    const cleartotal=()=>{
+    const cleartotal = () => {
         setgrandtotalpvccost(0);
-            setgrandtotalupvccost(0);
-            setgrandtotalwoodcost(0);
+        setgrandtotalupvccost(0);
+        setgrandtotalwoodcost(0);
     }
 
     const calculatetotal = (initalval, statevalue, type) => {

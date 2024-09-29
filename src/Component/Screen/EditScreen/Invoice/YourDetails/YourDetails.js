@@ -26,20 +26,7 @@ const YourDetails = () => {
 
   }
 
-  const dateHandler = () => {
-    const today = new Date();
-    let todaydate;
 
-    const month = today.getMonth() + 1;
-    const year = today.getFullYear();
-    const date = today.getDate();
-
-    todaydate = `${year}${month}${date}${compayDet.invoiceidcount}`;
-    compayDet.setinvoiceid(todaydate);
-    compayDet.setinvoiceidount(++compayDet.invoiceidcount);
-    console.log("todaydate: " + todaydate);
-    // compayDet.setinvoiceid()
-  }
   return <>
     <FormGroup>
       <FormControl>
@@ -66,6 +53,11 @@ const YourDetails = () => {
               onChange={(e) => setval(e, compayDet.setcompanyPhno)}
               color={setboxColors(compayDet.companyPhno, 'color')}
               error={setboxColors(compayDet.companyPhno, 'error')} />
+
+            <TextField required id="outlined-required" label="Company Mailid" value={compayDet.companymailid}
+              onChange={(e) => setval(e, compayDet.setcompanymailid)}
+              color={setboxColors(compayDet.companymailid, 'color')}
+              error={setboxColors(compayDet.companymailid, 'error')} />
 
             <TextField id="outlined-required" label="Company Gstin"
               onChange={(e) => setval(e, compayDet.setcompanyGstin)}

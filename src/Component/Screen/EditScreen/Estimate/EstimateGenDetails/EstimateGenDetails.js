@@ -38,7 +38,7 @@ const EstimateGenDetails = (props) => {
         estimateDet.setestimateid(todaydate);
         estimateDet.setestimateidcount(++estimateDet.estimateidcount);
         console.log("todaydate: " + todaydate);
-        // estimateDet.setinvoiceid()
+        
     }
 
     return <>
@@ -78,7 +78,7 @@ const EstimateGenDetails = (props) => {
                         {estimateDet.estimateid.length == 0 ?
                             <div><Button className="gen-invoice" variant="outlined" onClick={dateHandler}>Generate Estimate Id</Button> </div> : <div className="invoicegen"> Estimate Id Generated</div>}
                         Estimate date:
-                        <input type="date" className="date-field" onChange={(e) => setval(e, estimateDet.setestimatedate)} title="estimatedate" size={210} id="dateDefault" value={estimateDet.estimatedate} aria-label="invoice" />
+                        <input type="date" className="date-field" onChange={(e) => setval(e, estimateDet.setestimatedate)} title="estimatedate" size={210} id="dateDefault" value={estimateDet.estimatedate} aria-label="estimate" />
 
                     </Box>
                 </Card>
