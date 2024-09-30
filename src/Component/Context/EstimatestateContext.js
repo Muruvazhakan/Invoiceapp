@@ -9,25 +9,26 @@ export const estimateState = createContext();
 const EstimatestateContext = ({ children }) => {
     const [width] = useState(641);
 
-    let columnNames = [{ columnname: 'S.no', display: true }
-        , { columnname: 'Description', display: true }
-        , { columnname: 'Length', display: true }
-        , { columnname: 'Height', display: true }
-        , { columnname: 'Area', display: true }
-        , { columnname: 'Total sq.ft', display: true }
-        , { columnname: 'PVC cost Psf', display: true }
-        , { columnname: 'Total PVC Cost', display: true }
-        , { columnname: 'UPVC cost Psf', display: true }
-        , { columnname: 'Total UPVC Cost', display: true }
-        , { columnname: 'Wood cost Psf', display: true }
-        , { columnname: 'Total Wood Cost', display: true }
-        , { columnname: 'Remarks', display: false }];
+    let columnNames = [{ columnname: 'S.no', display: true ,cnmae:'other' }
+        , { columnname: 'Description', display: true,cnmae:'other' }
+        , { columnname: 'Length', display: true,cnmae:'other' }
+        , { columnname: 'Height', display: true,cnmae:'other' }
+        , { columnname: 'Area', display: true ,cnmae:'other'}
+        , { columnname: 'Total sq.ft', display: true,cnmae:'other' }
+        , { columnname: 'PVC cost Psf', display: true, cnmae:'pvc' }
+        , { columnname: 'Total PVC Cost', display: true,cnmae:'pvc' }
+        , { columnname: 'UPVC cost Psf', display: true,cnmae:'upvc' }
+        , { columnname: 'Total UPVC Cost', display: true,cnmae:'upvc' }
+        , { columnname: 'Wood cost Psf', display: true,cnmae:'wood' }
+        , { columnname: 'Total Wood Cost', display: true,cnmae:'wood' }
+        , { columnname: 'Remarks', display: false ,cnmae:'other'}];
 
     const [columns, setcolumns] = useState(columnNames);
-
+    const [granttotalsqft, setgranttotalsqft] = useState(0);
     const [grandtotalpvccost, setgrandtotalpvccost] = useState(0);
     const [grandtotalupvccost, setgrandtotalupvccost] = useState(0);
     const [grandtotalwoodcost, setgrandtotalwoodcost] = useState(0);
+
 
     let row = [{
         id: 1123, title: 'MODULAR KITCHEN', values: [{
@@ -62,17 +63,18 @@ const EstimatestateContext = ({ children }) => {
     const [woodcostpsf, setwoodcostpsf] = useState(1);
     const [totalwoodcost, settotalwoodcost] = useState(1);
     const [remarks, setremarks] = useState('');
-    const [granttotalpvccost, setgranttotalpvccost] = useState(0);
-    const [granttotalupvccost, setgranttotalupvccost] = useState(0);
-    const [granttotalwoodcost, setgranttotalwoodcost] = useState(0);
+    
+   
 
     const [estimateid, setestimateid] = useState('');
     const [estimateidcount, setestimateidcount] = useState(1000);
     const [estimatedate, setestimatedate] = useState('');
-
+    const [estimatedate1, setestimatedate1] = useState('');
     const [clientName, setclientName] = useState('');
     const [clientPhno, setclientPhno] = useState('');
     const [clientAdd, setclientAdd] = useState('');
+
+    
 
     const addOrUpdateEstimateItemHandler = (inputitem, inputsubitem, type) => {
         //console.log('item edit rows')
@@ -93,15 +95,17 @@ const EstimatestateContext = ({ children }) => {
                 // console.log(available[0]);         
                 let exitsingleestimatevalue1 = {
                     subid: uuidv4(), desc: subdesc, length: length, height: height, area: area,
-                    perqsft: perqsft, pvccostpsf: pvccostpsf, totalpvccost: totalpvccost, upvccostpsf: upvccostpsf, totalupvccost: totalupvccost, woodcostpsf: woodcostpsf, totalwoodcost: totalwoodcost, remarks: remarks
+                    perqsft: perqsft, pvccostpsf: pvccostpsf, totalpvccost: totalpvccost, upvccostpsf: upvccostpsf, 
+                    totalupvccost: totalupvccost, woodcostpsf: woodcostpsf, totalwoodcost: totalwoodcost, remarks: remarks
                 };
 
                 available[0] = {
                     id: available[0].id,
                     title: title,
-                    sumtotalpvccost: calculatetotal(available[0].sumtotalpvccost, totalpvccost, 'sum'),
-                    sumtotalupvccost: calculatetotal(available[0].sumtotalupvccost, totalupvccost, 'sum'),
-                    sumtotalwoodcost: calculatetotal(available[0].sumtotalwoodcost, totalwoodcost, 'sum'),
+                    sumtotalpvccost: calculatetotal(available[0].sumtotalpvccost, totalpvccost, 'sum',2),
+                    sumtotalupvccost: calculatetotal(available[0].sumtotalupvccost, totalupvccost, 'sum',2),
+                    sumtotalwoodcost: calculatetotal(available[0].sumtotalwoodcost, totalwoodcost, 'sum',2),
+                    sumtotalsqft:calculatetotal(available[0].sumtotalsqft, perqsft, 'sum',3),
                     values: [...available[0].values, exitsingleestimatevalue1]
                 };
 
@@ -127,6 +131,7 @@ const EstimatestateContext = ({ children }) => {
                     id: uuidv4(),
                     title: title,
                     sumtotalpvccost: totalpvccost, sumtotalupvccost: totalupvccost, sumtotalwoodcost: totalwoodcost,
+                    sumtotalsqft:perqsft,
                     values: [{
                         subid: uuidv4(), desc: subdesc, length: length, height: height, area: area,
                         perqsft: perqsft, pvccostpsf: pvccostpsf, totalpvccost: totalpvccost, upvccostpsf: upvccostpsf, totalupvccost: totalupvccost, woodcostpsf: woodcostpsf, totalwoodcost: totalwoodcost, remarks: remarks
@@ -197,9 +202,10 @@ const EstimatestateContext = ({ children }) => {
                     available1[0] = {
                         id: available1[0].id,
                         title: available1[0].title,
-                        sumtotalpvccost: calculatetotal(available1[0].sumtotalpvccost, subtableava[0].totalpvccost, 'diff'),
-                        sumtotalupvccost: calculatetotal(available1[0].sumtotalupvccost, subtableava[0].totalupvccost, 'diff'),
-                        sumtotalwoodcost: calculatetotal(available1[0].sumtotalwoodcost, subtableava[0].totalwoodcost, 'diff'),
+                        sumtotalpvccost: calculatetotal(available1[0].sumtotalpvccost, subtableava[0].totalpvccost, 'diff',2),
+                        sumtotalupvccost: calculatetotal(available1[0].sumtotalupvccost, subtableava[0].totalupvccost, 'diff',2),
+                        sumtotalwoodcost: calculatetotal(available1[0].sumtotalwoodcost, subtableava[0].totalwoodcost, 'diff',2),
+                        sumtotalsqft:calculatetotal(available1[0].sumtotalsqft, subtableava[0].perqsft, 'diff',3),
                         values: [...othersubtableava]
                     };
                     //console.log('available1');
@@ -242,12 +248,12 @@ const EstimatestateContext = ({ children }) => {
         setgrandtotalwoodcost(0);
     }
 
-    const calculatetotal = (initalval, statevalue, type) => {
+    const calculatetotal = (initalval, statevalue, type,fix) => {
         if (type === 'sum') {
-            return ((initalval) * 1 + (statevalue) * 1).toFixed(2);
+            return ((initalval) * 1 + (statevalue) * 1).toFixed(fix);
         }
         else {
-            return ((initalval) * 1 - (statevalue) * 1).toFixed(2);
+            return ((initalval) * 1 - (statevalue) * 1).toFixed(fix);
         }
     };
 
@@ -256,9 +262,11 @@ const EstimatestateContext = ({ children }) => {
             const totalpvc = rows.map((item) => item.sumtotalpvccost);
             const totalupvc = rows.map((item) => item.sumtotalupvccost);
             const totalwood = rows.map((item) => item.sumtotalwoodcost);
+            const totalsqft = rows.map((item) => item.sumtotalsqft);
             setgrandtotalpvccost(collect(totalpvc).sum().toFixed(2));
             setgrandtotalupvccost(collect(totalupvc).sum().toFixed(2));
             setgrandtotalwoodcost(collect(totalwood).sum().toFixed(2));
+            setgranttotalsqft(collect(totalsqft).sum().toFixed(3));
         }
         // grandtotalupvccost, setgrandtotalupvccost, grandtotalpvccost, setgrandtotalpvccost, grandtotalwoodcost, setgrandtotalwoodcost,
     };
@@ -288,14 +296,43 @@ const EstimatestateContext = ({ children }) => {
         settotalwoodcost(costwood);
     }, [perqsft, woodcostpsf]);
 
+    // useEffect(()=>{
+    //     console.log('columnNames'+columns[6]);
+
+    //     console.log(columns);
+    //     console.log(columns[6].display);
+    // });
+
+    const updateTableView=(cnames)=>{
+        // console.log(cnames);
+        const getresul = columns.map((item) =>{
+            // console.log(item)
+            if(item.cnmae === cnames){
+                item.display = !item.display;
+            }
+            return item;
+            
+        });
+        // console.log(getresul);
+        setcolumns(getresul);
+        
+        // if(props.columnname === 'Wood cost Psf'){
+
+        // }
+        // else if(props.columnname === 'UPVC cost Psf'){
+
+        // }
+        // else{
+
+        // }
+    }
     const estcontext = {
-        columns, setcolumns, rows, setrows, estimateidcount, setestimateidcount,
-        granttotalpvccost, setgranttotalpvccost, granttotalupvccost, setgranttotalupvccost, granttotalwoodcost, setgranttotalwoodcost,
+        columns, setcolumns, rows, setrows, estimateidcount, setestimateidcount,granttotalsqft, setgranttotalsqft,
         clientName, setclientName, clientPhno, setclientPhno, clientAdd, setclientAdd, estimateid, setestimateid, estimatedate, setestimatedate,
         grandtotalupvccost, setgrandtotalupvccost, grandtotalpvccost, setgrandtotalpvccost, grandtotalwoodcost, setgrandtotalwoodcost,
         title, settitle, subdesc, setsubdesc, length, setlength, height, setheight, area, setarea, perqsft, setperqsft,
         pvccostpsf, setpvccostpsf, totalpvccost, settotalpvccost, upvccostpsf, setupvccostpsf, totalupvccost, settotalupvccost, woodcostpsf, setwoodcostpsf, totalwoodcost, settotalwoodcost,
-        remarks, setremarks, addOrUpdateEstimateItemHandler
+        remarks, setremarks, addOrUpdateEstimateItemHandler,updateTableView,estimatedate1, setestimatedate1
     };
 
 

@@ -108,17 +108,64 @@ const EstimateTableForm = (props) => {
                                 color={setboxColors(estdetail.totalwoodcost, 'color')}
                                 error={setboxColors(estdetail.totalwoodcost, 'error')}
                             />
-                            <TextField  id="outlined-required" label="Remarks" value={estdetail.remarks}
+                            <TextField id="outlined-required" label="Remarks" value={estdetail.remarks}
                                 onChange={(e) => setval(e, estdetail.setremarks)}
                                 color={setboxColors(estdetail.remarks, 'color')}
-                                // error={setboxColors(estdetail.remarks, 'error')}
+                            // error={setboxColors(estdetail.remarks, 'error')}
                             />
                             <div className="button-warn">
-                                <Button variant="contained" color="success" size="medium" onClick={() => estdetail.addOrUpdateEstimateItemHandler('','','New')}>Add Item</Button>
+                                <Button variant="contained" color="success" size="medium" onClick={() => estdetail.addOrUpdateEstimateItemHandler('', '', 'New')}>Add Item</Button>
 
                             </div>
 
 
+                        </Box>
+                    </Card>
+
+                    <Card>
+                        <h3>Add details below for Estimation</h3>
+                        <Box component="form" sx={{ '& .MuiTextField-root': { m: 1, width: '15ch' } }}>
+                            <FormControlLabel
+                                control={
+                                    <Switch
+                                        checked={estdetail.columns[6].display}
+                                        onChange={() => estdetail.updateTableView('pvc')}
+                                        //   onChange={() => tabledet.setischargedinhsn(!tabledet.ischargedinhsn)} 
+                                        name="includePVC" />
+                                }
+                                label="Can include PVC"
+                            />
+
+                            <FormControlLabel
+                                control={
+                                    <Switch
+                                        checked={estdetail.columns[8].display}
+                                        onChange={() => estdetail.updateTableView('upvc')}
+                                        //  checked={tabledet.ischargedinhsn} onChange={() => tabledet.setischargedinhsn(!tabledet.ischargedinhsn)} 
+                                        name="includeUPVC" />
+                                }
+                                label="Can include UPVC"
+                            />
+
+                            <FormControlLabel
+                                control={
+                                    <Switch
+                                        checked={estdetail.columns[10].display}
+                                        onChange={() => estdetail.updateTableView('wood')}
+                                        name="includewood" />
+                                }
+                                label="Can include wood"
+                            />
+                            <div className="companyname tagline ">
+                                <div>
+                                {!estdetail.columns[6].display && <> " PVC cost Psf & Total PVC Cost colums will not be visible "</>}</div>
+                                <div> {!estdetail.columns[8].display && <> "UPVC cost Psf & Total UPVC Cost colums will not be visible"</>}</div>
+                                <div>  {!estdetail.columns[10].display && <>"Wood cost Psf & Total Wood Cost colums will not be visible"</>}</div>
+                            </div>
+                            {/* <div className="button-warn">
+                                <Button variant="contained" color="success" size="medium" onClick={() => estdetail.addOrUpdateEstimateItemHandler('', '', 'New')}>Update Table</Button>
+
+                            </div> */}
                         </Box>
                     </Card>
                 </FormControl>

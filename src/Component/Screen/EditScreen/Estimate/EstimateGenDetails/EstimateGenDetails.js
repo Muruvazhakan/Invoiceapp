@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { FormGroup, FormControl, TextField, Box, Button } from '@mui/material';
 
-
+import * as moment from 'moment';
 import { estimateState } from "../../../../Context/EstimatestateContext";
 // import '../YourDetails.css';
 import Card from "../../../../Style/Card/Card";
@@ -14,7 +14,14 @@ const EstimateGenDetails = (props) => {
     const setval = (e, fun) => {
         fun(e.target.value);
     }
-
+    const setdateval = (e, fun) => {
+        let date2= moment(e.target.value).format('DD/MM/YYYY')
+       
+        estimateDet.setestimatedate1(e.target.value);
+        fun(date2);
+       
+    }
+   
     const setboxColors = (item, field) => {
         if (field == 'color') {
             return item.length == 0 ? 'error' : 'success';
@@ -78,7 +85,13 @@ const EstimateGenDetails = (props) => {
                         {estimateDet.estimateid.length == 0 ?
                             <div><Button className="gen-invoice" variant="outlined" onClick={dateHandler}>Generate Estimate Id</Button> </div> : <div className="invoicegen"> Estimate Id Generated</div>}
                         Estimate date:
-                        <input type="date" className="date-field" onChange={(e) => setval(e, estimateDet.setestimatedate)} title="estimatedate" size={210} id="dateDefault" value={estimateDet.estimatedate} aria-label="estimate" />
+                        <input type="date" className="date-field" placeholder="dd-mm-yyyy"
+                        min="1997-01-01" max="2030-12-31"
+                          onChange={(e) => setdateval(e, estimateDet.setestimatedate)} title="estimatedate" size={210} id="dateDefault" 
+                          value={ estimateDet.estimatedate1} 
+                        // value={  moment(estimateDet.estimatedate).format('DD/MM/YYYY')} 
+                         
+                          aria-label="estimate" />
 
                     </Box>
                 </Card>

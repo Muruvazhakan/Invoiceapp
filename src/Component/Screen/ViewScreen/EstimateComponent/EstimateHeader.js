@@ -4,6 +4,8 @@ import { CompanyDetail } from "../../../Context/companyDetailContext";
 
 import '../../GeneralDetails/GeneralDetails.css';
 import { estimateState } from "../../../Context/EstimatestateContext";
+// import img  from '.'
+import logo from '../../../../Image/JRLogo.png';
 const EstimateHeader = () => {
 
     const estimatedet = useContext(estimateState);
@@ -44,7 +46,9 @@ const EstimateHeader = () => {
                     </li>
                 </ul>
 
-
+                <ul>
+                    <img src={logo} width="200" height="180"/>
+                </ul>
 
                 {/* <li>
              {companydet.companyGstin ? 'Gstin: '+companydet.companyGstin:null }

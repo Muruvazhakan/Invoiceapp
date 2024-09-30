@@ -23,6 +23,7 @@ const EstimateTable = (props) => {
         // console.log(upvcisisvisible); 
 
     }, [])
+    let pvcisisvisible = estdetail.columns[6];
     let upvcisisvisible = estdetail.columns[8];
     let woodisisvisible = estdetail.columns[10];
     let remarks = estdetail.columns[12];
@@ -75,8 +76,9 @@ const EstimateTable = (props) => {
                                     <TableCell ></TableCell>
                                     <TableCell ></TableCell>
                                     <TableCell ></TableCell>
+                                    {pvcisisvisible.display === true && <>
                                     <TableCell ></TableCell>
-                                    <TableCell ></TableCell>
+                                    <TableCell ></TableCell></>}
                                     {upvcisisvisible.display === true && <>
                                         <TableCell ></TableCell>
                                         <TableCell ></TableCell></>}
@@ -99,8 +101,9 @@ const EstimateTable = (props) => {
                                             <TableCell align='center' >{subitem.height}</TableCell>
                                             <TableCell align='center' >{subitem.area}</TableCell>
                                             <TableCell align='center' >{subitem.perqsft}</TableCell>
+                                            {pvcisisvisible.display === true && <>
                                             <TableCell align='center' >{subitem.pvccostpsf}</TableCell>
-                                            <TableCell align='center' >{subitem.totalpvccost}</TableCell>
+                                            <TableCell align='center' >{subitem.totalpvccost}</TableCell></>}
                                             {upvcisisvisible.display === true && <>
                                                 <TableCell align='center' >{subitem.upvccostpsf}</TableCell>
                                                 <TableCell align='center' >{subitem.totalupvccost}</TableCell></>}
@@ -133,9 +136,10 @@ const EstimateTable = (props) => {
                                     <TableCell ></TableCell>
                                     <TableCell ></TableCell>
                                     <TableCell ></TableCell>
-                                    <TableCell ></TableCell>
-                                    <TableCell ></TableCell>
-                                    <TableCell align='center'>{item.sumtotalpvccost}</TableCell>
+                                    <TableCell  align='center'>{item.sumtotalsqft}</TableCell>
+                                    {pvcisisvisible.display === true && <>
+                                    <TableCell></TableCell>
+                                    <TableCell align='center'>{item.sumtotalpvccost}</TableCell></>}
                                     {upvcisisvisible.display === true && <>
                                         <TableCell ></TableCell>
                                         <TableCell align='center'>{item.sumtotalupvccost}</TableCell></>}
@@ -157,9 +161,11 @@ const EstimateTable = (props) => {
                             <TableCell ></TableCell>
                             <TableCell ></TableCell>
                             <TableCell ></TableCell>
+                           
+                            <TableCell align='center' sx={{ fontWeight: 700 }}>{estdetail.granttotalsqft}</TableCell>
+                            {pvcisisvisible.display === true && <>
                             <TableCell ></TableCell>
-                            <TableCell ></TableCell>
-                            <TableCell align='center' sx={{ fontWeight: 700 }}>{estdetail.grandtotalpvccost}</TableCell>
+                            <TableCell align='center' sx={{ fontWeight: 700 }}>{estdetail.grandtotalpvccost}</TableCell></>}
                             {upvcisisvisible.display === true && <>
                                 <TableCell ></TableCell>
                                 <TableCell align='center' sx={{ fontWeight: 700 }}>{estdetail.grandtotalupvccost}</TableCell></>}
