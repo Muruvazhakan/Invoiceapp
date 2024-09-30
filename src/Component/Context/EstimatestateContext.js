@@ -49,19 +49,19 @@ const EstimatestateContext = ({ children }) => {
     ];
     const [rows, setrows] = useState([]);
 
-    const [title, settitle] = useState('tit');
-    const [subdesc, setsubdesc] = useState('sub');
+    const [title, settitle] = useState('');
+    const [subdesc, setsubdesc] = useState('');
     const [length, setlength] = useState(1);
     const [height, setheight] = useState(1);
     const [area, setarea] = useState(1);
     const [perqsft, setperqsft] = useState(1);
-    const [pvccostpsf, setpvccostpsf] = useState(10);
+    const [pvccostpsf, setpvccostpsf] = useState(1);
     const [totalpvccost, settotalpvccost] = useState(1);
     const [upvccostpsf, setupvccostpsf] = useState(1);
     const [totalupvccost, settotalupvccost] = useState(1);
     const [woodcostpsf, setwoodcostpsf] = useState(1);
     const [totalwoodcost, settotalwoodcost] = useState(1);
-    const [remarks, setremarks] = useState('remarks');
+    const [remarks, setremarks] = useState('');
     const [granttotalpvccost, setgranttotalpvccost] = useState(0);
     const [granttotalupvccost, setgranttotalupvccost] = useState(0);
     const [granttotalwoodcost, setgranttotalwoodcost] = useState(0);
@@ -70,7 +70,7 @@ const EstimatestateContext = ({ children }) => {
     const [estimateidcount, setestimateidcount] = useState(1000);
     const [estimatedate, setestimatedate] = useState('');
 
-    const [clientName, setclientName] = useState('it');
+    const [clientName, setclientName] = useState('');
     const [clientPhno, setclientPhno] = useState('');
     const [clientAdd, setclientAdd] = useState('');
 

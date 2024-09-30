@@ -6,6 +6,7 @@ import EstimateTable from "../EstimateTable/EstimateTable";
 import EstimateHeader from "../../../ViewScreen/EstimateComponent/EstimateHeader";
 import CompanyotherDetail from "../../../ViewScreen/CompanyotherDetail/CompanyotherDetail";
 import CompanyBankDetail from "../../../ViewScreen/CompanyotherDetail/CompanyBankDetail";
+import EstimateFooter from "../../../ViewScreen/EstimateComponent/EstimateFooter";
 
 
 const EstimateDetail = (props) =>{
@@ -17,6 +18,7 @@ const EstimateDetail = (props) =>{
       <EstimateTable screen="new" />
         <CompanyotherDetail/>
         <CompanyBankDetail/>
+        <EstimateFooter/>
       {/* <TableFooters/> */}
       </>
     )

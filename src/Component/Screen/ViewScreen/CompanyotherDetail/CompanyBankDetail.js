@@ -9,7 +9,7 @@ const CompanyBankDetail = () => {
     const companydet = useContext(CompanyDetail);
     return (
 
-        <Card>
+        <Card className="  ">
             <div className="header">Bank Details</div>
             {companydet.companyBankdetails.map((item, index) => {
                 return (
@@ -17,7 +17,7 @@ const CompanyBankDetail = () => {
                         {item.isvisible === true &&
 
                             <>
-                                <div className="items  ">
+                                <div className="items   ">
                                     {item.title} :  {item.value}
                                 </div>
                             </>

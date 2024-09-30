@@ -46,7 +46,7 @@ const CompanyDetailContext = ({ children }) => {
     { title: 'Account Holder Name', isvisible: true, value: 'JR MODULAR ENTERPRISES' },
     ];
 const [companyBankdetails, setcompanyBankdetails] = useState(bankdet);
-
+const [companythankyou, setcompanythankyou] = useState('Thanking you and assuring our best services at all times.');
 //     Invoice id
 // Invoice date
 // Payment mode
@@ -56,7 +56,8 @@ const compDet = {
     clientName, setclientName, clientPhno, setclientPhno, clientAdd, setclientAdd, companyName, setcompanyName,
     companyTagLine, setcompanyTagLine, companyAddress, setcompanyAddress, companyPhno, setcompanyPhno, companyGstin, setcompanyGstin, companyGstinStatename, setcompanyGstinStatename,
     invoiceid, setinvoiceid, invoicedate, setinvoicedate, paymentmode, setpaymentmode, paymentdate, setpaymentdate, invoiceidcount, setinvoiceidount,
-    companyDeleration, setcompanyDeleration, cleardetailoption, setcleardetailoption, companymailid, setcompanymailid, companyOwner, setcompanyOwner, companydetails, setcompanydetails, companyBankdetails, setcompanyBankdetails
+    companyDeleration, setcompanyDeleration, cleardetailoption, setcleardetailoption, companymailid, setcompanymailid, companyOwner, setcompanyOwner, companydetails, setcompanydetails, companyBankdetails, setcompanyBankdetails,
+    companythankyou, setcompanythankyou
 };
 
 

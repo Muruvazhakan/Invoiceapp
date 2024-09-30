@@ -3,7 +3,7 @@
     align-items: center;
     text-align: justify;
     justify-content: space-between;
-    margin: -2% 0 0 0;
+    margin: -2% 1% 0 0;
     font-size: small;
 }
 
@@ -44,4 +44,9 @@
 }
 .estimateheader{
     padding-bottom: 5px;
+   
+}
+.estimateheadercenter{
+    display: flex;
+    justify-content: center;
 }

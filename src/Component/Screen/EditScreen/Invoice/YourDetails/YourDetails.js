@@ -34,22 +34,22 @@ const YourDetails = () => {
           <h3>Company Details</h3>
           <Box component="form" sx={{ '& .MuiTextField-root': { m: 1, width: '25ch' } }} >
 
-            <TextField required id="outlined-required" label="Company Name"
+            <TextField required id="outlined-required" label="Company Name" value={compayDet.companyName}
               onChange={(e) => setval(e, compayDet.setcompanyName)}
               color={setboxColors(compayDet.companyName, 'color')}
               error={setboxColors(compayDet.companyName, 'error')} />
 
-            <TextField required id="outlined-required" label="Company Tag Line"
+            <TextField required id="outlined-required" label="Company Tag Line" value={compayDet.companyTagLine}
               onChange={(e) => setval(e, compayDet.setcompanyTagLine)}
               color={setboxColors(compayDet.companyTagLine, 'color')}
               error={setboxColors(compayDet.companyTagLine, 'error')} />
 
-            <TextField required id="outlined-required" label="Company Address" multiline
+            <TextField required id="outlined-required" label="Company Address" multiline value={compayDet.companyAddress}
               onChange={(e) => setval(e, compayDet.setcompanyAddress)}
               color={setboxColors(compayDet.companyAddress, 'color')}
               error={setboxColors(compayDet.companyAddress, 'error')} />
 
-            <TextField required id="outlined-required" label="Company Phone Number" type="number"
+            <TextField required id="outlined-required" label="Company Phone Number"  value={compayDet.companyPhno}
               onChange={(e) => setval(e, compayDet.setcompanyPhno)}
               color={setboxColors(compayDet.companyPhno, 'color')}
               error={setboxColors(compayDet.companyPhno, 'error')} />
@@ -58,19 +58,19 @@ const YourDetails = () => {
               onChange={(e) => setval(e, compayDet.setcompanymailid)}
               color={setboxColors(compayDet.companymailid, 'color')}
               error={setboxColors(compayDet.companymailid, 'error')} />
-
-            <TextField id="outlined-required" label="Company Gstin"
+ 
+            <TextField id="outlined-required" label="Company Gstin" value={compayDet.companyGstin}
               onChange={(e) => setval(e, compayDet.setcompanyGstin)}
             //  color ={setboxColors(compayDet.companyGstin,'color')}
             //  error={setboxColors(compayDet.companyGstin,'error')}
             />
-            <TextField id="outlined-required" label="Company Gstin state"
+            <TextField id="outlined-required" label="Company Gstin state" value={compayDet.companyGstinStatename}
               onChange={(e) => setval(e, compayDet.setcompanyGstinStatename)}
             //  color ={setboxColors(compayDet.companyGstinStatename,'color')}
             //  error={setboxColors(compayDet.companyGstinStatename,'error')}
             />
 
-            <TextField id="outlined-required" label="Company Declaration" value={compayDet.companyDeleration} multiline rows={4}
+            <TextField id="outlined-required" label="Company Declaration" value={compayDet.companyDeleration} multiline rows={4} 
               onChange={(e) => setval(e, compayDet.setcompanyDeleration)}
               color={setboxColors(compayDet.companyDeleration, 'color')}
               error={setboxColors(compayDet.companyDeleration, 'error')}
