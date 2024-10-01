@@ -9,7 +9,7 @@ const EstimateDetailEdit = (props) => {
   return (<>
     <YourDetails />
     <EstimateGenDetails />
-    {/* <CompanyOtherDetailEdit /> */}
+     <CompanyOtherDetailEdit /> 
   </>
   )
 }
