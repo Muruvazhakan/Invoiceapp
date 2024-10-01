@@ -12,18 +12,14 @@ const CompanyOtherDetailEdit = () => {
     const [companydetailtitle, setcompanydetailtitle] = useState(' ');
     const [companydetaildesc, setcompanydetaildesc] = useState(' ');
     const [companydetailid, setcompanydetailid] = useState(null);
-    const [companydetailhide, setcompanydetailhide] = useState(false);
+ 
     const companydet = useContext(CompanyDetail);
-    const [tempcompanydetails, settempcompanydetails] = useState(companydet.companydetails);
+  
+    // useEffect(() => {
+    //     console.log(companydet.companydetails)
+    // }, [companydet.companydetails]);
 
-    useEffect(() => {
-        console.log(companydet.companydetails)
-    }, [companydet.companydetails]);
-
-    const updatedet = (item) => {
-
-        companydet.companyOtherDetailHandeler(item.id, companydetailtitle, companydetaildesc, companydetailid, "save");
-    }
+   
     return (
 
         <Card className="">
@@ -38,31 +34,33 @@ const CompanyOtherDetailEdit = () => {
                             <div className="companyindex ">
                                 {index + 1}</div>
 
-                            <TextField id="outlined-required" label="Title" defaultValue={item.title}
-                                onChange={(e) => {
+                            <TextField id="outlined-required" label="Title" value={item.title}
+                                onChangeCapture={(e) => {
                                     setcompanydetailid(item.id);
-                                    setcompanydetailtitle(e.target.value)
+                                    setcompanydetailtitle(e.target.value);
+                                    companydet.companytitle(item.id,e.target.value,'title');
                                 }}
                             />
-                            <TextField id="outlined-required" label="Details" multiline defaultValue={item.desc}
+                            <TextField id="outlined-required" label="Details" multiline value={item.desc}
                                 onChange={(e) => {
                                     setcompanydetailid(item.id);
-                                    setcompanydetaildesc(e.target.value)
+                                    setcompanydetaildesc(e.target.value);
+                                    companydet.companytitle(item.id,e.target.value,'desc');
                                 }}
                             />
 
-                            <TableCell className="table-edit" onClick={() => companydet.companyOtherDetailHandeler(item.id, companydetailtitle, companydetaildesc, companydetailid, "save")}
+                            {/* <TableCell className="table-edit" onClick={() => companydet.companyOtherDetailHandeler(item.id, companydetailtitle, companydetaildesc, companydetailid, "save")}
                             >
 
                                 <FaRegSave size={20} />
 
-                            </TableCell>
+                            </TableCell> */}
 
-                            {/* <TableCell className="table-edit" onClick={() => companydet.companyOtherDetailHandeler(item.id, companydetailtitle, companydetaildesc, companydetailid, "delete")} >
+                            <TableCell className="table-edit" onClick={() => companydet.companyOtherDetailHandeler(item.id, companydetailtitle, companydetaildesc, companydetailid, "delete")} >
 
                                 <MdDelete size={20} />
 
-                            </TableCell> */}
+                            </TableCell>
 
                         </div>
                     </>}

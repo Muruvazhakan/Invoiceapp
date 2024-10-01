@@ -40,10 +40,25 @@ const CompanyDetailContext = ({ children }) => {
 
     const [companydetailtitle, setcompanydetailtitle] = useState('');
 
-    const companytitle = (value, itemid, v, type) => {
+    const companytitle = (id,value, type) => {
+        
+          const   getresul = companydetails.map((items) => {
+                // console.log(items.id + ' ids ' + id);
+                if (items.id == id){
+                    // console.log(items.id + ' inside ids ' + id);
+                    if (type === "title") {
+                        items.title = value;
+                    }
+                    else{
+                        items.desc = value;
+                    }
+                }
+                return items;
+            })
 
-
-
+            // console.log(getresul);
+            setcompanydetails(getresul);
+    
     }
     const bankdet = [
         { title: 'Bank Name', isvisible: true, value: 'AXIS BANK' },
@@ -60,7 +75,7 @@ const CompanyDetailContext = ({ children }) => {
     // Payment Date
 
     const companyOtherDetailHandeler = (item, title, desc, editid, type) => {
-        console.log(title + ' ' + desc + ' ' + type + ' item' +item);
+        //console.log(title + ' ' + desc + ' ' + type + ' item' +item);
         if (item != editid && type != "delete") {
             toast.warn("Item is not updated, you are saving different data");
             return;
@@ -69,7 +84,7 @@ const CompanyDetailContext = ({ children }) => {
             toast.error("Both Details are Empty");
             return;
         }
-        console.log('type ' + type);
+        // console.log('type ' + type);
         let getresul;
         if (type === "save") {
             getresul = companydetails.map((item) => {
@@ -86,17 +101,17 @@ const CompanyDetailContext = ({ children }) => {
                 return item;
 
             });
-            console.log(getresul);
+            //console.log(getresul);
             setcompanydetails(getresul);
             toast.success("Details are Updated");
         }
         else if (type === "delete") {
             getresul = companydetails.filter((items) => {
-                console.log(items.id + ' ids ' + item);
+                //console.log(items.id + ' ids ' + item);
                 return items.id != item;
             })
 
-            console.log(getresul);
+            //console.log(getresul);
             setcompanydetails(getresul);
             toast.success("Details deleted");
         }
@@ -106,9 +121,10 @@ const CompanyDetailContext = ({ children }) => {
 
     }
 
-    useEffect(() => {
-        console.log(companydetails);
-    }, [companydetails])
+    // useEffect(() => {
+    //     console.log(companydetails);
+    // }, [companydetails])
+
     const compDet = {
         clientName, setclientName, clientPhno, setclientPhno, clientAdd, setclientAdd, companyName, setcompanyName,
         companyTagLine, setcompanyTagLine, companyAddress, setcompanyAddress, companyPhno, setcompanyPhno, companyGstin, setcompanyGstin, companyGstinStatename, setcompanyGstinStatename,
