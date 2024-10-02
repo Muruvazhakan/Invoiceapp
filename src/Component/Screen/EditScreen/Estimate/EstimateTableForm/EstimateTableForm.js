@@ -50,17 +50,43 @@ const EstimateTableForm = (props) => {
                                 color={setboxColors(estdetail.subdesc, 'color')}
                                 error={setboxColors(estdetail.subdesc, 'error')}
                             />
-                            <TextField required id="outlined-required" label="Length" value={estdetail.length}
+
+                            <FormControlLabel
+                                control={
+                                    <Switch
+                                        checked={estdetail.isotheritem}
+                                        onChange={() => estdetail.setisotheritem(!estdetail.isotheritem)}
+                                         
+                                        name="isotheritem" />
+                                }
+                                label="Special Item"
+                            />
+                            {estdetail.isotheritem && <>
+                                <FormControlLabel
+                                control={
+                                    <Switch
+                                        checked={estdetail.hideotheritem}
+                                        onChange={() => estdetail.sethideotheritem(!estdetail.hideotheritem)}
+                                         
+                                        name="isotheritem" />
+                                }
+                                label="Hide other details"
+                            />
+                            </>}
+                            <h4 className="tagline">'Special item other than raw material' </h4>
+                            <h4 className="tagline">{estdetail.isotheritem? 'Specail Item activated':null}</h4>
+                            <h4 className="tagline">{estdetail.hideotheritem? 'Length, Height, Area, Total sq.ft will be hidden':null}</h4>
+                            <TextField required id="outlined-required" label="Length" value={estdetail.length} type="number"
                                 onChange={(e) => setval(e, estdetail.setlength)}
                                 color={setboxColors(estdetail.length, 'color')}
                                 error={setboxColors(estdetail.length, 'error')}
                             />
-                            <TextField required id="outlined-required" label="Height" value={estdetail.height}
+                            <TextField required id="outlined-required" label="Height" value={estdetail.height} type="number"
                                 onChange={(e) => setval(e, estdetail.setheight)}
                                 color={setboxColors(estdetail.height, 'color')}
                                 error={setboxColors(estdetail.height, 'error')}
                             />
-                            <TextField required id="outlined-required" label="Area" value={estdetail.area}
+                            <TextField required id="outlined-required" label="Area" value={estdetail.area} type="number"
                                 // onChange={(e) => setval(e, estdetail.setsubdesc)}
                                 disabled
                                 color={setboxColors(estdetail.area, 'color')}
@@ -72,39 +98,39 @@ const EstimateTableForm = (props) => {
                                 color={setboxColors(estdetail.perqsft, 'color')}
                                 error={setboxColors(estdetail.perqsft, 'error')}
                             />
-                            <TextField required id="outlined-required" label="Pvc cost psf" value={estdetail.pvccostpsf}
+                            <TextField required id="outlined-required" label="Pvc cost psf" value={estdetail.pvccostpsf} type="number"
                                 onChange={(e) => setval(e, estdetail.setpvccostpsf)}
                                 color={setboxColors(estdetail.pvccostpsf, 'color')}
                                 error={setboxColors(estdetail.pvccostpsf, 'error')}
                             />
-                            <TextField required id="outlined-required" label="Total Pvc cost" value={estdetail.totalpvccost}
-                                // onChange={(e) => setval(e, estdetail.setsubdesc)}
-                                disabled
+                            <TextField required id="outlined-required" label="Total Pvc cost" value={estdetail.totalpvccost} type="number"
+                                onChange={(e) => setval(e, estdetail.settotalpvccost)}
+
                                 color={setboxColors(estdetail.totalpvccost, 'color')}
                                 error={setboxColors(estdetail.totalpvccost, 'error')}
                             />
-                            <TextField required id="outlined-required" label="Upvc cost psf" value={estdetail.upvccostpsf}
+                            <TextField required id="outlined-required" label="Upvc cost psf" value={estdetail.upvccostpsf} type="number"
                                 onChange={(e) => setval(e, estdetail.setupvccostpsf)}
                                 color={setboxColors(estdetail.upvccostpsf, 'color')}
                                 error={setboxColors(estdetail.upvccostpsf, 'error')}
                             />
 
-                            <TextField required id="outlined-required" label="Total Upvc cost" value={estdetail.totalupvccost}
-                                // onChange={(e) => setval(e, estdetail.setsubdesc)}
-                                disabled
+                            <TextField required id="outlined-required" label="Total Upvc cost" value={estdetail.totalupvccost} type="number" 
+                                onChange={(e) => setval(e, estdetail.settotalupvccost)}
+
                                 color={setboxColors(estdetail.totalupvccost, 'color')}
                                 error={setboxColors(estdetail.totalupvccost, 'error')}
                             />
 
-                            <TextField required id="outlined-required" label="Wood cost psf" value={estdetail.woodcostpsf}
+                            <TextField required id="outlined-required" label="Wood cost psf" value={estdetail.woodcostpsf} type="number"
                                 onChange={(e) => setval(e, estdetail.setwoodcostpsf)}
                                 color={setboxColors(estdetail.woodcostpsf, 'color')}
                                 error={setboxColors(estdetail.woodcostpsf, 'error')}
                             />
 
-                            <TextField required id="outlined-required" label="Total Wood cost" value={estdetail.totalwoodcost}
-                                // onChange={(e) => setval(e, estdetail.setsubdesc)}
-                                disabled
+                            <TextField required id="outlined-required" label="Total Wood cost" value={estdetail.totalwoodcost} type="number"
+                                onChange={(e) => setval(e, estdetail.settotalwoodcost)}
+
                                 color={setboxColors(estdetail.totalwoodcost, 'color')}
                                 error={setboxColors(estdetail.totalwoodcost, 'error')}
                             />
@@ -158,7 +184,7 @@ const EstimateTableForm = (props) => {
                             />
                             <div className="companyname tagline ">
                                 <div>
-                                {!estdetail.columns[6].display && <> " PVC cost Psf & Total PVC Cost colums will not be visible "</>}</div>
+                                    {!estdetail.columns[6].display && <> " PVC cost Psf & Total PVC Cost colums will not be visible "</>}</div>
                                 <div> {!estdetail.columns[8].display && <> "UPVC cost Psf & Total UPVC Cost colums will not be visible"</>}</div>
                                 <div>  {!estdetail.columns[10].display && <>"Wood cost Psf & Total Wood Cost colums will not be visible"</>}</div>
                             </div>

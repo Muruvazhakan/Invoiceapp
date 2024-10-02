@@ -56,6 +56,8 @@ const EstimatestateContext = ({ children }) => {
     const [height, setheight] = useState(1);
     const [area, setarea] = useState(1);
     const [perqsft, setperqsft] = useState(1);
+    const [isotheritem, setisotheritem] = useState(false);
+    const [hideotheritem, sethideotheritem] = useState(false);
     const [pvccostpsf, setpvccostpsf] = useState(1);
     const [totalpvccost, settotalpvccost] = useState(1);
     const [upvccostpsf, setupvccostpsf] = useState(1);
@@ -95,7 +97,7 @@ const EstimatestateContext = ({ children }) => {
                 // console.log(available[0]);         
                 let exitsingleestimatevalue1 = {
                     subid: uuidv4(), desc: subdesc, length: length, height: height, area: area,
-                    perqsft: perqsft, pvccostpsf: pvccostpsf, totalpvccost: totalpvccost, upvccostpsf: upvccostpsf, 
+                    perqsft: perqsft, pvccostpsf: pvccostpsf, totalpvccost: totalpvccost, upvccostpsf: upvccostpsf, isotheritem:isotheritem, hideotheritem:hideotheritem,
                     totalupvccost: totalupvccost, woodcostpsf: woodcostpsf, totalwoodcost: totalwoodcost, remarks: remarks
                 };
 
@@ -133,7 +135,7 @@ const EstimatestateContext = ({ children }) => {
                     sumtotalpvccost: totalpvccost, sumtotalupvccost: totalupvccost, sumtotalwoodcost: totalwoodcost,
                     sumtotalsqft:perqsft,
                     values: [{
-                        subid: uuidv4(), desc: subdesc, length: length, height: height, area: area,
+                        subid: uuidv4(), desc: subdesc, length: length, height: height, area: area,isotheritem:isotheritem,hideotheritem:hideotheritem,
                         perqsft: perqsft, pvccostpsf: pvccostpsf, totalpvccost: totalpvccost, upvccostpsf: upvccostpsf, totalupvccost: totalupvccost, woodcostpsf: woodcostpsf, totalwoodcost: totalwoodcost, remarks: remarks
                     }]
                 };
@@ -190,6 +192,8 @@ const EstimatestateContext = ({ children }) => {
                     setwoodcostpsf(subtableava[0].woodcostpsf);
                     settotalwoodcost(subtableava[0].totalwoodcost);
                     setremarks(subtableava[0].remarks);
+                    setisotheritem(subtableava[0].isotheritem);
+                    sethideotheritem(subtableava[0].hideotheritem);
                     toast.info("Estimation Item is added in edit section");
                 }
                 else {
@@ -330,7 +334,7 @@ const EstimatestateContext = ({ children }) => {
         columns, setcolumns, rows, setrows, estimateidcount, setestimateidcount,granttotalsqft, setgranttotalsqft,
         clientName, setclientName, clientPhno, setclientPhno, clientAdd, setclientAdd, estimateid, setestimateid, estimatedate, setestimatedate,
         grandtotalupvccost, setgrandtotalupvccost, grandtotalpvccost, setgrandtotalpvccost, grandtotalwoodcost, setgrandtotalwoodcost,
-        title, settitle, subdesc, setsubdesc, length, setlength, height, setheight, area, setarea, perqsft, setperqsft,
+        title, settitle, subdesc, setsubdesc, length, setlength, height, setheight, area, setarea, perqsft, setperqsft,isotheritem, setisotheritem,hideotheritem, sethideotheritem,
         pvccostpsf, setpvccostpsf, totalpvccost, settotalpvccost, upvccostpsf, setupvccostpsf, totalupvccost, settotalupvccost, woodcostpsf, setwoodcostpsf, totalwoodcost, settotalwoodcost,
         remarks, setremarks, addOrUpdateEstimateItemHandler,updateTableView,estimatedate1, setestimatedate1
     };

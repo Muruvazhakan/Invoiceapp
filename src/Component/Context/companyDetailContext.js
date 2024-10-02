@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
-
+import { v4 as uuidv4 } from "uuid";
 export const CompanyDetail = createContext();
 
 const CompanyDetailContext = ({ children }) => {
@@ -39,6 +39,7 @@ const CompanyDetailContext = ({ children }) => {
     const [companydetails, setcompanydetails] = useState(companydet);
 
     const [companydetailtitle, setcompanydetailtitle] = useState('');
+    const [companydetaildesc, setcompanydetaildesc] = useState('');
 
     const companytitle = (id,value, type) => {
         
@@ -74,36 +75,27 @@ const CompanyDetailContext = ({ children }) => {
     // Payment mode
     // Payment Date
 
-    const companyOtherDetailHandeler = (item, title, desc, editid, type) => {
-        //console.log(title + ' ' + desc + ' ' + type + ' item' +item);
-        if (item != editid && type != "delete") {
-            toast.warn("Item is not updated, you are saving different data");
-            return;
-        }
-        if(title.length ===0 && desc.length ===0 && type !== "save"){
+    const companyOtherDetailHandeler = (item, type) => {
+        console.log(companydetailtitle + ' ' + companydetaildesc + ' ' + type + ' item' +item);
+        
+        if(companydetailtitle.length ===0 && companydetaildesc.length ===0 && type !== "delete"){
             toast.error("Both Details are Empty");
             return;
         }
-        // console.log('type ' + type);
+        console.log('type ' + type);
         let getresul;
-        if (type === "save") {
-            getresul = companydetails.map((item) => {
-                // console.log(item)
-                if (item.id == editid) {
-                    if (desc.length > 0) {
-                        item.desc = desc;
-                    }
-                    if (title.length > 0) {
-                        item.title = title;
-                    }
-
-                }
-                return item;
-
-            });
-            //console.log(getresul);
-            setcompanydetails(getresul);
-            toast.success("Details are Updated");
+        if (type === "new") {
+           getresul= { id: uuidv4(), title: companydetailtitle, isvisible: true, desc: companydetaildesc};
+            console.log('getresul');
+            console.log(getresul);
+            console.log(companydetails);
+            setcompanydetails([
+                ...companydetails,getresul
+            ]);
+            
+            toast.success("Details are Added");
+            setcompanydetailtitle('');
+            setcompanydetaildesc('');
         }
         else if (type === "delete") {
             getresul = companydetails.filter((items) => {
@@ -130,7 +122,7 @@ const CompanyDetailContext = ({ children }) => {
         companyTagLine, setcompanyTagLine, companyAddress, setcompanyAddress, companyPhno, setcompanyPhno, companyGstin, setcompanyGstin, companyGstinStatename, setcompanyGstinStatename,
         invoiceid, setinvoiceid, invoicedate, setinvoicedate, paymentmode, setpaymentmode, paymentdate, setpaymentdate, invoiceidcount, setinvoiceidount,
         companyDeleration, setcompanyDeleration, cleardetailoption, setcleardetailoption, companymailid, setcompanymailid, companyOwner, setcompanyOwner, companydetails, setcompanydetails, companyBankdetails, setcompanyBankdetails,
-        companythankyou, setcompanythankyou, companytitle, companyOtherDetailHandeler
+        companythankyou, setcompanythankyou, companytitle, companyOtherDetailHandeler,companydetailtitle, setcompanydetailtitle,companydetaildesc, setcompanydetaildesc
     };
 
 

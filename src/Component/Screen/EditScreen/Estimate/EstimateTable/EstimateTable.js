@@ -97,10 +97,14 @@ const EstimateTable = (props) => {
                                         <TableRow className={subindex.index % 2 == 0 ? "table-body tablegrey" : "table-body"} key={subindex + 1000}>
                                             <TableCell align='center' >{chr}</TableCell>
                                             <TableCell align='center' >{subitem.desc}</TableCell>
-                                            <TableCell align='center' >{subitem.length}</TableCell>
-                                            <TableCell align='center' >{subitem.height}</TableCell>
-                                            <TableCell align='center' >{subitem.area}</TableCell>
-                                            <TableCell align='center' >{subitem.perqsft}</TableCell>
+                                            {subitem.hideotheritem ?  <TableCell ></TableCell> :
+                                            <TableCell align='center' >{subitem.length}</TableCell> }
+                                              {subitem.hideotheritem ?  <TableCell ></TableCell> :
+                                            <TableCell align='center' >{subitem.height}</TableCell> }
+                                              {subitem.hideotheritem ?  <TableCell ></TableCell> :
+                                            <TableCell align='center' >{subitem.area}</TableCell>}
+                                              {subitem.hideotheritem ?  <TableCell ></TableCell> :
+                                            <TableCell align='center' >{subitem.perqsft}</TableCell>}
                                             {pvcisisvisible.display === true && <>
                                             <TableCell align='center' >{subitem.pvccostpsf}</TableCell>
                                             <TableCell align='center' >{subitem.totalpvccost}</TableCell></>}

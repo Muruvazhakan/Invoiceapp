@@ -1,25 +1,22 @@
 
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext } from "react";
 import { CompanyDetail } from "../../../Context/companyDetailContext";
 import './CompanyOtherDetailEdit.css';
 import Card from "../../../Style/Card/Card";
 import { Box, Button, TableCell, TextField } from "@mui/material";
-import { MdDelete } from "react-icons/md";
+import { MdDeleteForever } from "react-icons/md";
 import { FaRegSave } from "react-icons/fa";
 
 const CompanyOtherDetailEdit = () => {
 
-    const [companydetailtitle, setcompanydetailtitle] = useState(' ');
-    const [companydetaildesc, setcompanydetaildesc] = useState(' ');
-    const [companydetailid, setcompanydetailid] = useState(null);
- 
+   
     const companydet = useContext(CompanyDetail);
-  
+
     // useEffect(() => {
     //     console.log(companydet.companydetails)
     // }, [companydet.companydetails]);
 
-   
+
     return (
 
         <Card className="">
@@ -36,16 +33,14 @@ const CompanyOtherDetailEdit = () => {
 
                             <TextField id="outlined-required" label="Title" value={item.title}
                                 onChangeCapture={(e) => {
-                                    setcompanydetailid(item.id);
-                                    setcompanydetailtitle(e.target.value);
-                                    companydet.companytitle(item.id,e.target.value,'title');
+
+                                    companydet.companytitle(item.id, e.target.value, 'title');
                                 }}
                             />
                             <TextField id="outlined-required" label="Details" multiline value={item.desc}
                                 onChange={(e) => {
-                                    setcompanydetailid(item.id);
-                                    setcompanydetaildesc(e.target.value);
-                                    companydet.companytitle(item.id,e.target.value,'desc');
+
+                                    companydet.companytitle(item.id, e.target.value, 'desc');
                                 }}
                             />
 
@@ -55,12 +50,12 @@ const CompanyOtherDetailEdit = () => {
                                 <FaRegSave size={20} />
 
                             </TableCell> */}
+                             <Button variant="contained" color="error" endIcon={<MdDeleteForever />} 
+                        onClick={() => companydet.companyOtherDetailHandeler(item.id,"delete")} >
+                            Delete
+                        </Button>
 
-                            <TableCell className="table-edit" onClick={() => companydet.companyOtherDetailHandeler(item.id, companydetailtitle, companydetaildesc, companydetailid, "delete")} >
-
-                                <MdDelete size={20} />
-
-                            </TableCell>
+                            
 
                         </div>
                     </>}
@@ -68,25 +63,33 @@ const CompanyOtherDetailEdit = () => {
                 </Box>
                 )
             })}
+            <Card >
+                <h2 >Add New Terms And Conditions</h2>
+                <Box component="form" sx={{ '& .MuiTextField-root': { m: 2, width: '35ch' } }}>
+                    <div className=" companyotherdeta companyindex">
+                        <TextField id="outlined-required" label="Title" value={companydet.companydetailtitle}
+                            onChange={(e) => {
 
-            {/* <h2>Add New Terms And Conditions</h2>
-            <TextField id="outlined-required" label="Title" value={companydetailtitle}
-                onChange={(e) => {
-                    setcompanydetailid(null);
-                    setcompanydetailtitle(e.target.value)
-                }}
-            />
+                                companydet.setcompanydetailtitle(e.target.value)
+                            }}
+                        />
 
-            <TextField id="outlined-required" label="Details" multiline value={companydetaildesc}
-             onChange={(e) => {
-                setcompanydetailid(null);
-                setcompanydetaildesc(e.target.value)
-            }}
-            
-            />
+                        <TextField id="outlined-required" label="Details" multiline value={companydet.companydetaildesc}
+                            onChange={(e) => {
 
-            <Button>Add</Button> */}
+                                companydet.setcompanydetaildesc(e.target.value)
+                            }}
 
+                        />
+
+                        <Button variant="contained" color="success" endIcon={<FaRegSave />} 
+                        onClick={() => companydet.companyOtherDetailHandeler('', "new")} >
+                            Save
+                        </Button>
+
+                    </div>
+                </Box>
+            </Card>
         </Card>)
 }
 
