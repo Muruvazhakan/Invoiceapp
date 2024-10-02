@@ -50,32 +50,32 @@ const EstimateTableForm = (props) => {
                                 color={setboxColors(estdetail.subdesc, 'color')}
                                 error={setboxColors(estdetail.subdesc, 'error')}
                             />
-
+                            <h4 className="tagline">'Switch to Special item feature to add other than raw material' </h4>
                             <FormControlLabel
                                 control={
                                     <Switch
                                         checked={estdetail.isotheritem}
                                         onChange={() => estdetail.setisotheritem(!estdetail.isotheritem)}
-                                         
+
                                         name="isotheritem" />
                                 }
                                 label="Special Item"
                             />
                             {estdetail.isotheritem && <>
                                 <FormControlLabel
-                                control={
-                                    <Switch
-                                        checked={estdetail.hideotheritem}
-                                        onChange={() => estdetail.sethideotheritem(!estdetail.hideotheritem)}
-                                         
-                                        name="isotheritem" />
-                                }
-                                label="Hide other details"
-                            />
+                                    control={
+                                        <Switch
+                                            checked={estdetail.hideotheritem}
+                                            onChange={() => estdetail.sethideotheritem(!estdetail.hideotheritem)}
+
+                                            name="isotheritem" />
+                                    }
+                                    label="Hide other details"
+                                />
                             </>}
-                            <h4 className="tagline">'Special item other than raw material' </h4>
-                            <h4 className="tagline">{estdetail.isotheritem? 'Specail Item activated':null}</h4>
-                            <h4 className="tagline">{estdetail.hideotheritem? 'Length, Height, Area, Total sq.ft will be hidden':null}</h4>
+
+                            <h4 className="tagline">{estdetail.isotheritem ? 'Specail Item activated' : null}</h4>
+                            <h4 className="tagline">{estdetail.hideotheritem ? 'Length, Height, Area, Total sq.ft will be hidden' : null}</h4>
                             <TextField required id="outlined-required" label="Length" value={estdetail.length} type="number"
                                 onChange={(e) => setval(e, estdetail.setlength)}
                                 color={setboxColors(estdetail.length, 'color')}
@@ -115,7 +115,7 @@ const EstimateTableForm = (props) => {
                                 error={setboxColors(estdetail.upvccostpsf, 'error')}
                             />
 
-                            <TextField required id="outlined-required" label="Total Upvc cost" value={estdetail.totalupvccost} type="number" 
+                            <TextField required id="outlined-required" label="Total Upvc cost" value={estdetail.totalupvccost} type="number"
                                 onChange={(e) => setval(e, estdetail.settotalupvccost)}
 
                                 color={setboxColors(estdetail.totalupvccost, 'color')}
