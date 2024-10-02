@@ -3,13 +3,13 @@ import React, { useContext } from "react";
 import { CompanyDetail } from "../../../Context/companyDetailContext";
 import './CompanyOtherDetailEdit.css';
 import Card from "../../../Style/Card/Card";
-import { Box, Button, TableCell, TextField } from "@mui/material";
+import { Box, Button, TextField } from "@mui/material";
 import { MdDeleteForever } from "react-icons/md";
 import { FaRegSave } from "react-icons/fa";
 
 const CompanyOtherDetailEdit = () => {
 
-   
+
     const companydet = useContext(CompanyDetail);
 
     // useEffect(() => {
@@ -50,12 +50,12 @@ const CompanyOtherDetailEdit = () => {
                                 <FaRegSave size={20} />
 
                             </TableCell> */}
-                             <Button variant="contained" color="error" endIcon={<MdDeleteForever />} 
-                        onClick={() => companydet.companyOtherDetailHandeler(item.id,"delete")} >
-                            Delete
-                        </Button>
+                            <Button variant="contained" color="error" endIcon={<MdDeleteForever />}
+                                onClick={() => companydet.companyOtherDetailHandeler(item.id, "delete")} >
+                                Delete
+                            </Button>
 
-                            
+
 
                         </div>
                     </>}
@@ -63,6 +63,9 @@ const CompanyOtherDetailEdit = () => {
                 </Box>
                 )
             })}
+            <h5>
+                System will automatically update while editing...
+            </h5>
             <Card >
                 <h2 >Add New Terms And Conditions</h2>
                 <Box component="form" sx={{ '& .MuiTextField-root': { m: 2, width: '35ch' } }}>
@@ -82,8 +85,8 @@ const CompanyOtherDetailEdit = () => {
 
                         />
 
-                        <Button variant="contained" color="success" endIcon={<FaRegSave />} 
-                        onClick={() => companydet.companyOtherDetailHandeler('', "new")} >
+                        <Button variant="contained" color="success" endIcon={<FaRegSave />}
+                            onClick={() => companydet.companyOtherDetailHandeler('', "new")} >
                             Save
                         </Button>
 
