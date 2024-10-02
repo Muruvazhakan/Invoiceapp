@@ -3,9 +3,8 @@ import React, { useState, useContext, useEffect } from "react";
 import { Box, Button, FormControl, FormControlLabel, FormGroup, Switch, TextField } from "@mui/material";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { v4 as uuidv4 } from "uuid";
 import Card from "../../../../Style/Card/Card";
-
+import { BsSave } from "react-icons/bs";
 import { estimateState } from "../../../../Context/EstimatestateContext";
 
 import './EstimateTableForm.css';
@@ -37,7 +36,7 @@ const EstimateTableForm = (props) => {
                 <FormControl>
                     <Card>
                         <h3>Add details below for Estimation</h3>
-                        <Box component="form" sx={{ '& .MuiTextField-root': { m: 1, width: '15ch' } }}>
+                        <Box component="form" sx={{ '& .MuiTextField-root': { m: 1, width: '20ch' } }}>
 
                             <TextField required id="outlined-required" label="Item Title" value={estdetail.title}
                                 onChange={(e) => setval(e, estdetail.settitle)}
@@ -140,7 +139,8 @@ const EstimateTableForm = (props) => {
                             // error={setboxColors(estdetail.remarks, 'error')}
                             />
                             <div className="button-warn">
-                                <Button variant="contained" color="success" size="medium" onClick={() => estdetail.addOrUpdateEstimateItemHandler('', '', 'New')}>Add Item</Button>
+                                <Button variant="contained" color="success" size="medium" endIcon={<BsSave />}
+                                onClick={() => estdetail.addOrUpdateEstimateItemHandler('', '', 'New')}>Add Item</Button>
 
                             </div>
 

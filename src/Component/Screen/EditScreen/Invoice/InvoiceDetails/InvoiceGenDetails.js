@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { FormGroup, FormControl, TextField, Box, Button } from '@mui/material';
-
+import { FaRegIdCard } from "react-icons/fa6";
 
 import { CompanyDetail } from "../../../../Context/companyDetailContext";
 // import '../YourDetails.css';
@@ -74,7 +74,7 @@ const InvoiceGenDetails = () => {
           <Box component="form" sx={{ '& .MuiTextField-root': { m: 1, width: '15ch', height: '5ch' } }} >
 
             {compayDet.invoiceid.length == 0 ?
-              <div><Button className="gen-invoice" variant="outlined" onClick={dateHandler}>Generate Invoice</Button> </div> : <div className="invoicegen"> Invoice Id Generated</div>}
+              <div><Button className="gen-invoice" variant="outlined" endIcon={<FaRegIdCard />}  onClick={dateHandler}>Generate Invoice Id</Button> </div> : <div className="invoicegen"> Invoice Id Generated</div>}
             Invoice date:
             <input type="date" className="date-field" onChange={(e) => setval(e, compayDet.setinvoicedate)} title="payement" size={210} id="dateDefault" value={compayDet.invoicedate} aria-label="invoice" />
             Payment date:

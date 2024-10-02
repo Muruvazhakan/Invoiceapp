@@ -3,7 +3,9 @@ import React, { useState, useContext, useEffect } from "react";
 import { Box, Button, FormControl, FormControlLabel, FormGroup, Switch, TextField } from "@mui/material";
 import { ToastContainer, toast } from "react-toastify";
 import { v4 as uuidv4 } from "uuid";
-import collect from "collect.js";
+import { GrClearOption } from "react-icons/gr";
+import { MdOutlineAddToPhotos } from "react-icons/md";
+import { BsSave } from "react-icons/bs";
 import "react-toastify/dist/ReactToastify.css";
 import Card from "../../../../Style/Card/Card";
 import { AllState } from "../../../../Context/allStateContext";
@@ -194,7 +196,7 @@ const  clearOtherDetails =() =>{
                 <FormControl>
                     <Card>
                         <h3>HSN Tax Rate</h3>
-                        <Box component="form" sx={{ '& .MuiTextField-root': { m: 1, width: '15ch' } }}>
+                        <Box component="form" sx={{ '& .MuiTextField-root': { m: 1, width: '20ch' } }}>
                             <TextField required id="outlined-required" label="Central Tax Rate %" value={tabledet.ctrate} type="number"
                                 onChange={(e) => setval(e, tabledet.setctrate)}
                                 color={setboxColors(tabledet.ctrate, 'color')}
@@ -212,7 +214,7 @@ const  clearOtherDetails =() =>{
                         </Box>
 
                         <h3>Add Goods details below</h3>
-                        <Box component="form" sx={{ '& .MuiTextField-root': { m: 1, width: '15ch' } }}>
+                        <Box component="form" sx={{ '& .MuiTextField-root': { m: 1, width: '20ch' } }}>
 
                             <TextField required id="outlined-required" label="Item description" value={tabledet.desc}
                                 onChange={(e) => setval(e, tabledet.setdesc)}
@@ -274,10 +276,12 @@ const  clearOtherDetails =() =>{
                             </div>
 
                             <div className="button-warn">
-                                <Button variant="contained" color="success" size="medium" onClick={() => addOrUpdateItemHandler('Add')}>Add Item</Button>
+                                <Button variant="contained" color="success" size="medium" endIcon={<BsSave />}
+                                onClick={() => addOrUpdateItemHandler('Add')}>Add Item</Button>
                                 
                             </div>
-                            <Button  variant="contained" color="warning" size="medium" onClick={clearlistcontent}>Clear Form</Button>
+                            <Button  variant="contained" color="warning" size="medium"  endIcon={<GrClearOption />} 
+                             onClick={clearlistcontent}>Clear Form</Button>
                         </Box>
                         <h3>Value in Words</h3>
                         <Box component="form" sx={{ '& .MuiTextField-root': { m: 1, width: '25ch' } }}>
@@ -335,9 +339,11 @@ const  clearOtherDetails =() =>{
                                     
                                     {compayDet.cleardetailoption ?<div className="notcharge"> "Form will be cleared after adding" </div> : null}
                                     <div className="button-warn">
-                                        <Button variant="outlined" color="success" size="medium" onClick={addOtherItems}>Add Other Item</Button>
+                                        <Button variant="outlined" color="success" size="medium" endIcon={<MdOutlineAddToPhotos />} 
+                                        onClick={addOtherItems}>Add Other Item</Button>
                                     </div>
-                                    <Button  variant="outlined" color="warning" size="medium" onClick={clearOtherDetails}>Clear Form</Button>
+                                    <Button  variant="outlined" color="warning" size="medium" endIcon={<GrClearOption />} 
+                                     onClick={clearOtherDetails}>Clear Form</Button>
                                 </>
                             }
 

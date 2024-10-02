@@ -5,7 +5,7 @@ import ReactToPrint from "react-to-print";
 import { Button } from "@mui/material";
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-
+import { BsFileEarmarkPdfFill } from "react-icons/bs";
 
 import EstimateDetailEdit from "../EditScreen/Estimate/EstimateDetail/EstimateDetailEdit";
 import EstimateDetail from "../EditScreen/Estimate/EstimateDetail/EstimateDetail";
@@ -38,8 +38,8 @@ const EstimateMainComponent = (props) => {
             <Card>
                 <ReactToPrint
                     trigger={() => (
-                        <Button variant="outlined" color="success" >
-                            Print / Download
+                        <Button variant="contained" color="info" endIcon={<BsFileEarmarkPdfFill />} >
+                            Download
                         </Button>
                     )}
                     content={() => componentRef.current}

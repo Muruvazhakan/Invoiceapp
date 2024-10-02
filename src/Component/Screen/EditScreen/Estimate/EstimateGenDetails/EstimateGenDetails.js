@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { FormGroup, FormControl, TextField, Box, Button } from '@mui/material';
-
+import { FaRegIdCard } from "react-icons/fa6";
 import * as moment from 'moment';
 import { estimateState } from "../../../../Context/EstimatestateContext";
 // import '../YourDetails.css';
@@ -83,7 +83,7 @@ const EstimateGenDetails = (props) => {
                     <Box component="form" sx={{ '& .MuiTextField-root': { m: 1, width: '15ch', height: '5ch' } }} >
 
                         {estimateDet.estimateid.length == 0 ?
-                            <div><Button className="gen-invoice" variant="outlined" onClick={dateHandler}>Generate Estimate Id</Button> </div> : <div className="invoicegen"> Estimate Id Generated</div>}
+                            <div><Button className="gen-invoice" variant="outlined" onClick={dateHandler} endIcon={<FaRegIdCard />}  >Generate Estimate Id</Button> </div> : <div className="invoicegen"> Estimate Id Generated</div>}
                         Estimate date:
                         <input type="date" className="date-field" placeholder="dd-mm-yyyy"
                         min="1997-01-01" max="2030-12-31"
