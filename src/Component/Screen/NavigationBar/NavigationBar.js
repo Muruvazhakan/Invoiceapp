@@ -1,83 +1,112 @@
-import React from "react";
-import {Link} from "react-router-dom";
+import React, { useContext } from "react";
+import { Link } from "react-router-dom";
 
 import { IconContext } from 'react-icons/lib';
 import * as Datas from '../../Context/Datas';
 import { PiInvoiceThin } from "react-icons/pi";
 import './NavigationBar.css';
-const NavigationBar = (props)=>{
+import { CompanyDetail } from "../../Context/companyDetailContext";
 
-    const handleheaderClick = () => {
-        //console.log(" headerName,headerdetails click" + headerName + headerdetails);
-        //console.log(headerdetails);
-       
-        window.location.reload()
-      }
+const NavigationBar = (props) => {
 
-    return<>
-     <IconContext.Provider value={{ color: '#rrr' }}>
-   
-    <nav className='navbar'>
-          <div className="navbar-container container ">
+  const logindet = useContext(CompanyDetail);
+ 
 
-            <Link to='/' className='navbar-logo'>
+  return <>
+    <IconContext.Provider value={{ color: '#rrr' }}>
+
+      <nav className='navbar'>
+        <div className="navbar-container container ">
+
+          <Link to='/' className='navbar-logo'>
             <PiInvoiceThin className='logo logo-name' size={30} />
-              <div
-               
-                className='logo-name'>
-                {/* <img className='logo' src={Datas.EELogo}
+            <div
+
+              className='logo-name'>
+              {/* <img className='logo' src={Datas.EELogo}
                   alt="EE_Logo"
                 /> */}
-               
-                BillEdge</div>
 
-            </Link>
-          
-            <ul className={'nav-menu  nav-active  active' }>
-             
+              BillEdge</div>
+
+          </Link>
+
+          <ul className={'nav-menu  nav-active  active'}>
+            {logindet.loginstatus ?
               <>
                 {Datas.navigationbarcontent.map((item, index) => {
-                  let pathnameurl=  item.screenname=="Home"? "/" : `/screen=${item.altname}` ;
-                  console.log(pathnameurl + " pathnameurl ");
+                  let pathnameurl = item.screenname == "Home" ? "/" : `/screen=${item.altname}`;
+                  // console.log(pathnameurl + " pathnameurl ");
                   return (
                     <div className='nav-item  nav-active '
-                    //  onClick={() => handleheaderClick()} 
-                    key={index}>
-                    <li className='nav-item  nav-active '>
-                     
-                        < Link className='nav-links' to={ { pathname: item.altname }}
-                        duration={1000} activeClass="nav-active" spy={true} offset={-50}
-                        smooth 
+                      //  onClick={() => handleheaderClick()} 
+                      key={index}>
+                      <li className='nav-item  nav-active '>
+
+                        < Link className='nav-links' to={{ pathname: item.altname }}
+                          duration={1000} activeClass="nav-active" spy={true} offset={-50}
+                          smooth
                         // onClick={closeMobileMenu}
                         >
                           {item.screenname}
-                         </Link>
-                    </li>
+                        </Link>
+                      </li>
                     </div>
                   )
                 })}
-               
-                
-             
-              </>
-            
-             
-              <div className='nav-item menu-icon2' 
+                <div className='nav-item  nav-active '
+                  //  onClick={() => handleheaderClick()} 
+                  key="logout">
+                  <li className='nav-item  nav-active '>
+
+                    < Link className='nav-links'
+
+                      duration={1000} activeClass="nav-active" spy={true} offset={-50}
+                      smooth
+                      onClick={logindet.logoutHandler}
+                    >
+                      Logout
+                    </Link>
+                  </li>
+                </div>
+
+
+              </> :
+              <>
+                {Datas.userLogin.map((item, index) => {
+
+                  return (
+                    <div className='nav-item  nav-active'>
+                      <li className='nav-item  nav-active'>
+                        <Link className='nav-links' to={{ pathname: item.altname }}
+                          duration={1000} activeClass="nav-active" spy={true} offset={-50}
+                          smooth
+                        >
+                          {item.screenname}
+                        </Link>
+                      </li>
+                    </div>
+                  )
+                })}
+              </>}
+
+
+            <div className='nav-item menu-icon2'
             //   onClick={handleClick}
-              >
-              
-              </div>
-              {/* {state.useredits === '66656d6364' ?
+            >
+
+            </div>
+            {/* {state.useredits === '66656d6364' ?
                   <div className='nav-item nav-links'
                 //    onClick={handleLogout}
                   >Logout </div> : null
                 } */}
-            </ul>
+          </ul>
 
-          </div>
-        </nav>
+        </div>
+      </nav>
     </IconContext.Provider>
-    </>
+  </>
 }
 
 export default NavigationBar;

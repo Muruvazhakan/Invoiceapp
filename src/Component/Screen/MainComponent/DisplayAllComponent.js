@@ -11,15 +11,16 @@ import {
 
 const DisplayAllComponent = (props) => {
     return <>
-    <div >
+    <div className=" displayelements" >
         {Datas.navigationbarcontent.map((items, index) => {
             return(
-                <Link className="displayelements" to={{pathname:items.altname}} key={index}>
-            <Card className='displayscreenname' >
+              
+            <Card className='displayscreenname ' >
+                  <Link className="displayelements linkdecor" to={{pathname:items.altname}} key={index}>
                 {items.screenname}
-                
+                </Link>
             </Card>
-            </Link>
+          
             )
         })}
        

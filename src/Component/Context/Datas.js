@@ -25,4 +25,31 @@ export const navigationbarcontent = [
         altname: 'genestimate',
         displays: true
     },
+    
 ];
+
+export const userLogin = [
+    {
+    screenname: 'Login',
+    links: '/login',
+    altname: 'login',
+    displays: true
+},
+{
+    screenname: 'Siginup',
+    links: '/siginup',
+    altname: 'signup',
+    displays: true
+},
+]
+
+export const userLoginname = [
+    {
+        username: 'JR modular',
+        userPass: 'jrmodular123'
+    },
+    {
+        username: 'Other1',
+        userPass: 'jrmodular123'
+    },
+]

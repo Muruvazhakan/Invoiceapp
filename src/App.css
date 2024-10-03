@@ -1,7 +1,10 @@
 .App {
   text-align: center;
-  
 }
+.websitecontainer{
+  min-height: 97vh;
+}
+
 
 .App-logo {
   height: 40vmin;
