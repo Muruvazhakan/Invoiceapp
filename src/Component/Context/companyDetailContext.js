@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { v4 as uuidv4 } from "uuid";
 
@@ -29,23 +29,26 @@ const CompanyDetailContext = ({ children }) => {
     const [paymentdate, setpaymentdate] = useState('');
     const [companyDeleration, setcompanyDeleration] = useState('We declare that the invoice details are the actual price of the goods');
     const [cleardetailoption, setcleardetailoption] = useState(true);
-    let companydet = [
-        { id: 1, title: 'Prices', isvisible: true, desc: 'Prices quoted are strictly as per the size, quantity and design SPECIFIED only, Any change in either one will result in change in quoted price, If any change in Government taxes & regulations it will be implicated in pricing as per actual.' },
-        { id: 2, title: 'Billing format', isvisible: true, desc: 'Billing will be done for individual items & rates specified for individual items only tolerance of (+/-) 25mm will not affect the rate per Sqft quoted.' },
-        { id: 3, title: 'Payment & Supply of Materials', isvisible: true, desc: '50% Advance' },
-        { id: 4, title: '', isvisible: true, desc: '30% after start work' },
-        { id: 5, title: '', isvisible: true, desc: '20% after completion' },
-        { id: 6, title: '', isvisible: true, desc: 'Supply of materials will be done within 15 days from the date of receipt order and advance payments along with confirmed sizes & Design.' },
-        { id: 7, title: '', isvisible: true, desc: 'The materials will be taken for production once the Order and advance payments are received. Work order & Payments to be made. We can also work in line with your schedule of works.' },
-        { id: 8, title: 'Installation', isvisible: true, desc: 'We carry out the work once the materials reach the site. The Sequence of work will however have to be mutually agreed upon.' },
-        { id: 9, title: 'Warranty', isvisible: true, desc: 'All the Extrusions used will carry a warranty of 15 years. All the accessories used will have a warranty of one year under any manufacturing defects. The above warranty does not include mishandling of products & natural calamities like fire, earth quake etc.,' },
-    ];
+    // let companydet = [
+    //     { id: 1, title: 'Prices', isvisible: true, desc: 'Prices quoted are strictly as per the size, quantity and design SPECIFIED only, Any change in either one will result in change in quoted price, If any change in Government taxes & regulations it will be implicated in pricing as per actual.' },
+    //     { id: 2, title: 'Billing format', isvisible: true, desc: 'Billing will be done for individual items & rates specified for individual items only tolerance of (+/-) 25mm will not affect the rate per Sqft quoted.' },
+    //     { id: 3, title: 'Payment & Supply of Materials', isvisible: true, desc: '50% Advance' },
+    //     { id: 4, title: '', isvisible: true, desc: '30% after start work' },
+    //     { id: 5, title: '', isvisible: true, desc: '20% after completion' },
+    //     { id: 6, title: '', isvisible: true, desc: 'Supply of materials will be done within 15 days from the date of receipt order and advance payments along with confirmed sizes & Design.' },
+    //     { id: 7, title: '', isvisible: true, desc: 'The materials will be taken for production once the Order and advance payments are received. Work order & Payments to be made. We can also work in line with your schedule of works.' },
+    //     { id: 8, title: 'Installation', isvisible: true, desc: 'We carry out the work once the materials reach the site. The Sequence of work will however have to be mutually agreed upon.' },
+    //     { id: 9, title: 'Warranty', isvisible: true, desc: 'All the Extrusions used will carry a warranty of 15 years. All the accessories used will have a warranty of one year under any manufacturing defects. The above warranty does not include mishandling of products & natural calamities like fire, earth quake etc.,' },
+    // ];
     const [companydetails, setcompanydetails] = useState([]);
 
     const [companydetailtitle, setcompanydetailtitle] = useState('');
     const [companydetaildesc, setcompanydetaildesc] = useState('');
+    const [companydetailIsVisible, setcompanydetailIsVisible] = useState(false);
 
-
+    const [companyBankdetailtitle, setcompanyBankdetailtitle] = useState('');
+    const [companyBankdetailvalue, setcompanyBankdetailvalue] = useState('');
+    const [companyBankdetailIsVisible, setcompanyBankdetailIsVisible] = useState(false);
     // const [loginuser, setloginuser] = useState(localStorage.getItem('loginuser').length> 0 ? localStorage.getItem('loginuser'): '');
     const [loginuser, setloginuser] = useState('');
     const [loginUserPassword, setloginUserPassword] = useState('');
@@ -60,13 +63,16 @@ const CompanyDetailContext = ({ children }) => {
 
         const getresul = companydetails.map((items) => {
             // console.log(items.id + ' ids ' + id);
-            if (items.id == id) {
+            if (items.id === id) {
                 // console.log(items.id + ' inside ids ' + id);
                 if (type === "title") {
                     items.title = value;
                 }
-                else {
+                else if (type === "desc") {
                     items.desc = value;
+                }
+                else {
+                    items.isvisible = !items.isvisible;
                 }
             }
             return items;
@@ -76,12 +82,36 @@ const CompanyDetailContext = ({ children }) => {
         setcompanydetails(getresul);
 
     }
+    const updateBankDetailHandler = (id, value, type) => {
+        // console.log(value + ' ids ' + id);
+        // console.log(value );
+
+        const getresul = companyBankdetails.map((items) => {
+            // console.log(items.id + ' ids ' + id);
+            if (items.id === id) {
+                // console.log(items.id + ' inside ids ' + id);
+                if (type === "title") {
+                    items.title = value;
+                }
+                else if (type === "value") {
+                    items.value = value;
+                }
+                else {
+                    items.isvisible = !items.isvisible;
+                }
+            }
+            return items;
+        })
+
+        // console.log(getresul);
+        setcompanyBankdetails(getresul);
+    }
     const bankdet = [
-        { title: 'Bank Name', isvisible: true, value: 'AXIS BANK' },
-        { title: 'Branch', isvisible: true, value: 'Chromepet' },
-        { title: 'IFS Ccode', isvisible: true, value: 'UTIB0003905' },
-        { title: 'Account Number', isvisible: true, value: '923020005067138' },
-        { title: 'Account Holder Name', isvisible: true, value: 'JR MODULAR ENTERPRISES' },
+        { id: 1, title: 'Bank Name', isvisible: true, value: 'AXIS BANK' },
+        { id: 2, title: 'Branch', isvisible: true, value: 'Chromepet' },
+        { id: 3, title: 'IFS Ccode', isvisible: true, value: 'UTIB0003905' },
+        { id: 4, title: 'Account Number', isvisible: true, value: '923020005067138' },
+        { id: 5, title: 'Account Holder Name', isvisible: true, value: 'JR MODULAR ENTERPRISES' },
     ];
     const [companyBankdetails, setcompanyBankdetails] = useState(bankdet);
     const [companythankyou, setcompanythankyou] = useState('Thanking you and assuring our best services at all times.');
@@ -95,12 +125,12 @@ const CompanyDetailContext = ({ children }) => {
     }
 
     const setboxColors = (item, field) => {
-        if (field == 'color') {
-            return item.length == 0 || item == 0 ? 'error' : 'success';
+        if (field === 'color') {
+            return item.length === 0 || item === 0 ? 'error' : 'success';
         }
 
         else {
-            return item.length == 0 || item == 0 ? true : false;
+            return item.length === 0 || item === 0 ? true : false;
         }
 
     }
@@ -170,14 +200,14 @@ const CompanyDetailContext = ({ children }) => {
     }
     const getAlldataOnLogin = () => {
         let companyTermsAndCondition = localstore.getCompanyTermsAndConditionHandler();
-        console.log(companyTermsAndCondition);
+        // console.log(companyTermsAndCondition);
         setcompanydetails(companyTermsAndCondition);
-        
-        let companydetail =JSON.parse(localStorage.getItem('companydetail'));
-        console.log(companydetail);
+
+        let companydetail = localstore.getCompanyHandler();
+        // console.log(companydetail);
         setcompanyName(companydetail.companyName);
         setcompanyAddress(companydetail.companyAddress);
-        setcompanyBankdetails(companydetail.companyBankdetails);
+
         setcompanyDeleration(companydetail.companyDeleration);
         setcompanyGstin(companydetail.companyGstin);
         setcompanyGstinStatename(companydetail.companyGstinStatename);
@@ -185,17 +215,13 @@ const CompanyDetailContext = ({ children }) => {
         setcompanyPhno(companydetail.companyPhno);
         setcompanyTagLine(companydetail.companyTagLine);
         setcompanydetaildesc(companydetail.companydetaildesc);
-        setcompanydetaildesc(companydetail.companydetaildesc);
+        setcompanymailid(companydetail.companymailid);
         setcompanythankyou(companydetail.companythankyou);
 
-    // let companydetail1={companyAddress:props.companyAddress,companyBankdetails:props.companyBankdetails,companyDeleration:props.companyDeleration,
-    //     companyGstin:props.companyGstin,companyGstinStatename:props.companyGstinStatename,companyName:props.companyName,companyName:props.companyOwner,
-    // companyPhno:props.companyPhno,companyTagLine :props.companyTagLine,
-    //     companydetaildesc:props.companydetaildesc,companymailid:props.companydetaildesc,companythankyou:props.companythankyou
-
-    // }
-
-
+        let companyBankdetail = localstore.addOrGetCompanyBankDetailHandler('', 'get');
+        // console.log('companyBankdetail');
+        // console.log(companyBankdetail);
+        setcompanyBankdetails(companyBankdetail);
     }
     const companyOtherDetailHandeler = (item, type) => {
         //console.log(companydetailtitle + ' ' + companydetaildesc + ' ' + type + ' item' +item);
@@ -207,22 +233,23 @@ const CompanyDetailContext = ({ children }) => {
         //console.log('type ' + type);
         let getresul;
         if (type === "new") {
-            getresul = { id: uuidv4(), title: companydetailtitle, isvisible: true, desc: companydetaildesc };
+            getresul = { id: uuidv4(), title: companydetailtitle, isvisible: companydetailIsVisible, desc: companydetaildesc };
             //console.log('getresul');
             //console.log(getresul);
             //console.log(companydetails);
             setcompanydetails([
                 ...companydetails, getresul
             ]);
-       
+
             toast.success("Details are Added");
             setcompanydetailtitle('');
             setcompanydetaildesc('');
+            setcompanydetailIsVisible(false);
         }
         else if (type === "delete") {
             getresul = companydetails.filter((items) => {
                 //console.log(items.id + ' ids ' + item);
-                return items.id != item;
+                return items.id !== item;
             })
 
             //console.log(getresul);
@@ -232,6 +259,39 @@ const CompanyDetailContext = ({ children }) => {
 
     }
 
+    const companyBankDetailHandler = (item, type) => {
+        //  console.log(companyBankdetailtitle + ' ' + companyBankdetailvalue + ' ' + type + ' item' +item);
+        if (companyBankdetailtitle.length === 0 && companyBankdetailvalue.length === 0 && type !== "delete") {
+            toast.error("Both Details are Empty");
+            return;
+        }
+        //console.log('type ' + type);
+        let getresul;
+        if (type === "new") {
+            getresul = { id: uuidv4(), title: companyBankdetailtitle, isvisible: companyBankdetailIsVisible, value: companyBankdetailvalue };
+            //console.log('getresul');
+            //console.log(getresul);
+            //console.log(companydetails);
+            setcompanyBankdetails([
+                ...companyBankdetails, getresul
+            ]);
+
+            toast.success("New Bank Details are Added");
+            setcompanyBankdetailtitle('');
+            setcompanyBankdetailvalue('');
+            setcompanyBankdetailIsVisible(false);
+        }
+        else if (type === "delete") {
+            getresul = companyBankdetails.filter((items) => {
+                //console.log(items.id + ' ids ' + item);
+                return items.id !== item;
+            })
+
+            //console.log(getresul);
+            setcompanyBankdetails(getresul);
+            toast.success("Selected Bank detail is deleted");
+        }
+    }
     useEffect(() => {
         let useralreadyloggedin = localStorage.getItem('loginuser');
         //    console.log(useralreadyloggedin);
@@ -244,17 +304,18 @@ const CompanyDetailContext = ({ children }) => {
         // const [loginstatus, setloginstatus] = useState(localStorage.getItem('loginuser').length> 0 ? true: false);
     }, []);
 
-    useEffect(() =>{
+    useEffect(() => {
         getAlldataOnLogin()
-    },[])
+    }, [])
 
     const compDet = {
         clientName, setclientName, clientPhno, setclientPhno, clientAdd, setclientAdd, companyName, setcompanyName,
         companyTagLine, setcompanyTagLine, companyAddress, setcompanyAddress, companyPhno, setcompanyPhno, companyGstin, setcompanyGstin, companyGstinStatename, setcompanyGstinStatename,
-        invoiceid, setinvoiceid, invoicedate, setinvoicedate, paymentmode, setpaymentmode, paymentdate, setpaymentdate, invoiceidcount, setinvoiceidount,
+        invoiceid, setinvoiceid, invoicedate, setinvoicedate, paymentmode, setpaymentmode, paymentdate, setpaymentdate, invoiceidcount, setinvoiceidount, updateBankDetailHandler, companyBankDetailHandler,
         companyDeleration, setcompanyDeleration, cleardetailoption, setcleardetailoption, companymailid, setcompanymailid, companyOwner, setcompanyOwner, companydetails, setcompanydetails, companyBankdetails, setcompanyBankdetails,
         companythankyou, setcompanythankyou, companytitle, companyOtherDetailHandeler, companydetailtitle, setcompanydetailtitle, companydetaildesc, setcompanydetaildesc, setval, setboxColors,
-        loginuser, setloginuser, loginUserPassword, setloginUserPassword, loginHandler, loginstatus, setloginstatus, loginId, setloginId, loginUserConfirmPassword, setloginUserConfirmPassword, tokenid, settokenid, logoutHandler
+        loginuser, setloginuser, loginUserPassword, setloginUserPassword, loginHandler, loginstatus, setloginstatus, loginId, setloginId, loginUserConfirmPassword, setloginUserConfirmPassword, tokenid, settokenid, logoutHandler,
+        companyBankdetailtitle, setcompanyBankdetailtitle, companyBankdetailvalue, setcompanyBankdetailvalue, companyBankdetailIsVisible, setcompanyBankdetailIsVisible,companydetailIsVisible, setcompanydetailIsVisible
     };
 
 

@@ -3,8 +3,8 @@ import React, { useContext } from "react";
 import { CompanyDetail } from "../../../Context/companyDetailContext";
 import './CompanyOtherDetailEdit.css';
 import Card from "../../../Style/Card/Card";
-import { Box, Button, TextField } from "@mui/material";
-import { MdDeleteForever,MdOutlineSaveAlt } from "react-icons/md";
+import { Box, Button, FormControlLabel, Switch, TextField } from "@mui/material";
+import { MdDeleteForever, MdOutlineSaveAlt } from "react-icons/md";
 import { FaRegSave } from "react-icons/fa";
 import * as localstorage from "../../../Context/localStorageData";
 const CompanyOtherDetailEdit = () => {
@@ -19,15 +19,15 @@ const CompanyOtherDetailEdit = () => {
 
     return (
 
-        <Card className="">
+        <Card >
             <h2>Terms And Conditions</h2>
             {companydet.companydetails.map((item, index) => {
-                return (<Box className="  "
+                return (<Box className="  " key={item.id}
                     sx={{ '& .MuiTextField-root': { m: 2, width: '45ch' } }}
                 >
 
                     {item.isvisible === true && <>
-                        <div className=" companyotherdeta companyindex">
+                        <div className=" companyotherdeta companyindex" key={item.id}>
                             <div className="companyindex ">
                                 {index + 1}</div>
 
@@ -43,6 +43,18 @@ const CompanyOtherDetailEdit = () => {
                                     companydet.companytitle(item.id, e.target.value, 'desc');
                                 }}
                             />
+
+                            <FormControlLabel
+                                control={
+                                    <Switch checked={item.isvisible}
+                                        onChange={(e) => {
+                                            companydet.companytitle(item.id, e, 'visible');
+                                        }}
+                                        name="Visibility" />
+                                }
+                            // label="Is Visible?"
+                            />
+                            <h5 className="tagline isvisible">{item.isvisible ? 'Visible' : 'Hidden'}</h5>
 
                             {/* <TableCell className="table-edit" onClick={() => companydet.companyOtherDetailHandeler(item.id, companydetailtitle, companydetaildesc, companydetailid, "save")}
                             >
@@ -88,6 +100,22 @@ const CompanyOtherDetailEdit = () => {
                             }}
 
                         />
+
+                        <FormControlLabel
+                            control={
+                                <Switch checked={companydet.companyBankdetailIsVisible}
+                                    onChange={(e) => {
+                                        companydet.setcompanydetailIsVisible(!companydet.companydetailIsVisible);
+                                    }}
+                                    name="Visibility" />
+                            }
+                            label="Is Visible?"
+                        />
+                        <div className="tagline isvisible">
+                            {companydet.companyBankdetailIsVisible ? 'Visible in the screen' : <>Details will be hidden...
+                            <h5> Please click switch to Visible </h5>  </>}
+                        </div>
+
 
                         <Button variant="contained" color="success" endIcon={<FaRegSave />}
                             onClick={() => companydet.companyOtherDetailHandeler('', "new")} >

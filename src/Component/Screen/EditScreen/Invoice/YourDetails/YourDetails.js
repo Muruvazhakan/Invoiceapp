@@ -18,12 +18,12 @@ const YourDetails = () => {
   }
 
   const setboxColors = (item, field) => {
-    if (field == 'color') {
-      return item.length == 0 ? 'error' : 'success';
+    if (field === 'color') {
+      return item.length === 0 ? 'error' : 'success';
     }
 
     else {
-      return item.length == 0 ? true : false;
+      return item.length === 0 ? true : false;
     }
 
   }
@@ -51,7 +51,7 @@ const YourDetails = () => {
               color={setboxColors(compayDet.companyAddress, 'color')}
               error={setboxColors(compayDet.companyAddress, 'error')} />
 
-            <TextField required id="outlined-required" label="Company Phone Number"  value={compayDet.companyPhno}
+            <TextField required id="outlined-required" label="Company Phone Number" value={compayDet.companyPhno}
               onChange={(e) => setval(e, compayDet.setcompanyPhno)}
               color={setboxColors(compayDet.companyPhno, 'color')}
               error={setboxColors(compayDet.companyPhno, 'error')} />
@@ -60,7 +60,17 @@ const YourDetails = () => {
               onChange={(e) => setval(e, compayDet.setcompanymailid)}
               color={setboxColors(compayDet.companymailid, 'color')}
               error={setboxColors(compayDet.companymailid, 'error')} />
- 
+
+            <TextField required id="outlined-required" label="Company Owner Name" value={compayDet.companyOwner}
+              onChange={(e) => setval(e, compayDet.setcompanyOwner)}
+              color={setboxColors(compayDet.companyOwner, 'color')}
+              error={setboxColors(compayDet.companyOwner, 'error')} />
+
+            <TextField required id="outlined-required" label="Thanksyou words" value={compayDet.companythankyou} multiline rows={2}
+              onChange={(e) => setval(e, compayDet.setcompanythankyou)}
+              color={setboxColors(compayDet.companythankyou, 'color')}
+              error={setboxColors(compayDet.companythankyou, 'error')} />
+
             <TextField id="outlined-required" label="Company Gstin" value={compayDet.companyGstin}
               onChange={(e) => setval(e, compayDet.setcompanyGstin)}
             //  color ={setboxColors(compayDet.companyGstin,'color')}
@@ -72,7 +82,7 @@ const YourDetails = () => {
             //  error={setboxColors(compayDet.companyGstinStatename,'error')}
             />
 
-            <TextField id="outlined-required" label="Company Declaration" value={compayDet.companyDeleration} multiline rows={3} 
+            <TextField id="outlined-required" label="Company Declaration" value={compayDet.companyDeleration} multiline rows={3}
               onChange={(e) => setval(e, compayDet.setcompanyDeleration)}
               color={setboxColors(compayDet.companyDeleration, 'color')}
               error={setboxColors(compayDet.companyDeleration, 'error')}
@@ -81,8 +91,8 @@ const YourDetails = () => {
               System will automatically update..
             </h5>
             <Button variant="contained" color="info" endIcon={<MdOutlineSaveAlt />}
-                onClick={() => localstorage.addOrUpdateCompanyHandler(compayDet, "save")} >
-                Save the Changes
+              onClick={() => localstorage.addOrUpdateCompanyHandler(compayDet, "save")} >
+              Save the Changes
             </Button>
           </Box>
         </Card>
