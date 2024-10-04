@@ -34,14 +34,14 @@ const YourDetails = () => {
       <FormControl>
         <Card>
           <h3>Company Details</h3>
-          <Box component="form" sx={{ '& .MuiTextField-root': { m: 1, width: '25ch' } }} >
+          <Box component="form" sx={{ '& .MuiTextField-root': { m: 1, width: '45ch' } }} >
 
             <TextField required id="outlined-required" label="Company Name" value={compayDet.companyName}
               onChange={(e) => setval(e, compayDet.setcompanyName)}
               color={setboxColors(compayDet.companyName, 'color')}
               error={setboxColors(compayDet.companyName, 'error')} />
 
-            <TextField required id="outlined-required" label="Company Tag Line" value={compayDet.companyTagLine}
+            <TextField required id="outlined-required" label="Company Tag Line" multiline value={compayDet.companyTagLine}
               onChange={(e) => setval(e, compayDet.setcompanyTagLine)}
               color={setboxColors(compayDet.companyTagLine, 'color')}
               error={setboxColors(compayDet.companyTagLine, 'error')} />
@@ -66,13 +66,13 @@ const YourDetails = () => {
             //  color ={setboxColors(compayDet.companyGstin,'color')}
             //  error={setboxColors(compayDet.companyGstin,'error')}
             />
-            <TextField id="outlined-required" label="Company Gstin state" value={compayDet.companyGstinStatename}
+            <TextField id="outlined-required" label="Company Gstin state" value={compayDet.companyGstinStatename} multiline
               onChange={(e) => setval(e, compayDet.setcompanyGstinStatename)}
             //  color ={setboxColors(compayDet.companyGstinStatename,'color')}
             //  error={setboxColors(compayDet.companyGstinStatename,'error')}
             />
 
-            <TextField id="outlined-required" label="Company Declaration" value={compayDet.companyDeleration} multiline rows={4} 
+            <TextField id="outlined-required" label="Company Declaration" value={compayDet.companyDeleration} multiline rows={3} 
               onChange={(e) => setval(e, compayDet.setcompanyDeleration)}
               color={setboxColors(compayDet.companyDeleration, 'color')}
               error={setboxColors(compayDet.companyDeleration, 'error')}

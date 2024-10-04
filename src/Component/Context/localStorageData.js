@@ -2,6 +2,18 @@
 
 export const addOrUpdateCompanyHandler = (props) =>{
     console.log(props);
+    let companydetail={companyAddress:props.companyAddress,companyBankdetails:props.companyBankdetails,companyDeleration:props.companyDeleration,
+        companyGstin:props.companyGstin,companyGstinStatename:props.companyGstinStatename,companyName:props.companyName,companyOwner:props.companyOwner,companyPhno:props.companyPhno,companyTagLine :props.companyTagLine,
+        companydetaildesc:props.companydetaildesc,companymailid:props.companymailid,companythankyou:props.companythankyou
+
+    }
+
+    console.log(props);
+    localStorage.setItem('companydetail',  JSON.stringify(companydetail));
+    console.log('saved data');
+    let sto =JSON.parse(localStorage.getItem('companydetail'));
+    console.log(sto);
+
 //     companyAddress
 // : 
 // "Address: No.1/4, Mummurti Nagar Main Road, Chromepet, Chennai-600044"
@@ -69,14 +81,18 @@ export const addOrUpdateCompanyHandler = (props) =>{
 // :
 }
 
+export const getCompanyHandler = () =>{
+    // console.log('get CompanyTermsAndCondition ');
+    return JSON.parse(localStorage.getItem('companydetail'));
+}
 export const addOrUpdateCompanyTermsAndConditionHandler = (props) =>{
-    console.log(props);
+    // console.log(props);
     localStorage.setItem('companyTermsAndCondition',  JSON.stringify(props));
-    console.log('saved data');
-    let sto =JSON.parse(localStorage.getItem('companyTermsAndCondition'));
-    console.log(sto);
+    // console.log('saved data');
+    // let sto =JSON.parse(localStorage.getItem('companyTermsAndCondition'));
+    // console.log(sto);
 }
 export const getCompanyTermsAndConditionHandler = () =>{
-    console.log('get CompanyTermsAndCondition ');
+    // console.log('get CompanyTermsAndCondition ');
     return JSON.parse(localStorage.getItem('companyTermsAndCondition'));
 }

@@ -172,6 +172,30 @@ const CompanyDetailContext = ({ children }) => {
         let companyTermsAndCondition = localstore.getCompanyTermsAndConditionHandler();
         console.log(companyTermsAndCondition);
         setcompanydetails(companyTermsAndCondition);
+        
+        let companydetail =JSON.parse(localStorage.getItem('companydetail'));
+        console.log(companydetail);
+        setcompanyName(companydetail.companyName);
+        setcompanyAddress(companydetail.companyAddress);
+        setcompanyBankdetails(companydetail.companyBankdetails);
+        setcompanyDeleration(companydetail.companyDeleration);
+        setcompanyGstin(companydetail.companyGstin);
+        setcompanyGstinStatename(companydetail.companyGstinStatename);
+        setcompanyOwner(companydetail.companyOwner);
+        setcompanyPhno(companydetail.companyPhno);
+        setcompanyTagLine(companydetail.companyTagLine);
+        setcompanydetaildesc(companydetail.companydetaildesc);
+        setcompanydetaildesc(companydetail.companydetaildesc);
+        setcompanythankyou(companydetail.companythankyou);
+
+    // let companydetail1={companyAddress:props.companyAddress,companyBankdetails:props.companyBankdetails,companyDeleration:props.companyDeleration,
+    //     companyGstin:props.companyGstin,companyGstinStatename:props.companyGstinStatename,companyName:props.companyName,companyName:props.companyOwner,
+    // companyPhno:props.companyPhno,companyTagLine :props.companyTagLine,
+    //     companydetaildesc:props.companydetaildesc,companymailid:props.companydetaildesc,companythankyou:props.companythankyou
+
+    // }
+
+
     }
     const companyOtherDetailHandeler = (item, type) => {
         //console.log(companydetailtitle + ' ' + companydetaildesc + ' ' + type + ' item' +item);
