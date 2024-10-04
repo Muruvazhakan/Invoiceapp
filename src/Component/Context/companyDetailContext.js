@@ -3,7 +3,9 @@ import { toast } from "react-toastify";
 import { v4 as uuidv4 } from "uuid";
 
 import * as Datas from '../Context/Datas';
+import * as localstore from './localStorageData';
 export const CompanyDetail = createContext();
+
 
 const CompanyDetailContext = ({ children }) => {
 
@@ -38,14 +40,14 @@ const CompanyDetailContext = ({ children }) => {
         { id: 8, title: 'Installation', isvisible: true, desc: 'We carry out the work once the materials reach the site. The Sequence of work will however have to be mutually agreed upon.' },
         { id: 9, title: 'Warranty', isvisible: true, desc: 'All the Extrusions used will carry a warranty of 15 years. All the accessories used will have a warranty of one year under any manufacturing defects. The above warranty does not include mishandling of products & natural calamities like fire, earth quake etc.,' },
     ];
-    const [companydetails, setcompanydetails] = useState(companydet);
+    const [companydetails, setcompanydetails] = useState([]);
 
     const [companydetailtitle, setcompanydetailtitle] = useState('');
     const [companydetaildesc, setcompanydetaildesc] = useState('');
 
 
     // const [loginuser, setloginuser] = useState(localStorage.getItem('loginuser').length> 0 ? localStorage.getItem('loginuser'): '');
-    const [loginuser, setloginuser] = useState( '');
+    const [loginuser, setloginuser] = useState('');
     const [loginUserPassword, setloginUserPassword] = useState('');
     const [loginUserConfirmPassword, setloginUserConfirmPassword] = useState('');
 
@@ -54,25 +56,25 @@ const CompanyDetailContext = ({ children }) => {
 
     const [loginId, setloginId] = useState('');
     const [tokenid, settokenid] = useState('');
-    const companytitle = (id,value, type) => {
-        
-          const   getresul = companydetails.map((items) => {
-                // console.log(items.id + ' ids ' + id);
-                if (items.id == id){
-                    // console.log(items.id + ' inside ids ' + id);
-                    if (type === "title") {
-                        items.title = value;
-                    }
-                    else{
-                        items.desc = value;
-                    }
-                }
-                return items;
-            })
+    const companytitle = (id, value, type) => {
 
-            // console.log(getresul);
-            setcompanydetails(getresul);
-    
+        const getresul = companydetails.map((items) => {
+            // console.log(items.id + ' ids ' + id);
+            if (items.id == id) {
+                // console.log(items.id + ' inside ids ' + id);
+                if (type === "title") {
+                    items.title = value;
+                }
+                else {
+                    items.desc = value;
+                }
+            }
+            return items;
+        })
+
+        // console.log(getresul);
+        setcompanydetails(getresul);
+
     }
     const bankdet = [
         { title: 'Bank Name', isvisible: true, value: 'AXIS BANK' },
@@ -103,88 +105,92 @@ const CompanyDetailContext = ({ children }) => {
 
     }
 
-    const loginHandler = (type) =>{
-        console.log('login handler' + loginuser.length +'loginuser.length ' +loginUserPassword.length );
-       
-            if(loginuser.length>0 && loginUserPassword.length>0)
-                {
-                    let userExsist=false
-                 userExsist = Datas.userLoginname.filter((item)=>{
-                    console.log(item);
-                    if(item.username === loginuser && item.userPass === loginUserPassword){
-                       return true;
-                    }
-                    else return false;
-                });
-                // console.log(userExsist);
-                if(type ==='login'){
-                if(userExsist.length>0){
-                    toast.success(" Welcome " + loginuser + "!");   
+    const loginHandler = (type) => {
+        //console.log('login handler' + loginuser.length +'loginuser.length ' +loginUserPassword.length );
+
+        if (loginuser.length > 0 && loginUserPassword.length > 0) {
+            let userExsist = false
+            userExsist = Datas.userLoginname.filter((item) => {
+                //console.log(item);
+                if (item.username === loginuser && item.userPass === loginUserPassword) {
+                    return true;
+                }
+                else return false;
+            });
+            // console.log(userExsist);
+            if (type === 'login') {
+                if (userExsist.length > 0) {
+                    toast.success(" Welcome " + loginuser + "!");
                     localStorage.setItem('loginuser', loginuser);
                     setloginstatus(true);
                     window.location.href = '/';
-                    
-                   
-                }else{
+                    getAlldataOnLogin();
+
+                } else {
                     toast.warning("Password mismatch");
                 }
             } else {
-                if(loginUserPassword !==loginUserConfirmPassword){
+                if (loginUserPassword !== loginUserConfirmPassword) {
                     toast.error("Password is not match iwth Confirm Password");
                     return;
                 }
-                if(userExsist.length>0){
-                    toast.error(" User already exist");   
+                if (userExsist.length > 0) {
+                    toast.error(" User already exist");
                     // setloginstatus(true);
-                }else if(tokenid ==='muru123') {
+                } else if (tokenid === 'muru123') {
                     toast.success("User registered");
                 } else {
-                    toast.error(" Token Id is not matched");   
+                    toast.error(" Token Id is not matched");
                 }
             }
-    
-                // if(loginuser ==="JR modular" && loginUserPassword ==="jrmodular123"){
-                //     toast.success(" Welcome " + loginuser + "!");   
-                //     setloginstatus(true);
-                // }
-                // else{
-                //     toast.warning("Password mismatch");
-                // }
-            }
-            else{
-               
-                toast.error("Please fill both User Name and Password");
-                return;
-            }
-        
-       
+
+            // if(loginuser ==="JR modular" && loginUserPassword ==="jrmodular123"){
+            //     toast.success(" Welcome " + loginuser + "!");   
+            //     setloginstatus(true);
+            // }
+            // else{
+            //     toast.warning("Password mismatch");
+            // }
+        }
+        else {
+
+            toast.error("Please fill both User Name and Password");
+            return;
+        }
+
+
     }
 
     const logoutHandler = () => {
-        
+
         localStorage.setItem('loginuser', '');
         setloginstatus(false);
         window.location.href = '/';
-        toast.success("You have successfully logedout")
-      }
+        toast.success("You have successfully logedout");
+    }
+    const getAlldataOnLogin = () => {
+        let companyTermsAndCondition = localstore.getCompanyTermsAndConditionHandler();
+        console.log(companyTermsAndCondition);
+        setcompanydetails(companyTermsAndCondition);
+    }
     const companyOtherDetailHandeler = (item, type) => {
-        console.log(companydetailtitle + ' ' + companydetaildesc + ' ' + type + ' item' +item);
-        
-        if(companydetailtitle.length ===0 && companydetaildesc.length ===0 && type !== "delete"){
+        //console.log(companydetailtitle + ' ' + companydetaildesc + ' ' + type + ' item' +item);
+
+        if (companydetailtitle.length === 0 && companydetaildesc.length === 0 && type !== "delete") {
             toast.error("Both Details are Empty");
             return;
         }
-        console.log('type ' + type);
+        //console.log('type ' + type);
         let getresul;
         if (type === "new") {
-           getresul= { id: uuidv4(), title: companydetailtitle, isvisible: true, desc: companydetaildesc};
-            console.log('getresul');
-            console.log(getresul);
-            console.log(companydetails);
+            getresul = { id: uuidv4(), title: companydetailtitle, isvisible: true, desc: companydetaildesc };
+            //console.log('getresul');
+            //console.log(getresul);
+            //console.log(companydetails);
             setcompanydetails([
-                ...companydetails,getresul
+                ...companydetails, getresul
             ]);
-            
+       
             toast.success("Details are Added");
             setcompanydetailtitle('');
             setcompanydetaildesc('');
@@ -199,30 +205,32 @@ const CompanyDetailContext = ({ children }) => {
             setcompanydetails(getresul);
             toast.success("Details deleted");
         }
-      
-
-       
 
     }
 
     useEffect(() => {
-       let useralreadyloggedin =localStorage.getItem('loginuser');
-       if(useralreadyloggedin.length>0){
-        setloginstatus(true);
-        setloginuser(useralreadyloggedin);
-        // toast.success('Welcome Back ' +useralreadyloggedin);
-       }
-       console.log(useralreadyloggedin);
+        let useralreadyloggedin = localStorage.getItem('loginuser');
+        //    console.log(useralreadyloggedin);
+        if (useralreadyloggedin !== null && useralreadyloggedin !== '') {
+            setloginstatus(true);
+            setloginuser(useralreadyloggedin);
+            // toast.success('Welcome Back ' +useralreadyloggedin);
+        }
+        //    console.log(useralreadyloggedin);
         // const [loginstatus, setloginstatus] = useState(localStorage.getItem('loginuser').length> 0 ? true: false);
-    }, [])
+    }, []);
+
+    useEffect(() =>{
+        getAlldataOnLogin()
+    },[])
 
     const compDet = {
         clientName, setclientName, clientPhno, setclientPhno, clientAdd, setclientAdd, companyName, setcompanyName,
         companyTagLine, setcompanyTagLine, companyAddress, setcompanyAddress, companyPhno, setcompanyPhno, companyGstin, setcompanyGstin, companyGstinStatename, setcompanyGstinStatename,
         invoiceid, setinvoiceid, invoicedate, setinvoicedate, paymentmode, setpaymentmode, paymentdate, setpaymentdate, invoiceidcount, setinvoiceidount,
         companyDeleration, setcompanyDeleration, cleardetailoption, setcleardetailoption, companymailid, setcompanymailid, companyOwner, setcompanyOwner, companydetails, setcompanydetails, companyBankdetails, setcompanyBankdetails,
-        companythankyou, setcompanythankyou, companytitle, companyOtherDetailHandeler,companydetailtitle, setcompanydetailtitle,companydetaildesc, setcompanydetaildesc,setval,setboxColors,
-        loginuser, setloginuser,loginUserPassword, setloginUserPassword,loginHandler,loginstatus, setloginstatus,loginId, setloginId,loginUserConfirmPassword, setloginUserConfirmPassword,tokenid, settokenid,logoutHandler
+        companythankyou, setcompanythankyou, companytitle, companyOtherDetailHandeler, companydetailtitle, setcompanydetailtitle, companydetaildesc, setcompanydetaildesc, setval, setboxColors,
+        loginuser, setloginuser, loginUserPassword, setloginUserPassword, loginHandler, loginstatus, setloginstatus, loginId, setloginId, loginUserConfirmPassword, setloginUserConfirmPassword, tokenid, settokenid, logoutHandler
     };
 
 

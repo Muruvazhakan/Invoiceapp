@@ -4,9 +4,9 @@ import { CompanyDetail } from "../../../Context/companyDetailContext";
 import './CompanyOtherDetailEdit.css';
 import Card from "../../../Style/Card/Card";
 import { Box, Button, TextField } from "@mui/material";
-import { MdDeleteForever } from "react-icons/md";
+import { MdDeleteForever,MdOutlineSaveAlt } from "react-icons/md";
 import { FaRegSave } from "react-icons/fa";
-
+import * as localstorage from "../../../Context/localStorageData";
 const CompanyOtherDetailEdit = () => {
 
 
@@ -63,9 +63,13 @@ const CompanyOtherDetailEdit = () => {
                 </Box>
                 )
             })}
-            <h5>
+            {/* <h5>
                 System will automatically update while editing...
-            </h5>
+            </h5> */}
+            <Button variant="contained" color="info" endIcon={<MdOutlineSaveAlt />}
+                onClick={() => localstorage.addOrUpdateCompanyTermsAndConditionHandler(companydet.companydetails, "save")} >
+                Save the Changes
+            </Button>
             <Card >
                 <h2 >Add New Terms And Conditions</h2>
                 <Box component="form" sx={{ '& .MuiTextField-root': { m: 2, width: '35ch' } }}>
