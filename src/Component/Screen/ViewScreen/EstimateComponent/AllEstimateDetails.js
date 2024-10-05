@@ -15,81 +15,84 @@ const AllEstimateDetails = () => {
     return (
 
         <>
-            {estimatedet.estimateHistoryData === null && <>
-            return (<>
-                   <NoData details="Estimation Found"/>
-            </>)
-           </> }
-            <div className="displayelements">
-                {estimatedet.estimateHistoryData.map((item) => {
 
-                    // item.estimatedate 
-                    // item.estimatedate1 
-                    // item.clientName
-                    // item.clientPhno 
-                    // item.clientAdd 
-                    // item.rows 
-                    // item.granttotalsqft 
-                    // item.grandtotalpvccost
-                    // item.grandtotalupvccost 
-                    // item.grandtotalwoodcost 
+            {estimatedet.estimateHistoryData === null ?
+                <>
+                   
+                        <NoData details="Estimation Found" />
+                    
+                </>
+                :
+                <div className="displayelements">
+                    {estimatedet.estimateHistoryData.map((item) => {
+
+                        // item.estimatedate 
+                        // item.estimatedate1 
+                        // item.clientName
+                        // item.clientPhno 
+                        // item.clientAdd 
+                        // item.rows 
+                        // item.granttotalsqft 
+                        // item.grandtotalpvccost
+                        // item.grandtotalupvccost 
+                        // item.grandtotalwoodcost 
 
 
 
-                    return (<> <Card className="  allestimatedisplay">
-                        {/* <div className="generaldetails "> */}
+                        return (<> <Card className="  allestimatedisplay">
+                            {/* <div className="generaldetails "> */}
 
-                        <ul className="details invoicedetails details ">
+                            <ul className="details invoicedetails details ">
 
-                            <li >
-                                <div className="companyname"> Estimate ID: {item.estimateid}</div>
-                            </li>
-                            <li>
-                                <div className="companyname"> Estimate Date: {item.estimatedate}</div>
-
-                            </li>
-                        </ul>
-                        <ul className="details">
-                            <div className=" ">
-                                <h3>Client Details</h3>
+                                <li >
+                                    <div className="companyname"> Estimate ID: {item.estimateid}</div>
+                                </li>
                                 <li>
-                                    Client Name
-                                </li> <div className="nameheigh">{item.clientName} </div> 
-                                <li>
-                                    Client Phone Number
-                                </li>{item.clientPhno}
-                                <li>
-                                    Client Address
-                                </li> {item.clientAdd}
-                            </div>
-                        </ul>
-                        <ul className="details  ">
-                            <div className="">
-                                <h3>Estimated Details</h3>
-                                <li className="">
-                                    Estimated Grand Total Sq.ft
-                                </li> {item.granttotalsqft}
-                                <li>
-                                    Estimated Grand Total PVC Cost
-                                </li> {item.grandtotalpvccost}
-                                <li>
-                                    Estimated Grand Total UPVC Cost
-                                </li> {item.grandtotalupvccost}
-                                <li>
-                                    Estimated Grand Total Wood Cost
-                                </li>{item.grandtotalwoodcost}
-                            </div>
-                        </ul>
+                                    <div className="companyname"> Estimate Date: {item.estimatedate}</div>
+
+                                </li>
+                            </ul>
+                            <ul className="details">
+                                <div className=" ">
+                                    <h3>Client Details</h3>
+                                    <li>
+                                        Client Name
+                                    </li> <div className="nameheigh">{item.clientName} </div>
+                                    <li>
+                                        Client Phone Number
+                                    </li>{item.clientPhno}
+                                    <li>
+                                        Client Address
+                                    </li> {item.clientAdd}
+                                </div>
+                            </ul>
+                            <ul className="details  ">
+                                <div className="">
+                                    <h3>Estimated Details</h3>
+                                    <li className="">
+                                        Estimated Grand Total Sq.ft
+                                    </li> {item.granttotalsqft}
+                                    <li>
+                                        Estimated Grand Total PVC Cost
+                                    </li> {item.grandtotalpvccost}
+                                    <li>
+                                        Estimated Grand Total UPVC Cost
+                                    </li> {item.grandtotalupvccost}
+                                    <li>
+                                        Estimated Grand Total Wood Cost
+                                    </li>{item.grandtotalwoodcost}
+                                </div>
+                            </ul>
 
 
-                        {/* </div> */}
+                            {/* </div> */}
 
-                    </Card>  </>)
+                        </Card>  </>)
 
-                })}
+                    })}
 
-            </div>
-
+                </div>
+            }
         </>)
 }
 

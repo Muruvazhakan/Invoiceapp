@@ -127,11 +127,11 @@ const EstimatestateContext = ({ children }) => {
             else{
                 toast.success('Estimate Details are updated');
             }
-            console.log('estimateHistoryData');
-            console.log(estimateHistoryData);
+            // console.log('estimateHistoryData');
+            // console.log(estimateHistoryData);
 
         } else {
-            console.log('inside else');
+            // console.log('inside else');
             setestimateHistoryData([
                 singleEstimation
             ]);
@@ -140,7 +140,7 @@ const EstimatestateContext = ({ children }) => {
         localstorage.addOrGetEstimateHistoryData(estimateHistoryData, "save");
         //  console.log(saveddata);
         // toast.success('Estimate Details are added');
-        console.log(estimateHistoryData);
+        //console.log(estimateHistoryData);
        
     }
 
@@ -354,7 +354,7 @@ const EstimatestateContext = ({ children }) => {
         let count = estimateidcount;
         localstorage.addOrGetEstimateid(++count, "save");
         setestimateidcount(++count);
-        console.log("todaydate: " + estimateidcount + '  ');
+        //console.log("todaydate: " + estimateidcount + '  ');
 
     }
     useEffect(() => {
@@ -372,16 +372,16 @@ const EstimatestateContext = ({ children }) => {
             setestimateidcount(count);
         }
 
-        console.log('estimateHistoryData');
-        console.log(estimateHistoryData);
+        //console.log('estimateHistoryData');
+        //console.log(estimateHistoryData);
         // console.log(count + 'count');
     }, []);
 
     useEffect(() => {
         if (estimateHistoryData !== null) {
             localstorage.addOrGetEstimateHistoryData(estimateHistoryData, "save");
-            console.log("localstorage: ");
-            console.log(localstorage.addOrGetEstimateHistoryData(estimateHistoryData, "get"));
+            //console.log("localstorage: ");
+            //console.log(localstorage.addOrGetEstimateHistoryData(estimateHistoryData, "get"));
         }
 
     }, [estimateHistoryData]);

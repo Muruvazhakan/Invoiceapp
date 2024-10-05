@@ -4,4 +4,7 @@
     color: red;
     font-weight: 800;
     font-size: 25px;
+    display: flex;
+    border-radius: 5%;
+    padding: 5%;
 }

@@ -1,7 +1,7 @@
-import companyperson from '../../Image/companyperson.png';
+import companyperson from '../../Image/companydetails.png';
 import invocie from '../../Image/invoice.png';
-import estimation from '../../Image/estimation.png';
-
+import estimation from '../../Image/estimationgen.png';
+import allestimation from '../../Image/allestimation.png';
 export const isbackendconnect = "Yes";
 
 
@@ -38,7 +38,7 @@ export const navigationbarcontent = [
         links: '/allestimates',
         altname: 'allestimates',
         displays: true,
-        image: estimation
+        image: allestimation
     },
 
 ];
