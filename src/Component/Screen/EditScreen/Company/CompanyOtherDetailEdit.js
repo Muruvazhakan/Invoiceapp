@@ -6,7 +6,6 @@ import Card from "../../../Style/Card/Card";
 import { Box, Button, FormControlLabel, Switch, TextField } from "@mui/material";
 import { MdDeleteForever, MdOutlineSaveAlt } from "react-icons/md";
 import { FaRegSave } from "react-icons/fa";
-import * as localstorage from "../../../Context/localStorageData";
 const CompanyOtherDetailEdit = () => {
 
 
@@ -24,9 +23,7 @@ const CompanyOtherDetailEdit = () => {
             {companydet.companydetails.map((item, index) => {
                 return (<Box className="  " key={item.id}
                     sx={{ '& .MuiTextField-root': { m: 2, width: '45ch' } }}
-                >
-
-                    {item.isvisible === true && <>
+                >    
                         <div className=" companyotherdeta companyindex" key={item.id}>
                             <div className="companyindex ">
                                 {index + 1}</div>
@@ -70,16 +67,16 @@ const CompanyOtherDetailEdit = () => {
 
 
                         </div>
-                    </>}
+                    
 
                 </Box>
                 )
             })}
-            {/* <h5>
-                System will automatically update while editing...
-            </h5> */}
+             <h5 className="notetext" >
+              New Item will not be automatically saved until you save!! 
+            </h5>
             <Button variant="contained" color="info" endIcon={<MdOutlineSaveAlt />}
-                onClick={() => localstorage.addOrUpdateCompanyTermsAndConditionHandler(companydet.companydetails, "save")} >
+                onClick={() => companydet.saveHandler('addOrUpdateCompanyTermsAndConditionHandler',companydet.companydetails, "save")} >
                 Save the Changes
             </Button>
             <Card >
@@ -103,7 +100,7 @@ const CompanyOtherDetailEdit = () => {
 
                         <FormControlLabel
                             control={
-                                <Switch checked={companydet.companyBankdetailIsVisible}
+                                <Switch checked={companydet.companydetailIsVisible}
                                     onChange={(e) => {
                                         companydet.setcompanydetailIsVisible(!companydet.companydetailIsVisible);
                                     }}
@@ -112,8 +109,8 @@ const CompanyOtherDetailEdit = () => {
                             label="Is Visible?"
                         />
                         <div className="tagline isvisible">
-                            {companydet.companyBankdetailIsVisible ? 'Visible in the screen' : <>Details will be hidden...
-                            <h5> Please click switch to Visible </h5>  </>}
+                            {companydet.companydetailIsVisible ? 'Visible in the screen' : <>Details will be hidden...
+                            <h5> Switch to Visible </h5>  </>}
                         </div>
 
 

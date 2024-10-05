@@ -59,11 +59,11 @@ const CompanyBankDetailEdit = () => {
                 </Box>
                 )
             })}
-            {/* <h5>
-                System will automatically update while editing...
-            </h5> */}
+            <h5 className="notetext" >
+              New Item will not be automatically saved until you save!! 
+            </h5>
             <Button variant="contained" color="info" endIcon={<MdOutlineSaveAlt />}
-                onClick={() => localstorage.addOrGetCompanyBankDetailHandler(companydet.companyBankdetails, "save")} >
+                onClick={() => companydet.saveHandler('addOrGetCompanyBankDetailHandler',companydet.companyBankdetails, "save")} >
                 Save the Changes
             </Button>
             <Card >

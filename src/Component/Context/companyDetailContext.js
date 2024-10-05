@@ -29,18 +29,18 @@ const CompanyDetailContext = ({ children }) => {
     const [paymentdate, setpaymentdate] = useState('');
     const [companyDeleration, setcompanyDeleration] = useState('We declare that the invoice details are the actual price of the goods');
     const [cleardetailoption, setcleardetailoption] = useState(true);
-    // let companydet = [
-    //     { id: 1, title: 'Prices', isvisible: true, desc: 'Prices quoted are strictly as per the size, quantity and design SPECIFIED only, Any change in either one will result in change in quoted price, If any change in Government taxes & regulations it will be implicated in pricing as per actual.' },
-    //     { id: 2, title: 'Billing format', isvisible: true, desc: 'Billing will be done for individual items & rates specified for individual items only tolerance of (+/-) 25mm will not affect the rate per Sqft quoted.' },
-    //     { id: 3, title: 'Payment & Supply of Materials', isvisible: true, desc: '50% Advance' },
-    //     { id: 4, title: '', isvisible: true, desc: '30% after start work' },
-    //     { id: 5, title: '', isvisible: true, desc: '20% after completion' },
-    //     { id: 6, title: '', isvisible: true, desc: 'Supply of materials will be done within 15 days from the date of receipt order and advance payments along with confirmed sizes & Design.' },
-    //     { id: 7, title: '', isvisible: true, desc: 'The materials will be taken for production once the Order and advance payments are received. Work order & Payments to be made. We can also work in line with your schedule of works.' },
-    //     { id: 8, title: 'Installation', isvisible: true, desc: 'We carry out the work once the materials reach the site. The Sequence of work will however have to be mutually agreed upon.' },
-    //     { id: 9, title: 'Warranty', isvisible: true, desc: 'All the Extrusions used will carry a warranty of 15 years. All the accessories used will have a warranty of one year under any manufacturing defects. The above warranty does not include mishandling of products & natural calamities like fire, earth quake etc.,' },
-    // ];
-    const [companydetails, setcompanydetails] = useState([]);
+    let companydet = [
+        { id: 1, title: 'Prices', isvisible: true, desc: 'Prices quoted are strictly as per the size, quantity and design SPECIFIED only, Any change in either one will result in change in quoted price, If any change in Government taxes & regulations it will be implicated in pricing as per actual.' },
+        { id: 2, title: 'Billing format', isvisible: true, desc: 'Billing will be done for individual items & rates specified for individual items only tolerance of (+/-) 25mm will not affect the rate per Sqft quoted.' },
+        { id: 3, title: 'Payment & Supply of Materials', isvisible: true, desc: '50% Advance' },
+        { id: 4, title: '', isvisible: true, desc: '30% after start work' },
+        { id: 5, title: '', isvisible: true, desc: '20% after completion' },
+        { id: 6, title: '', isvisible: true, desc: 'Supply of materials will be done within 15 days from the date of receipt order and advance payments along with confirmed sizes & Design.' },
+        { id: 7, title: '', isvisible: true, desc: 'The materials will be taken for production once the Order and advance payments are received. Work order & Payments to be made. We can also work in line with your schedule of works.' },
+        { id: 8, title: 'Installation', isvisible: true, desc: 'We carry out the work once the materials reach the site. The Sequence of work will however have to be mutually agreed upon.' },
+        { id: 9, title: 'Warranty', isvisible: true, desc: 'All the Extrusions used will carry a warranty of 15 years. All the accessories used will have a warranty of one year under any manufacturing defects. The above warranty does not include mishandling of products & natural calamities like fire, earth quake etc.,' },
+    ];
+    const [companydetails, setcompanydetails] = useState(companydet);
 
     const [companydetailtitle, setcompanydetailtitle] = useState('');
     const [companydetaildesc, setcompanydetaildesc] = useState('');
@@ -51,6 +51,7 @@ const CompanyDetailContext = ({ children }) => {
     const [companyBankdetailIsVisible, setcompanyBankdetailIsVisible] = useState(false);
     // const [loginuser, setloginuser] = useState(localStorage.getItem('loginuser').length> 0 ? localStorage.getItem('loginuser'): '');
     const [loginuser, setloginuser] = useState('');
+    const [loginuserid, setloginuserid] = useState(0);
     const [loginUserPassword, setloginUserPassword] = useState('');
     const [loginUserConfirmPassword, setloginUserConfirmPassword] = useState('');
 
@@ -200,28 +201,36 @@ const CompanyDetailContext = ({ children }) => {
     }
     const getAlldataOnLogin = () => {
         let companyTermsAndCondition = localstore.getCompanyTermsAndConditionHandler();
+
+        if(companyTermsAndCondition !== null){
         // console.log(companyTermsAndCondition);
         setcompanydetails(companyTermsAndCondition);
-
+        }
         let companydetail = localstore.getCompanyHandler();
         // console.log(companydetail);
-        setcompanyName(companydetail.companyName);
-        setcompanyAddress(companydetail.companyAddress);
-
-        setcompanyDeleration(companydetail.companyDeleration);
-        setcompanyGstin(companydetail.companyGstin);
-        setcompanyGstinStatename(companydetail.companyGstinStatename);
-        setcompanyOwner(companydetail.companyOwner);
-        setcompanyPhno(companydetail.companyPhno);
-        setcompanyTagLine(companydetail.companyTagLine);
-        setcompanydetaildesc(companydetail.companydetaildesc);
-        setcompanymailid(companydetail.companymailid);
-        setcompanythankyou(companydetail.companythankyou);
+        if(companydetail !== null){
+            setcompanyName(companydetail.companyName);
+            setcompanyAddress(companydetail.companyAddress);
+    
+            setcompanyDeleration(companydetail.companyDeleration);
+            setcompanyGstin(companydetail.companyGstin);
+            setcompanyGstinStatename(companydetail.companyGstinStatename);
+            setcompanyOwner(companydetail.companyOwner);
+            setcompanyPhno(companydetail.companyPhno);
+            setcompanyTagLine(companydetail.companyTagLine);
+            setcompanydetaildesc(companydetail.companydetaildesc);
+            setcompanymailid(companydetail.companymailid);
+            setcompanythankyou(companydetail.companythankyou);
+        }
+       
 
         let companyBankdetail = localstore.addOrGetCompanyBankDetailHandler('', 'get');
-        // console.log('companyBankdetail');
+        if(companyBankdetail!== null){
+             // console.log('companyBankdetail');
         // console.log(companyBankdetail);
         setcompanyBankdetails(companyBankdetail);
+        }
+       
     }
     const companyOtherDetailHandeler = (item, type) => {
         //console.log(companydetailtitle + ' ' + companydetaildesc + ' ' + type + ' item' +item);
@@ -234,8 +243,8 @@ const CompanyDetailContext = ({ children }) => {
         let getresul;
         if (type === "new") {
             getresul = { id: uuidv4(), title: companydetailtitle, isvisible: companydetailIsVisible, desc: companydetaildesc };
-            //console.log('getresul');
-            //console.log(getresul);
+            console.log('getresul');
+            console.log(getresul);
             //console.log(companydetails);
             setcompanydetails([
                 ...companydetails, getresul
@@ -257,6 +266,17 @@ const CompanyDetailContext = ({ children }) => {
             toast.success("Details deleted");
         }
 
+    }
+
+    const saveHandler= (funcs,item,type) =>{
+        if(funcs ==='addOrUpdateCompanyTermsAndConditionHandler'){
+            localstore.addOrUpdateCompanyTermsAndConditionHandler(item, type);
+        }
+        if(funcs ==='addOrGetCompanyBankDetailHandler'){
+            localstore.addOrGetCompanyBankDetailHandler(item, type);
+        }
+
+       toast.success("Details are saved");
     }
 
     const companyBankDetailHandler = (item, type) => {
@@ -315,7 +335,8 @@ const CompanyDetailContext = ({ children }) => {
         companyDeleration, setcompanyDeleration, cleardetailoption, setcleardetailoption, companymailid, setcompanymailid, companyOwner, setcompanyOwner, companydetails, setcompanydetails, companyBankdetails, setcompanyBankdetails,
         companythankyou, setcompanythankyou, companytitle, companyOtherDetailHandeler, companydetailtitle, setcompanydetailtitle, companydetaildesc, setcompanydetaildesc, setval, setboxColors,
         loginuser, setloginuser, loginUserPassword, setloginUserPassword, loginHandler, loginstatus, setloginstatus, loginId, setloginId, loginUserConfirmPassword, setloginUserConfirmPassword, tokenid, settokenid, logoutHandler,
-        companyBankdetailtitle, setcompanyBankdetailtitle, companyBankdetailvalue, setcompanyBankdetailvalue, companyBankdetailIsVisible, setcompanyBankdetailIsVisible,companydetailIsVisible, setcompanydetailIsVisible
+        companyBankdetailtitle, setcompanyBankdetailtitle, companyBankdetailvalue, setcompanyBankdetailvalue, companyBankdetailIsVisible, setcompanyBankdetailIsVisible,companydetailIsVisible, setcompanydetailIsVisible,
+        loginuserid, setloginuserid,saveHandler
     };
 
 

@@ -1,14 +1,14 @@
 export const isbackendconnect = "Yes";
 
 export const navigationbarcontent = [
+    // {
+    //     screenname: 'Home',
+    //     links: '/',
+    //     altname: '/',
+    //     displays: true
+    // },
     {
-        screenname: 'Home',
-        links: '/',
-        altname: '/',
-        displays: true
-    },
-    {
-        screenname: 'Your Detail',
+        screenname: 'Company Detail',
         links: '/yourdetail',
         altname: 'yourdetail',
         displays: true
