@@ -33,6 +33,13 @@ export const navigationbarcontent = [
         displays: true,
         image: estimation
     },
+    {
+        screenname: 'All Estimate',
+        links: '/allestimate',
+        altname: 'allestimate',
+        displays: true,
+        image: estimation
+    },
 
 ];
 

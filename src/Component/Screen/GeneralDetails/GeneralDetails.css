@@ -6,7 +6,21 @@
     margin: -2% 1% 0 0;
     font-size: small;
 }
-
+.allestimatedisplay{
+   
+    /* display: flex;
+    align-items: center;
+    text-align: justify; */
+    /* justify-content: space-evenly; */
+    /* margin: -2% 1% 0 0; */
+    font-size: medium;
+    padding-right: 2%;
+}
+.nameheigh{
+    font-weight: bolder;
+    font-size: larger;
+    padding: 2px;
+}
 .details {
 
     list-style-type: none;

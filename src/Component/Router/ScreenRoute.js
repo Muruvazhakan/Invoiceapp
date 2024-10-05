@@ -13,6 +13,7 @@ import { CompanyDetail } from "../Context/companyDetailContext";
 import SignUp from "../Screen/Login/SignUp";
 import Developer from "../Screen/ViewScreen/Developer";
 import { ToastContainer } from "react-toastify";
+import AllEstimateDetails from "../Screen/ViewScreen/EstimateComponent/AllEstimateDetails";
 const ScreenRoute = (props) => {
     const logindet = useContext(CompanyDetail);
     return <>
@@ -35,6 +36,7 @@ const ScreenRoute = (props) => {
                         <Route path='/yourdetail' Component={CompanyEditeScreen} />
                         <Route path='/geninvoice' Component={InvoiceMainComponent} />
                         <Route path='/genestimate' Component={EstimateMainComponent} />
+                        <Route path='/allestimate' Component={AllEstimateDetails} />
                         <Route path='/login' Component={Login} />
                         <Route path='/' Component={NoData} />
                         </> }

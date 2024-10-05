@@ -18,7 +18,7 @@ const DisplayAllComponent = (props) => {
               
                     <Card className='displayscreenname' >
                           <Link className="displayelements linkdecor" to={{pathname:items.altname}} key={index}>
-                          <img src={items.image} height={350} width={350} />
+                          <img src={items.image} height={350} width={350} alt={items.altname}/>
                           {/* <div className="cardline">
                             {items.screenname}
                             </div> */}
@@ -28,7 +28,7 @@ const DisplayAllComponent = (props) => {
                     </Card>
                   
                     )
-            }
+            }else return null;
            
         })}
        

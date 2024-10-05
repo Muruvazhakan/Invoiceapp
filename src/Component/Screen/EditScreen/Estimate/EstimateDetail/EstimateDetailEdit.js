@@ -6,7 +6,7 @@ import YourDetails from "../../Invoice/YourDetails/YourDetails";
 
 const EstimateDetailEdit = (props) => {
   return (<>
-    <YourDetails />
+    {/* <YourDetails /> */}
     <EstimateGenDetails />
   </>
   )

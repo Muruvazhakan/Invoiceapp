@@ -2,21 +2,23 @@
   cursor: pointer;
   border-radius: 20px;
   display: flex;
-  width: 400px;
-  height: 300px;
+  /* width: 400px;
+  height: 300px; */
   align-items: center;
   background-color: #4f4f4f;
   color: aliceblue;
   justify-content: center;
-  flex-direction: column;
+  /* flex-direction: column; */
+ 
   /* height: 100px; */
 }
 
 .displayelements {
   display: flex;
   align-items: stretch;
-  justify-content: space-around;
+  justify-content: start;
   margin-top: 1%;
+  flex-flow: wrap;
   /* flex-direction: column; */
 }
 

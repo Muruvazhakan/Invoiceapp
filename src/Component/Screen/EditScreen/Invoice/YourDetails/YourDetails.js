@@ -3,7 +3,6 @@ import React, { useContext } from "react";
 import { FormGroup, FormControl, TextField, Box, Button } from '@mui/material';
 
 import { MdOutlineSaveAlt } from "react-icons/md";
-import * as localstorage from "../../../../Context/localStorageData";
 
 import { CompanyDetail } from "../../../../Context/companyDetailContext";
 import './YourDetails.css';
@@ -91,7 +90,7 @@ const YourDetails = () => {
               System will automatically update..
             </h5>
             <Button variant="contained" color="info" endIcon={<MdOutlineSaveAlt />}
-              onClick={() => localstorage.addOrUpdateCompanyHandler(compayDet, "save")} >
+              onClick={() =>  compayDet.saveHandler('addOrUpdateCompanyHandler',compayDet, "save")} >
               Save the Changes
             </Button>
           </Box>

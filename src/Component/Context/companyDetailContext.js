@@ -1,13 +1,15 @@
-import React, { createContext, useEffect, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { v4 as uuidv4 } from "uuid";
 
 import * as Datas from '../Context/Datas';
 import * as localstore from './localStorageData';
+import { estimateState } from "./EstimatestateContext";
 export const CompanyDetail = createContext();
 
 
 const CompanyDetailContext = ({ children }) => {
+    const estimateDet = useContext(estimateState);
 
     const [clientName, setclientName] = useState('');
     const [clientPhno, setclientPhno] = useState('');
@@ -77,7 +79,7 @@ const CompanyDetailContext = ({ children }) => {
                 }
             }
             return items;
-        })
+        });
 
         // console.log(getresul);
         setcompanydetails(getresul);
@@ -202,16 +204,16 @@ const CompanyDetailContext = ({ children }) => {
     const getAlldataOnLogin = () => {
         let companyTermsAndCondition = localstore.getCompanyTermsAndConditionHandler();
 
-        if(companyTermsAndCondition !== null){
-        // console.log(companyTermsAndCondition);
-        setcompanydetails(companyTermsAndCondition);
+        if (companyTermsAndCondition !== null) {
+            // console.log(companyTermsAndCondition);
+            setcompanydetails(companyTermsAndCondition);
         }
         let companydetail = localstore.getCompanyHandler();
         // console.log(companydetail);
-        if(companydetail !== null){
+        if (companydetail !== null) {
             setcompanyName(companydetail.companyName);
             setcompanyAddress(companydetail.companyAddress);
-    
+
             setcompanyDeleration(companydetail.companyDeleration);
             setcompanyGstin(companydetail.companyGstin);
             setcompanyGstinStatename(companydetail.companyGstinStatename);
@@ -222,15 +224,17 @@ const CompanyDetailContext = ({ children }) => {
             setcompanymailid(companydetail.companymailid);
             setcompanythankyou(companydetail.companythankyou);
         }
-       
+
 
         let companyBankdetail = localstore.addOrGetCompanyBankDetailHandler('', 'get');
-        if(companyBankdetail!== null){
-             // console.log('companyBankdetail');
-        // console.log(companyBankdetail);
-        setcompanyBankdetails(companyBankdetail);
+        if (companyBankdetail != null) {
+            // console.log('companyBankdetail');
+            // console.log(companyBankdetail);
+            setcompanyBankdetails(companyBankdetail);
         }
-       
+
+
+
     }
     const companyOtherDetailHandeler = (item, type) => {
         //console.log(companydetailtitle + ' ' + companydetaildesc + ' ' + type + ' item' +item);
@@ -246,10 +250,18 @@ const CompanyDetailContext = ({ children }) => {
             console.log('getresul');
             console.log(getresul);
             //console.log(companydetails);
-            setcompanydetails([
-                ...companydetails, getresul
-            ]);
+            if (companydetails.length > 0) {
 
+                setcompanydetails([
+                    ...companydetails, getresul
+                ]);
+
+            } else {
+
+                setcompanydetails([
+                    getresul
+                ]);
+            };
             toast.success("Details are Added");
             setcompanydetailtitle('');
             setcompanydetaildesc('');
@@ -268,15 +280,18 @@ const CompanyDetailContext = ({ children }) => {
 
     }
 
-    const saveHandler= (funcs,item,type) =>{
-        if(funcs ==='addOrUpdateCompanyTermsAndConditionHandler'){
+    const saveHandler = (funcs, item, type) => {
+        if (funcs === 'addOrUpdateCompanyTermsAndConditionHandler') {
             localstore.addOrUpdateCompanyTermsAndConditionHandler(item, type);
         }
-        if(funcs ==='addOrGetCompanyBankDetailHandler'){
+        if (funcs === 'addOrGetCompanyBankDetailHandler') {
             localstore.addOrGetCompanyBankDetailHandler(item, type);
         }
+        if (funcs === 'addOrUpdateCompanyHandler') {
+            localstore.addOrUpdateCompanyHandler(item, type);
+        }
 
-       toast.success("Details are saved");
+        toast.success("Details are saved");
     }
 
     const companyBankDetailHandler = (item, type) => {
@@ -335,8 +350,8 @@ const CompanyDetailContext = ({ children }) => {
         companyDeleration, setcompanyDeleration, cleardetailoption, setcleardetailoption, companymailid, setcompanymailid, companyOwner, setcompanyOwner, companydetails, setcompanydetails, companyBankdetails, setcompanyBankdetails,
         companythankyou, setcompanythankyou, companytitle, companyOtherDetailHandeler, companydetailtitle, setcompanydetailtitle, companydetaildesc, setcompanydetaildesc, setval, setboxColors,
         loginuser, setloginuser, loginUserPassword, setloginUserPassword, loginHandler, loginstatus, setloginstatus, loginId, setloginId, loginUserConfirmPassword, setloginUserConfirmPassword, tokenid, settokenid, logoutHandler,
-        companyBankdetailtitle, setcompanyBankdetailtitle, companyBankdetailvalue, setcompanyBankdetailvalue, companyBankdetailIsVisible, setcompanyBankdetailIsVisible,companydetailIsVisible, setcompanydetailIsVisible,
-        loginuserid, setloginuserid,saveHandler
+        companyBankdetailtitle, setcompanyBankdetailtitle, companyBankdetailvalue, setcompanyBankdetailvalue, companyBankdetailIsVisible, setcompanyBankdetailIsVisible, companydetailIsVisible, setcompanydetailIsVisible,
+        loginuserid, setloginuserid, saveHandler
     };
 
 

@@ -21,7 +21,7 @@ const NoData = (props) => {
             {/* <Flash delay={1200}> */}
                 <div className=" why_pvc_div-style nodata-stytle">
                     <Card className="img-style w-100 why_pvc_div-style nodata-stytle">                      
-                        No Details!! {props.errorcode}
+                        No {props.details} {props.errorcode}
                     </Card>
                 </div>
             {/* </Flash> */}

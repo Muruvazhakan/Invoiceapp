@@ -30,7 +30,7 @@ const EstimateTable = (props) => {
 
     return <>
         <Paper sx={{ width: '98%', overflow: 'hidden', padding: '5px', borderRadius: '10px' }}>
-            <TableContainer sx={{ minWidth: 650, borderRadius: '10px' }}>
+            <TableContainer sx={{ minWidth: 650, borderRadius: '10px' }} containerId="EstimateTable" >
                 <Table aria-label="simple table">
                     <TableHead sx={{ fontWeight: 1130, color: "white" }}>
                         <TableRow className="table-header" key="estimatetable" >

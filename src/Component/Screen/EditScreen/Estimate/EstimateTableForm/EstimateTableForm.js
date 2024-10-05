@@ -1,12 +1,12 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, {  useContext } from "react";
 
 import { Box, Button, FormControl, FormControlLabel, FormGroup, Switch, TextField } from "@mui/material";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Card from "../../../../Style/Card/Card";
 import { BsSave } from "react-icons/bs";
 import { estimateState } from "../../../../Context/EstimatestateContext";
-
+import { FaFileInvoice } from "react-icons/fa";
 import './EstimateTableForm.css';
 
 const EstimateTableForm = (props) => {
@@ -30,7 +30,7 @@ const EstimateTableForm = (props) => {
 
     return <>
         <Card>
-            <ToastContainer position="top-center" theme="colored" />
+            <ToastContainer position="top-center" theme="colored" containerId="EstimateTableForm" />
             <h3>Estimate Data </h3>
             <FormGroup>
                 <FormControl>
@@ -93,7 +93,7 @@ const EstimateTableForm = (props) => {
                             />
                             <TextField required id="outlined-required" label="Total Sq. feet" value={estdetail.perqsft}
                                 // onChange={(e) => setval(e, estdetail.setsubdesc)}
-                                disabled
+                                
                                 color={setboxColors(estdetail.perqsft, 'color')}
                                 error={setboxColors(estdetail.perqsft, 'error')}
                             />
@@ -194,6 +194,12 @@ const EstimateTableForm = (props) => {
                             </div> */}
                         </Box>
                     </Card>
+
+                    <div className="button-warn">
+                                <Button variant="contained" color="success" size="medium" endIcon={<FaFileInvoice />}
+                                onClick={() => estdetail.addOrGetEstimateHistoryData('', '', 'New')}>Save Complete Invoice</Button>
+
+                            </div>
                 </FormControl>
             </FormGroup>
         </Card>

@@ -33,20 +33,7 @@ const EstimateGenDetails = (props) => {
 
     }
 
-    const dateHandler = () => {
-        const today = new Date();
-        let todaydate;
-
-        const month = today.getMonth() + 1;
-        const year = today.getFullYear();
-        const date = today.getDate();
-
-        todaydate = `ES${year}${month}${date}${estimateDet.estimateidcount}`;
-        estimateDet.setestimateid(todaydate);
-        estimateDet.setestimateidcount(++estimateDet.estimateidcount);
-        console.log("todaydate: " + todaydate);
-        
-    }
+   
 
     return <>
         <FormGroup>
@@ -82,8 +69,12 @@ const EstimateGenDetails = (props) => {
                     </h3>
                     <Box component="form" sx={{ '& .MuiTextField-root': { m: 1, width: '15ch', height: '5ch' } }} >
 
-                        {estimateDet.estimateid.length == 0 ?
-                            <div><Button className="gen-invoice" variant="outlined" onClick={dateHandler} endIcon={<FaRegIdCard />}  >Generate Estimate Id</Button> </div> : <div className="invoicegen"> Estimate Id Generated</div>}
+                        {estimateDet.estimateid.length === 0 ?
+                            <div><Button className="gen-invoice" variant="outlined" 
+                            onClick={()=>estimateDet.dateHandler()} endIcon={<FaRegIdCard />}  >
+                                Generate Estimate Id</Button> </div> : <div className="invoicegen"> Estimate Id Generated</div>}
+                                <Button className="gen-invoice" variant="outlined" 
+                            onClick={()=>estimateDet.dateHandler()} endIcon={<FaRegIdCard />}  ></Button>
                         Estimate date:
                         <input type="date" className="date-field" placeholder="dd-mm-yyyy"
                         min="1997-01-01" max="2030-12-31"
