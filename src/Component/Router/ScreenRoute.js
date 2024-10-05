@@ -36,7 +36,7 @@ const ScreenRoute = (props) => {
                         <Route path='/yourdetail' Component={CompanyEditeScreen} />
                         <Route path='/geninvoice' Component={InvoiceMainComponent} />
                         <Route path='/genestimate' Component={EstimateMainComponent} />
-                        <Route path='/allestimate' Component={AllEstimateDetails} />
+                        <Route path='/allestimates' Component={AllEstimateDetails} />
                         <Route path='/login' Component={Login} />
                         <Route path='/' Component={NoData} />
                         </> }
