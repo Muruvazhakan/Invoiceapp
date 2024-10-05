@@ -13,15 +13,23 @@ const DisplayAllComponent = (props) => {
     return <>
     <div className=" displayelements" >
         {Datas.navigationbarcontent.map((items, index) => {
-            return(
+            if(items.screenname!=="Home"){
+                return(
               
-            <Card className='displayscreenname ' >
-                  <Link className="displayelements linkdecor" to={{pathname:items.altname}} key={index}>
-                {items.screenname}
-                </Link>
-            </Card>
-          
-            )
+                    <Card className='displayscreenname' >
+                          <Link className="displayelements linkdecor" to={{pathname:items.altname}} key={index}>
+                          <img src={items.image} height={350} width={350} />
+                          {/* <div className="cardline">
+                            {items.screenname}
+                            </div> */}
+                        
+                        </Link>
+        
+                    </Card>
+                  
+                    )
+            }
+           
         })}
        
     </div>

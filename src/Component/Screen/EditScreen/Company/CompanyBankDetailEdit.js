@@ -6,7 +6,6 @@ import Card from "../../../Style/Card/Card";
 import { Box, Button, FormControlLabel, Switch, TextField } from "@mui/material";
 import { MdDeleteForever, MdOutlineSaveAlt } from "react-icons/md";
 import { FaRegSave } from "react-icons/fa";
-import * as localstorage from "../../../Context/localStorageData";
 const CompanyBankDetailEdit = () => {
 
 
