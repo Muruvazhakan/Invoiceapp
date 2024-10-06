@@ -1,4 +1,4 @@
-import React, { useState, useEffect, createContext, useContext } from "react";
+import React, { useState, useEffect, createContext } from "react";
 import { toast } from "react-toastify";
 import { v4 as uuidv4 } from "uuid";
 import collect from "collect.js";
@@ -79,8 +79,12 @@ const EstimatestateContext = ({ children }) => {
 
     const addOrGetEstimateHistoryData = () => {
 
+        if(estimateid ==='' || estimateid === null ){
+            toast.error('Estimate Id is not generates');
+            return false;
+        }
         let iscontains = false;
-        let loginuserid= localstorage.addOrGetUserdetail('','userid','get');
+        let loginuserid = localstorage.addOrGetUserdetail('', 'userid', 'get');
         let singleEstimation = {
             userid: loginuserid,
             estimateid: estimateid,
@@ -90,7 +94,7 @@ const EstimatestateContext = ({ children }) => {
             clientPhno: clientPhno,
             clientAdd: clientAdd,
             rows: rows,
-            columns:columns,
+            columns: columns,
             granttotalsqft: granttotalsqft,
             grandtotalpvccost: grandtotalpvccost,
             grandtotalupvccost: grandtotalupvccost,
@@ -100,9 +104,8 @@ const EstimatestateContext = ({ children }) => {
             iscontains: true,
         }
         // let [getvalue] = estimateHistoryData;
-        // console.log('getvalue');
-        // console.log(getvalue);
-
+       
+        
         // console.log('estimateHistoryData');
         // console.log(estimateHistoryData);
         // console.log('singleEstimation');
@@ -133,7 +136,7 @@ const EstimatestateContext = ({ children }) => {
                 ]);
                 toast.success('Estimate Details are added');
             }
-            else{
+            else {
                 toast.success('Estimate Details are updated');
             }
             // console.log('estimateHistoryData');
@@ -150,7 +153,7 @@ const EstimatestateContext = ({ children }) => {
         //  console.log(saveddata);
         // toast.success('Estimate Details are added');
         //console.log(estimateHistoryData);
-       
+
     }
 
     const addOrUpdateEstimateItemHandler = (inputitem, inputsubitem, type) => {
@@ -379,8 +382,8 @@ const EstimatestateContext = ({ children }) => {
             setestimateidcount(count);
         }
 
-        console.log('estimateHistoryData');
-        console.log(estimateHistoryData);
+        // console.log('estimateHistoryData');
+        // console.log(estimateHistoryData);
         // console.log(count + 'count');
     }, []);
 
@@ -450,8 +453,27 @@ const EstimatestateContext = ({ children }) => {
         // }
     };
 
-    const allEstimateEdit=(props) =>{
-        console.log(props);
+    const allEstimateEdit = (props) => {
+        // console.log(props);
+
+        let estimatedetails = props;
+        setgranttotalsqft(estimatedetails.granttotalsqft);
+        setgrandtotalpvccost(estimatedetails.grandtotalpvccost);
+        setgrandtotalupvccost(estimatedetails.grandtotalupvccost);
+        setgrandtotalwoodcost(estimatedetails.grandtotalwoodcost);
+
+        setrows(estimatedetails.rows);
+        setclientName(estimatedetails.clientName);
+        setclientPhno(estimatedetails.clientPhno);
+        setclientAdd(estimatedetails.clientAdd);
+
+        setestimateid(estimatedetails.estimateid);
+        setestimatedate(estimatedetails.estimatedate);
+        setestimatedate1(estimatedetails.estimatedate1);
+        if (estimatedetails.columns) {
+            setcolumns(estimatedetails.columns);
+        }
+
     }
     const estcontext = {
         columns, setcolumns, rows, setrows, estimateidcount, setestimateidcount, granttotalsqft, setgranttotalsqft,
@@ -460,7 +482,7 @@ const EstimatestateContext = ({ children }) => {
         title, settitle, subdesc, setsubdesc, length, setlength, height, setheight, area, setarea, perqsft, setperqsft, isotheritem, setisotheritem, hideotheritem, sethideotheritem,
         pvccostpsf, setpvccostpsf, totalpvccost, settotalpvccost, upvccostpsf, setupvccostpsf, totalupvccost, settotalupvccost, woodcostpsf, setwoodcostpsf, totalwoodcost, settotalwoodcost,
         remarks, setremarks, addOrUpdateEstimateItemHandler, updateTableView, estimatedate1, setestimatedate1, estimateHistoryData, setestimateHistoryData, addOrGetEstimateHistoryData, dateHandler,
-        estimateSingleData, setestimateSingleData,allEstimateEdit
+        estimateSingleData, setestimateSingleData, allEstimateEdit
     };
 
 

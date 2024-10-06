@@ -31,3 +31,8 @@
   margin-top: 1%;
   font-weight: bolder;
 }
+.displaysmalldata{
+  margin-top: 3px;
+  color: brown;
+  font-size: smaller;
+}

@@ -13,17 +13,13 @@ const CompanyBankDetail = () => {
             <div className="header">Bank Details</div>
             {companydet.companyBankdetails.map((item, index) => {
                 return (
-                    <>
+                    <div key={index} className="items">
                         {item.isvisible === true &&
-
                             <>
-                                <div className="items   ">
-                                    {item.title} :  {item.value}
-                                </div>
+                                {item.title} :  {item.value}
                             </>
-
                         }
-                    </>
+                    </div>
                 )
             })}
         </Card>)

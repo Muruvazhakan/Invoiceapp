@@ -7,7 +7,6 @@ import Card from "../../../../Style/Card/Card";
 import { BsSave } from "react-icons/bs";
 import { estimateState } from "../../../../Context/EstimatestateContext";
 import { FaFileInvoice } from "react-icons/fa";
-import './EstimateTableForm.css';
 
 const EstimateTableForm = (props) => {
 
@@ -18,12 +17,12 @@ const EstimateTableForm = (props) => {
     }
 
     const setboxColors = (item, field) => {
-        if (field == 'color') {
-            return item.length == 0 || item == 0 ? 'error' : 'success';
+        if (field === 'color') {
+            return item.length === 0 || item === 0 ? 'error' : 'success';
         }
 
         else {
-            return item.length == 0 || item == 0 ? true : false;
+            return item.length === 0 || item === 0 ? true : false;
         }
 
     }
@@ -198,6 +197,8 @@ const EstimateTableForm = (props) => {
                     <div className="button-warn">
                                 <Button variant="contained" color="success" size="medium" endIcon={<FaFileInvoice />}
                                 onClick={() => estdetail.addOrGetEstimateHistoryData('', '', 'New')}>Save Complete Invoice</Button>
+                               
+                                {estdetail.estimateid.length === 0  &&   <div className="displaysmalldata"> Estimate Id is not generates</div>   }
 
                             </div>
                 </FormControl>

@@ -8,29 +8,28 @@ const CompanyotherDetail = () => {
     return (
 
         <Card>
-           <div className="header">Terms And Conditions</div>
-                {companydet.companydetails.map((item, index) => {
-                    return (
-                        <>
-                            {item.isvisible === true &&
-                                <ul className="details" key={index}>
+            <div className="header">Terms And Conditions</div>
+            {companydet.companydetails.map((item, index) => {
+                return (
+                    <ul className="details" key={index}>
+                        {item.isvisible === true &&
+                            < >
+                                <li >
+                                    <div className="companyname  itemtitle">
+                                        {item.title}
 
-                                    <li >
-                                        <div className="companyname  itemtitle">
-                                            {item.title}
+                                    </div>
+                                </li>
+                                <li>
+                                    {item.desc}
+                                </li>
+                            </>
+                        }
+                    </ul>
+                )
+            })}
 
-                                        </div>
-                                    </li>
-                                    <li>
-                                        {item.desc}
-                                    </li>
-                                </ul>
-                            }
-                        </>
-                    )
-                })}
 
-           
 
         </Card>)
 }

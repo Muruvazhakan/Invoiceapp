@@ -1,15 +1,13 @@
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { v4 as uuidv4 } from "uuid";
 
 import * as Datas from '../Context/Datas';
 import * as localstore from './localStorageData';
-import { estimateState } from "./EstimatestateContext";
 export const CompanyDetail = createContext();
 
 
 const CompanyDetailContext = ({ children }) => {
-    const estimateDet = useContext(estimateState);
     
     const [clientName, setclientName] = useState('');
     const [clientPhno, setclientPhno] = useState('');
@@ -339,7 +337,7 @@ const CompanyDetailContext = ({ children }) => {
         let useralreadyloggedin= localstore.addOrGetUserdetail('','loginuser',"get");
         let loginuserids= localstore.addOrGetUserdetail('','userid',"get");
        
-           console.log(useralreadyloggedin);
+        //    console.log(useralreadyloggedin);
         if (useralreadyloggedin !== null && useralreadyloggedin !== '') {
             setloginstatus(true);
             setloginuserid(loginuserids);

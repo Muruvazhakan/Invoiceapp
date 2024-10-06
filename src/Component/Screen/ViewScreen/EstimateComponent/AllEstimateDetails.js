@@ -88,7 +88,7 @@ const AllEstimateDetails = () => {
                                     </ul>
                                     <Link  to={{
                                         pathname: `/genestimate`
-                                    }}  state={{ estimate: item,fromscreen: 'allestimate'  }}
+                                    }}  
                                     >
                                         <Button className="gen-invoice" variant="outlined"
                                             onClick={() => estimatedet.allEstimateEdit(item)} endIcon={<RiEditCircleFill />}  >
