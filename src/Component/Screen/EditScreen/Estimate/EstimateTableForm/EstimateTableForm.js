@@ -1,4 +1,4 @@
-import React, {  useContext } from "react";
+import React, { useContext } from "react";
 
 import { Box, Button, FormControl, FormControlLabel, FormGroup, Switch, TextField } from "@mui/material";
 import { ToastContainer } from "react-toastify";
@@ -48,6 +48,11 @@ const EstimateTableForm = (props) => {
                                 color={setboxColors(estdetail.subdesc, 'color')}
                                 error={setboxColors(estdetail.subdesc, 'error')}
                             />
+                            <TextField required id="outlined-required" label="Order number" value={estdetail.orderno} type="number"
+                                onChange={(e) => setval(e, estdetail.setorderno)}
+                                color={setboxColors(estdetail.orderno, 'color')}
+                                error={setboxColors(estdetail.orderno, 'error')}
+                            />
                             <h4 className="tagline">'Switch to Special item feature to add other than raw material' </h4>
                             <FormControlLabel
                                 control={
@@ -92,7 +97,7 @@ const EstimateTableForm = (props) => {
                             />
                             <TextField required id="outlined-required" label="Total Sq. feet" value={estdetail.perqsft}
                                 // onChange={(e) => setval(e, estdetail.setsubdesc)}
-                                
+
                                 color={setboxColors(estdetail.perqsft, 'color')}
                                 error={setboxColors(estdetail.perqsft, 'error')}
                             />
@@ -137,10 +142,20 @@ const EstimateTableForm = (props) => {
                                 color={setboxColors(estdetail.remarks, 'color')}
                             // error={setboxColors(estdetail.remarks, 'error')}
                             />
-                            <div className="button-warn">
-                                <Button variant="contained" color="success" size="medium" endIcon={<BsSave />}
-                                onClick={() => estdetail.addOrUpdateEstimateItemHandler('', '', 'New')}>Add Item</Button>
 
+                            <div className="button-warn">
+                                {estdetail.isNewDataSaveType ? <>
+                                    <Button variant="contained" color="success" size="medium" endIcon={<BsSave />}
+                                        onClick={() => estdetail.addOrUpdateEstimateItemHandler('', '', 'New')}>Add Item</Button>
+                                </>
+                                    :
+                                    <>
+
+
+                                        <Button variant="contained" color="success" size="medium" endIcon={<BsSave />}
+                                            onClick={() => estdetail.addOrUpdateEstimateItemHandler('', '', 'Cancelupdate')}>Cancel Update</Button>
+                                    </>
+                                }
                             </div>
 
 
@@ -194,13 +209,14 @@ const EstimateTableForm = (props) => {
                         </Box>
                     </Card>
 
-                    <div className="button-warn">
-                                <Button variant="contained" color="success" size="medium" endIcon={<FaFileInvoice />}
-                                onClick={() => estdetail.addOrGetEstimateHistoryData('', '', 'New')}>Save Complete Invoice</Button>
-                               
-                                {estdetail.estimateid.length === 0  &&   <div className="displaysmalldata"> Estimate Id is not generates</div>   }
+                    <div className="button-warn buttonspace">
+                      
+                        <Button variant="contained" color="success" size="medium" endIcon={<FaFileInvoice />}
+                            onClick={() => estdetail.addOrGetEstimateHistoryData('', '', 'New')}>Save Complete Invoice</Button>
 
-                            </div>
+                        {estdetail.estimateid.length === 0 && <div className="displaysmalldata"> Estimate Id is not generates</div>}
+
+                    </div>
                 </FormControl>
             </FormGroup>
         </Card>

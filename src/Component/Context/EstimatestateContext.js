@@ -29,8 +29,8 @@ const EstimatestateContext = ({ children }) => {
     const [grandtotalpvccost, setgrandtotalpvccost] = useState(0);
     const [grandtotalupvccost, setgrandtotalupvccost] = useState(0);
     const [grandtotalwoodcost, setgrandtotalwoodcost] = useState(0);
-
-
+    const [isNewDataSaveType, setisNewDataSaveType] = useState(true);
+    const [orderno,setorderno] =useState(0);
     // let row = [{
     //     id: 1123, title: 'MODULAR KITCHEN', values: [{
     //         subid: 1, desc: '1', length: '1', height: '1', area: '1',
@@ -77,9 +77,24 @@ const EstimatestateContext = ({ children }) => {
     const [clientPhno, setclientPhno] = useState('');
     const [clientAdd, setclientAdd] = useState('');
 
+    const setval = (e, fun) => {
+        fun(e.target.value);
+    }
+
+    const setboxColors = (item, field) => {
+        if (field === 'color') {
+            return item.length === 0 || item === 0 ? 'error' : 'success';
+        }
+
+        else {
+            return item.length === 0 || item === 0 ? true : false;
+        }
+
+    }
+
     const addOrGetEstimateHistoryData = () => {
 
-        if(estimateid ==='' || estimateid === null ){
+        if (estimateid === '' || estimateid === null) {
             toast.error('Estimate Id is not generates');
             return false;
         }
@@ -104,8 +119,8 @@ const EstimatestateContext = ({ children }) => {
             iscontains: true,
         }
         // let [getvalue] = estimateHistoryData;
-       
-        
+
+
         // console.log('estimateHistoryData');
         // console.log(estimateHistoryData);
         // console.log('singleEstimation');
@@ -157,10 +172,14 @@ const EstimatestateContext = ({ children }) => {
     }
 
     const addOrUpdateEstimateItemHandler = (inputitem, inputsubitem, type) => {
-        //console.log('item edit rows')
-        //console.log(type);
+        // console.log('item edit rows')
+        // console.log(inputsubitem);
 
         if (type === 'New') {
+            if(!title || !subdesc || Number(orderno) === 0 ){
+                toast.error("Title or Sub Details or orderno was not added");
+                return false
+            }
             const available = rows.filter((item) => {
                 return item.title === title;
             });
@@ -171,6 +190,7 @@ const EstimatestateContext = ({ children }) => {
             //console.log(available);
             //console.log('other');
             //console.log(other);
+            
             if (available.length > 0) {
                 // console.log(available[0]);         
                 let exitsingleestimatevalue1 = {
@@ -182,6 +202,7 @@ const EstimatestateContext = ({ children }) => {
                 available[0] = {
                     id: available[0].id,
                     title: title,
+                    orderno:orderno,
                     sumtotalpvccost: calculatetotal(available[0].sumtotalpvccost, totalpvccost, 'sum', 2),
                     sumtotalupvccost: calculatetotal(available[0].sumtotalupvccost, totalupvccost, 'sum', 2),
                     sumtotalwoodcost: calculatetotal(available[0].sumtotalwoodcost, totalwoodcost, 'sum', 2),
@@ -210,6 +231,7 @@ const EstimatestateContext = ({ children }) => {
                 let singleestimate = {
                     id: uuidv4(),
                     title: title,
+                    orderno:orderno,
                     sumtotalpvccost: totalpvccost, sumtotalupvccost: totalupvccost, sumtotalwoodcost: totalwoodcost,
                     sumtotalsqft: perqsft,
                     values: [{
@@ -226,6 +248,71 @@ const EstimatestateContext = ({ children }) => {
             }
             toast.success("Estimation Item Added");
         }
+        // else if (type === 'delete') {
+        //     const available1 = rows.filter((item) => {
+        //         return item.id === inputitem;
+        //     });
+        //     const other1 = rows.filter((item) => {
+        //         return item.id !== inputitem;
+        //     });
+
+        //     if (available1.length > 0) {
+        //         const subtableava = available1[0].values.filter((subitem) => {
+        //             return subitem.subid === inputsubitem.subid
+        //         });
+        //         const othersubtableava = available1[0].values.filter((subitem) => {
+        //             return subitem.subid !== inputsubitem.subid
+        //         });
+
+        //         if (othersubtableava.length > 0) {
+
+        //         } else {
+        //             if (other1.length > 0) {
+        //                 setrows([
+        //                     ...other1
+        //                 ]);
+        //             }
+        //             else {
+        //                 setrows([]);
+        //                 cleartotal();
+        //             }
+        //         }
+
+        //         let newrows=[];
+        //         let a=0,b=0;
+        //         for(let i=0;i<rows.length;i++){
+        //             console.log('rows '+i);
+        //             console.log(rows[i]);
+        //             for(let j=0;j<rows[i].values.length  ;j++){
+        //                 console.log('rows[i].values[j] : ' + j);
+        //                 console.log(rows[i].values[j]);
+        //                 if(rows[i].values[j].subid !==inputsubitem.subid){
+        //                     console.log('found ' + inputsubitem.subid);
+        //                     newrows[a]=rows[i];
+        //                     b++;
+        //                 }
+        //             }
+        //             a++
+        //         }
+        //         console.log('newrows ');
+        //         console.log(newrows);
+        //         // let alterrows = rows.filter((item,index) =>{
+        //         //    return item.values[index].subid !==inputsubitem.subid;
+        //         //     // console.log(item);
+        //         //     // console.log(item.values
+        //         //     // );
+        //         //     // if(item.values[index].subid ===inputsubitem.subid ){
+        //         //     //     console.log('inside ' +inputsubitem.subid);
+        //         //     // }
+        //         // })
+        //         // console.log('alterrows');
+        //         // console.log(alterrows);
+
+        //     }
+
+           
+        //     toast.warning("Estimation Item Deleted");
+        // }
         else {
             const available1 = rows.filter((item) => {
                 return item.id === inputitem;
@@ -233,16 +320,6 @@ const EstimatestateContext = ({ children }) => {
             const other1 = rows.filter((item) => {
                 return item.id !== inputitem;
             });
-            //     title, settitle, subdesc, setsubdesc, length, setlength, height, setheight, area, setarea, perqsft, setperqsft,
-            // pvccostpsf, setpvccostpsf, totalpvccost, settotalpvccost, upvccostpsf, setupvccostpsf, totalupvccost, settotalupvccost, woodcostpsf, setwoodcostpsf, totalwoodcost, settotalwoodcost,
-            // remarks, 
-
-            //console.log('available1');
-            //console.log(available1);
-            //console.log('other1');
-            //console.log(other1);
-            //console.log('inputsubitem');
-            //console.log(inputsubitem);
             if (available1.length > 0) {
                 const subtableava = available1[0].values.filter((subitem) => {
                     return subitem.subid === inputsubitem.subid
@@ -251,13 +328,11 @@ const EstimatestateContext = ({ children }) => {
                     return subitem.subid !== inputsubitem.subid
                 });
 
+                // console.log(available1[0].orderno);
 
-                //console.log('subtableava');
-                //console.log(subtableava);
-                //console.log('othersubtableava');
-                //console.log(othersubtableava);
                 if (type === 'update') {
                     settitle(available1[0].title);
+                    setorderno(available1[0].orderno);
                     setsubdesc(subtableava[0].desc);
                     setlength(subtableava[0].length);
                     setheight(subtableava[0].height);
@@ -270,6 +345,7 @@ const EstimatestateContext = ({ children }) => {
                     setwoodcostpsf(subtableava[0].woodcostpsf);
                     settotalwoodcost(subtableava[0].totalwoodcost);
                     setremarks(subtableava[0].remarks);
+                    
                     setisotheritem(subtableava[0].isotheritem);
                     sethideotheritem(subtableava[0].hideotheritem);
                     toast.info("Estimation Item is added in edit section");
@@ -277,32 +353,35 @@ const EstimatestateContext = ({ children }) => {
                 else {
                     toast.warning("Estimation Item Deleted");
                 }
-
-
                 if (othersubtableava.length > 0) {
 
                     available1[0] = {
                         id: available1[0].id,
                         title: available1[0].title,
+                        orderno:available1[0].orderno,
                         sumtotalpvccost: calculatetotal(available1[0].sumtotalpvccost, subtableava[0].totalpvccost, 'diff', 2),
                         sumtotalupvccost: calculatetotal(available1[0].sumtotalupvccost, subtableava[0].totalupvccost, 'diff', 2),
                         sumtotalwoodcost: calculatetotal(available1[0].sumtotalwoodcost, subtableava[0].totalwoodcost, 'diff', 2),
                         sumtotalsqft: calculatetotal(available1[0].sumtotalsqft, subtableava[0].perqsft, 'diff', 3),
                         values: [...othersubtableava]
                     };
-                    //console.log('available1');
-                    //console.log(available1);
                     if (other1.length > 0) {
                         setrows([
                             ...other1,
                             available1[0]
                         ]);
+                        // const sortedrows = rows.sort((a,b)=> a.orderno >b.orderno ? 1:-1);
+                        // console.log('sortedrow');
+                        // console.log(sortedrows);
+                        // setrows(sortedrows);
+                       
                     }
                     else {
                         setrows([
                             available1[0]
                         ]);
                     }
+
                 } else {
                     if (other1.length > 0) {
                         setrows([
@@ -314,15 +393,19 @@ const EstimatestateContext = ({ children }) => {
                         cleartotal();
                     }
                 }
-                // setrows([
-                //     ...other1,
-                // ]);
-            }
 
-            //console.log('rows')
-            //console.log(rows);
+            }
         }
+        
+       
     };
+
+    const sortorder= () =>{
+        const sortedrows = rows.sort((a,b)=> a.orderno >b.orderno ? 1:-1);
+        // console.log('sortedrow');
+        // console.log(sortedrows);
+        setrows(sortedrows);
+    }
 
     const cleartotal = () => {
         setgrandtotalpvccost(0);
@@ -398,6 +481,7 @@ const EstimatestateContext = ({ children }) => {
 
     useEffect(() => {
         calculateEstimateTotal();
+        sortorder();
     }, [rows])
 
     useEffect(() => {
@@ -482,7 +566,7 @@ const EstimatestateContext = ({ children }) => {
         title, settitle, subdesc, setsubdesc, length, setlength, height, setheight, area, setarea, perqsft, setperqsft, isotheritem, setisotheritem, hideotheritem, sethideotheritem,
         pvccostpsf, setpvccostpsf, totalpvccost, settotalpvccost, upvccostpsf, setupvccostpsf, totalupvccost, settotalupvccost, woodcostpsf, setwoodcostpsf, totalwoodcost, settotalwoodcost,
         remarks, setremarks, addOrUpdateEstimateItemHandler, updateTableView, estimatedate1, setestimatedate1, estimateHistoryData, setestimateHistoryData, addOrGetEstimateHistoryData, dateHandler,
-        estimateSingleData, setestimateSingleData, allEstimateEdit
+        estimateSingleData, setestimateSingleData, allEstimateEdit, isNewDataSaveType, setisNewDataSaveType,orderno,setorderno,setval,setboxColors,sortorder
     };
 
 

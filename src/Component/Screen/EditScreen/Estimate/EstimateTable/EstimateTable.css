@@ -4,3 +4,11 @@
 .tableblue{
     background-color: rgb(93, 194, 237);
 }
+.buttonspace{
+    margin: 10px;
+    padding: 2px;
+   
+}
+.sortbutton{
+    margin-bottom: 5px;
+}

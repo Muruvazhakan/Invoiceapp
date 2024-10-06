@@ -23,12 +23,12 @@ const EstimateGenDetails = (props) => {
     }
    
     const setboxColors = (item, field) => {
-        if (field == 'color') {
-            return item.length == 0 ? 'error' : 'success';
+        if (field === 'color') {
+            return item.length === 0 ? 'error' : 'success';
         }
 
         else {
-            return item.length == 0 ? true : false;
+            return item.length === 0 ? true : false;
         }
 
     }

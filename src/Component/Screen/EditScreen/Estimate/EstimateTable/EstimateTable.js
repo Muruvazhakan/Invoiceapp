@@ -18,12 +18,12 @@ const EstimateTable = (props) => {
     // const estdetail = useContext(estimateState);
     const estdetail = useContext(estimateState);
 
-   
+
     useEffect(() => {
         // console.log('estdetail.columns[8].values');
         // console.log(props);
         // console.log('from screen' +props.fromscreen);
-       
+
         // console.log(estdetail.columns);
         // let upvcisisvisible = estdetail.columns.map(item =>item.columnname==='UPVC cost Psf')
         // console.log(upvcisisvisible); 
@@ -52,6 +52,9 @@ const EstimateTable = (props) => {
                             })}
                             {props.screen === "update" &&
                                 <>
+                                    <TableCell sx={{ fontWeight: 700 }} >Order
+
+                                    </TableCell>
                                     <TableCell sx={{ fontWeight: 700 }} >Edit rows
 
                                     </TableCell>
@@ -83,8 +86,8 @@ const EstimateTable = (props) => {
                                     <TableCell ></TableCell>
                                     <TableCell ></TableCell>
                                     {pvcisisvisible.display === true && <>
-                                    <TableCell ></TableCell>
-                                    <TableCell ></TableCell></>}
+                                        <TableCell ></TableCell>
+                                        <TableCell ></TableCell></>}
                                     {upvcisisvisible.display === true && <>
                                         <TableCell ></TableCell>
                                         <TableCell ></TableCell></>}
@@ -94,7 +97,8 @@ const EstimateTable = (props) => {
                                             <TableCell ></TableCell></>}
                                     {remarks.display === true &&
                                         <TableCell ></TableCell>}
-
+                                    {props.screen === "update" &&
+                                        <TableCell align='center' sx={{ fontWeight: 700 }} >{item.orderno}</TableCell>}
                                 </TableRow>
                                 {item.values.map((subitem, subindex) => {
                                     var chr = String.fromCharCode(97 + subindex);
@@ -103,17 +107,17 @@ const EstimateTable = (props) => {
                                         <TableRow className={subindex.index % 2 === 0 ? "table-body tablegrey" : "table-body"} key={subindex + 1000}>
                                             <TableCell align='center' >{chr}</TableCell>
                                             <TableCell align='center' >{subitem.desc}</TableCell>
-                                            {subitem.hideotheritem && subitem.isotheritem ?  <TableCell ></TableCell> :
-                                            <TableCell align='center' >{subitem.length}</TableCell> }
-                                              {subitem.hideotheritem && subitem.isotheritem ?  <TableCell ></TableCell> :
-                                            <TableCell align='center' >{subitem.height}</TableCell> }
-                                              {subitem.hideotheritem && subitem.isotheritem ?  <TableCell ></TableCell> :
-                                            <TableCell align='center' >{subitem.area}</TableCell>}
-                                              {subitem.hideotheritem && subitem.isotheritem ?  <TableCell ></TableCell> :
-                                            <TableCell align='center' >{subitem.perqsft}</TableCell>}
+                                            {subitem.hideotheritem && subitem.isotheritem ? <TableCell ></TableCell> :
+                                                <TableCell align='center' >{subitem.length}</TableCell>}
+                                            {subitem.hideotheritem && subitem.isotheritem ? <TableCell ></TableCell> :
+                                                <TableCell align='center' >{subitem.height}</TableCell>}
+                                            {subitem.hideotheritem && subitem.isotheritem ? <TableCell ></TableCell> :
+                                                <TableCell align='center' >{subitem.area}</TableCell>}
+                                            {subitem.hideotheritem && subitem.isotheritem ? <TableCell ></TableCell> :
+                                                <TableCell align='center' >{subitem.perqsft}</TableCell>}
                                             {pvcisisvisible.display === true && <>
-                                            <TableCell align='center' >{subitem.pvccostpsf}</TableCell>
-                                            <TableCell align='center' >{subitem.totalpvccost}</TableCell></>}
+                                                <TableCell align='center' >{subitem.pvccostpsf}</TableCell>
+                                                <TableCell align='center' >{subitem.totalpvccost}</TableCell></>}
                                             {upvcisisvisible.display === true && <>
                                                 <TableCell align='center' >{subitem.upvccostpsf}</TableCell>
                                                 <TableCell align='center' >{subitem.totalupvccost}</TableCell></>}
@@ -126,6 +130,7 @@ const EstimateTable = (props) => {
 
                                             {props.screen === "update" &&
                                                 <>
+                                                    <TableCell ></TableCell>
                                                     <TableCell className="table-edit" onClick={() => estdetail.addOrUpdateEstimateItemHandler(item.id, subitem, "update")} >
 
                                                         <FiEdit size={18} />
@@ -140,16 +145,16 @@ const EstimateTable = (props) => {
                                         </TableRow>
                                     )
                                 })}
-                                <TableRow className={"table-body tablegrey"} key={item.sumtotalpvscost*Math.round}>
+                                <TableRow className={"table-body tablegrey"} key={item.sumtotalpvscost * Math.round}>
                                     <TableCell ></TableCell>
                                     <TableCell align='center' sx={{ fontWeight: 700 }}> Total</TableCell>
                                     <TableCell ></TableCell>
                                     <TableCell ></TableCell>
                                     <TableCell ></TableCell>
-                                    <TableCell  align='center'>{item.sumtotalsqft}</TableCell>
+                                    <TableCell align='center'>{item.sumtotalsqft}</TableCell>
                                     {pvcisisvisible.display === true && <>
-                                    <TableCell></TableCell>
-                                    <TableCell align='center'>{item.sumtotalpvccost}</TableCell></>}
+                                        <TableCell></TableCell>
+                                        <TableCell align='center'>{item.sumtotalpvccost}</TableCell></>}
                                     {upvcisisvisible.display === true && <>
                                         <TableCell ></TableCell>
                                         <TableCell align='center'>{item.sumtotalupvccost}</TableCell></>}
@@ -171,11 +176,11 @@ const EstimateTable = (props) => {
                             <TableCell ></TableCell>
                             <TableCell ></TableCell>
                             <TableCell ></TableCell>
-                           
+
                             <TableCell align='center' sx={{ fontWeight: 700 }}>{estdetail.granttotalsqft}</TableCell>
                             {pvcisisvisible.display === true && <>
-                            <TableCell ></TableCell>
-                            <TableCell align='center' sx={{ fontWeight: 700 }}>{estdetail.grandtotalpvccost}</TableCell></>}
+                                <TableCell ></TableCell>
+                                <TableCell align='center' sx={{ fontWeight: 700 }}>{estdetail.grandtotalpvccost}</TableCell></>}
                             {upvcisisvisible.display === true && <>
                                 <TableCell ></TableCell>
                                 <TableCell align='center' sx={{ fontWeight: 700 }}>{estdetail.grandtotalupvccost}</TableCell></>}
