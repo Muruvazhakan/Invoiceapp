@@ -15,9 +15,15 @@ import { estimateState } from "../../../../Context/EstimatestateContext";
 
 
 const EstimateTable = (props) => {
+    // const estdetail = useContext(estimateState);
     const estdetail = useContext(estimateState);
+
+   
     useEffect(() => {
         // console.log('estdetail.columns[8].values');
+        // console.log(props);
+        // console.log('from screen' +props.fromscreen);
+       
         // console.log(estdetail.columns);
         // let upvcisisvisible = estdetail.columns.map(item =>item.columnname==='UPVC cost Psf')
         // console.log(upvcisisvisible); 
@@ -94,7 +100,7 @@ const EstimateTable = (props) => {
                                     var chr = String.fromCharCode(97 + subindex);
 
                                     return (
-                                        <TableRow className={subindex.index % 2 == 0 ? "table-body tablegrey" : "table-body"} key={subindex + 1000}>
+                                        <TableRow className={subindex.index % 2 === 0 ? "table-body tablegrey" : "table-body"} key={subindex + 1000}>
                                             <TableCell align='center' >{chr}</TableCell>
                                             <TableCell align='center' >{subitem.desc}</TableCell>
                                             {subitem.hideotheritem && subitem.isotheritem ?  <TableCell ></TableCell> :

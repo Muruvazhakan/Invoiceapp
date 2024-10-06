@@ -1,15 +1,15 @@
-import React, { useState, useEffect, createContext } from "react";
+import React, { useState, useEffect, createContext, useContext } from "react";
 import { toast } from "react-toastify";
 import { v4 as uuidv4 } from "uuid";
 import collect from "collect.js";
 
 import * as localstorage from '../Context/localStorageData';
-
+// import { CompanyDetail } from "./companyDetailContext";
 export const estimateState = createContext();
 
 const EstimatestateContext = ({ children }) => {
     // const [width] = useState(641);
-
+    // const companydet = useContext(CompanyDetail);
     let columnNames = [{ columnname: 'S.no', display: true, cnmae: 'other' }
         , { columnname: 'Description', display: true, cnmae: 'other' }
         , { columnname: 'Length', display: true, cnmae: 'other' }
@@ -90,10 +90,13 @@ const EstimatestateContext = ({ children }) => {
             clientPhno: clientPhno,
             clientAdd: clientAdd,
             rows: rows,
+            columns:columns,
             granttotalsqft: granttotalsqft,
             grandtotalpvccost: grandtotalpvccost,
             grandtotalupvccost: grandtotalupvccost,
             grandtotalwoodcost: grandtotalwoodcost,
+            // companytermsandcondition:companydet.companydetails,
+            // companybankdet:companydet.companyBankdetails,
             iscontains: true,
         }
         // let [getvalue] = estimateHistoryData;
@@ -113,11 +116,15 @@ const EstimatestateContext = ({ children }) => {
                     item.clientPhno = clientPhno;
                     item.clientAdd = clientAdd;
                     item.rows = rows;
+                    item.columns = columns;
                     item.granttotalsqft = granttotalsqft;
                     item.grandtotalpvccost = grandtotalpvccost;
                     item.grandtotalupvccost = grandtotalupvccost;
                     item.grandtotalwoodcost = grandtotalwoodcost;
                     iscontains = true;
+                    // item.companytermsandcondition=companydet.companydetails;
+                    // item.companybankdet=companydet.companyBankdetails;
+
                 }
             });
             if (iscontains === false) {

@@ -50,13 +50,13 @@ const EstimateGenDetails = (props) => {
 
                         // error={estimateDet.clientName.length ==0?'true':'false'} 
                         />
-                        <TextField id="outlined-required" label="Client Phone Number"
+                        <TextField id="outlined-required" label="Client Phone Number" value={estimateDet.clientPhno}
                             onChange={(e) => setval(e, estimateDet.setclientPhno)}
                             color={setboxColors(estimateDet.clientPhno, 'color')}
                         //  error={setboxColors(estimateDet.clientPhno,'error')} 
                         />
 
-                        <TextField id="outlined-required" label="Client Address" multiline
+                        <TextField id="outlined-required" label="Client Address" multiline value={estimateDet.clientAdd}
                             onChange={(e) => setval(e, estimateDet.setclientAdd)}
                             color={setboxColors(estimateDet.clientAdd, 'color')}
                         //  error={setboxColors(estimateDet.clientAdd,'error')} 
