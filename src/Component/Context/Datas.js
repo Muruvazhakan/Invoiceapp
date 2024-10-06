@@ -60,10 +60,12 @@ export const userLogin = [
 
 export const userLoginname = [
     {
+        userid:'12',
         username: 'JR modular',
         userPass: 'jrmodular123'
     },
     {
+        userid:'13',
         username: 'Other1',
         userPass: 'jrmodular123'
     },

@@ -80,7 +80,9 @@ const EstimatestateContext = ({ children }) => {
     const addOrGetEstimateHistoryData = () => {
 
         let iscontains = false;
+        let loginuserid= localstorage.addOrGetUserdetail('','userid','get');
         let singleEstimation = {
+            userid: loginuserid,
             estimateid: estimateid,
             estimatedate: estimatedate,
             estimatedate1: estimatedate1,
@@ -358,9 +360,7 @@ const EstimatestateContext = ({ children }) => {
 
     }
     useEffect(() => {
-        console.log('local Estimate history');
-
-
+        // console.log('local Estimate history');
 
         let estimateHistoryData = localstorage.addOrGetEstimateHistoryData('', 'get');
 
@@ -372,8 +372,8 @@ const EstimatestateContext = ({ children }) => {
             setestimateidcount(count);
         }
 
-        //console.log('estimateHistoryData');
-        //console.log(estimateHistoryData);
+        console.log('estimateHistoryData');
+        console.log(estimateHistoryData);
         // console.log(count + 'count');
     }, []);
 
@@ -441,6 +441,10 @@ const EstimatestateContext = ({ children }) => {
         // else{
 
         // }
+    };
+
+    const allEstimateEdit=(props) =>{
+        console.log(props);
     }
     const estcontext = {
         columns, setcolumns, rows, setrows, estimateidcount, setestimateidcount, granttotalsqft, setgranttotalsqft,
@@ -449,7 +453,7 @@ const EstimatestateContext = ({ children }) => {
         title, settitle, subdesc, setsubdesc, length, setlength, height, setheight, area, setarea, perqsft, setperqsft, isotheritem, setisotheritem, hideotheritem, sethideotheritem,
         pvccostpsf, setpvccostpsf, totalpvccost, settotalpvccost, upvccostpsf, setupvccostpsf, totalupvccost, settotalupvccost, woodcostpsf, setwoodcostpsf, totalwoodcost, settotalwoodcost,
         remarks, setremarks, addOrUpdateEstimateItemHandler, updateTableView, estimatedate1, setestimatedate1, estimateHistoryData, setestimateHistoryData, addOrGetEstimateHistoryData, dateHandler,
-        estimateSingleData, setestimateSingleData
+        estimateSingleData, setestimateSingleData,allEstimateEdit
     };
 
 

@@ -6,6 +6,8 @@ import '../../GeneralDetails/GeneralDetails.css';
 import { estimateState } from "../../../Context/EstimatestateContext";
 import Card from "../../../Style/Card/Card";
 import NoData from "../../NoData/NoData";
+import { Button } from "@mui/material";
+import { RiEditCircleFill } from "react-icons/ri";
 // import img  from '.'
 
 const AllEstimateDetails = () => {
@@ -18,9 +20,9 @@ const AllEstimateDetails = () => {
 
             {estimatedet.estimateHistoryData === null ?
                 <>
-                   
-                        <NoData details="Estimation Found" />
-                    
+
+                    <NoData details="Estimation Found" />
+
                 </>
                 :
                 <div className="displayelements">
@@ -37,9 +39,9 @@ const AllEstimateDetails = () => {
                         // item.grandtotalupvccost 
                         // item.grandtotalwoodcost 
 
-
-
-                        return (<> <Card className="  allestimatedisplay">
+                        return ( <>
+                        {item.userid ===companydet.loginuserid ? 
+                          (  <Card className="  allestimatedisplay">
                             {/* <div className="generaldetails "> */}
 
                             <ul className="details invoicedetails details ">
@@ -83,12 +85,15 @@ const AllEstimateDetails = () => {
                                     </li>{item.grandtotalwoodcost}
                                 </div>
                             </ul>
-
+                            <Button className="gen-invoice" variant="outlined" 
+                            onClick={()=>estimatedet.allEstimateEdit(item)} endIcon={<RiEditCircleFill />}  >
+                                Edit Estimate</Button>
 
                             {/* </div> */}
 
-                        </Card>  </>)
-
+                        </Card> )
+                         :
+                        null}</> )
                     })}
 
                 </div>

@@ -10,7 +10,7 @@ export const CompanyDetail = createContext();
 
 const CompanyDetailContext = ({ children }) => {
     const estimateDet = useContext(estimateState);
-
+    
     const [clientName, setclientName] = useState('');
     const [clientPhno, setclientPhno] = useState('');
     const [clientAdd, setclientAdd] = useState('');
@@ -53,7 +53,7 @@ const CompanyDetailContext = ({ children }) => {
     const [companyBankdetailIsVisible, setcompanyBankdetailIsVisible] = useState(false);
     // const [loginuser, setloginuser] = useState(localStorage.getItem('loginuser').length> 0 ? localStorage.getItem('loginuser'): '');
     const [loginuser, setloginuser] = useState('');
-    const [loginuserid, setloginuserid] = useState(0);
+    const [loginuserid, setloginuserid] = useState('');
     const [loginUserPassword, setloginUserPassword] = useState('');
     const [loginUserConfirmPassword, setloginUserConfirmPassword] = useState('');
 
@@ -150,13 +150,17 @@ const CompanyDetailContext = ({ children }) => {
                 }
                 else return false;
             });
-            // console.log(userExsist);
+            //console.log(userExsist);
             if (type === 'login') {
                 if (userExsist.length > 0) {
-                    toast.success(" Welcome " + loginuser + "!");
-                    localStorage.setItem('loginuser', loginuser);
+                    // toast.success(" Welcome " + loginuser + "!");
+                    // localStorage.setItem('loginuser', loginuser);
+                    //console.log(userExsist[0].userid + ' userExsist.userid');
+                    setloginuserid(userExsist[0].userid);
+                    localstore.addOrGetUserdetail(loginuser,'loginuser',"save");
+                    localstore.addOrGetUserdetail(userExsist[0].userid,'userid',"save");
                     setloginstatus(true);
-                    window.location.href = '/';
+                    // window.location.href = '/';
                     getAlldataOnLogin();
 
                 } else {
@@ -195,15 +199,17 @@ const CompanyDetailContext = ({ children }) => {
     }
 
     const logoutHandler = () => {
-
-        localStorage.setItem('loginuser', '');
+        localstore.addOrGetUserdetail('','loginuser','remove');
+        localstore.addOrGetUserdetail('','userid','remove');
         setloginstatus(false);
+        setloginuserid(null);
+        setloginuser('');
         window.location.href = '/';
         toast.success("You have successfully logedout");
     }
     const getAlldataOnLogin = () => {
         let companyTermsAndCondition = localstore.getCompanyTermsAndConditionHandler();
-
+        
         if (companyTermsAndCondition !== null) {
             // console.log(companyTermsAndCondition);
             setcompanydetails(companyTermsAndCondition);
@@ -233,6 +239,8 @@ const CompanyDetailContext = ({ children }) => {
             setcompanyBankdetails(companyBankdetail);
         }
 
+       
+           
 
 
     }
@@ -247,8 +255,8 @@ const CompanyDetailContext = ({ children }) => {
         let getresul;
         if (type === "new") {
             getresul = { id: uuidv4(), title: companydetailtitle, isvisible: companydetailIsVisible, desc: companydetaildesc };
-            console.log('getresul');
-            console.log(getresul);
+            //console.log('getresul');
+            //console.log(getresul);
             //console.log(companydetails);
             if (companydetails.length > 0) {
 
@@ -328,10 +336,13 @@ const CompanyDetailContext = ({ children }) => {
         }
     }
     useEffect(() => {
-        let useralreadyloggedin = localStorage.getItem('loginuser');
-        //    console.log(useralreadyloggedin);
+        let useralreadyloggedin= localstore.addOrGetUserdetail('','loginuser',"get");
+        let loginuserids= localstore.addOrGetUserdetail('','userid',"get");
+       
+           console.log(useralreadyloggedin);
         if (useralreadyloggedin !== null && useralreadyloggedin !== '') {
             setloginstatus(true);
+            setloginuserid(loginuserids);
             setloginuser(useralreadyloggedin);
             // toast.success('Welcome Back ' +useralreadyloggedin);
         }

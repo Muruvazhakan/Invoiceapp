@@ -1,4 +1,17 @@
-
+export const addOrGetUserdetail = (value,name,type) =>{
+    // console.log(value + name+type + 'addOrGetUserdetail');
+    // console.log(name +" name"+value + ' value ');
+    if(type ==="save"){
+        localStorage.setItem(name, value);
+    }
+    else if(type ==="get") {
+        // return JSON.parse(localStorage.getItem(name));
+        return localStorage.getItem(name);
+    }
+    else {
+        localStorage.removeItem(name);
+    }
+}
 
 export const addOrUpdateCompanyHandler = (props) => {
     // console.log(props);
