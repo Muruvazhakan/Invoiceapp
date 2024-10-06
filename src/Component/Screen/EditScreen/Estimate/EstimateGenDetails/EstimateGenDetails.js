@@ -50,7 +50,7 @@ const EstimateGenDetails = (props) => {
 
                         // error={estimateDet.clientName.length ==0?'true':'false'} 
                         />
-                        <TextField id="outlined-required" label="Client Phone Number" value={estimateDet.clientPhno}
+                        <TextField id="outlined-required" label="Client Phone Number" value={estimateDet.clientPhno} type="number"
                             onChange={(e) => setval(e, estimateDet.setclientPhno)}
                             color={setboxColors(estimateDet.clientPhno, 'color')}
                         //  error={setboxColors(estimateDet.clientPhno,'error')} 
