@@ -12,7 +12,7 @@ const SignUp = (props) => {
 
     const logindet = useContext(CompanyDetail);
     return (<div className="displaycontent">
-        <ToastContainer position="top-center" theme="colored" />
+        <ToastContainer position="top-center" theme="colored" containerId="Signin" autoClose={1000} />
         <Card className="logincard displaycontent">
             <Box component="form" sx={{ '& .MuiTextField-root': { m: 1.5, width: '35ch' } }}>
                 <h2 className="logintext">Sign Up</h2>

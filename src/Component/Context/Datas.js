@@ -46,8 +46,8 @@ export const navigationbarcontent = [
 export const userLogin = [
     {
         screenname: 'Login',
-        links: '/login',
-        altname: 'login',
+        links: '/',
+        altname: '/',
         displays: true
     },
     {

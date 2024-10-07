@@ -4,11 +4,12 @@ import { v4 as uuidv4 } from "uuid";
 
 import * as Datas from '../Context/Datas';
 import * as localstore from './localStorageData';
+import * as companyDetailsDB from '../DBconnection/companyDetailsDB';
 export const CompanyDetail = createContext();
 
 
 const CompanyDetailContext = ({ children }) => {
-    
+
     const [clientName, setclientName] = useState('');
     const [clientPhno, setclientPhno] = useState('');
     const [clientAdd, setclientAdd] = useState('');
@@ -136,55 +137,68 @@ const CompanyDetailContext = ({ children }) => {
 
     }
 
-    const loginHandler = (type) => {
+
+    const loginHandler = async (type) => {
         //console.log('login handler' + loginuser.length +'loginuser.length ' +loginUserPassword.length );
 
         if (loginuser.length > 0 && loginUserPassword.length > 0) {
-            let userExsist = false
-            userExsist = Datas.userLoginname.filter((item) => {
-                //console.log(item);
-                if (item.username === loginuser && item.userPass === loginUserPassword) {
-                    return true;
-                }
-                else return false;
-            });
-            //console.log(userExsist);
+            let userExsist = '';
+
+
+            // userExsist = Datas.userLoginname.filter((item) => {
+            //     //console.log(item);
+            //     if (item.username === loginuser && item.userPass === loginUserPassword) {
+            //         return true;
+            //     }
+            //     else return false;
+            // });
+
             if (type === 'login') {
-                if (userExsist.length > 0) {
-                    // toast.success(" Welcome " + loginuser + "!");
+                userExsist = await companyDetailsDB.loginUser(loginuser, loginUserPassword);
+                console.log(userExsist);
+                if (userExsist.status === 200) {
+                    toast.success(" Welcome " + loginuser + "!");
                     // localStorage.setItem('loginuser', loginuser);
-                    //console.log(userExsist[0].userid + ' userExsist.userid');
-                    setloginuserid(userExsist[0].userid);
-                    localstore.addOrGetUserdetail(loginuser,'loginuser',"save");
-                    localstore.addOrGetUserdetail(userExsist[0].userid,'userid',"save");
+                    // console.log(userExsist[0].userid + ' userExsist.userid');
+                    setloginuserid(userExsist.data);
+                    localstore.addOrGetUserdetail(loginuser, 'loginuser', "save");
+                    localstore.addOrGetUserdetail(userExsist.data, 'userid', "save");
+                    console.log(userExsist.data);
                     setloginstatus(true);
                     // window.location.href = '/';
                     getAlldataOnLogin();
 
-                } else {
-                    toast.warning("Password mismatch");
+                } else if (userExsist.status === 224) {
+                    toast.warning("User Not Found");
+                } else{
+                    toast.warning(userExsist.data);
                 }
             } else {
                 if (loginUserPassword !== loginUserConfirmPassword) {
                     toast.error("Password is not match iwth Confirm Password");
                     return;
                 }
-                if (userExsist.length > 0) {
+                // if (tokenid !== 'Billedge123') {
+                //     toast.error("Invalid Token");
+                //     return;
+                // }
+                userExsist = await companyDetailsDB.siginUser(loginuser, loginUserPassword);
+                console.log(userExsist);
+                if (userExsist.data ==="User already exist") {
                     toast.error(" User already exist");
                     // setloginstatus(true);
-                } else if (tokenid === 'muru123') {
-                    toast.success("User registered");
-                } else {
-                    toast.error(" Token Id is not matched");
+                } else if (userExsist.status === 201) {
+
+                    toast.success(" User successfully registered");
+                    console.log(userExsist.data);
+                } else{
+                    toast.warning(userExsist.data);
                 }
             }
 
-            // if(loginuser ==="JR modular" && loginUserPassword ==="jrmodular123"){
-            //     toast.success(" Welcome " + loginuser + "!");   
+            // if (loginuser === "JR modular" && loginUserPassword === "jrmodular123") {
+            //     toast.success(" Welcome " + loginuser + "!");
             //     setloginstatus(true);
-            // }
-            // else{
-            //     toast.warning("Password mismatch");
             // }
         }
         else {
@@ -197,8 +211,8 @@ const CompanyDetailContext = ({ children }) => {
     }
 
     const logoutHandler = () => {
-        localstore.addOrGetUserdetail('','loginuser','remove');
-        localstore.addOrGetUserdetail('','userid','remove');
+        localstore.addOrGetUserdetail('', 'loginuser', 'remove');
+        localstore.addOrGetUserdetail('', 'userid', 'remove');
         setloginstatus(false);
         setloginuserid(null);
         setloginuser('');
@@ -207,7 +221,7 @@ const CompanyDetailContext = ({ children }) => {
     }
     const getAlldataOnLogin = () => {
         let companyTermsAndCondition = localstore.getCompanyTermsAndConditionHandler();
-        
+
         if (companyTermsAndCondition !== null) {
             // console.log(companyTermsAndCondition);
             setcompanydetails(companyTermsAndCondition);
@@ -237,8 +251,8 @@ const CompanyDetailContext = ({ children }) => {
             setcompanyBankdetails(companyBankdetail);
         }
 
-       
-           
+
+
 
 
     }
@@ -310,8 +324,8 @@ const CompanyDetailContext = ({ children }) => {
         let getresul;
         if (type === "new") {
             getresul = { id: uuidv4(), title: companyBankdetailtitle, isvisible: companyBankdetailIsVisible, value: companyBankdetailvalue };
-            //console.log('getresul');
-            //console.log(getresul);
+            console.log('getresul');
+            console.log(getresul);
             //console.log(companydetails);
             setcompanyBankdetails([
                 ...companyBankdetails, getresul
@@ -334,9 +348,9 @@ const CompanyDetailContext = ({ children }) => {
         }
     }
     useEffect(() => {
-        let useralreadyloggedin= localstore.addOrGetUserdetail('','loginuser',"get");
-        let loginuserids= localstore.addOrGetUserdetail('','userid',"get");
-       
+        let useralreadyloggedin = localstore.addOrGetUserdetail('', 'loginuser', "get");
+        let loginuserids = localstore.addOrGetUserdetail('', 'userid', "get");
+
         //    console.log(useralreadyloggedin);
         if (useralreadyloggedin !== null && useralreadyloggedin !== '') {
             setloginstatus(true);
