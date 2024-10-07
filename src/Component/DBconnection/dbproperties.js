@@ -4,6 +4,10 @@ export const backendUrl = "http://localhost:4000";
 export const userLoginUrl = `${backendUrl}/user/login`;
 export const userSigninUrl = `${backendUrl}/user/signin`;
 
+
+export const getEstimateUrl = `${backendUrl}/estimate`;
+export const saveEstimateUrl = `${backendUrl}/estimate/createorupateestimate`;
+
 // app.use('/user/',userRoure);
 
 // app.use('/invoice/',invoicegenRoute);

@@ -1,14 +1,19 @@
-import React, { createContext, useEffect, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { v4 as uuidv4 } from "uuid";
 
 import * as Datas from '../Context/Datas';
 import * as localstore from './localStorageData';
 import * as companyDetailsDB from '../DBconnection/companyDetailsDB';
+import * as estimateDetailsDb from '../DBconnection/estimateDetailsDB';
+import { estimateState } from "./EstimatestateContext";
 export const CompanyDetail = createContext();
 
 
+
 const CompanyDetailContext = ({ children }) => {
+
+    const estdetail = useContext(estimateState);
 
     const [clientName, setclientName] = useState('');
     const [clientPhno, setclientPhno] = useState('');
@@ -170,7 +175,7 @@ const CompanyDetailContext = ({ children }) => {
 
                 } else if (userExsist.status === 224) {
                     toast.warning("User Not Found");
-                } else{
+                } else {
                     toast.warning(userExsist.data);
                 }
             } else {
@@ -184,14 +189,14 @@ const CompanyDetailContext = ({ children }) => {
                 // }
                 userExsist = await companyDetailsDB.siginUser(loginuser, loginUserPassword);
                 console.log(userExsist);
-                if (userExsist.data ==="User already exist") {
+                if (userExsist.data === "User already exist") {
                     toast.error(" User already exist");
                     // setloginstatus(true);
                 } else if (userExsist.status === 201) {
 
                     toast.success(" User successfully registered");
                     console.log(userExsist.data);
-                } else{
+                } else {
                     toast.warning(userExsist.data);
                 }
             }
@@ -219,6 +224,44 @@ const CompanyDetailContext = ({ children }) => {
         window.location.href = '/';
         toast.success("You have successfully logedout");
     }
+
+    const getAlldataFromDB = async () => {
+       
+       
+        // if (estimateHistoryData !== null) {
+        //     setestimateHistoryData(estimateHistoryData);
+        // }
+        console.log('loginuserid');
+        console.log(loginuserid);
+        if(loginuserid !== null && loginuserid !==''){
+            let estimateHistoryData = localstore.addOrGetEstimateHistoryData('', 'get');
+    
+            let getestimatefromdb = await estimateDetailsDb.getEstimateDB(loginuserid);
+            console.log('getestimatefromdb ' + estimateHistoryData );
+            console.log(getestimatefromdb);
+            if (getestimatefromdb.status === 200) {
+                console.log("estimateHistoryData.length <=getestimatefromdb.data.length  " + estimateHistoryData.length +getestimatefromdb.data.length );
+                console.log( getestimatefromdb.data.length );
+                console.log( estimateHistoryData.length );
+                if(estimateHistoryData.length <=getestimatefromdb.data.length ){
+                    console.log(getestimatefromdb.data);
+                    localstore.addOrGetInvoiceHistoryData(getestimatefromdb.data, 'save');
+                    estdetail.setestimateHistoryData(getestimatefromdb.data);
+                }
+                else{
+                    estdetail.setestimateHistoryData(getestimatefromdb.data);
+                }
+                
+                // let estimatedetailscontext = localstorage.addOrGetInvoiceHistoryData('', 'get');
+                // console.log('estimatedetailscontext ****');
+                // console.log(estimatedetailscontext);
+               
+            }
+        }
+        
+
+    }
+   
     const getAlldataOnLogin = () => {
         let companyTermsAndCondition = localstore.getCompanyTermsAndConditionHandler();
 
@@ -250,10 +293,7 @@ const CompanyDetailContext = ({ children }) => {
             // console.log(companyBankdetail);
             setcompanyBankdetails(companyBankdetail);
         }
-
-
-
-
+        getAlldataFromDB();
 
     }
     const companyOtherDetailHandeler = (item, type) => {
@@ -351,7 +391,7 @@ const CompanyDetailContext = ({ children }) => {
         let useralreadyloggedin = localstore.addOrGetUserdetail('', 'loginuser', "get");
         let loginuserids = localstore.addOrGetUserdetail('', 'userid', "get");
 
-        //    console.log(useralreadyloggedin);
+        // console.log(loginuserids);
         if (useralreadyloggedin !== null && useralreadyloggedin !== '') {
             setloginstatus(true);
             setloginuserid(loginuserids);
@@ -363,8 +403,11 @@ const CompanyDetailContext = ({ children }) => {
     }, []);
 
     useEffect(() => {
-        getAlldataOnLogin()
-    }, [])
+        getAlldataOnLogin();
+        // if(loginuserid !== null && loginuserid){
+        
+        // }
+    }, [loginuserid])
 
     const compDet = {
         clientName, setclientName, clientPhno, setclientPhno, clientAdd, setclientAdd, companyName, setcompanyName,

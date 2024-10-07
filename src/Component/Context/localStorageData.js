@@ -31,11 +31,11 @@ export const addOrUpdateCompanyHandler = (props) => {
 }
 
 export const getCompanyHandler = () => {
-    console.log('get CompanyTermsAndCondition ');
+    // console.log('get CompanyTermsAndCondition ');
     return JSON.parse(localStorage.getItem('companydetail'));
 }
 export const addOrUpdateCompanyTermsAndConditionHandler = (props) => {
-    console.log(props);
+    // console.log(props);
     localStorage.setItem('companyTermsAndCondition', JSON.stringify(props));
     // console.log('saved data');
     // let sto =JSON.parse(localStorage.getItem('companyTermsAndCondition'));

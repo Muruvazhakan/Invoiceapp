@@ -1,15 +1,16 @@
-import React, { useState, useEffect, createContext } from "react";
+import React, { useState, useEffect, createContext,useContext } from "react";
 import { toast } from "react-toastify";
 import { v4 as uuidv4 } from "uuid";
 import collect from "collect.js";
 
 import * as localstorage from '../Context/localStorageData';
-// import { CompanyDetail } from "./companyDetailContext";
+import * as estimateDetailsDb from '../DBconnection/estimateDetailsDB';
+import { CompanyDetail } from "./companyDetailContext";
 export const estimateState = createContext();
 
 const EstimatestateContext = ({ children }) => {
     // const [width] = useState(641);
-    // const companydet = useContext(CompanyDetail);
+    const companydet = useContext(CompanyDetail);
     let columnNames = [{ columnname: 'S.no', display: true, cnmae: 'other' }
         , { columnname: 'Description', display: true, cnmae: 'other' }
         , { columnname: 'Length', display: true, cnmae: 'other' }
@@ -92,7 +93,7 @@ const EstimatestateContext = ({ children }) => {
 
     }
 
-    const addOrGetEstimateHistoryData = () => {
+    const addOrGetEstimateHistoryData = async () => {
 
         if (estimateid === '' || estimateid === null) {
             toast.error('Estimate Id is not generates');
@@ -164,10 +165,11 @@ const EstimatestateContext = ({ children }) => {
             ]);
         }
 
-        localstorage.addOrGetEstimateHistoryData(estimateHistoryData, "save");
-        //  console.log(saveddata);
+        // localstorage.addOrGetEstimateHistoryData(estimateHistoryData, "save");
+       
+       
         // toast.success('Estimate Details are added');
-        //console.log(estimateHistoryData);
+       
 
     }
 
@@ -452,14 +454,14 @@ const EstimatestateContext = ({ children }) => {
         //console.log("todaydate: " + estimateidcount + '  ');
 
     }
+
+ 
+
     useEffect(() => {
         // console.log('local Estimate history');
 
-        let estimateHistoryData = localstorage.addOrGetEstimateHistoryData('', 'get');
-
-        if (estimateHistoryData !== null) {
-            setestimateHistoryData(estimateHistoryData);
-        }
+        // getAlldataFromDB();
+       
         let count = localstorage.addOrGetEstimateid('', 'get');
         if (count !== null) {
             setestimateidcount(count);
@@ -470,9 +472,18 @@ const EstimatestateContext = ({ children }) => {
         // console.log(count + 'count');
     }, []);
 
+    const updateestimate = async (data) =>{
+        let loginuserid = localstorage.addOrGetUserdetail('', 'userid', 'get');
+        let storedataindb = await estimateDetailsDb.saveEstimateDB(data,loginuserid);
+        console.log(storedataindb);
+        if(storedataindb.status !==200 || storedataindb.data !=='estimation saved'){
+            toast.error('Error in saving Estimate Details in DB');
+        }
+    }
     useEffect(() => {
         if (estimateHistoryData !== null) {
             localstorage.addOrGetEstimateHistoryData(estimateHistoryData, "save");
+            updateestimate(estimateHistoryData);
             //console.log("localstorage: ");
             //console.log(localstorage.addOrGetEstimateHistoryData(estimateHistoryData, "get"));
         }

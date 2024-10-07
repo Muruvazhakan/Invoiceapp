@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 
 import { CompanyDetail } from "../../../Context/companyDetailContext";
 
@@ -15,6 +15,12 @@ const AllEstimateDetails = () => {
 
     const estimatedet = useContext(estimateState);
     const companydet = useContext(CompanyDetail);
+
+    // useEffect(()=>{
+    //     console.log('AllEstimateDetails');
+    //     console.log(estimatedet.estimateHistoryData);
+    // },[])
+    
     return (
 
         <>
@@ -27,22 +33,13 @@ const AllEstimateDetails = () => {
                 </>
                 :
                 <div className="displayelements">
-                    {estimatedet.estimateHistoryData.map((item) => {
-
-                        // item.estimatedate 
-                        // item.estimatedate1 
-                        // item.clientName
-                        // item.clientPhno 
-                        // item.clientAdd 
-                        // item.rows 
-                        // item.granttotalsqft 
-                        // item.grandtotalpvccost
-                        // item.grandtotalupvccost 
-                        // item.grandtotalwoodcost 
-
-                        return (<>
-                            {item.userid === companydet.loginuserid ?
-                                (<Card className="  allestimatedisplay">
+                    {estimatedet.estimateHistoryData.map((item,index) => {
+                        // console.log('item');
+                        // console.log(item);
+                        // console.log(item.estimateid + ' estimateid ' + item.clientName + ' companydet.loginuserid ' +companydet.loginuserid + 'item.userid ' + item.userid );
+                        return <>
+                           
+                                <Card className="  allestimatedisplay" key={index}>
                                     {/* <div className="generaldetails "> */}
 
                                     <ul className="details invoicedetails details ">
@@ -97,9 +94,9 @@ const AllEstimateDetails = () => {
                                     </Link>
                                     {/* </div> */}
 
-                                </Card>)
-                                :
-                                null}</>)
+                                </Card>
+                               
+                                </>
                     })}
 
                 </div>
