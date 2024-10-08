@@ -4,9 +4,22 @@ export const backendUrl = "http://localhost:4000";
 export const userLoginUrl = `${backendUrl}/user/login`;
 export const userSigninUrl = `${backendUrl}/user/signin`;
 
+export const getCompanyBasicDetailsUrl = `${backendUrl}/user/getcompanybasic`;
+export const saveCompanyBasicDetailsUrl = `${backendUrl}/user/savecompanybasic`;
+
+export const getCompanyBankDetailsUrl = `${backendUrl}/user/getcompanybank`;
+export const saveCompanyBankDetailsUrl = `${backendUrl}/user/savecompanybank`;
+
+export const getCompanyTermsAndConditionDetailsUrl = `${backendUrl}/user/gettermsandconditioncompany`;
+export const saveCompanyTermsAndConditionDetailsUrl = `${backendUrl}/user/savetermsandconditioncompany`;
+
+// export const getCompanyTermsAndConditionDetailsUrl = `${backendUrl}/user/getcompanybasic`;
+// export const saveCompanyTermsAndConditionDetailsUrl = `${backendUrl}/user/savecompanybasic`;
 
 export const getEstimateUrl = `${backendUrl}/estimate`;
 export const saveEstimateUrl = `${backendUrl}/estimate/createorupateestimate`;
+
+
 
 // app.use('/user/',userRoure);
 

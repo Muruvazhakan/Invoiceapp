@@ -237,13 +237,10 @@ const CompanyDetailContext = ({ children }) => {
             let estimateHistoryData = localstore.addOrGetEstimateHistoryData('', 'get');
     
             let getestimatefromdb = await estimateDetailsDb.getEstimateDB(loginuserid);
-            console.log('getestimatefromdb ' + estimateHistoryData );
+            console.log('estimateHistoryData ' + estimateHistoryData );
             console.log(getestimatefromdb);
             if (getestimatefromdb.status === 200) {
-                console.log("estimateHistoryData.length <=getestimatefromdb.data.length  " + estimateHistoryData.length +getestimatefromdb.data.length );
-                console.log( getestimatefromdb.data.length );
-                console.log( estimateHistoryData.length );
-                if(estimateHistoryData.length <=getestimatefromdb.data.length ){
+                if(estimateHistoryData === null || (estimateHistoryData.length <=getestimatefromdb.data.length) ){
                     console.log(getestimatefromdb.data);
                     localstore.addOrGetInvoiceHistoryData(getestimatefromdb.data, 'save');
                     estdetail.setestimateHistoryData(getestimatefromdb.data);

@@ -62,3 +62,42 @@ export const siginUser = async (username, userpassword) => {
         return err;
     }
 };
+
+export const getCompanyBasicDetails = async (userid) => {
+    console.log(`${dbprop.getCompanyBasicDetailsUrl}/${userid}` + 'dbprop.getCompanyBasicDetails');
+    let response;
+    try {
+        response = await axios.get(`${dbprop.getCompanyBasicDetailsUrl}/${userid}}`, config);
+        console.log(response);
+        return response;
+    } catch (err) {
+        console.log(err);
+        return err;
+    }
+}
+
+export const saveCompanyBasicDetails = async (basicdetail, userid) => {
+    console.log(`${dbprop.saveCompanyBasicDetailsUrl}/${userid}` + ' dbprop.getCompanyBasicDetails');
+    const data = {
+        companyName: basicdetail.companyName,
+        companyTagLine: basicdetail.companyTagLine,
+        companyAddress: basicdetail.companyAddress,
+        companyPhno: basicdetail.companyPhno,
+        companymailid: basicdetail.companymailid,
+        companyGstin: basicdetail.companyGstin,
+        companyGstinStatename: basicdetail.companyGstinStatename,
+        companyOwner: basicdetail.companyOwner,
+        companyDeleration: basicdetail.companyDeleration,
+        companythankyou: basicdetail.companythankyou,
+    };
+    console.log(data);
+    let response;
+    try {
+        response = await axios.post(`${dbprop.saveCompanyBasicDetailsUrl}/${userid}}`, data, config);
+        console.log(response);
+        return response;
+    } catch (err) {
+        console.log(err);
+        return err;
+    }
+};
