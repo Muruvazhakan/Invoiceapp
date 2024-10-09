@@ -5,6 +5,8 @@ import Card from "../../../Style/Card/Card";
 const CompanyotherDetail = () => {
 
     const companydet = useContext(CompanyDetail);
+
+
     return (
 
         <Card>
@@ -12,7 +14,7 @@ const CompanyotherDetail = () => {
             {companydet.companydetails.map((item, index) => {
                 return (
                     <ul className="details" key={index}>
-                        {item.isvisible === true &&
+                        {(item.isvisible === true || item.isvisible === "true") &&
                             < >
                                 <li >
                                     <div className="companyname  itemtitle">

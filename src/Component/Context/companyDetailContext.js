@@ -18,12 +18,24 @@ const CompanyDetailContext = ({ children }) => {
     const [clientName, setclientName] = useState('');
     const [clientPhno, setclientPhno] = useState('');
     const [clientAdd, setclientAdd] = useState('');
-    const [companyName, setcompanyName] = useState('JR MODULAR ENTERPRISES');
-    const [companyTagLine, setcompanyTagLine] = useState('‘YOUR HOME OUR INTERIOR’');
-    const [companyAddress, setcompanyAddress] = useState('Address: No.1/4, Mummurti Nagar Main Road, Chromepet, Chennai-600044');
-    const [companyPhno, setcompanyPhno] = useState('Contact: 8428952208');
-    const [companymailid, setcompanymailid] = useState('mailto: jrmodularenterprises@gmail.com');
-    const [companyOwner, setcompanyOwner] = useState('Mr. JAFER HUSSAN');
+    // const [companyName, setcompanyName] = useState('JR MODULAR ENTERPRISES');
+    // const [companyTagLine, setcompanyTagLine] = useState('‘YOUR HOME OUR INTERIOR’');
+    // const [companyAddress, setcompanyAddress] = useState('Address: No.1/4, Mummurti Nagar Main Road, Chromepet, Chennai-600044');
+    // const [companyPhno, setcompanyPhno] = useState('Contact: 8428952208');
+    // const [companymailid, setcompanymailid] = useState('mailto: jrmodularenterprises@gmail.com');
+    // const [companyOwner, setcompanyOwner] = useState('Mr. JAFER HUSSAN');
+    // const [companyDeleration, setcompanyDeleration] = useState('We declare that the invoice details are the actual price of the goods');
+    // const [companythankyou, setcompanythankyou] = useState('Thanking you and assuring our best services at all times.');
+
+    const [companyName, setcompanyName] = useState('');
+    const [companyTagLine, setcompanyTagLine] = useState('');
+    const [companyAddress, setcompanyAddress] = useState('');
+    const [companyPhno, setcompanyPhno] = useState('Contact:');
+    const [companymailid, setcompanymailid] = useState('mailto: ');
+    const [companyOwner, setcompanyOwner] = useState('');
+    const [companyDeleration, setcompanyDeleration] = useState('');
+    const [companythankyou, setcompanythankyou] = useState('');
+
     const [companyGstin, setcompanyGstin] = useState('');
     const [companyGstinStatename, setcompanyGstinStatename] = useState('');
 
@@ -33,7 +45,7 @@ const CompanyDetailContext = ({ children }) => {
     const [invoicedate, setinvoicedate] = useState('');
     const [paymentmode, setpaymentmode] = useState('');
     const [paymentdate, setpaymentdate] = useState('');
-    const [companyDeleration, setcompanyDeleration] = useState('We declare that the invoice details are the actual price of the goods');
+
     const [cleardetailoption, setcleardetailoption] = useState(true);
     // let companydet = [
     //     { id: 1, title: 'Prices', isvisible: true, desc: 'Prices quoted are strictly as per the size, quantity and design SPECIFIED only, Any change in either one will result in change in quoted price, If any change in Government taxes & regulations it will be implicated in pricing as per actual.' },
@@ -46,6 +58,8 @@ const CompanyDetailContext = ({ children }) => {
     //     { id: 8, title: 'Installation', isvisible: true, desc: 'We carry out the work once the materials reach the site. The Sequence of work will however have to be mutually agreed upon.' },
     //     { id: 9, title: 'Warranty', isvisible: true, desc: 'All the Extrusions used will carry a warranty of 15 years. All the accessories used will have a warranty of one year under any manufacturing defects. The above warranty does not include mishandling of products & natural calamities like fire, earth quake etc.,' },
     // ];
+
+
     const [companydetails, setcompanydetails] = useState([]);
 
     const [companydetailtitle, setcompanydetailtitle] = useState('');
@@ -66,6 +80,43 @@ const CompanyDetailContext = ({ children }) => {
 
     const [loginId, setloginId] = useState('');
     const [tokenid, settokenid] = useState('');
+
+    // const bankdet = [
+    //     { id: 1, title: 'Bank Name', isvisible: true, value: 'AXIS BANK' },
+    //     { id: 2, title: 'Branch', isvisible: true, value: 'Chromepet' },
+    //     { id: 3, title: 'IFS Ccode', isvisible: true, value: 'UTIB0003905' },
+    //     { id: 4, title: 'Account Number', isvisible: true, value: '923020005067138' },
+    //     { id: 5, title: 'Account Holder Name', isvisible: true, value: 'JR MODULAR ENTERPRISES' },
+    // ];
+    const bankdet = [
+        { id: 1, title: 'Bank Name', isvisible: true, value: '' },
+        { id: 2, title: 'Branch', isvisible: true, value: '' },
+        { id: 3, title: 'IFS Ccode', isvisible: true, value: '' },
+        { id: 4, title: 'Account Number', isvisible: true, value: '' },
+        { id: 5, title: 'Account Holder Name', isvisible: true, value: '' },
+    ];
+    const [companyBankdetails, setcompanyBankdetails] = useState(bankdet);
+
+    //     Invoice id
+    // Invoice date
+    // Payment mode
+    // Payment Date
+
+    const setval = (e, fun) => {
+        fun(e.target.value);
+    }
+
+    const setboxColors = (item, field) => {
+        if (field === 'color') {
+            return item.length === 0 || item === 0 ? 'error' : 'success';
+        }
+
+        else {
+            return item.length === 0 || item === 0 ? true : false;
+        }
+
+    }
+
     const companytitle = (id, value, type) => {
 
         const getresul = companydetails.map((items) => {
@@ -89,6 +140,7 @@ const CompanyDetailContext = ({ children }) => {
         setcompanydetails(getresul);
 
     }
+
     const updateBankDetailHandler = (id, value, type) => {
         // console.log(value + ' ids ' + id);
         // console.log(value );
@@ -113,35 +165,6 @@ const CompanyDetailContext = ({ children }) => {
         // console.log(getresul);
         setcompanyBankdetails(getresul);
     }
-    // const bankdet = [
-    //     { id: 1, title: 'Bank Name', isvisible: true, value: 'AXIS BANK' },
-    //     { id: 2, title: 'Branch', isvisible: true, value: 'Chromepet' },
-    //     { id: 3, title: 'IFS Ccode', isvisible: true, value: 'UTIB0003905' },
-    //     { id: 4, title: 'Account Number', isvisible: true, value: '923020005067138' },
-    //     { id: 5, title: 'Account Holder Name', isvisible: true, value: 'JR MODULAR ENTERPRISES' },
-    // ];
-    const [companyBankdetails, setcompanyBankdetails] = useState([]);
-    const [companythankyou, setcompanythankyou] = useState('Thanking you and assuring our best services at all times.');
-    //     Invoice id
-    // Invoice date
-    // Payment mode
-    // Payment Date
-
-    const setval = (e, fun) => {
-        fun(e.target.value);
-    }
-
-    const setboxColors = (item, field) => {
-        if (field === 'color') {
-            return item.length === 0 || item === 0 ? 'error' : 'success';
-        }
-
-        else {
-            return item.length === 0 || item === 0 ? true : false;
-        }
-
-    }
-
 
     const loginHandler = async (type) => {
         //console.log('login handler' + loginuser.length +'loginuser.length ' +loginUserPassword.length );
@@ -218,6 +241,11 @@ const CompanyDetailContext = ({ children }) => {
     const logoutHandler = () => {
         localstore.addOrGetUserdetail('', 'loginuser', 'remove');
         localstore.addOrGetUserdetail('', 'userid', 'remove');
+        localstore.addOrUpdateCompanyHandler('','remove');
+        localstore.addOrUpdateCompanyTermsAndConditionHandler('', 'remove');
+        localstore.addOrGetCompanyBankDetailHandler('', 'remove');
+        localstore.addOrGetInvoiceHistoryData('', 'remove');
+        localstore.addOrGetEstimateHistoryData('', 'remove');
         setloginstatus(false);
         setloginuserid(null);
         setloginuser('');
@@ -237,12 +265,12 @@ const CompanyDetailContext = ({ children }) => {
         if (loginuserid !== null && loginuserid !== '') {
 
             let estimateidcounter = localstore.addOrGetEstimateid('', "get");
-            console.log(estimateidcounter + 'estimateidcounter');
+            // console.log(estimateidcounter + 'estimateidcounter');
             let getEstimationIdfromDb = await estimateDetailsDb.getEstimationId(loginuserid);
-            console.log(getEstimationIdfromDb.data);
-            if (getEstimationIdfromDb.status === 200 && estimateidcounter < getEstimationIdfromDb.data ) {
+            // console.log(getEstimationIdfromDb.data );
+            if (getEstimationIdfromDb.status === 200 && estimateidcounter < getEstimationIdfromDb.data) {
                 localstore.addOrGetEstimateid(getEstimationIdfromDb.data, "save");
-                console.log('saving');
+                // console.log('saving');
             }
 
             let estimateHistoryData = localstore.addOrGetEstimateHistoryData('', 'get');
@@ -285,10 +313,10 @@ const CompanyDetailContext = ({ children }) => {
             // getCompanyBankDetails
             let companyBankDetailslocal = localstore.addOrGetCompanyBankDetailHandler('', 'get');
             let companyBankDetailsfromdb = await companyDetailsDB.getCompanyBankDetails(loginuserid);
-            // console.log('companyBankDetailsfromdb ');
-            // console.log(companyBankDetailsfromdb);
-            // console.log('companyBankDetailslocal ');
-            // console.log(companyBankDetailslocal);
+            console.log('companyBankDetailsfromdb ');
+            console.log(companyBankDetailsfromdb);
+            console.log('companyBankDetailslocal ');
+            console.log(companyBankDetailslocal);
 
             if (companyBasicDetailsfromdb.status === 200) {
                 if (!companyBankDetailslocal || (companyBankDetailsfromdb.data
@@ -299,7 +327,13 @@ const CompanyDetailContext = ({ children }) => {
                 }
             }
             else {
-                toast.warning(companyBankDetailslocal.data);
+                if (companyBankDetailsfromdb.data !== null) {
+                    toast.warning(companyBankDetailsfromdb.data);
+                }
+                else {
+                    toast.warning("Issue in Company Basic details retrival");
+                }
+
             }
 
             let companyTermsAndConditionDetailslocal = localstore.getCompanyTermsAndConditionHandler();
@@ -312,7 +346,7 @@ const CompanyDetailContext = ({ children }) => {
             if (companyBasicDetailsfromdb.status === 200) {
                 if (!companyTermsAndConditionDetailslocal || (companyTermsAndConditionDetailsfromDB.data
                     && companyTermsAndConditionDetailsfromDB.data.length > companyTermsAndConditionDetailslocal.length)) {
-                    localstore.addOrUpdateCompanyTermsAndConditionHandler(companyTermsAndConditionDetailsfromDB.data);
+                    localstore.addOrUpdateCompanyTermsAndConditionHandler(companyTermsAndConditionDetailsfromDB.data, "save");
                     // console.log("companycompanyTermsAndConditionDetailslocal updated");
                     refreshdata = true;
                 }
@@ -372,13 +406,14 @@ const CompanyDetailContext = ({ children }) => {
             setcompanyBankdetails(companyBankdetail);
         }
 
-       
+
 
     }
-    const companyOtherDetailHandeler = (item, type) => {
-        //console.log(companydetailtitle + ' ' + companydetaildesc + ' ' + type + ' item' +item);
 
-        if (companydetailtitle.length === 0 && companydetaildesc.length === 0 && type !== "delete") {
+    const companyOtherDetailHandeler = (item, type) => {
+        console.log(companydetailtitle + ' ' + companydetaildesc + ' ' + type + ' item' + item);
+
+        if (type !== "delete" && companydetailtitle.length === 0 && companydetaildesc.length === 0) {
             toast.error("Both Details are Empty");
             return;
         }
@@ -408,11 +443,11 @@ const CompanyDetailContext = ({ children }) => {
         }
         else if (type === "delete") {
             getresul = companydetails.filter((items) => {
-                //console.log(items.id + ' ids ' + item);
+                // console.log(items.id + ' ids ' + item);
                 return items.id !== item;
             })
 
-            //console.log(getresul);
+            console.log(getresul);
             setcompanydetails(getresul);
             toast.success("Details deleted");
         }
@@ -521,7 +556,7 @@ const CompanyDetailContext = ({ children }) => {
         companythankyou, setcompanythankyou, companytitle, companyOtherDetailHandeler, companydetailtitle, setcompanydetailtitle, companydetaildesc, setcompanydetaildesc, setval, setboxColors,
         loginuser, setloginuser, loginUserPassword, setloginUserPassword, loginHandler, loginstatus, setloginstatus, loginId, setloginId, loginUserConfirmPassword, setloginUserConfirmPassword, tokenid, settokenid, logoutHandler,
         companyBankdetailtitle, setcompanyBankdetailtitle, companyBankdetailvalue, setcompanyBankdetailvalue, companyBankdetailIsVisible, setcompanyBankdetailIsVisible, companydetailIsVisible, setcompanydetailIsVisible,
-        loginuserid, setloginuserid, saveHandler,getAlldataFromDB,getAlldataOnLogin
+        loginuserid, setloginuserid, saveHandler, getAlldataFromDB, getAlldataOnLogin
     };
 
 

@@ -96,9 +96,9 @@ const EstimatestateContext = ({ children }) => {
 
     const saveEstimationDetailCounter = async (estimateidcount, loginuserid) => {
         localstorage.addOrGetEstimateid(estimateidcount, "save");
-        console.log(estimateidcount + 'estimateidcount');
+        // console.log(estimateidcount + 'estimateidcount');
         let responsesaveEstimationId = await estimateDetailsDb.saveEstimationId(estimateidcount, loginuserid);
-        console.log(responsesaveEstimationId);
+        // console.log(responsesaveEstimationId);
     }
     const addOrGetEstimateHistoryData = async () => {
 
@@ -464,14 +464,14 @@ const EstimatestateContext = ({ children }) => {
         let count = estimateidcount *1;
 
         setestimateidcount(++count);
-        console.log("todaydate: " + estimateidcount + '  ');
+        // console.log("todaydate: " + estimateidcount + '  ');
         localstorage.addOrGetUserdetail(++count, 'estimateidcount', 'save');
     }
 
 
 
     useEffect(() => {
-        console.log('local Estimate history');
+        // console.log('local Estimate history');
 
         // getAlldataFromDB();
 
@@ -483,7 +483,7 @@ const EstimatestateContext = ({ children }) => {
         }
 
        
-        console.log(count + 'count');
+        // console.log(count + 'count');
     }, []);
 
     const updateestimate = async (data) => {

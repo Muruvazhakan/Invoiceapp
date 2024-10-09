@@ -107,11 +107,11 @@ export const saveCompanyBasicDetails = async (basicdetail, userid,estimateidcoun
 };
 
 export const getCompanyBankDetails = async (userid) =>{
-    //console.log(`${dbprop.getCompanyBankDetailsUrl}/${userid}` + 'dbprop.getCompanyBankDetailsUrl');
+    console.log(`${dbprop.getCompanyBankDetailsUrl}/${userid}` + 'dbprop.getCompanyBankDetailsUrl');
     let response;
     try {
         response = await axios.get(`${dbprop.getCompanyBankDetailsUrl}/${userid}`, config);
-        //console.log(response);
+        console.log(response);
         return response;
     } catch (err) {
         console.log(err);
@@ -120,13 +120,13 @@ export const getCompanyBankDetails = async (userid) =>{
 }
 
 export const saveCompanyBankDetails = async (bankdetails,userid) => {
-    //console.log(`${dbprop.saveCompanyBankDetailsUrl}/${userid}` + ' dbprop.saveCompanyBankDetailsUrl');
+    console.log(`${dbprop.saveCompanyBankDetailsUrl}/${userid}` + ' dbprop.saveCompanyBankDetailsUrl');
    
-    //console.log(bankdetails);
+    console.log(bankdetails);
     let response;
     try {
         response = await axios.post(`${dbprop.saveCompanyBankDetailsUrl}/${userid}`,bankdetails, config);
-        //console.log(response);
+        console.log(response);
         return response;
     } catch (err) {
         console.log(err);

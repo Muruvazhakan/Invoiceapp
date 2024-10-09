@@ -14,7 +14,7 @@ const CompanyBankDetail = () => {
             {companydet.companyBankdetails.map((item, index) => {
                 return (
                     <div key={index} className="items">
-                        {item.isvisible === true &&
+                        {(item.isvisible === true || item.isvisible === "true") &&
                             <>
                                 {item.title} :  {item.value}
                             </>

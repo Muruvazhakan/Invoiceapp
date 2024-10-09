@@ -1,5 +1,5 @@
 
-import React, { useContext } from "react";
+import React, { useContext,useEffect } from "react";
 import { CompanyDetail } from "../../../Context/companyDetailContext";
 import './CompanyOtherDetailEdit.css';
 import Card from "../../../Style/Card/Card";
@@ -12,8 +12,9 @@ const CompanyBankDetailEdit = () => {
     const companydet = useContext(CompanyDetail);
 
     // useEffect(() => {
-    //     console.log(companydet.companydetails)
-    // }, [companydet.companydetails]);
+    //     console.log(companydet.companydetails);
+
+    // }, []);
 
 
     return (

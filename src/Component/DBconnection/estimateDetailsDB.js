@@ -18,7 +18,7 @@ export const getEstimateDB = async (userid) => {
     let response;
     try {
         response = await axios.get(`${dbprop.getEstimateUrl}/${userid}`, config);
-        console.log(response);
+        // console.log(response);
         return response;
     } catch (err) {
         console.log(err);
@@ -36,7 +36,7 @@ export const getEstimationId = async (userid) => {
     let response;
     try {
         response = await axios.get(`${dbprop.getEstimationIdUrl}/${userid}`, config);
-        console.log(response);
+        // console.log(response);
         return response;
     } catch (err) {
         console.log(err);
@@ -45,15 +45,15 @@ export const getEstimationId = async (userid) => {
 };
 
 export const saveEstimationId = async (estimationcount,userid) => {
-    console.log(`${dbprop.saveEstimationIdUrl}/${userid}` + ' dbprop.userLoginUrl');
+    // console.log(`${dbprop.saveEstimationIdUrl}/${userid}` + ' dbprop.userLoginUrl');
     const data = {
         estimationcount
     };
-    console.log(data);
+    // console.log(data);
     let response;
     try {
         response = await axios.post(`${dbprop.saveEstimationIdUrl}/${userid}`,data, config);
-        console.log(response);
+        // console.log(response);
         return response;
     } catch (err) {
         console.log(err);
@@ -67,7 +67,7 @@ export const saveEstimateDB = async (estimate,userid) => {
     const data = {
         estimate
     };
-    console.log(data);
+    // console.log(data);
     let response;
     try {
         response = await axios.post(`${dbprop.saveEstimateUrl}/${userid}`,data, config);

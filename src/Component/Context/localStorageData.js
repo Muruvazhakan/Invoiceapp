@@ -15,48 +15,62 @@ export const addOrGetUserdetail = (value,name,type) =>{
 
 export const addOrUpdateCompanyHandler = (props,type,estimateidcount) => {
     // console.log(props);
-    let companydetail = {
-        companyAddress: props.companyAddress, companyDeleration: props.companyDeleration,
-        companyGstin: props.companyGstin, companyGstinStatename: props.companyGstinStatename, companyName: props.companyName, companyOwner: props.companyOwner,
-        companyPhno: props.companyPhno, companyTagLine: props.companyTagLine,
-        companydetaildesc: props.companydetaildesc, companymailid: props.companymailid, companythankyou: props.companythankyou,estimateidcount:estimateidcount,
-        invoiceidcount:props.invoiceidcount,
-
+    if(type ==="save"){
+        let companydetail = {
+            companyAddress: props.companyAddress, companyDeleration: props.companyDeleration,
+            companyGstin: props.companyGstin, companyGstinStatename: props.companyGstinStatename, companyName: props.companyName, companyOwner: props.companyOwner,
+            companyPhno: props.companyPhno, companyTagLine: props.companyTagLine,
+            companydetaildesc: props.companydetaildesc, companymailid: props.companymailid, companythankyou: props.companythankyou,estimateidcount:estimateidcount,
+            invoiceidcount:props.invoiceidcount,
+    
+        }
+        // console.log(props);
+        localStorage.setItem('companydetail', JSON.stringify(companydetail));
+        // console.log('saved data');
+        // let sto =JSON.parse(localStorage.getItem('companydetail'));
+        // console.log(sto);
+    
     }
-    // console.log(props);
-    localStorage.setItem('companydetail', JSON.stringify(companydetail));
-    // console.log('saved data');
-    // let sto =JSON.parse(localStorage.getItem('companydetail'));
-    // console.log(sto);
-
+    else {
+        localStorage.removeItem('companydetail');
+    }
 }
 
 export const getCompanyHandler = () => {
     // console.log('get CompanyTermsAndCondition ');
     return JSON.parse(localStorage.getItem('companydetail'));
 }
-export const addOrUpdateCompanyTermsAndConditionHandler = (props) => {
+export const addOrUpdateCompanyTermsAndConditionHandler = (props,type) => {
     // console.log(props);
-    localStorage.setItem('companyTermsAndCondition', JSON.stringify(props));
+    if(type ==="save"){
+        localStorage.setItem('companyTermsAndCondition', JSON.stringify(props));
     // console.log('saved data');
     // let sto =JSON.parse(localStorage.getItem('companyTermsAndCondition'));
     // console.log(sto);
+    }
+    else {
+        localStorage.removeItem('companyTermsAndCondition');
+    }
+    
 }
 export const getCompanyTermsAndConditionHandler = () => {
     // console.log('get CompanyTermsAndCondition ');
     return JSON.parse(localStorage.getItem('companyTermsAndCondition'));
 }
 export const addOrGetCompanyBankDetailHandler = (props, type) => {
-    // console.log(props);
-    // ,companyBankdetails:props.companyBankdetails
+    console.log(props);
+    console.log('saved data bank details');
     if (type === 'save') {
         localStorage.setItem('companybankdetail', JSON.stringify(props));
-        //  console.log('saved data bank details');
+        
         // let sto =JSON.parse(localStorage.getItem('companybankdetail'));
         // console.log(sto);
     }
     else if (type === 'get') {
         return JSON.parse(localStorage.getItem('companybankdetail'));
+    }
+    else {
+        localStorage.removeItem('companybankdetail');
     }
 }
 
@@ -72,10 +86,13 @@ export const addOrGetInvoiceHistoryData = (props, type) => {
     else if (type === 'get') {
         return JSON.parse(localStorage.getItem('companyinvoicehistory'));
     }
+    else {
+        localStorage.removeItem('companyinvoicehistory');
+    }
 }
 
 export const addOrGetEstimateHistoryData = (props, type) => {
-    console.log(props);
+    // console.log(props);
 
     if (type === 'save') {
         localStorage.setItem('companyestimatehistory', JSON.stringify(props));
@@ -85,6 +102,9 @@ export const addOrGetEstimateHistoryData = (props, type) => {
     }
     else if (type === 'get') {
         return JSON.parse(localStorage.getItem('companyestimatehistory'));
+    }
+    else {
+        localStorage.removeItem('companyestimatehistory');
     }
 }
 
