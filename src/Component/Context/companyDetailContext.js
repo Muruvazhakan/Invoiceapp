@@ -2,7 +2,7 @@ import React, { createContext, useContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { v4 as uuidv4 } from "uuid";
 
-import * as Datas from '../Context/Datas';
+// import * as Datas from '../Context/Datas';
 import * as localstore from './localStorageData';
 import * as companyDetailsDB from '../DBconnection/companyDetailsDB';
 import * as estimateDetailsDb from '../DBconnection/estimateDetailsDB';
@@ -35,18 +35,18 @@ const CompanyDetailContext = ({ children }) => {
     const [paymentdate, setpaymentdate] = useState('');
     const [companyDeleration, setcompanyDeleration] = useState('We declare that the invoice details are the actual price of the goods');
     const [cleardetailoption, setcleardetailoption] = useState(true);
-    let companydet = [
-        { id: 1, title: 'Prices', isvisible: true, desc: 'Prices quoted are strictly as per the size, quantity and design SPECIFIED only, Any change in either one will result in change in quoted price, If any change in Government taxes & regulations it will be implicated in pricing as per actual.' },
-        { id: 2, title: 'Billing format', isvisible: true, desc: 'Billing will be done for individual items & rates specified for individual items only tolerance of (+/-) 25mm will not affect the rate per Sqft quoted.' },
-        { id: 3, title: 'Payment & Supply of Materials', isvisible: true, desc: '50% Advance' },
-        { id: 4, title: '', isvisible: true, desc: '30% after start work' },
-        { id: 5, title: '', isvisible: true, desc: '20% after completion' },
-        { id: 6, title: '', isvisible: true, desc: 'Supply of materials will be done within 15 days from the date of receipt order and advance payments along with confirmed sizes & Design.' },
-        { id: 7, title: '', isvisible: true, desc: 'The materials will be taken for production once the Order and advance payments are received. Work order & Payments to be made. We can also work in line with your schedule of works.' },
-        { id: 8, title: 'Installation', isvisible: true, desc: 'We carry out the work once the materials reach the site. The Sequence of work will however have to be mutually agreed upon.' },
-        { id: 9, title: 'Warranty', isvisible: true, desc: 'All the Extrusions used will carry a warranty of 15 years. All the accessories used will have a warranty of one year under any manufacturing defects. The above warranty does not include mishandling of products & natural calamities like fire, earth quake etc.,' },
-    ];
-    const [companydetails, setcompanydetails] = useState(companydet);
+    // let companydet = [
+    //     { id: 1, title: 'Prices', isvisible: true, desc: 'Prices quoted are strictly as per the size, quantity and design SPECIFIED only, Any change in either one will result in change in quoted price, If any change in Government taxes & regulations it will be implicated in pricing as per actual.' },
+    //     { id: 2, title: 'Billing format', isvisible: true, desc: 'Billing will be done for individual items & rates specified for individual items only tolerance of (+/-) 25mm will not affect the rate per Sqft quoted.' },
+    //     { id: 3, title: 'Payment & Supply of Materials', isvisible: true, desc: '50% Advance' },
+    //     { id: 4, title: '', isvisible: true, desc: '30% after start work' },
+    //     { id: 5, title: '', isvisible: true, desc: '20% after completion' },
+    //     { id: 6, title: '', isvisible: true, desc: 'Supply of materials will be done within 15 days from the date of receipt order and advance payments along with confirmed sizes & Design.' },
+    //     { id: 7, title: '', isvisible: true, desc: 'The materials will be taken for production once the Order and advance payments are received. Work order & Payments to be made. We can also work in line with your schedule of works.' },
+    //     { id: 8, title: 'Installation', isvisible: true, desc: 'We carry out the work once the materials reach the site. The Sequence of work will however have to be mutually agreed upon.' },
+    //     { id: 9, title: 'Warranty', isvisible: true, desc: 'All the Extrusions used will carry a warranty of 15 years. All the accessories used will have a warranty of one year under any manufacturing defects. The above warranty does not include mishandling of products & natural calamities like fire, earth quake etc.,' },
+    // ];
+    const [companydetails, setcompanydetails] = useState([]);
 
     const [companydetailtitle, setcompanydetailtitle] = useState('');
     const [companydetaildesc, setcompanydetaildesc] = useState('');
@@ -113,14 +113,14 @@ const CompanyDetailContext = ({ children }) => {
         // console.log(getresul);
         setcompanyBankdetails(getresul);
     }
-    const bankdet = [
-        { id: 1, title: 'Bank Name', isvisible: true, value: 'AXIS BANK' },
-        { id: 2, title: 'Branch', isvisible: true, value: 'Chromepet' },
-        { id: 3, title: 'IFS Ccode', isvisible: true, value: 'UTIB0003905' },
-        { id: 4, title: 'Account Number', isvisible: true, value: '923020005067138' },
-        { id: 5, title: 'Account Holder Name', isvisible: true, value: 'JR MODULAR ENTERPRISES' },
-    ];
-    const [companyBankdetails, setcompanyBankdetails] = useState(bankdet);
+    // const bankdet = [
+    //     { id: 1, title: 'Bank Name', isvisible: true, value: 'AXIS BANK' },
+    //     { id: 2, title: 'Branch', isvisible: true, value: 'Chromepet' },
+    //     { id: 3, title: 'IFS Ccode', isvisible: true, value: 'UTIB0003905' },
+    //     { id: 4, title: 'Account Number', isvisible: true, value: '923020005067138' },
+    //     { id: 5, title: 'Account Holder Name', isvisible: true, value: 'JR MODULAR ENTERPRISES' },
+    // ];
+    const [companyBankdetails, setcompanyBankdetails] = useState([]);
     const [companythankyou, setcompanythankyou] = useState('Thanking you and assuring our best services at all times.');
     //     Invoice id
     // Invoice date
@@ -233,9 +233,18 @@ const CompanyDetailContext = ({ children }) => {
         // }
         // console.log('loginuserid');
         // console.log(loginuserid);
-        
+        let refreshdata = false;
         if (loginuserid !== null && loginuserid !== '') {
-            
+
+            let estimateidcounter = localstore.addOrGetEstimateid('', "get");
+            console.log(estimateidcounter + 'estimateidcounter');
+            let getEstimationIdfromDb = await estimateDetailsDb.getEstimationId(loginuserid);
+            console.log(getEstimationIdfromDb.data);
+            if (getEstimationIdfromDb.status === 200 && estimateidcounter < getEstimationIdfromDb.data ) {
+                localstore.addOrGetEstimateid(getEstimationIdfromDb.data, "save");
+                console.log('saving');
+            }
+
             let estimateHistoryData = localstore.addOrGetEstimateHistoryData('', 'get');
 
             let getestimatefromdb = await estimateDetailsDb.getEstimateDB(loginuserid);
@@ -244,12 +253,13 @@ const CompanyDetailContext = ({ children }) => {
             if (getestimatefromdb.status === 200) {
                 if (estimateHistoryData === null || (estimateHistoryData.length <= getestimatefromdb.data.length)) {
                     // console.log(getestimatefromdb.data);
-                    localstore.addOrGetInvoiceHistoryData(getestimatefromdb.data, 'save');
+                    localstore.addOrGetEstimateHistoryData(getestimatefromdb.data, 'save');
                     estdetail.setestimateHistoryData(getestimatefromdb.data);
+                    refreshdata = true;
                 }
-                else {
-                    estdetail.setestimateHistoryData(getestimatefromdb.data);
-                }
+                // else {
+                //     estdetail.setestimateHistoryData(getestimatefromdb.data);
+                // }
 
                 // let estimatedetailscontext = localstorage.addOrGetInvoiceHistoryData('', 'get');
                 // console.log('estimatedetailscontext ****');
@@ -261,34 +271,60 @@ const CompanyDetailContext = ({ children }) => {
             let companyBasicDetailsfromdb = await companyDetailsDB.getCompanyBasicDetails(loginuserid);
             // console.log('companyBasicDetailslocal ');
             // console.log(companyBasicDetailslocal);
-            
+
             if (companyBasicDetailsfromdb.status === 200) {
                 if (!companyBasicDetailslocal || (companyBasicDetailsfromdb && companyBasicDetailsfromdb.data[0].companyAddress !== companyBasicDetailslocal.companyAddress)) {
                     localstore.addOrUpdateCompanyHandler(companyBasicDetailsfromdb.data[0], "save", companyBasicDetailsfromdb.data[0].estimateidcount);
                     // console.log("company basic details updated");
+                    refreshdata = true;
                 }
             }
             else {
                 toast.warning(companyBasicDetailsfromdb.data);
             }
             // getCompanyBankDetails
-            let companyBankDetailslocal = localstore.addOrGetCompanyBankDetailHandler('','get');
+            let companyBankDetailslocal = localstore.addOrGetCompanyBankDetailHandler('', 'get');
             let companyBankDetailsfromdb = await companyDetailsDB.getCompanyBankDetails(loginuserid);
             // console.log('companyBankDetailsfromdb ');
             // console.log(companyBankDetailsfromdb);
             // console.log('companyBankDetailslocal ');
             // console.log(companyBankDetailslocal);
-            
+
             if (companyBasicDetailsfromdb.status === 200) {
-                if (!companyBankDetailslocal || (companyBankDetailsfromdb.data  
-                    && companyBankDetailsfromdb.data.length   !== companyBankDetailslocal.length)) {
+                if (!companyBankDetailslocal || (companyBankDetailsfromdb.data
+                    && companyBankDetailsfromdb.data.length > companyBankDetailslocal.length)) {
                     localstore.addOrGetCompanyBankDetailHandler(companyBankDetailsfromdb.data, "save");
                     // console.log("company basic details updated");
+                    refreshdata = true;
                 }
             }
             else {
-                toast.warning(companyBasicDetailsfromdb.data);
+                toast.warning(companyBankDetailslocal.data);
             }
+
+            let companyTermsAndConditionDetailslocal = localstore.getCompanyTermsAndConditionHandler();
+            let companyTermsAndConditionDetailsfromDB = await companyDetailsDB.getCompanyTermsAndConditionDetails(loginuserid);
+            // console.log('companyTermsAndConditionDetailsfromDB ');
+            // console.log(companyTermsAndConditionDetailsfromDB);
+            // console.log('companyTermsAndConditionDetailslocal ');
+            // console.log(companyTermsAndConditionDetailslocal);
+
+            if (companyBasicDetailsfromdb.status === 200) {
+                if (!companyTermsAndConditionDetailslocal || (companyTermsAndConditionDetailsfromDB.data
+                    && companyTermsAndConditionDetailsfromDB.data.length > companyTermsAndConditionDetailslocal.length)) {
+                    localstore.addOrUpdateCompanyTermsAndConditionHandler(companyTermsAndConditionDetailsfromDB.data);
+                    // console.log("companycompanyTermsAndConditionDetailslocal updated");
+                    refreshdata = true;
+                }
+            }
+            else {
+                toast.warning(companyTermsAndConditionDetailsfromDB.data);
+            }
+
+        }
+
+        if (refreshdata === true) {
+            getAlldataOnLogin();
         }
 
 
@@ -318,13 +354,13 @@ const CompanyDetailContext = ({ children }) => {
             setcompanymailid(companydetail.companymailid);
             setcompanythankyou(companydetail.companythankyou);
             setinvoiceidount(companydetail.invoiceidcount);
-            console.log('companydetail.estimateidcount');
-            console.log(companydetail.estimateidcount);
-            if (companydetail.estimateidcount !== undefined && companydetail.estimateidcount > estdetail.estimateidcount) {
-                console.log('companydetail.estimateidcount');
-                console.log(companydetail.estimateidcount);
-                estdetail.setestimateidcount(companydetail.estimateidcount);
-            }
+            // console.log('companydetail.estimateidcount');
+            // console.log(companydetail.estimateidcount);
+            // if (companydetail.estimateidcount !== undefined && companydetail.estimateidcount > estdetail.estimateidcount) {
+            //     console.log('companydetail.estimateidcount');
+            //     console.log(companydetail.estimateidcount);
+            //     // estdetail.setestimateidcount(companydetail.estimateidcount);
+            // }
 
         }
 
@@ -335,7 +371,8 @@ const CompanyDetailContext = ({ children }) => {
             // console.log(companyBankdetail);
             setcompanyBankdetails(companyBankdetail);
         }
-        getAlldataFromDB();
+
+       
 
     }
     const companyOtherDetailHandeler = (item, type) => {
@@ -385,20 +422,30 @@ const CompanyDetailContext = ({ children }) => {
     const saveHandler = async (funcs, item, type) => {
         if (funcs === 'addOrUpdateCompanyTermsAndConditionHandler') {
             localstore.addOrUpdateCompanyTermsAndConditionHandler(item, type);
+
+            let saveCompanyTermsAndConditionDetailsdb = await companyDetailsDB.saveCompanyTermsAndConditionDetails(item, loginuserid);
+            // console.log('saveCompanyTermsAndConditionDetailsdb');
+            // console.log(saveCompanyTermsAndConditionDetailsdb);
+            if (saveCompanyTermsAndConditionDetailsdb.status !== 201 && saveCompanyTermsAndConditionDetailsdb.status !== 200) {
+                toast.error(saveCompanyTermsAndConditionDetailsdb.data + " in saving DB");
+            }
         }
         if (funcs === 'addOrGetCompanyBankDetailHandler') {
             localstore.addOrGetCompanyBankDetailHandler(item, type);
-            let  saveCompanyBankDetaitlsdb = await companyDetailsDB.saveCompanyBankDetails(item,loginuserid);
-            console.log('compabankdet');
-            console.log(saveCompanyBankDetaitlsdb);
+            let saveCompanyBankDetaitlsdb = await companyDetailsDB.saveCompanyBankDetails(item, loginuserid);
+            // console.log('compabankdet');
+            // console.log(saveCompanyBankDetaitlsdb);
+            if (saveCompanyBankDetaitlsdb.status !== 201 && saveCompanyBankDetaitlsdb.status !== 200) {
+                toast.error(saveCompanyBankDetaitlsdb.data + " in saving DB");
+            }
         }
         if (funcs === 'addOrUpdateCompanyHandler') {
             let estimateidcount = localstore.addOrGetEstimateid('', 'get');
             localstore.addOrUpdateCompanyHandler(item, type, estimateidcount);
 
             let companyBasicDetails = await companyDetailsDB.saveCompanyBasicDetails(item, loginuserid, estimateidcount);
-            console.log('companyBasicDetails');
-            console.log(companyBasicDetails);
+            // console.log('companyBasicDetails');
+            // console.log(companyBasicDetails);
             if (companyBasicDetails.status !== 201 && companyBasicDetails.status !== 200) {
                 toast.error(companyBasicDetails.data + " in saving DB");
             }
@@ -418,14 +465,14 @@ const CompanyDetailContext = ({ children }) => {
         let getresul;
         if (type === "new") {
             getresul = { id: uuidv4(), title: companyBankdetailtitle, isvisible: companyBankdetailIsVisible, value: companyBankdetailvalue };
-            console.log('getresul');
-            console.log(getresul);
+            // console.log('getresul');
+            // console.log(getresul);
             //console.log(companydetails);
             let compabankdet = [
                 ...companyBankdetails, getresul
             ];
-            console.log('compabankdet');
-            console.log(compabankdet);
+            // console.log('compabankdet');
+            // console.log(compabankdet);
             setcompanyBankdetails(compabankdet);
             toast.success("New Bank Details are Added");
             setcompanyBankdetailtitle('');
@@ -460,6 +507,7 @@ const CompanyDetailContext = ({ children }) => {
 
     useEffect(() => {
         getAlldataOnLogin();
+        getAlldataFromDB();
         // if(loginuserid !== null && loginuserid){
 
         // }
@@ -473,7 +521,7 @@ const CompanyDetailContext = ({ children }) => {
         companythankyou, setcompanythankyou, companytitle, companyOtherDetailHandeler, companydetailtitle, setcompanydetailtitle, companydetaildesc, setcompanydetaildesc, setval, setboxColors,
         loginuser, setloginuser, loginUserPassword, setloginUserPassword, loginHandler, loginstatus, setloginstatus, loginId, setloginId, loginUserConfirmPassword, setloginUserConfirmPassword, tokenid, settokenid, logoutHandler,
         companyBankdetailtitle, setcompanyBankdetailtitle, companyBankdetailvalue, setcompanyBankdetailvalue, companyBankdetailIsVisible, setcompanyBankdetailIsVisible, companydetailIsVisible, setcompanydetailIsVisible,
-        loginuserid, setloginuserid, saveHandler
+        loginuserid, setloginuserid, saveHandler,getAlldataFromDB,getAlldataOnLogin
     };
 
 

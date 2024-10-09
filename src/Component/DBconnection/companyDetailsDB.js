@@ -6,16 +6,16 @@ const config = {
     },
 };
 export const loginUser = async (username, userpassword) => {
-    console.log(dbprop.userLoginUrl + ' dbprop.userLoginUrl');
+    //console.log(dbprop.userLoginUrl + ' dbprop.userLoginUrl');
     const data = {
         username: username,
         password: userpassword
     };
-    console.log(data);
+    //console.log(data);
     let response;
     try {
         response = await axios.post(dbprop.userLoginUrl, data, config);
-        console.log(response);
+        //console.log(response);
         return response;
     } catch (err) {
         console.log(err);
@@ -26,7 +26,7 @@ export const loginUser = async (username, userpassword) => {
 
 
 export const siginUser = async (username, userpassword) => {
-    console.log(username, userpassword);
+    //console.log(username, userpassword);
     // fetch(dbprop.userSigninUrl,
     //     {
     //         // mode: 'no-cors',
@@ -51,11 +51,11 @@ export const siginUser = async (username, userpassword) => {
         username: username,
         password: userpassword
     };
-    console.log(data);
+    //console.log(data);
     let response
     try {
         response = await axios.post(dbprop.userSigninUrl, data, config);
-        console.log(response);
+        //console.log(response);
         return response;
     } catch (err) {
         console.log(err);
@@ -64,11 +64,11 @@ export const siginUser = async (username, userpassword) => {
 };
 
 export const getCompanyBasicDetails = async (userid) => {
-    console.log(`${dbprop.getCompanyBasicDetailsUrl}/${userid}` + 'dbprop.getCompanyBasicDetails');
+    //console.log(`${dbprop.getCompanyBasicDetailsUrl}/${userid}` + 'dbprop.getCompanyBasicDetails');
     let response;
     try {
         response = await axios.get(`${dbprop.getCompanyBasicDetailsUrl}/${userid}`, config);
-        console.log(response);
+        //console.log(response);
         return response;
     } catch (err) {
         console.log(err);
@@ -78,8 +78,8 @@ export const getCompanyBasicDetails = async (userid) => {
 
 export const saveCompanyBasicDetails = async (basicdetail, userid,estimateidcount) => {
     
-    console.log(`${dbprop.saveCompanyBasicDetailsUrl}/${userid}` + ' dbprop.getCompanyBasicDetails');
-    console.log(basicdetail);
+    //console.log(`${dbprop.saveCompanyBasicDetailsUrl}/${userid}` + ' dbprop.getCompanyBasicDetails');
+    //console.log(basicdetail);
     const data = {
         companyName: basicdetail.companyName,
         companyTagLine: basicdetail.companyTagLine,
@@ -94,11 +94,11 @@ export const saveCompanyBasicDetails = async (basicdetail, userid,estimateidcoun
         invoiceidcount:basicdetail.invoiceidcount,
         estimateidcount:estimateidcount
     };
-    console.log(data);
+    //console.log(data);
     let response;
     try {
         response = await axios.post(`${dbprop.saveCompanyBasicDetailsUrl}/${userid}`, data, config);
-        console.log(response);
+        //console.log(response);
         return response;
     } catch (err) {
         console.log(err);
@@ -107,11 +107,11 @@ export const saveCompanyBasicDetails = async (basicdetail, userid,estimateidcoun
 };
 
 export const getCompanyBankDetails = async (userid) =>{
-    console.log(`${dbprop.getCompanyBankDetailsUrl}/${userid}` + 'dbprop.getCompanyBankDetailsUrl');
+    //console.log(`${dbprop.getCompanyBankDetailsUrl}/${userid}` + 'dbprop.getCompanyBankDetailsUrl');
     let response;
     try {
         response = await axios.get(`${dbprop.getCompanyBankDetailsUrl}/${userid}`, config);
-        console.log(response);
+        //console.log(response);
         return response;
     } catch (err) {
         console.log(err);
@@ -120,15 +120,13 @@ export const getCompanyBankDetails = async (userid) =>{
 }
 
 export const saveCompanyBankDetails = async (bankdetails,userid) => {
-    console.log(`${dbprop.saveCompanyBankDetailsUrl}/${userid}` + ' dbprop.saveCompanyBankDetailsUrl');
-    const data = {
-        bankdetails
-    };
-    console.log(data);
+    //console.log(`${dbprop.saveCompanyBankDetailsUrl}/${userid}` + ' dbprop.saveCompanyBankDetailsUrl');
+   
+    //console.log(bankdetails);
     let response;
     try {
         response = await axios.post(`${dbprop.saveCompanyBankDetailsUrl}/${userid}`,bankdetails, config);
-        console.log(response);
+        //console.log(response);
         return response;
     } catch (err) {
         console.log(err);
@@ -137,11 +135,11 @@ export const saveCompanyBankDetails = async (bankdetails,userid) => {
 };
 
 export const getCompanyTermsAndConditionDetails = async (userid) =>{
-    console.log(`${dbprop.getCompanyTermsAndConditionDetailsUrl}/${userid}` + 'dbprop.getCompanyTermsAndConditionDetailsUrl');
+    //console.log(`${dbprop.getCompanyTermsAndConditionDetailsUrl}/${userid}` + 'dbprop.getCompanyTermsAndConditionDetailsUrl');
     let response;
     try {
         response = await axios.get(`${dbprop.getCompanyTermsAndConditionDetailsUrl}/${userid}`, config);
-        console.log(response);
+        //console.log(response);
         return response;
     } catch (err) {
         console.log(err);
@@ -149,13 +147,13 @@ export const getCompanyTermsAndConditionDetails = async (userid) =>{
     }
 }
 
-export const saveCompanyTermsAndConditionDetails = async (bankdetails,userid) => {
-    console.log(`${dbprop.saveCompanyTermsAndConditionDetailsUrl}/${userid}` + ' dbprop.saveCompanyTermsAndConditionDetailsUrl');
-   
+export const saveCompanyTermsAndConditionDetails = async (termsAndCondition,userid) => {
+    //console.log(`${dbprop.saveCompanyTermsAndConditionDetailsUrl}/${userid}` + ' dbprop.saveCompanyTermsAndConditionDetailsUrl');
+    //console.log(termsAndCondition);
     let response;
     try {
-        response = await axios.post(`${dbprop.saveCompanyTermsAndConditionDetailsUrl}/${userid}`,bankdetails, config);
-        console.log(response);
+        response = await axios.post(`${dbprop.saveCompanyTermsAndConditionDetailsUrl}/${userid}`,termsAndCondition, config);
+        //console.log(response);
         return response;
     } catch (err) {
         console.log(err);

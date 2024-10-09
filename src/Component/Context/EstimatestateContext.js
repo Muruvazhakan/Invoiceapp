@@ -1,16 +1,16 @@
-import React, { useState, useEffect, createContext,useContext } from "react";
+import React, { useState, useEffect, createContext } from "react";
 import { toast } from "react-toastify";
 import { v4 as uuidv4 } from "uuid";
 import collect from "collect.js";
 
 import * as localstorage from '../Context/localStorageData';
 import * as estimateDetailsDb from '../DBconnection/estimateDetailsDB';
-import { CompanyDetail } from "./companyDetailContext";
+// import { CompanyDetail } from "./companyDetailContext";
 export const estimateState = createContext();
 
 const EstimatestateContext = ({ children }) => {
     // const [width] = useState(641);
-    const companydet = useContext(CompanyDetail);
+    // const companydet = useContext(CompanyDetail);
     let columnNames = [{ columnname: 'S.no', display: true, cnmae: 'other' }
         , { columnname: 'Description', display: true, cnmae: 'other' }
         , { columnname: 'Length', display: true, cnmae: 'other' }
@@ -31,7 +31,7 @@ const EstimatestateContext = ({ children }) => {
     const [grandtotalupvccost, setgrandtotalupvccost] = useState(0);
     const [grandtotalwoodcost, setgrandtotalwoodcost] = useState(0);
     const [isNewDataSaveType, setisNewDataSaveType] = useState(true);
-    const [orderno,setorderno] =useState(0);
+    const [orderno, setorderno] = useState(0);
     // let row = [{
     //     id: 1123, title: 'MODULAR KITCHEN', values: [{
     //         subid: 1, desc: '1', length: '1', height: '1', area: '1',
@@ -68,6 +68,7 @@ const EstimatestateContext = ({ children }) => {
     const [totalwoodcost, settotalwoodcost] = useState(1);
     const [remarks, setremarks] = useState('');
     const [estimateHistoryData, setestimateHistoryData] = useState(null);
+    const [estimateHistroyUpdateFlag, setestimateHistroyUpdateFlag] = useState(false);
     const [estimateSingleData, setestimateSingleData] = useState(null);
 
     const [estimateid, setestimateid] = useState('');
@@ -93,6 +94,12 @@ const EstimatestateContext = ({ children }) => {
 
     }
 
+    const saveEstimationDetailCounter = async (estimateidcount, loginuserid) => {
+        localstorage.addOrGetEstimateid(estimateidcount, "save");
+        console.log(estimateidcount + 'estimateidcount');
+        let responsesaveEstimationId = await estimateDetailsDb.saveEstimationId(estimateidcount, loginuserid);
+        console.log(responsesaveEstimationId);
+    }
     const addOrGetEstimateHistoryData = async () => {
 
         if (estimateid === '' || estimateid === null) {
@@ -100,7 +107,11 @@ const EstimatestateContext = ({ children }) => {
             return false;
         }
         let iscontains = false;
+        setestimateHistroyUpdateFlag(true);
+
         let loginuserid = localstorage.addOrGetUserdetail('', 'userid', 'get');
+        saveEstimationDetailCounter(estimateidcount, loginuserid);
+
         let singleEstimation = {
             userid: loginuserid,
             estimateid: estimateid,
@@ -145,6 +156,7 @@ const EstimatestateContext = ({ children }) => {
                     // item.companybankdet=companydet.companyBankdetails;
 
                 }
+                return item;
             });
             if (iscontains === false) {
                 setestimateHistoryData([
@@ -166,10 +178,10 @@ const EstimatestateContext = ({ children }) => {
         }
 
         // localstorage.addOrGetEstimateHistoryData(estimateHistoryData, "save");
-       
-       
+
+
         // toast.success('Estimate Details are added');
-       
+
 
     }
 
@@ -178,7 +190,7 @@ const EstimatestateContext = ({ children }) => {
         // console.log(inputsubitem);
 
         if (type === 'New') {
-            if(!title || !subdesc || Number(orderno) === 0 ){
+            if (!title || !subdesc || Number(orderno) === 0) {
                 toast.error("Title or Sub Details or orderno was not added");
                 return false
             }
@@ -192,7 +204,7 @@ const EstimatestateContext = ({ children }) => {
             //console.log(available);
             //console.log('other');
             //console.log(other);
-            
+
             if (available.length > 0) {
                 // console.log(available[0]);         
                 let exitsingleestimatevalue1 = {
@@ -204,7 +216,7 @@ const EstimatestateContext = ({ children }) => {
                 available[0] = {
                     id: available[0].id,
                     title: title,
-                    orderno:orderno,
+                    orderno: orderno,
                     sumtotalpvccost: calculatetotal(available[0].sumtotalpvccost, totalpvccost, 'sum', 2),
                     sumtotalupvccost: calculatetotal(available[0].sumtotalupvccost, totalupvccost, 'sum', 2),
                     sumtotalwoodcost: calculatetotal(available[0].sumtotalwoodcost, totalwoodcost, 'sum', 2),
@@ -233,7 +245,7 @@ const EstimatestateContext = ({ children }) => {
                 let singleestimate = {
                     id: uuidv4(),
                     title: title,
-                    orderno:orderno,
+                    orderno: orderno,
                     sumtotalpvccost: totalpvccost, sumtotalupvccost: totalupvccost, sumtotalwoodcost: totalwoodcost,
                     sumtotalsqft: perqsft,
                     values: [{
@@ -312,7 +324,7 @@ const EstimatestateContext = ({ children }) => {
 
         //     }
 
-           
+
         //     toast.warning("Estimation Item Deleted");
         // }
         else {
@@ -347,7 +359,7 @@ const EstimatestateContext = ({ children }) => {
                     setwoodcostpsf(subtableava[0].woodcostpsf);
                     settotalwoodcost(subtableava[0].totalwoodcost);
                     setremarks(subtableava[0].remarks);
-                    
+
                     setisotheritem(subtableava[0].isotheritem);
                     sethideotheritem(subtableava[0].hideotheritem);
                     toast.info("Estimation Item is added in edit section");
@@ -360,7 +372,7 @@ const EstimatestateContext = ({ children }) => {
                     available1[0] = {
                         id: available1[0].id,
                         title: available1[0].title,
-                        orderno:available1[0].orderno,
+                        orderno: available1[0].orderno,
                         sumtotalpvccost: calculatetotal(available1[0].sumtotalpvccost, subtableava[0].totalpvccost, 'diff', 2),
                         sumtotalupvccost: calculatetotal(available1[0].sumtotalupvccost, subtableava[0].totalupvccost, 'diff', 2),
                         sumtotalwoodcost: calculatetotal(available1[0].sumtotalwoodcost, subtableava[0].totalwoodcost, 'diff', 2),
@@ -376,7 +388,7 @@ const EstimatestateContext = ({ children }) => {
                         // console.log('sortedrow');
                         // console.log(sortedrows);
                         // setrows(sortedrows);
-                       
+
                     }
                     else {
                         setrows([
@@ -398,12 +410,12 @@ const EstimatestateContext = ({ children }) => {
 
             }
         }
-        
-       
+
+
     };
 
-    const sortorder= () =>{
-        const sortedrows = rows.sort((a,b)=> a.orderno >b.orderno ? 1:-1);
+    const sortorder = () => {
+        const sortedrows = rows.sort((a, b) => a.orderno > b.orderno ? 1 : -1);
         // console.log('sortedrow');
         // console.log(sortedrows);
         setrows(sortedrows);
@@ -447,21 +459,22 @@ const EstimatestateContext = ({ children }) => {
         let date = today.getDate();
 
         todaydate = `ES${year}${month}${date}${estimateidcount}`;
+        
         setestimateid(todaydate);
-        let count = estimateidcount;
-        localstorage.addOrGetEstimateid(++count, "save");
+        let count = estimateidcount *1;
+
         setestimateidcount(++count);
-        //console.log("todaydate: " + estimateidcount + '  ');
+        console.log("todaydate: " + estimateidcount + '  ');
         localstorage.addOrGetUserdetail(++count, 'estimateidcount', 'save');
     }
 
- 
+
 
     useEffect(() => {
         console.log('local Estimate history');
 
         // getAlldataFromDB();
-       
+
         let count = localstorage.addOrGetEstimateid('', 'get');
 
         // let estimateid =  localstorage.addOrGetUserdetail(++count, 'estimateidcount', 'get');
@@ -469,29 +482,32 @@ const EstimatestateContext = ({ children }) => {
             setestimateidcount(count);
         }
 
-        // console.log('estimateHistoryData');
-        // console.log(estimateHistoryData);
-        // console.log(count + 'count');
+       
+        console.log(count + 'count');
     }, []);
 
-    const updateestimate = async (data) =>{
-       
+    const updateestimate = async (data) => {
+
         let loginuserid = localstorage.addOrGetUserdetail('', 'userid', 'get');
-        let storedataindb = await estimateDetailsDb.saveEstimateDB(data,loginuserid);
+        let storedataindb = await estimateDetailsDb.saveEstimateDB(data, loginuserid);
         console.log(storedataindb);
-        if(storedataindb.status !==200 || storedataindb.data !=='estimation saved'){
+        if (storedataindb.status !== 200 || storedataindb.data !== 'estimation saved') {
             toast.error('Error in saving Estimate Details in DB');
         }
+        setestimateHistroyUpdateFlag(false);
     }
     useEffect(() => {
         if (estimateHistoryData !== null) {
             localstorage.addOrGetEstimateHistoryData(estimateHistoryData, "save");
-            updateestimate(estimateHistoryData);
+            if (estimateHistroyUpdateFlag) {
+                updateestimate(estimateHistoryData);
+            }
+
             //console.log("localstorage: ");
             //console.log(localstorage.addOrGetEstimateHistoryData(estimateHistoryData, "get"));
         }
 
-    }, [estimateHistoryData]);
+    }, [estimateHistroyUpdateFlag]);
 
     useEffect(() => {
         calculateEstimateTotal();
@@ -580,7 +596,8 @@ const EstimatestateContext = ({ children }) => {
         title, settitle, subdesc, setsubdesc, length, setlength, height, setheight, area, setarea, perqsft, setperqsft, isotheritem, setisotheritem, hideotheritem, sethideotheritem,
         pvccostpsf, setpvccostpsf, totalpvccost, settotalpvccost, upvccostpsf, setupvccostpsf, totalupvccost, settotalupvccost, woodcostpsf, setwoodcostpsf, totalwoodcost, settotalwoodcost,
         remarks, setremarks, addOrUpdateEstimateItemHandler, updateTableView, estimatedate1, setestimatedate1, estimateHistoryData, setestimateHistoryData, addOrGetEstimateHistoryData, dateHandler,
-        estimateSingleData, setestimateSingleData, allEstimateEdit, isNewDataSaveType, setisNewDataSaveType,orderno,setorderno,setval,setboxColors,sortorder
+        estimateSingleData, setestimateSingleData, allEstimateEdit, isNewDataSaveType, setisNewDataSaveType, orderno, setorderno, setval, setboxColors, sortorder,
+        estimateHistroyUpdateFlag, setestimateHistroyUpdateFlag
     };
 
 

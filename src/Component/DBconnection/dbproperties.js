@@ -13,12 +13,11 @@ export const saveCompanyBankDetailsUrl = `${backendUrl}/user/savecompanybank`;
 export const getCompanyTermsAndConditionDetailsUrl = `${backendUrl}/user/gettermsandconditioncompany`;
 export const saveCompanyTermsAndConditionDetailsUrl = `${backendUrl}/user/savetermsandconditioncompany`;
 
-// export const getCompanyTermsAndConditionDetailsUrl = `${backendUrl}/user/getcompanybasic`;
-// export const saveCompanyTermsAndConditionDetailsUrl = `${backendUrl}/user/savecompanybasic`;
-
 export const getEstimateUrl = `${backendUrl}/estimate`;
 export const saveEstimateUrl = `${backendUrl}/estimate/createorupateestimate`;
 
+export const getEstimationIdUrl = `${backendUrl}/estimate/getestimationid`;
+export const saveEstimationIdUrl = `${backendUrl}/estimate/saveestimationid`;
 
 
 // app.use('/user/',userRoure);

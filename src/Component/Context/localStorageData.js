@@ -43,7 +43,7 @@ export const addOrUpdateCompanyTermsAndConditionHandler = (props) => {
     // console.log(sto);
 }
 export const getCompanyTermsAndConditionHandler = () => {
-    console.log('get CompanyTermsAndCondition ');
+    // console.log('get CompanyTermsAndCondition ');
     return JSON.parse(localStorage.getItem('companyTermsAndCondition'));
 }
 export const addOrGetCompanyBankDetailHandler = (props, type) => {
