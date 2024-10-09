@@ -226,40 +226,76 @@ const CompanyDetailContext = ({ children }) => {
     }
 
     const getAlldataFromDB = async () => {
-       
-       
+
+
         // if (estimateHistoryData !== null) {
         //     setestimateHistoryData(estimateHistoryData);
         // }
-        console.log('loginuserid');
-        console.log(loginuserid);
-        if(loginuserid !== null && loginuserid !==''){
+        // console.log('loginuserid');
+        // console.log(loginuserid);
+        
+        if (loginuserid !== null && loginuserid !== '') {
+            
             let estimateHistoryData = localstore.addOrGetEstimateHistoryData('', 'get');
-    
+
             let getestimatefromdb = await estimateDetailsDb.getEstimateDB(loginuserid);
-            console.log('estimateHistoryData ' + estimateHistoryData );
-            console.log(getestimatefromdb);
+            // console.log('estimateHistoryData ' + estimateHistoryData);
+            // console.log(getestimatefromdb);
             if (getestimatefromdb.status === 200) {
-                if(estimateHistoryData === null || (estimateHistoryData.length <=getestimatefromdb.data.length) ){
-                    console.log(getestimatefromdb.data);
+                if (estimateHistoryData === null || (estimateHistoryData.length <= getestimatefromdb.data.length)) {
+                    // console.log(getestimatefromdb.data);
                     localstore.addOrGetInvoiceHistoryData(getestimatefromdb.data, 'save');
                     estdetail.setestimateHistoryData(getestimatefromdb.data);
                 }
-                else{
+                else {
                     estdetail.setestimateHistoryData(getestimatefromdb.data);
                 }
-                
+
                 // let estimatedetailscontext = localstorage.addOrGetInvoiceHistoryData('', 'get');
                 // console.log('estimatedetailscontext ****');
                 // console.log(estimatedetailscontext);
-               
+
+            }
+
+            let companyBasicDetailslocal = localstore.getCompanyHandler();
+            let companyBasicDetailsfromdb = await companyDetailsDB.getCompanyBasicDetails(loginuserid);
+            // console.log('companyBasicDetailslocal ');
+            // console.log(companyBasicDetailslocal);
+            
+            if (companyBasicDetailsfromdb.status === 200) {
+                if (!companyBasicDetailslocal || (companyBasicDetailsfromdb && companyBasicDetailsfromdb.data[0].companyAddress !== companyBasicDetailslocal.companyAddress)) {
+                    localstore.addOrUpdateCompanyHandler(companyBasicDetailsfromdb.data[0], "save", companyBasicDetailsfromdb.data[0].estimateidcount);
+                    // console.log("company basic details updated");
+                }
+            }
+            else {
+                toast.warning(companyBasicDetailsfromdb.data);
+            }
+            // getCompanyBankDetails
+            let companyBankDetailslocal = localstore.addOrGetCompanyBankDetailHandler('','get');
+            let companyBankDetailsfromdb = await companyDetailsDB.getCompanyBankDetails(loginuserid);
+            // console.log('companyBankDetailsfromdb ');
+            // console.log(companyBankDetailsfromdb);
+            // console.log('companyBankDetailslocal ');
+            // console.log(companyBankDetailslocal);
+            
+            if (companyBasicDetailsfromdb.status === 200) {
+                if (!companyBankDetailslocal || (companyBankDetailsfromdb.data  
+                    && companyBankDetailsfromdb.data.length   !== companyBankDetailslocal.length)) {
+                    localstore.addOrGetCompanyBankDetailHandler(companyBankDetailsfromdb.data, "save");
+                    // console.log("company basic details updated");
+                }
+            }
+            else {
+                toast.warning(companyBasicDetailsfromdb.data);
             }
         }
-        
 
-    }
-   
+
+    };
+
     const getAlldataOnLogin = () => {
+
         let companyTermsAndCondition = localstore.getCompanyTermsAndConditionHandler();
 
         if (companyTermsAndCondition !== null) {
@@ -281,6 +317,15 @@ const CompanyDetailContext = ({ children }) => {
             setcompanydetaildesc(companydetail.companydetaildesc);
             setcompanymailid(companydetail.companymailid);
             setcompanythankyou(companydetail.companythankyou);
+            setinvoiceidount(companydetail.invoiceidcount);
+            console.log('companydetail.estimateidcount');
+            console.log(companydetail.estimateidcount);
+            if (companydetail.estimateidcount !== undefined && companydetail.estimateidcount > estdetail.estimateidcount) {
+                console.log('companydetail.estimateidcount');
+                console.log(companydetail.estimateidcount);
+                estdetail.setestimateidcount(companydetail.estimateidcount);
+            }
+
         }
 
 
@@ -337,21 +382,33 @@ const CompanyDetailContext = ({ children }) => {
 
     }
 
-    const saveHandler = (funcs, item, type) => {
+    const saveHandler = async (funcs, item, type) => {
         if (funcs === 'addOrUpdateCompanyTermsAndConditionHandler') {
             localstore.addOrUpdateCompanyTermsAndConditionHandler(item, type);
         }
         if (funcs === 'addOrGetCompanyBankDetailHandler') {
             localstore.addOrGetCompanyBankDetailHandler(item, type);
+            let  saveCompanyBankDetaitlsdb = await companyDetailsDB.saveCompanyBankDetails(item,loginuserid);
+            console.log('compabankdet');
+            console.log(saveCompanyBankDetaitlsdb);
         }
         if (funcs === 'addOrUpdateCompanyHandler') {
-            localstore.addOrUpdateCompanyHandler(item, type);
+            let estimateidcount = localstore.addOrGetEstimateid('', 'get');
+            localstore.addOrUpdateCompanyHandler(item, type, estimateidcount);
+
+            let companyBasicDetails = await companyDetailsDB.saveCompanyBasicDetails(item, loginuserid, estimateidcount);
+            console.log('companyBasicDetails');
+            console.log(companyBasicDetails);
+            if (companyBasicDetails.status !== 201 && companyBasicDetails.status !== 200) {
+                toast.error(companyBasicDetails.data + " in saving DB");
+            }
         }
 
         toast.success("Details are saved");
     }
 
-    const companyBankDetailHandler = (item, type) => {
+
+    const companyBankDetailHandler = async (item, type) => {
         //  console.log(companyBankdetailtitle + ' ' + companyBankdetailvalue + ' ' + type + ' item' +item);
         if (companyBankdetailtitle.length === 0 && companyBankdetailvalue.length === 0 && type !== "delete") {
             toast.error("Both Details are Empty");
@@ -364,10 +421,12 @@ const CompanyDetailContext = ({ children }) => {
             console.log('getresul');
             console.log(getresul);
             //console.log(companydetails);
-            setcompanyBankdetails([
+            let compabankdet = [
                 ...companyBankdetails, getresul
-            ]);
-
+            ];
+            console.log('compabankdet');
+            console.log(compabankdet);
+            setcompanyBankdetails(compabankdet);
             toast.success("New Bank Details are Added");
             setcompanyBankdetailtitle('');
             setcompanyBankdetailvalue('');
@@ -402,7 +461,7 @@ const CompanyDetailContext = ({ children }) => {
     useEffect(() => {
         getAlldataOnLogin();
         // if(loginuserid !== null && loginuserid){
-        
+
         // }
     }, [loginuserid])
 

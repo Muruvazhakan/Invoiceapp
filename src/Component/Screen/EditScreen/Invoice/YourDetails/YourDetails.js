@@ -18,11 +18,11 @@ const YourDetails = () => {
 
   const setboxColors = (item, field) => {
     if (field === 'color') {
-      return item.length === 0 ? 'error' : 'success';
+      return (item ===undefined  || item.length > 0) ? 'success' :  'error';
     }
 
     else {
-      return item.length === 0 ? true : false;
+      return (item ===undefined  || item.length > 0)? false : true;
     }
 
   }

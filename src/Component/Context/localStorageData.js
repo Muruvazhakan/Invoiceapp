@@ -13,13 +13,14 @@ export const addOrGetUserdetail = (value,name,type) =>{
     }
 }
 
-export const addOrUpdateCompanyHandler = (props) => {
+export const addOrUpdateCompanyHandler = (props,type,estimateidcount) => {
     // console.log(props);
     let companydetail = {
         companyAddress: props.companyAddress, companyDeleration: props.companyDeleration,
         companyGstin: props.companyGstin, companyGstinStatename: props.companyGstinStatename, companyName: props.companyName, companyOwner: props.companyOwner,
         companyPhno: props.companyPhno, companyTagLine: props.companyTagLine,
-        companydetaildesc: props.companydetaildesc, companymailid: props.companymailid, companythankyou: props.companythankyou
+        companydetaildesc: props.companydetaildesc, companymailid: props.companymailid, companythankyou: props.companythankyou,estimateidcount:estimateidcount,
+        invoiceidcount:props.invoiceidcount,
 
     }
     // console.log(props);
