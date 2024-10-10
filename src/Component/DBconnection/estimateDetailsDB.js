@@ -71,7 +71,7 @@ export const saveEstimateDB = async (estimate,userid) => {
     let response;
     try {
         response = await axios.post(`${dbprop.saveEstimateUrl}/${userid}`,data, config);
-        console.log(response);
+        // console.log(response);
         return response;
     } catch (err) {
         console.log(err);
