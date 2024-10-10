@@ -97,11 +97,12 @@ const EstimatestateContext = ({ children }) => {
 
     const saveEstimationDetailCounter = async (estimateidcount, loginuserid) => {
         localstorage.addOrGetEstimateid(estimateidcount, "save");
-        // console.log(estimateidcount + 'estimateidcount');
+        console.log(estimateidcount + 'estimateidcount');
+        let responsesaveEstimationId;
         if (isbackendconnect) {
-            let responsesaveEstimationId = await estimateDetailsDb.saveEstimationId(estimateidcount, loginuserid);
+             responsesaveEstimationId = await estimateDetailsDb.saveEstimationId(estimateidcount, loginuserid);
         }
-        // console.log(responsesaveEstimationId);
+        console.log(responsesaveEstimationId);
     }
     const addOrGetEstimateHistoryData = async () => {
 

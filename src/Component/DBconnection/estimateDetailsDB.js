@@ -49,12 +49,12 @@ export const saveEstimationId = async (estimationcount,userid) => {
     const data = {
         estimationcount
     };
-    // console.log(data);
+    console.log(data);
     let response;
     try {
         response = await axios.post(`${dbprop.saveEstimationIdUrl}/${userid}`,data, config);
         // console.log(response);
-        return response;
+        // return response;
     } catch (err) {
         console.log(err);
         return err;

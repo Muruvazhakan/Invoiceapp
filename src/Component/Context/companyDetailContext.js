@@ -288,12 +288,13 @@ const CompanyDetailContext = ({ children }) => {
         if (loginuserid !== null && loginuserid !== '') {
 
             let estimateidcounter = localstore.addOrGetEstimateid('', "get");
-            //console.log(estimateidcounter + 'estimateidcounter');
+            // console.log(estimateidcounter + 'estimateidcounter');
             let getEstimationIdfromDb = await estimateDetailsDb.getEstimationId(loginuserid);
-            //console.log(getEstimationIdfromDb );
-            if (getEstimationIdfromDb.data!="No count is registered" && estimateidcounter < getEstimationIdfromDb.data) {
+            // console.log(getEstimationIdfromDb );
+            if (getEstimationIdfromDb.status === 200 && estimateidcounter < getEstimationIdfromDb.data) {
                 localstore.addOrGetEstimateid(getEstimationIdfromDb.data, "save");
-                //console.log('saving');
+                estdetail.setestimateidcount(getEstimationIdfromDb.data);
+                // console.log('saving');
                 
             }
 
