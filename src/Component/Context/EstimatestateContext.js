@@ -460,21 +460,23 @@ const EstimatestateContext = ({ children }) => {
         let month = today.getMonth() + 1;
         let year = today.getFullYear();
         let date = today.getDate();
-
+       
+        
         todaydate = `ES${year}${month}${date}${estimateidcount}`;
+        //console.log(typeof estimateidcount + " type of estimateidcount");
 
         setestimateid(todaydate);
         let count = estimateidcount * 1;
 
         setestimateidcount(++count);
-        // console.log("todaydate: " + estimateidcount + '  ');
+        //console.log("todaydate: " + estimateidcount + '  ');
         localstorage.addOrGetUserdetail(++count, 'estimateidcount', 'save');
     }
 
 
 
     useEffect(() => {
-        // console.log('local Estimate history');
+        // //console.log('local Estimate history');
 
         // getAlldataFromDB();
 
@@ -494,7 +496,7 @@ const EstimatestateContext = ({ children }) => {
         let loginuserid = localstorage.addOrGetUserdetail('', 'userid', 'get');
         if (isbackendconnect) {
             let storedataindb = await estimateDetailsDb.saveEstimateDB(data, loginuserid);
-            console.log(storedataindb);
+            //console.log(storedataindb);
             if (storedataindb.status !== 200 || storedataindb.data !== 'estimation saved') {
                 toast.error('Error in saving Estimate Details in DB');
             }

@@ -58,8 +58,8 @@ export const getCompanyTermsAndConditionHandler = () => {
     return JSON.parse(localStorage.getItem('companyTermsAndCondition'));
 }
 export const addOrGetCompanyBankDetailHandler = (props, type) => {
-    console.log(props);
-    console.log('saved data bank details');
+    //console.log(props);
+    //console.log('saved data bank details');
     if (type === 'save') {
         localStorage.setItem('companybankdetail', JSON.stringify(props));
         
@@ -75,7 +75,7 @@ export const addOrGetCompanyBankDetailHandler = (props, type) => {
 }
 
 export const addOrGetInvoiceHistoryData = (props, type) => {
-    console.log(props);
+    //console.log(props);
 
     if (type === 'save') {
         localStorage.setItem('companyinvoicehistory', JSON.stringify(props));

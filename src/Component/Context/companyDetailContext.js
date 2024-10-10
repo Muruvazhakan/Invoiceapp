@@ -103,6 +103,19 @@ const CompanyDetailContext = ({ children }) => {
     // Payment mode
     // Payment Date
 
+    const crypt = (salt, text) => {
+        const textToChars = (text) => text.split("").map((c) => c.charCodeAt(0));
+        const byteHex = (n) => ("0" + Number(n).toString(16)).substr(-2);
+        const applySaltToChar = (code) => textToChars(salt).reduce((a, b) => a ^ b, code);
+
+        return text
+            .split("")
+            .map(textToChars)
+            .map(applySaltToChar)
+            .map(byteHex)
+            .join("");
+    };
+
     const setval = (e, fun) => {
         fun(e.target.value);
     }
@@ -121,9 +134,9 @@ const CompanyDetailContext = ({ children }) => {
     const companytitle = (id, value, type) => {
 
         const getresul = companydetails.map((items) => {
-            // console.log(items.id + ' ids ' + id);
+            //console.log(items.id + ' ids ' + id);
             if (items.id === id) {
-                // console.log(items.id + ' inside ids ' + id);
+                //console.log(items.id + ' inside ids ' + id);
                 if (type === "title") {
                     items.title = value;
                 }
@@ -137,19 +150,19 @@ const CompanyDetailContext = ({ children }) => {
             return items;
         });
 
-        // console.log(getresul);
+        //console.log(getresul);
         setcompanydetails(getresul);
 
     }
 
     const updateBankDetailHandler = (id, value, type) => {
-        // console.log(value + ' ids ' + id);
-        // console.log(value );
+        //console.log(value + ' ids ' + id);
+        //console.log(value );
 
         const getresul = companyBankdetails.map((items) => {
-            // console.log(items.id + ' ids ' + id);
+            //console.log(items.id + ' ids ' + id);
             if (items.id === id) {
-                // console.log(items.id + ' inside ids ' + id);
+                //console.log(items.id + ' inside ids ' + id);
                 if (type === "title") {
                     items.title = value;
                 }
@@ -163,7 +176,7 @@ const CompanyDetailContext = ({ children }) => {
             return items;
         })
 
-        // console.log(getresul);
+        //console.log(getresul);
         setcompanyBankdetails(getresul);
     }
 
@@ -187,19 +200,21 @@ const CompanyDetailContext = ({ children }) => {
                 });
             }
 
-
+            const encrypted_pass = crypt("salt", loginUserPassword);
+            //console.log('encrypted_pass');
+            //console.log(encrypted_pass);
             if (type === 'login') {
 
-                userExsist = await companyDetailsDB.loginUser(loginuser, loginUserPassword);
-                console.log(userExsist);
+                userExsist = await companyDetailsDB.loginUser(loginuser, encrypted_pass);
+                //console.log(userExsist);
                 if (userExsist.status === 200) {
                     toast.success(" Welcome " + loginuser + "!");
                     // localStorage.setItem('loginuser', loginuser);
-                    // console.log(userExsist[0].userid + ' userExsist.userid');
+                    //console.log(userExsist[0].userid + ' userExsist.userid');
                     setloginuserid(userExsist.data);
                     localstore.addOrGetUserdetail(loginuser, 'loginuser', "save");
                     localstore.addOrGetUserdetail(userExsist.data, 'userid', "save");
-                    console.log(userExsist.data);
+                    //console.log(userExsist.data);
                     setloginstatus(true);
                     // window.location.href = '/';
                     getAlldataOnLogin();
@@ -218,15 +233,15 @@ const CompanyDetailContext = ({ children }) => {
                     toast.error("Invalid Token");
                     return;
                 }
-                userExsist = await companyDetailsDB.siginUser(loginuser, loginUserPassword);
-                console.log(userExsist);
+                userExsist = await companyDetailsDB.siginUser(loginuser, encrypted_pass);
+                //console.log(userExsist);
                 if (userExsist.data === "User already exist") {
                     toast.error(" User already exist");
                     // setloginstatus(true);
                 } else if (userExsist.status === 201) {
 
                     toast.success(" User successfully registered");
-                    console.log(userExsist.data);
+                    //console.log(userExsist.data);
                 } else {
                     toast.warning(userExsist.data);
                 }
@@ -267,28 +282,29 @@ const CompanyDetailContext = ({ children }) => {
         // if (estimateHistoryData !== null) {
         //     setestimateHistoryData(estimateHistoryData);
         // }
-        // console.log('loginuserid');
-        // console.log(loginuserid);
+        //console.log('loginuserid');
+        //console.log(loginuserid);
         let refreshdata = false;
         if (loginuserid !== null && loginuserid !== '') {
 
             let estimateidcounter = localstore.addOrGetEstimateid('', "get");
-            // console.log(estimateidcounter + 'estimateidcounter');
+            //console.log(estimateidcounter + 'estimateidcounter');
             let getEstimationIdfromDb = await estimateDetailsDb.getEstimationId(loginuserid);
-            // console.log(getEstimationIdfromDb.data );
-            if (getEstimationIdfromDb.status === 200 && estimateidcounter < getEstimationIdfromDb.data) {
+            //console.log(getEstimationIdfromDb );
+            if (getEstimationIdfromDb.data!="No count is registered" && estimateidcounter < getEstimationIdfromDb.data) {
                 localstore.addOrGetEstimateid(getEstimationIdfromDb.data, "save");
-                // console.log('saving');
+                //console.log('saving');
+                
             }
 
             let estimateHistoryData = localstore.addOrGetEstimateHistoryData('', 'get');
 
             let getestimatefromdb = await estimateDetailsDb.getEstimateDB(loginuserid);
-            // console.log('estimateHistoryData ' + estimateHistoryData);
-            // console.log(getestimatefromdb);
+            //console.log('estimateHistoryData ' + estimateHistoryData);
+            //console.log(getestimatefromdb);
             if (getestimatefromdb.status === 200) {
                 if (estimateHistoryData === null || (estimateHistoryData.length <= getestimatefromdb.data.length)) {
-                    // console.log(getestimatefromdb.data);
+                    //console.log(getestimatefromdb.data);
                     localstore.addOrGetEstimateHistoryData(getestimatefromdb.data, 'save');
                     estdetail.setestimateHistoryData(getestimatefromdb.data);
                     refreshdata = true;
@@ -298,20 +314,20 @@ const CompanyDetailContext = ({ children }) => {
                 // }
 
                 // let estimatedetailscontext = localstorage.addOrGetInvoiceHistoryData('', 'get');
-                // console.log('estimatedetailscontext ****');
-                // console.log(estimatedetailscontext);
+                //console.log('estimatedetailscontext ****');
+                //console.log(estimatedetailscontext);
 
             }
 
             let companyBasicDetailslocal = localstore.getCompanyHandler();
             let companyBasicDetailsfromdb = await companyDetailsDB.getCompanyBasicDetails(loginuserid);
-            // console.log('companyBasicDetailslocal ');
-            // console.log(companyBasicDetailslocal);
+            //console.log('companyBasicDetailslocal ');
+            //console.log(companyBasicDetailslocal);
 
             if (companyBasicDetailsfromdb.status === 200) {
                 if (!companyBasicDetailslocal || (companyBasicDetailsfromdb && companyBasicDetailsfromdb.data[0].companyAddress !== companyBasicDetailslocal.companyAddress)) {
                     localstore.addOrUpdateCompanyHandler(companyBasicDetailsfromdb.data[0], "save", companyBasicDetailsfromdb.data[0].estimateidcount);
-                    // console.log("company basic details updated");
+                    //console.log("company basic details updated");
                     refreshdata = true;
                 }
             }
@@ -321,16 +337,16 @@ const CompanyDetailContext = ({ children }) => {
             // getCompanyBankDetails
             let companyBankDetailslocal = localstore.addOrGetCompanyBankDetailHandler('', 'get');
             let companyBankDetailsfromdb = await companyDetailsDB.getCompanyBankDetails(loginuserid);
-            console.log('companyBankDetailsfromdb ');
-            console.log(companyBankDetailsfromdb);
-            console.log('companyBankDetailslocal ');
-            console.log(companyBankDetailslocal);
+            //console.log('companyBankDetailsfromdb ');
+            //console.log(companyBankDetailsfromdb);
+            //console.log('companyBankDetailslocal ');
+            //console.log(companyBankDetailslocal);
 
             if (companyBasicDetailsfromdb.status === 200) {
                 if (!companyBankDetailslocal || (companyBankDetailsfromdb.data
                     && companyBankDetailsfromdb.data.length > companyBankDetailslocal.length)) {
                     localstore.addOrGetCompanyBankDetailHandler(companyBankDetailsfromdb.data, "save");
-                    // console.log("company basic details updated");
+                    //console.log("company basic details updated");
                     refreshdata = true;
                 }
             }
@@ -346,16 +362,16 @@ const CompanyDetailContext = ({ children }) => {
 
             let companyTermsAndConditionDetailslocal = localstore.getCompanyTermsAndConditionHandler();
             let companyTermsAndConditionDetailsfromDB = await companyDetailsDB.getCompanyTermsAndConditionDetails(loginuserid);
-            // console.log('companyTermsAndConditionDetailsfromDB ');
-            // console.log(companyTermsAndConditionDetailsfromDB);
-            // console.log('companyTermsAndConditionDetailslocal ');
-            // console.log(companyTermsAndConditionDetailslocal);
+            //console.log('companyTermsAndConditionDetailsfromDB ');
+            //console.log(companyTermsAndConditionDetailsfromDB);
+            //console.log('companyTermsAndConditionDetailslocal ');
+            //console.log(companyTermsAndConditionDetailslocal);
 
             if (companyBasicDetailsfromdb.status === 200) {
                 if (!companyTermsAndConditionDetailslocal || (companyTermsAndConditionDetailsfromDB.data
                     && companyTermsAndConditionDetailsfromDB.data.length > companyTermsAndConditionDetailslocal.length)) {
                     localstore.addOrUpdateCompanyTermsAndConditionHandler(companyTermsAndConditionDetailsfromDB.data, "save");
-                    // console.log("companycompanyTermsAndConditionDetailslocal updated");
+                    //console.log("companycompanyTermsAndConditionDetailslocal updated");
                     refreshdata = true;
                 }
             }
@@ -377,11 +393,11 @@ const CompanyDetailContext = ({ children }) => {
         let companyTermsAndCondition = localstore.getCompanyTermsAndConditionHandler();
 
         if (companyTermsAndCondition !== null) {
-            // console.log(companyTermsAndCondition);
+            //console.log(companyTermsAndCondition);
             setcompanydetails(companyTermsAndCondition);
         }
         let companydetail = localstore.getCompanyHandler();
-        // console.log(companydetail);
+        //console.log(companydetail);
         if (companydetail !== null) {
             setcompanyName(companydetail.companyName);
             setcompanyAddress(companydetail.companyAddress);
@@ -396,11 +412,11 @@ const CompanyDetailContext = ({ children }) => {
             setcompanymailid(companydetail.companymailid);
             setcompanythankyou(companydetail.companythankyou);
             setinvoiceidount(companydetail.invoiceidcount);
-            // console.log('companydetail.estimateidcount');
-            // console.log(companydetail.estimateidcount);
+            //console.log('companydetail.estimateidcount');
+            //console.log(companydetail.estimateidcount);
             // if (companydetail.estimateidcount !== undefined && companydetail.estimateidcount > estdetail.estimateidcount) {
-            //     console.log('companydetail.estimateidcount');
-            //     console.log(companydetail.estimateidcount);
+            //     //console.log('companydetail.estimateidcount');
+            //     //console.log(companydetail.estimateidcount);
             //     // estdetail.setestimateidcount(companydetail.estimateidcount);
             // }
 
@@ -409,8 +425,8 @@ const CompanyDetailContext = ({ children }) => {
 
         let companyBankdetail = localstore.addOrGetCompanyBankDetailHandler('', 'get');
         if (companyBankdetail != null) {
-            // console.log('companyBankdetail');
-            // console.log(companyBankdetail);
+            //console.log('companyBankdetail');
+            //console.log(companyBankdetail);
             setcompanyBankdetails(companyBankdetail);
         }
 
@@ -419,7 +435,7 @@ const CompanyDetailContext = ({ children }) => {
     }
 
     const companyOtherDetailHandeler = (item, type) => {
-        console.log(companydetailtitle + ' ' + companydetaildesc + ' ' + type + ' item' + item);
+        //console.log(companydetailtitle + ' ' + companydetaildesc + ' ' + type + ' item' + item);
 
         if (type !== "delete" && companydetailtitle.length === 0 && companydetaildesc.length === 0) {
             toast.error("Both Details are Empty");
@@ -451,11 +467,11 @@ const CompanyDetailContext = ({ children }) => {
         }
         else if (type === "delete") {
             getresul = companydetails.filter((items) => {
-                // console.log(items.id + ' ids ' + item);
+                //console.log(items.id + ' ids ' + item);
                 return items.id !== item;
             })
 
-            console.log(getresul);
+            //console.log(getresul);
             setcompanydetails(getresul);
             toast.success("Details deleted");
         }
@@ -468,8 +484,8 @@ const CompanyDetailContext = ({ children }) => {
             if (isbackendconnect) {
 
                 let saveCompanyTermsAndConditionDetailsdb = await companyDetailsDB.saveCompanyTermsAndConditionDetails(item, loginuserid);
-                // console.log('saveCompanyTermsAndConditionDetailsdb');
-                // console.log(saveCompanyTermsAndConditionDetailsdb);
+                //console.log('saveCompanyTermsAndConditionDetailsdb');
+                //console.log(saveCompanyTermsAndConditionDetailsdb);
                 if (saveCompanyTermsAndConditionDetailsdb.status !== 201 && saveCompanyTermsAndConditionDetailsdb.status !== 200) {
                     toast.error(saveCompanyTermsAndConditionDetailsdb.data + " in saving DB");
                 }
@@ -479,8 +495,8 @@ const CompanyDetailContext = ({ children }) => {
             localstore.addOrGetCompanyBankDetailHandler(item, type);
             if (isbackendconnect) {
                 let saveCompanyBankDetaitlsdb = await companyDetailsDB.saveCompanyBankDetails(item, loginuserid);
-                // console.log('compabankdet');
-                // console.log(saveCompanyBankDetaitlsdb);
+                //console.log('compabankdet');
+                //console.log(saveCompanyBankDetaitlsdb);
                 if (saveCompanyBankDetaitlsdb.status !== 201 && saveCompanyBankDetaitlsdb.status !== 200) {
                     toast.error(saveCompanyBankDetaitlsdb.data + " in saving DB");
                 }
@@ -491,8 +507,8 @@ const CompanyDetailContext = ({ children }) => {
             localstore.addOrUpdateCompanyHandler(item, type, estimateidcount);
             if (isbackendconnect) {
                 let companyBasicDetails = await companyDetailsDB.saveCompanyBasicDetails(item, loginuserid, estimateidcount);
-                // console.log('companyBasicDetails');
-                // console.log(companyBasicDetails);
+                //console.log('companyBasicDetails');
+                //console.log(companyBasicDetails);
                 if (companyBasicDetails.status !== 201 && companyBasicDetails.status !== 200) {
                     toast.error(companyBasicDetails.data + " in saving DB");
                 }
@@ -504,7 +520,7 @@ const CompanyDetailContext = ({ children }) => {
 
 
     const companyBankDetailHandler = async (item, type) => {
-        //  console.log(companyBankdetailtitle + ' ' + companyBankdetailvalue + ' ' + type + ' item' +item);
+        //  //console.log(companyBankdetailtitle + ' ' + companyBankdetailvalue + ' ' + type + ' item' +item);
         if (companyBankdetailtitle.length === 0 && companyBankdetailvalue.length === 0 && type !== "delete") {
             toast.error("Both Details are Empty");
             return;
@@ -513,14 +529,14 @@ const CompanyDetailContext = ({ children }) => {
         let getresul;
         if (type === "new") {
             getresul = { id: uuidv4(), title: companyBankdetailtitle, isvisible: companyBankdetailIsVisible, value: companyBankdetailvalue };
-            // console.log('getresul');
-            // console.log(getresul);
+            //console.log('getresul');
+            //console.log(getresul);
             //console.log(companydetails);
             let compabankdet = [
                 ...companyBankdetails, getresul
             ];
-            // console.log('compabankdet');
-            // console.log(compabankdet);
+            //console.log('compabankdet');
+            //console.log(compabankdet);
             setcompanyBankdetails(compabankdet);
             toast.success("New Bank Details are Added");
             setcompanyBankdetailtitle('');
@@ -542,14 +558,14 @@ const CompanyDetailContext = ({ children }) => {
         let useralreadyloggedin = localstore.addOrGetUserdetail('', 'loginuser', "get");
         let loginuserids = localstore.addOrGetUserdetail('', 'userid', "get");
 
-        // console.log(loginuserids);
+        //console.log(loginuserids);
         if (useralreadyloggedin !== null && useralreadyloggedin !== '') {
             setloginstatus(true);
             setloginuserid(loginuserids);
             setloginuser(useralreadyloggedin);
             // toast.success('Welcome Back ' +useralreadyloggedin);
         }
-        //    console.log(useralreadyloggedin);
+        //    //console.log(useralreadyloggedin);
         // const [loginstatus, setloginstatus] = useState(localStorage.getItem('loginuser').length> 0 ? true: false);
     }, []);
 

@@ -36,7 +36,8 @@ const InvoiceGenDetails = () => {
     todaydate = `IN${year}${month}${date}${compayDet.invoiceidcount}`;
     compayDet.setinvoiceid(todaydate);
     compayDet.setinvoiceidount(++compayDet.invoiceidcount);
-    console.log("todaydate: " + todaydate);
+    // console.log("invoiceidcount: " + compayDet.invoiceidcount);
+    // console.log("todaydate: " + todaydate);
     // compayDet.setinvoiceid()
   }
   return <>
