@@ -2,8 +2,6 @@ import companyperson from '../../Image/companydetails.png';
 import invocie from '../../Image/invoice.png';
 import estimation from '../../Image/estimationgen.png';
 import allestimation from '../../Image/allestimation.png';
-export const isbackendconnect = "Yes";
-
 
 export const navigationbarcontent = [
     {

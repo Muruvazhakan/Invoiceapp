@@ -2,11 +2,12 @@ import React, { createContext, useContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { v4 as uuidv4 } from "uuid";
 
-// import * as Datas from '../Context/Datas';
+import * as Datas from '../Context/Datas';
 import * as localstore from './localStorageData';
 import * as companyDetailsDB from '../DBconnection/companyDetailsDB';
 import * as estimateDetailsDb from '../DBconnection/estimateDetailsDB';
 import { estimateState } from "./EstimatestateContext";
+import { isbackendconnect } from "../DBconnection/dbproperties";
 export const CompanyDetail = createContext();
 
 
@@ -172,16 +173,23 @@ const CompanyDetailContext = ({ children }) => {
         if (loginuser.length > 0 && loginUserPassword.length > 0) {
             let userExsist = '';
 
+            if (!isbackendconnect) {
+                userExsist = Datas.userLoginname.filter((item) => {
+                    //console.log(item);
+                    if (item.username === loginuser && item.userPass === loginUserPassword) {
+                        localstore.addOrGetUserdetail(loginuser, 'loginuser', "save");
+                        localstore.addOrGetUserdetail(loginuser, 'userid', "save");
+                        setloginuserid(loginuser);
+                        setloginstatus(true);
+                        return true;
+                    }
+                    else return false;
+                });
+            }
 
-            // userExsist = Datas.userLoginname.filter((item) => {
-            //     //console.log(item);
-            //     if (item.username === loginuser && item.userPass === loginUserPassword) {
-            //         return true;
-            //     }
-            //     else return false;
-            // });
 
             if (type === 'login') {
+
                 userExsist = await companyDetailsDB.loginUser(loginuser, loginUserPassword);
                 console.log(userExsist);
                 if (userExsist.status === 200) {
@@ -206,10 +214,10 @@ const CompanyDetailContext = ({ children }) => {
                     toast.error("Password is not match iwth Confirm Password");
                     return;
                 }
-                // if (tokenid !== 'Billedge123') {
-                //     toast.error("Invalid Token");
-                //     return;
-                // }
+                if (tokenid !== 'Billedge123') {
+                    toast.error("Invalid Token");
+                    return;
+                }
                 userExsist = await companyDetailsDB.siginUser(loginuser, loginUserPassword);
                 console.log(userExsist);
                 if (userExsist.data === "User already exist") {
@@ -241,7 +249,7 @@ const CompanyDetailContext = ({ children }) => {
     const logoutHandler = () => {
         localstore.addOrGetUserdetail('', 'loginuser', 'remove');
         localstore.addOrGetUserdetail('', 'userid', 'remove');
-        localstore.addOrUpdateCompanyHandler('','remove');
+        localstore.addOrUpdateCompanyHandler('', 'remove');
         localstore.addOrUpdateCompanyTermsAndConditionHandler('', 'remove');
         localstore.addOrGetCompanyBankDetailHandler('', 'remove');
         localstore.addOrGetInvoiceHistoryData('', 'remove');
@@ -457,32 +465,37 @@ const CompanyDetailContext = ({ children }) => {
     const saveHandler = async (funcs, item, type) => {
         if (funcs === 'addOrUpdateCompanyTermsAndConditionHandler') {
             localstore.addOrUpdateCompanyTermsAndConditionHandler(item, type);
+            if (isbackendconnect) {
 
-            let saveCompanyTermsAndConditionDetailsdb = await companyDetailsDB.saveCompanyTermsAndConditionDetails(item, loginuserid);
-            // console.log('saveCompanyTermsAndConditionDetailsdb');
-            // console.log(saveCompanyTermsAndConditionDetailsdb);
-            if (saveCompanyTermsAndConditionDetailsdb.status !== 201 && saveCompanyTermsAndConditionDetailsdb.status !== 200) {
-                toast.error(saveCompanyTermsAndConditionDetailsdb.data + " in saving DB");
+                let saveCompanyTermsAndConditionDetailsdb = await companyDetailsDB.saveCompanyTermsAndConditionDetails(item, loginuserid);
+                // console.log('saveCompanyTermsAndConditionDetailsdb');
+                // console.log(saveCompanyTermsAndConditionDetailsdb);
+                if (saveCompanyTermsAndConditionDetailsdb.status !== 201 && saveCompanyTermsAndConditionDetailsdb.status !== 200) {
+                    toast.error(saveCompanyTermsAndConditionDetailsdb.data + " in saving DB");
+                }
             }
         }
         if (funcs === 'addOrGetCompanyBankDetailHandler') {
             localstore.addOrGetCompanyBankDetailHandler(item, type);
-            let saveCompanyBankDetaitlsdb = await companyDetailsDB.saveCompanyBankDetails(item, loginuserid);
-            // console.log('compabankdet');
-            // console.log(saveCompanyBankDetaitlsdb);
-            if (saveCompanyBankDetaitlsdb.status !== 201 && saveCompanyBankDetaitlsdb.status !== 200) {
-                toast.error(saveCompanyBankDetaitlsdb.data + " in saving DB");
+            if (isbackendconnect) {
+                let saveCompanyBankDetaitlsdb = await companyDetailsDB.saveCompanyBankDetails(item, loginuserid);
+                // console.log('compabankdet');
+                // console.log(saveCompanyBankDetaitlsdb);
+                if (saveCompanyBankDetaitlsdb.status !== 201 && saveCompanyBankDetaitlsdb.status !== 200) {
+                    toast.error(saveCompanyBankDetaitlsdb.data + " in saving DB");
+                }
             }
         }
         if (funcs === 'addOrUpdateCompanyHandler') {
             let estimateidcount = localstore.addOrGetEstimateid('', 'get');
             localstore.addOrUpdateCompanyHandler(item, type, estimateidcount);
-
-            let companyBasicDetails = await companyDetailsDB.saveCompanyBasicDetails(item, loginuserid, estimateidcount);
-            // console.log('companyBasicDetails');
-            // console.log(companyBasicDetails);
-            if (companyBasicDetails.status !== 201 && companyBasicDetails.status !== 200) {
-                toast.error(companyBasicDetails.data + " in saving DB");
+            if (isbackendconnect) {
+                let companyBasicDetails = await companyDetailsDB.saveCompanyBasicDetails(item, loginuserid, estimateidcount);
+                // console.log('companyBasicDetails');
+                // console.log(companyBasicDetails);
+                if (companyBasicDetails.status !== 201 && companyBasicDetails.status !== 200) {
+                    toast.error(companyBasicDetails.data + " in saving DB");
+                }
             }
         }
 
@@ -542,7 +555,10 @@ const CompanyDetailContext = ({ children }) => {
 
     useEffect(() => {
         getAlldataOnLogin();
-        getAlldataFromDB();
+        if (isbackendconnect) {
+            getAlldataFromDB();
+        }
+
         // if(loginuserid !== null && loginuserid){
 
         // }

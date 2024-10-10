@@ -5,6 +5,7 @@ import collect from "collect.js";
 
 import * as localstorage from '../Context/localStorageData';
 import * as estimateDetailsDb from '../DBconnection/estimateDetailsDB';
+import { isbackendconnect } from "../DBconnection/dbproperties";
 // import { CompanyDetail } from "./companyDetailContext";
 export const estimateState = createContext();
 
@@ -97,7 +98,9 @@ const EstimatestateContext = ({ children }) => {
     const saveEstimationDetailCounter = async (estimateidcount, loginuserid) => {
         localstorage.addOrGetEstimateid(estimateidcount, "save");
         // console.log(estimateidcount + 'estimateidcount');
-        let responsesaveEstimationId = await estimateDetailsDb.saveEstimationId(estimateidcount, loginuserid);
+        if (isbackendconnect) {
+            let responsesaveEstimationId = await estimateDetailsDb.saveEstimationId(estimateidcount, loginuserid);
+        }
         // console.log(responsesaveEstimationId);
     }
     const addOrGetEstimateHistoryData = async () => {
@@ -459,9 +462,9 @@ const EstimatestateContext = ({ children }) => {
         let date = today.getDate();
 
         todaydate = `ES${year}${month}${date}${estimateidcount}`;
-        
+
         setestimateid(todaydate);
-        let count = estimateidcount *1;
+        let count = estimateidcount * 1;
 
         setestimateidcount(++count);
         // console.log("todaydate: " + estimateidcount + '  ');
@@ -482,19 +485,22 @@ const EstimatestateContext = ({ children }) => {
             setestimateidcount(count);
         }
 
-       
+
         // console.log(count + 'count');
     }, []);
 
     const updateestimate = async (data) => {
 
         let loginuserid = localstorage.addOrGetUserdetail('', 'userid', 'get');
-        let storedataindb = await estimateDetailsDb.saveEstimateDB(data, loginuserid);
-        console.log(storedataindb);
-        if (storedataindb.status !== 200 || storedataindb.data !== 'estimation saved') {
-            toast.error('Error in saving Estimate Details in DB');
+        if (isbackendconnect) {
+            let storedataindb = await estimateDetailsDb.saveEstimateDB(data, loginuserid);
+            console.log(storedataindb);
+            if (storedataindb.status !== 200 || storedataindb.data !== 'estimation saved') {
+                toast.error('Error in saving Estimate Details in DB');
+            }
         }
         setestimateHistroyUpdateFlag(false);
+
     }
     useEffect(() => {
         if (estimateHistoryData !== null) {
