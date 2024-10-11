@@ -264,6 +264,7 @@ const CompanyDetailContext = ({ children }) => {
     }
 
     const logoutHandler = () => {
+        
         localstore.addOrGetUserdetail('', 'loginuser', 'remove');
         localstore.addOrGetUserdetail('', 'userid', 'remove');
         localstore.addOrUpdateCompanyHandler('', 'remove');
@@ -276,6 +277,7 @@ const CompanyDetailContext = ({ children }) => {
         setloginuser('');
         window.location.href = '/';
         toast.success("You have successfully logedout");
+        
     }
 
     const getAlldataFromDB = async () => {
@@ -482,6 +484,7 @@ const CompanyDetailContext = ({ children }) => {
     }
 
     const saveHandler = async (funcs, item, type) => {
+        setisloaded(false);
         if (funcs === 'addOrUpdateCompanyTermsAndConditionHandler') {
             localstore.addOrUpdateCompanyTermsAndConditionHandler(item, type);
             if (isbackendconnect) {
@@ -517,6 +520,7 @@ const CompanyDetailContext = ({ children }) => {
                 }
             }
         }
+        setisloaded(true);
 
         toast.success("Details are saved");
     }
@@ -558,6 +562,7 @@ const CompanyDetailContext = ({ children }) => {
         }
     }
     useEffect(() => {
+        
         let useralreadyloggedin = localstore.addOrGetUserdetail('', 'loginuser', "get");
         let loginuserids = localstore.addOrGetUserdetail('', 'userid', "get");
 
@@ -570,6 +575,7 @@ const CompanyDetailContext = ({ children }) => {
         }
         //    //console.log(useralreadyloggedin);
         // const [loginstatus, setloginstatus] = useState(localStorage.getItem('loginuser').length> 0 ? true: false);
+        setisloaded(false);
     }, []);
 
     useEffect(() => {

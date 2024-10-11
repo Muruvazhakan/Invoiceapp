@@ -79,6 +79,7 @@ const EstimatestateContext = ({ children }) => {
     const [clientName, setclientName] = useState('');
     const [clientPhno, setclientPhno] = useState('');
     const [clientAdd, setclientAdd] = useState('');
+    const [isloaded, setisloaded] = useState(true);
 
     const setval = (e, fun) => {
         fun(e.target.value);
@@ -100,7 +101,9 @@ const EstimatestateContext = ({ children }) => {
         console.log(estimateidcount + 'estimateidcount');
         let responsesaveEstimationId;
         if (isbackendconnect) {
-             responsesaveEstimationId = await estimateDetailsDb.saveEstimationId(estimateidcount, loginuserid);
+            
+            responsesaveEstimationId = await estimateDetailsDb.saveEstimationId(estimateidcount, loginuserid);
+            
         }
         console.log(responsesaveEstimationId);
     }
@@ -461,8 +464,8 @@ const EstimatestateContext = ({ children }) => {
         let month = today.getMonth() + 1;
         let year = today.getFullYear();
         let date = today.getDate();
-       
-        
+
+
         todaydate = `ES${year}${month}${date}${estimateidcount}`;
         //console.log(typeof estimateidcount + " type of estimateidcount");
 
@@ -496,11 +499,14 @@ const EstimatestateContext = ({ children }) => {
 
         let loginuserid = localstorage.addOrGetUserdetail('', 'userid', 'get');
         if (isbackendconnect) {
+            setisloaded(false);
             let storedataindb = await estimateDetailsDb.saveEstimateDB(data, loginuserid);
+
             //console.log(storedataindb);
             if (storedataindb.status !== 200 || storedataindb.data !== 'estimation saved') {
                 toast.error('Error in saving Estimate Details in DB');
             }
+            setisloaded(true);
         }
         setestimateHistroyUpdateFlag(false);
 
@@ -606,7 +612,7 @@ const EstimatestateContext = ({ children }) => {
         pvccostpsf, setpvccostpsf, totalpvccost, settotalpvccost, upvccostpsf, setupvccostpsf, totalupvccost, settotalupvccost, woodcostpsf, setwoodcostpsf, totalwoodcost, settotalwoodcost,
         remarks, setremarks, addOrUpdateEstimateItemHandler, updateTableView, estimatedate1, setestimatedate1, estimateHistoryData, setestimateHistoryData, addOrGetEstimateHistoryData, dateHandler,
         estimateSingleData, setestimateSingleData, allEstimateEdit, isNewDataSaveType, setisNewDataSaveType, orderno, setorderno, setval, setboxColors, sortorder,
-        estimateHistroyUpdateFlag, setestimateHistroyUpdateFlag
+        estimateHistroyUpdateFlag, setestimateHistroyUpdateFlag, isloaded, setisloaded
     };
 
 

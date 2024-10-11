@@ -9,7 +9,7 @@
   color: aliceblue;
   justify-content: center;
   /* flex-direction: column; */
- 
+
   /* height: 100px; */
 }
 
@@ -26,16 +26,23 @@
   text-decoration: none;
   color: rgb(238, 193, 56);
 }
-.cardline{
+
+.cardline {
   position: absolute;
   margin-top: 1%;
   font-weight: bolder;
 }
-.displaysmalldata{
+
+.displaysmalldata {
   margin-top: 3px;
   color: brown;
   font-size: smaller;
 }
-.spinnerstyle{
+
+.spinnerstyle {
   margin-top: 20%;
+  margin-left: 50%;
+  display: flex;
+  position: absolute;
+
 }
