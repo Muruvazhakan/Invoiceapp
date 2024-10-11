@@ -1,6 +1,6 @@
 
-import React from "react";
-
+import React, { useContext } from "react";
+import {  CircularProgress, Stack } from "@mui/material";
 import * as Datas from '../../Context/Datas';
 import Card from "../../Style/Card/Card";
 import {
@@ -8,8 +8,21 @@ import {
   } from "react-router-dom";
 
   import './DisplayAllComponent.css';
+import { CompanyDetail } from "../../Context/companyDetailContext";
 
 const DisplayAllComponent = (props) => {
+
+    const logindet = useContext(CompanyDetail);
+    if (!logindet.isloaded) {
+
+        return (
+            <Stack sx={{ color: 'grey.500' }} spacing={2} alignItems={"center"} className="spinnerstyle">
+                <CircularProgress color="success" size={30}  />
+            </Stack>
+            )
+    }
+
+
     return <>
     <div className=" displayelements" >
         {Datas.navigationbarcontent.map((items, index) => {

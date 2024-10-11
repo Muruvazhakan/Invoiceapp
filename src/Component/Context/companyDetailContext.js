@@ -47,6 +47,8 @@ const CompanyDetailContext = ({ children }) => {
     const [paymentmode, setpaymentmode] = useState('');
     const [paymentdate, setpaymentdate] = useState('');
 
+    const [isloaded, setisloaded] = useState(true);
+
     const [cleardetailoption, setcleardetailoption] = useState(true);
     // let companydet = [
     //     { id: 1, title: 'Prices', isvisible: true, desc: 'Prices quoted are strictly as per the size, quantity and design SPECIFIED only, Any change in either one will result in change in quoted price, If any change in Government taxes & regulations it will be implicated in pricing as per actual.' },
@@ -182,10 +184,10 @@ const CompanyDetailContext = ({ children }) => {
 
     const loginHandler = async (type) => {
         //console.log('login handler' + loginuser.length +'loginuser.length ' +loginUserPassword.length );
-
+        
         if (loginuser.length > 0 && loginUserPassword.length > 0) {
             let userExsist = '';
-
+            setisloaded(false);
             if (!isbackendconnect) {
                 userExsist = Datas.userLoginname.filter((item) => {
                     //console.log(item);
@@ -246,7 +248,7 @@ const CompanyDetailContext = ({ children }) => {
                     toast.warning(userExsist.data);
                 }
             }
-
+            setisloaded(true);
             // if (loginuser === "JR modular" && loginUserPassword === "jrmodular123") {
             //     toast.success(" Welcome " + loginuser + "!");
             //     setloginstatus(true);
@@ -257,7 +259,7 @@ const CompanyDetailContext = ({ children }) => {
             toast.error("Please fill both User Name and Password");
             return;
         }
-
+       
 
     }
 
@@ -386,11 +388,11 @@ const CompanyDetailContext = ({ children }) => {
             getAlldataOnLogin();
         }
 
-
+        setisloaded(true);
     };
 
     const getAlldataOnLogin = () => {
-
+        setisloaded(false);
         let companyTermsAndCondition = localstore.getCompanyTermsAndConditionHandler();
 
         if (companyTermsAndCondition !== null) {
@@ -589,7 +591,7 @@ const CompanyDetailContext = ({ children }) => {
         companythankyou, setcompanythankyou, companytitle, companyOtherDetailHandeler, companydetailtitle, setcompanydetailtitle, companydetaildesc, setcompanydetaildesc, setval, setboxColors,
         loginuser, setloginuser, loginUserPassword, setloginUserPassword, loginHandler, loginstatus, setloginstatus, loginId, setloginId, loginUserConfirmPassword, setloginUserConfirmPassword, tokenid, settokenid, logoutHandler,
         companyBankdetailtitle, setcompanyBankdetailtitle, companyBankdetailvalue, setcompanyBankdetailvalue, companyBankdetailIsVisible, setcompanyBankdetailIsVisible, companydetailIsVisible, setcompanydetailIsVisible,
-        loginuserid, setloginuserid, saveHandler, getAlldataFromDB, getAlldataOnLogin
+        loginuserid, setloginuserid, saveHandler, getAlldataFromDB, getAlldataOnLogin,isloaded, setisloaded
     };
 
 

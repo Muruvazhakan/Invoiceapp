@@ -1,4 +1,4 @@
-import { Box, Button, TextField } from "@mui/material";
+import { Box, Button, CircularProgress, Stack, TextField } from "@mui/material";
 import React, { useContext } from "react";
 import './Login.css';
 import { MdLogin } from "react-icons/md";
@@ -11,8 +11,17 @@ import { ToastContainer } from "react-toastify";
 const Login = (props) => {
 
     const logindet = useContext(CompanyDetail);
+    if (!logindet.isloaded) {
+
+        return (
+            <Stack sx={{ color: 'grey.500' }} spacing={2} alignItems={"center"} className="spinnerstyle">
+                <CircularProgress color="success" size={30}  />
+            </Stack>
+            )
+    }
+
     return (<div className="displaycontent">
-        <ToastContainer position="top-center" theme="colored" containerId="Login" autoClose={50}/>
+        <ToastContainer position="top-center" theme="colored" containerId="Login" autoClose={50} />
         <Card className="logincard displaycontent">
             <Box component="form" sx={{ '& .MuiTextField-root': { m: 1.5, width: '35ch' } }}>
                 <h2 className="logintext">Login</h2>
@@ -30,7 +39,7 @@ const Login = (props) => {
                 <div className="loginbutton">
                     <Button variant="contained" color="success" endIcon={< MdLogin />}
                         onClick={(e) => logindet.loginHandler('login')}
-                       
+
                     >Login</Button>
                 </div>
             </Box>
