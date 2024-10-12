@@ -13,16 +13,25 @@ const CompanyBankDetail = () => {
             <div className="header">Bank Details</div>
             {companydet.companyBankdetails.map((item, index) => {
                 return (
-                    <div key={index} className="items">
-                        {(item.isvisible === true || item.isvisible === "true") &&
-                            <>
-                                {item.title} :  {item.value}
-                            </>
+                    <>
+                        {item.value.length >1 ?
+                            <div key={index} className="items">
+                                {(item.isvisible === true || item.isvisible === "true") &&
+                                    <>
+                                        {item.title} :  {item.value}
+                                    </>
+                                }
+                            </div>
+                            :
+                            null
                         }
-                    </div>
+                    </>
                 )
             })}
-        </Card>)
+           
+        </Card>
+
+    )
 }
 
 export default CompanyBankDetail;

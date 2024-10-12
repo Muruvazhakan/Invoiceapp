@@ -101,9 +101,9 @@ const EstimatestateContext = ({ children }) => {
         console.log(estimateidcount + 'estimateidcount');
         let responsesaveEstimationId;
         if (isbackendconnect) {
-            
+
             responsesaveEstimationId = await estimateDetailsDb.saveEstimationId(estimateidcount, loginuserid);
-            
+
         }
         console.log(responsesaveEstimationId);
     }
@@ -434,6 +434,36 @@ const EstimatestateContext = ({ children }) => {
         setgrandtotalwoodcost(0);
     }
 
+    const cleartallEstimateotal = () => {
+        setclientAdd('');
+        setclientName('');
+        setclientPhno('');
+        setestimatedate('');
+        setestimatedate1('');
+        setgrandtotalpvccost(0);
+        setgrandtotalupvccost(0);
+        setgrandtotalwoodcost(0);
+        setgranttotalsqft(0);
+        setestimateid('')
+        settitle('');
+        setorderno(1);
+        setsubdesc('');
+        setlength(1);
+        setheight(1);
+        setarea(1);
+        setperqsft(1);
+        setpvccostpsf(0);
+        settotalpvccost(0);
+        setupvccostpsf(0);
+        settotalupvccost(0);
+        setwoodcostpsf(0);
+        settotalwoodcost(0);
+        setremarks('');
+        setrows([]);
+        setisotheritem(false);
+        sethideotheritem(false);
+    }
+
     const calculatetotal = (initalval, statevalue, type, fix) => {
         if (type === 'sum') {
             return ((initalval) * 1 + (statevalue) * 1).toFixed(fix);
@@ -612,7 +642,7 @@ const EstimatestateContext = ({ children }) => {
         pvccostpsf, setpvccostpsf, totalpvccost, settotalpvccost, upvccostpsf, setupvccostpsf, totalupvccost, settotalupvccost, woodcostpsf, setwoodcostpsf, totalwoodcost, settotalwoodcost,
         remarks, setremarks, addOrUpdateEstimateItemHandler, updateTableView, estimatedate1, setestimatedate1, estimateHistoryData, setestimateHistoryData, addOrGetEstimateHistoryData, dateHandler,
         estimateSingleData, setestimateSingleData, allEstimateEdit, isNewDataSaveType, setisNewDataSaveType, orderno, setorderno, setval, setboxColors, sortorder,
-        estimateHistroyUpdateFlag, setestimateHistroyUpdateFlag, isloaded, setisloaded
+        estimateHistroyUpdateFlag, setestimateHistroyUpdateFlag, isloaded, setisloaded,cleartallEstimateotal
     };
 
 

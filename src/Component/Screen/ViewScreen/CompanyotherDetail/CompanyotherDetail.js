@@ -8,7 +8,8 @@ const CompanyotherDetail = () => {
 
 
     return (
-
+        <>
+        {companydet.companydetails.length>1 && 
         <Card>
             <div className="header">Terms And Conditions</div>
             {companydet.companydetails.map((item, index) => {
@@ -33,7 +34,9 @@ const CompanyotherDetail = () => {
 
 
 
-        </Card>)
+        </Card>}
+        </>
+    )
 }
 
 export default CompanyotherDetail;

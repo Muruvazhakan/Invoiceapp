@@ -184,7 +184,7 @@ const CompanyDetailContext = ({ children }) => {
 
     const loginHandler = async (type) => {
         //console.log('login handler' + loginuser.length +'loginuser.length ' +loginUserPassword.length );
-        
+
         if (loginuser.length > 0 && loginUserPassword.length > 0) {
             let userExsist = '';
             setisloaded(false);
@@ -259,12 +259,12 @@ const CompanyDetailContext = ({ children }) => {
             toast.error("Please fill both User Name and Password");
             return;
         }
-       
+
 
     }
 
     const logoutHandler = () => {
-        
+
         localstore.addOrGetUserdetail('', 'loginuser', 'remove');
         localstore.addOrGetUserdetail('', 'userid', 'remove');
         localstore.addOrUpdateCompanyHandler('', 'remove');
@@ -277,7 +277,7 @@ const CompanyDetailContext = ({ children }) => {
         setloginuser('');
         window.location.href = '/';
         toast.success("You have successfully logedout");
-        
+
     }
 
     const getAlldataFromDB = async () => {
@@ -299,7 +299,7 @@ const CompanyDetailContext = ({ children }) => {
                 localstore.addOrGetEstimateid(getEstimationIdfromDb.data, "save");
                 estdetail.setestimateidcount(getEstimationIdfromDb.data);
                 // console.log('saving');
-                
+
             }
 
             let estimateHistoryData = localstore.addOrGetEstimateHistoryData('', 'get');
@@ -360,7 +360,7 @@ const CompanyDetailContext = ({ children }) => {
                     toast.warning(companyBankDetailsfromdb.data);
                 }
                 else {
-                    toast.warning("Issue in Company Basic details retrival");
+                    toast.warning("Issue in Company Bank details retrival");
                 }
 
             }
@@ -474,13 +474,11 @@ const CompanyDetailContext = ({ children }) => {
             getresul = companydetails.filter((items) => {
                 //console.log(items.id + ' ids ' + item);
                 return items.id !== item;
-            })
-
+            });
             //console.log(getresul);
             setcompanydetails(getresul);
             toast.success("Details deleted");
         }
-
     }
 
     const saveHandler = async (funcs, item, type) => {
@@ -562,7 +560,7 @@ const CompanyDetailContext = ({ children }) => {
         }
     }
     useEffect(() => {
-        
+
         let useralreadyloggedin = localstore.addOrGetUserdetail('', 'loginuser', "get");
         let loginuserids = localstore.addOrGetUserdetail('', 'userid', "get");
 
@@ -597,19 +595,8 @@ const CompanyDetailContext = ({ children }) => {
         companythankyou, setcompanythankyou, companytitle, companyOtherDetailHandeler, companydetailtitle, setcompanydetailtitle, companydetaildesc, setcompanydetaildesc, setval, setboxColors,
         loginuser, setloginuser, loginUserPassword, setloginUserPassword, loginHandler, loginstatus, setloginstatus, loginId, setloginId, loginUserConfirmPassword, setloginUserConfirmPassword, tokenid, settokenid, logoutHandler,
         companyBankdetailtitle, setcompanyBankdetailtitle, companyBankdetailvalue, setcompanyBankdetailvalue, companyBankdetailIsVisible, setcompanyBankdetailIsVisible, companydetailIsVisible, setcompanydetailIsVisible,
-        loginuserid, setloginuserid, saveHandler, getAlldataFromDB, getAlldataOnLogin,isloaded, setisloaded
+        loginuserid, setloginuserid, saveHandler, getAlldataFromDB, getAlldataOnLogin, isloaded, setisloaded
     };
-
-
-    // sno:1,
-    // desc:"Description of Goods",
-    // hsn:"200",
-    // quantity:20,
-    // rateoftax:2,
-    // rate:100,
-    // per:"PCS",
-    // disc:"15%",
-    // amount:"1000"
 
     return <CompanyDetail.Provider value={compDet} >{children}</CompanyDetail.Provider>;
 

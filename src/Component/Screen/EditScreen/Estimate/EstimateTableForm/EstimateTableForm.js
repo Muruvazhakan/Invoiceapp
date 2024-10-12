@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 
 import { Box, Button, FormControl, FormControlLabel, FormGroup, Switch, TextField } from "@mui/material";
 import { ToastContainer } from "react-toastify";
+import { GrClearOption } from "react-icons/gr";
 import "react-toastify/dist/ReactToastify.css";
 import Card from "../../../../Style/Card/Card";
 import { BsSave } from "react-icons/bs";
@@ -212,11 +213,16 @@ const EstimateTableForm = (props) => {
                     <div className="button-warn buttonspace">
                       
                         <Button variant="contained" color="success" size="medium" endIcon={<FaFileInvoice />}
-                            onClick={() => estdetail.addOrGetEstimateHistoryData('', '', 'New')}>Save Complete Invoice</Button>
+                            onClick={() => estdetail.addOrGetEstimateHistoryData('', '', 'New')}>Save Complete Estimate</Button>
 
                         {estdetail.estimateid.length === 0 && <div className="displaysmalldata"> Estimate Id is not generates</div>}
 
                     </div>
+                    <div className="button-warn buttonspace">
+                      
+                      <Button variant="contained" color="warning" size="medium" endIcon={<GrClearOption />}
+                          onClick={() => estdetail.cleartallEstimateotal()}>Clear Estimate</Button>
+                  </div>
                 </FormControl>
             </FormGroup>
         </Card>
