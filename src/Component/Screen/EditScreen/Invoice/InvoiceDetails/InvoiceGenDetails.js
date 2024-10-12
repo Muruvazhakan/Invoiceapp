@@ -3,6 +3,7 @@ import { FormGroup, FormControl, TextField, Box, Button } from '@mui/material';
 import { FaRegIdCard } from "react-icons/fa6";
 
 import { CompanyDetail } from "../../../../Context/companyDetailContext";
+import { AllState } from "../../../../Context/allStateContext";
 // import '../YourDetails.css';
 import Card from "../../../../Style/Card/Card";
 
@@ -10,6 +11,7 @@ import Card from "../../../../Style/Card/Card";
 const InvoiceGenDetails = () => {
 
   const compayDet = useContext(CompanyDetail);
+  const invoicedet = useContext(AllState);
   const setval = (e, fun) => {
     fun(e.target.value);
   }
@@ -33,12 +35,12 @@ const InvoiceGenDetails = () => {
     const year = today.getFullYear();
     const date = today.getDate();
 
-    todaydate = `IN${year}${month}${date}${compayDet.invoiceidcount}`;
-    compayDet.setinvoiceid(todaydate);
-    compayDet.setinvoiceidount(++compayDet.invoiceidcount);
-    // console.log("invoiceidcount: " + compayDet.invoiceidcount);
+    todaydate = `IN${year}${month}${date}${invoicedet.invoiceidcount}`;
+    invoicedet.setinvoiceid(todaydate);
+    invoicedet.setinvoiceidount(++invoicedet.invoiceidcount);
+    // console.log("invoiceidcount: " + invoicedet.invoiceidcount);
     // console.log("todaydate: " + todaydate);
-    // compayDet.setinvoiceid()
+    // invoicedet.setinvoiceid()
   }
   return <>
     <FormGroup>
@@ -47,24 +49,24 @@ const InvoiceGenDetails = () => {
           <h3>Client Details</h3>
 
           <Box component="form" sx={{ '& .MuiTextField-root': { m: 1, width: '25ch' } }} >
-            <TextField required id="outlined-required" label="Client Name" value={compayDet.clientName}
-              // onChange={(e)=>compayDet.setclientName(e.target.value)}
-              onChange={(e) => setval(e, compayDet.setclientName)}
-              color={setboxColors(compayDet.clientName, 'color')}
-              error={setboxColors(compayDet.clientName, 'error')}
+            <TextField required id="outlined-required" label="Client Name" value={invoicedet.clientName}
+              // onChange={(e)=>invoicedet.setclientName(e.target.value)}
+              onChange={(e) => setval(e, invoicedet.setclientName)}
+              color={setboxColors(invoicedet.clientName, 'color')}
+              error={setboxColors(invoicedet.clientName, 'error')}
 
-            // error={compayDet.clientName.length ==0?'true':'false'} 
+            // error={invoicedet.clientName.length ==0?'true':'false'} 
             />
             <TextField id="outlined-required" label="Client Phone Number"
-              onChange={(e) => setval(e, compayDet.setclientPhno)}
-              color={setboxColors(compayDet.clientPhno, 'color')}
-            //  error={setboxColors(compayDet.clientPhno,'error')} 
+              onChange={(e) => setval(e, invoicedet.setclientPhno)}
+              color={setboxColors(invoicedet.clientPhno, 'color')}
+            //  error={setboxColors(invoicedet.clientPhno,'error')} 
             />
 
             <TextField id="outlined-required" label="Client Address" multiline
-              onChange={(e) => setval(e, compayDet.setclientAdd)}
-              color={setboxColors(compayDet.clientAdd, 'color')}
-            //  error={setboxColors(compayDet.clientAdd,'error')} 
+              onChange={(e) => setval(e, invoicedet.setclientAdd)}
+              color={setboxColors(invoicedet.clientAdd, 'color')}
+            //  error={setboxColors(invoicedet.clientAdd,'error')} 
             />
 
           </Box>
@@ -74,17 +76,17 @@ const InvoiceGenDetails = () => {
           </h3>
           <Box component="form" sx={{ '& .MuiTextField-root': { m: 1, width: '15ch', height: '5ch' } }} >
 
-            {compayDet.invoiceid.length == 0 ?
+            {invoicedet.invoiceid.length == 0 ?
               <div><Button className="gen-invoice" variant="outlined" endIcon={<FaRegIdCard />}  onClick={dateHandler}>Generate Invoice Id</Button> </div> : <div className="invoicegen"> Invoice Id Generated</div>}
             Invoice date:
-            <input type="date" className="date-field" onChange={(e) => setval(e, compayDet.setinvoicedate)} title="payement" size={210} id="dateDefault" value={compayDet.invoicedate} aria-label="invoice" />
+            <input type="date" className="date-field" onChange={(e) => setval(e, invoicedet.setinvoicedate)} title="payement" size={210} id="dateDefault" value={invoicedet.invoicedate} aria-label="invoice" />
             Payment date:
-            <input type="date" className="date-field" onChange={(e) => setval(e, compayDet.setpaymentdate)} value={compayDet.paymentdate} title="payement" size={210} />
+            <input type="date" className="date-field" onChange={(e) => setval(e, invoicedet.setpaymentdate)} value={invoicedet.paymentdate} title="payement" size={210} />
 
-            <TextField id="outlined-required" label="Payment Mode" value={compayDet.paymentmode}
-              onChange={(e) => setval(e, compayDet.setpaymentmode)}
-              color={setboxColors(compayDet.paymentmode, 'color')}
-            //  error={setboxColors(compayDet.paymentmode,'error')} 
+            <TextField id="outlined-required" label="Payment Mode" value={invoicedet.paymentmode}
+              onChange={(e) => setval(e, invoicedet.setpaymentmode)}
+              color={setboxColors(invoicedet.paymentmode, 'color')}
+            //  error={setboxColors(invoicedet.paymentmode,'error')} 
             />
 
           </Box>

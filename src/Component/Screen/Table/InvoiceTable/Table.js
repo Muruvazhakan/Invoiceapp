@@ -17,49 +17,49 @@ const Tables = (props) =>{
 
   const tabledetails=useContext(AllState);
     
-    const list=[{
-        sno:1,
-        desc:"Description of Goods",
-        hsn:"200",
-        quantity:20,
-        rateoftax:2,
-        rate:100,
-        per:"PCS",
-        disc:"15%",
-        amount:"1000"
-    },{
-        sno:2,
-        desc:"Description of Goods",
-        hsn:"200",
-        quantity:20,
-        rateoftax:2,
-        rate:100,
-        per:"PCS",
-        disc:"15%",
-        amount:"1000"
-    },{
-        sno:3,
-        desc:"Description of Goods",
-        hsn:"200",
-        quantity:20,
-        rateoftax:2,
-        rate:100,
-        per:"PCS",
-        disc:"15%",
-        amount:"1000"
-    }];
+    // const list=[{
+    //     sno:1,
+    //     desc:"Description of Goods",
+    //     hsn:"200",
+    //     quantity:20,
+    //     rateoftax:2,
+    //     rate:100,
+    //     per:"PCS",
+    //     disc:"15%",
+    //     amount:"1000"
+    // },{
+    //     sno:2,
+    //     desc:"Description of Goods",
+    //     hsn:"200",
+    //     quantity:20,
+    //     rateoftax:2,
+    //     rate:100,
+    //     per:"PCS",
+    //     disc:"15%",
+    //     amount:"1000"
+    // },{
+    //     sno:3,
+    //     desc:"Description of Goods",
+    //     hsn:"200",
+    //     quantity:20,
+    //     rateoftax:2,
+    //     rate:100,
+    //     per:"PCS",
+    //     disc:"15%",
+    //     amount:"1000"
+    // }];
 
     
-    const hsnlist=[{
-        sno:1,
-        hsn:2000,
-        taxableValue:1000,
-        centaxrate:10,
-        centaxamt:110,
-        satetaxrate:10,
-        statetaxamt:110,
-        totaltaxamt:200
-    }]
+    // const hsnlist=[{
+    //     sno:1,
+    //     hsn:2000,
+    //     taxableValue:1000,
+    //     centaxrate:10,
+    //     centaxamt:110,
+    //     satetaxrate:10,
+    //     statetaxamt:110,
+    //     totaltaxamt:200
+    // }]
     return <>
     {/* <Paper sx={{ height: 400, width: '100%' }}>
   <DataGrid
@@ -83,7 +83,7 @@ const Tables = (props) =>{
                     
                      <TableCell sx={{fontWeight:700}}>Rate
                     (Incl.of tax)</TableCell>
-                    <TableCell sx={{fontWeight:700}}>Disc.%</TableCell>
+                    <TableCell sx={{fontWeight:700}}>Discount %</TableCell>
                      <TableCell sx={{fontWeight:700}}>Rate</TableCell>
                      <TableCell sx={{fontWeight:700}}>Per</TableCell>
                      <TableCell sx={{fontWeight:700}}>Amount (₹)</TableCell>
@@ -103,7 +103,7 @@ const Tables = (props) =>{
           {tabledetails.list.map((item,index) => {
            
              return (
-                <TableRow className= {item.index%2==0 ? "table-body tablegrey" :  "table-body"} key={item.id}
+                <TableRow className= {item.index%2===0 ? "table-body tablegrey" :  "table-body"} key={item.id}
                 // sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                 >
                 <TableCell align='center'  className="table-header-td">{index+1}</TableCell>
@@ -154,7 +154,7 @@ const Tables = (props) =>{
        {tabledetails.otherchargedetail.map((item,index) => {
            
            return (
-              <TableRow className= {index%2==0 ? "table-body tablegrey" :  "table-body"} key={item.id}
+              <TableRow className= {index%2===0 ? "table-body tablegrey" :  "table-body"} key={item.id}
               // sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
               >
               <TableCell ></TableCell>
@@ -216,7 +216,7 @@ const Tables = (props) =>{
             
        </TableRow>
           {/* {tabledetails.gstCgstitem.map((item) => (
-            <TableRow className= {item.sno%2==0 ? "table-body tablegrey" :  "table-body"} key={item.sno}
+            <TableRow className= {item.sno%2===0 ? "table-body tablegrey" :  "table-body"} key={item.sno}
             // sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
             <TableCell ></TableCell>
@@ -283,7 +283,7 @@ const Tables = (props) =>{
         </TableHead>
         <TableBody>
           {tabledetails.hsnlist.map((item,key) => (
-            <TableRow className= {item.sno%2==0 ? "table-body tablegrey" :  "table-body"} key={item.sno}
+            <TableRow className= {item.sno%2===0 ? "table-body tablegrey" :  "table-body"} key={item.sno}
             // sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
             <TableCell className="table-header-td">{key+1}</TableCell>
@@ -302,7 +302,7 @@ const Tables = (props) =>{
     <>
     {item.ischargedinhsn &&
      
-            <TableRow className= {key%2==0 ? "table-body tablegrey" :  "table-body"} key={item.id}
+            <TableRow className= {key%2===0 ? "table-body tablegrey" :  "table-body"} key={item.id}
             // sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
             <TableCell></TableCell>

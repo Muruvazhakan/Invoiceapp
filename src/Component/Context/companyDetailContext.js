@@ -16,9 +16,7 @@ const CompanyDetailContext = ({ children }) => {
 
     const estdetail = useContext(estimateState);
 
-    const [clientName, setclientName] = useState('');
-    const [clientPhno, setclientPhno] = useState('');
-    const [clientAdd, setclientAdd] = useState('');
+   
     // const [companyName, setcompanyName] = useState('JR MODULAR ENTERPRISES');
     // const [companyTagLine, setcompanyTagLine] = useState('‘YOUR HOME OUR INTERIOR’');
     // const [companyAddress, setcompanyAddress] = useState('Address: No.1/4, Mummurti Nagar Main Road, Chromepet, Chennai-600044');
@@ -40,16 +38,9 @@ const CompanyDetailContext = ({ children }) => {
     const [companyGstin, setcompanyGstin] = useState('');
     const [companyGstinStatename, setcompanyGstinStatename] = useState('');
 
-    const [invoiceid, setinvoiceid] = useState('');
-
-    const [invoiceidcount, setinvoiceidount] = useState(1000);
-    const [invoicedate, setinvoicedate] = useState('');
-    const [paymentmode, setpaymentmode] = useState('');
-    const [paymentdate, setpaymentdate] = useState('');
-
     const [isloaded, setisloaded] = useState(true);
 
-    const [cleardetailoption, setcleardetailoption] = useState(true);
+    
     // let companydet = [
     //     { id: 1, title: 'Prices', isvisible: true, desc: 'Prices quoted are strictly as per the size, quantity and design SPECIFIED only, Any change in either one will result in change in quoted price, If any change in Government taxes & regulations it will be implicated in pricing as per actual.' },
     //     { id: 2, title: 'Billing format', isvisible: true, desc: 'Billing will be done for individual items & rates specified for individual items only tolerance of (+/-) 25mm will not affect the rate per Sqft quoted.' },
@@ -416,7 +407,7 @@ const CompanyDetailContext = ({ children }) => {
             setcompanydetaildesc(companydetail.companydetaildesc);
             setcompanymailid(companydetail.companymailid);
             setcompanythankyou(companydetail.companythankyou);
-            setinvoiceidount(companydetail.invoiceidcount);
+            
             //console.log('companydetail.estimateidcount');
             //console.log(companydetail.estimateidcount);
             // if (companydetail.estimateidcount !== undefined && companydetail.estimateidcount > estdetail.estimateidcount) {
@@ -588,10 +579,10 @@ const CompanyDetailContext = ({ children }) => {
     }, [loginuserid])
 
     const compDet = {
-        clientName, setclientName, clientPhno, setclientPhno, clientAdd, setclientAdd, companyName, setcompanyName,
+        companyName, setcompanyName,
         companyTagLine, setcompanyTagLine, companyAddress, setcompanyAddress, companyPhno, setcompanyPhno, companyGstin, setcompanyGstin, companyGstinStatename, setcompanyGstinStatename,
-        invoiceid, setinvoiceid, invoicedate, setinvoicedate, paymentmode, setpaymentmode, paymentdate, setpaymentdate, invoiceidcount, setinvoiceidount, updateBankDetailHandler, companyBankDetailHandler,
-        companyDeleration, setcompanyDeleration, cleardetailoption, setcleardetailoption, companymailid, setcompanymailid, companyOwner, setcompanyOwner, companydetails, setcompanydetails, companyBankdetails, setcompanyBankdetails,
+        updateBankDetailHandler, companyBankDetailHandler,
+        companyDeleration, setcompanyDeleration,  companymailid, setcompanymailid, companyOwner, setcompanyOwner, companydetails, setcompanydetails, companyBankdetails, setcompanyBankdetails,
         companythankyou, setcompanythankyou, companytitle, companyOtherDetailHandeler, companydetailtitle, setcompanydetailtitle, companydetaildesc, setcompanydetaildesc, setval, setboxColors,
         loginuser, setloginuser, loginUserPassword, setloginUserPassword, loginHandler, loginstatus, setloginstatus, loginId, setloginId, loginUserConfirmPassword, setloginUserConfirmPassword, tokenid, settokenid, logoutHandler,
         companyBankdetailtitle, setcompanyBankdetailtitle, companyBankdetailvalue, setcompanyBankdetailvalue, companyBankdetailIsVisible, setcompanyBankdetailIsVisible, companydetailIsVisible, setcompanydetailIsVisible,

@@ -2,62 +2,62 @@ import React,{useContext} from "react";
 
 
 import './GeneralDetails.css';
-import { CompanyDetail } from "../../Context/companyDetailContext";
+import { AllState } from "../../Context/allStateContext";
 const GeneralDetails = () =>{
 
-    const companydet=useContext(CompanyDetail);
+    const invoicedet=useContext(AllState);
     return <div className="generaldetails">
         <ul className="details">
             <div className="companyname">Buyer:
             <li> 
-                {companydet.clientName}               
+                {invoicedet.clientName}               
             </li>
             <li> 
-                {companydet.clientPhno}               
+                {invoicedet.clientPhno}               
             </li>
             <li>
-                {companydet.clientAdd} 
+                {invoicedet.clientAdd} 
             </li>
             </div>
         </ul>
        
         <ul className="details">
             <li className="companyname">
-                {companydet.companyName}
+                {invoicedet.companyName}
             </li>
             <li>
-            {companydet.companyTagLine}
+            {invoicedet.companyTagLine}
             </li>
             <li>
-            {companydet.companyAddress}
+            {invoicedet.companyAddress}
             </li>
             <li>
-            {companydet.companyName}
+            {invoicedet.companyName}
             </li>
             <li>
-            {companydet.companyPhno}
+            {invoicedet.companyPhno}
             </li>
             <li>
-             {companydet.companyGstin ? 'Gstin: '+companydet.companyGstin:null }
+             {invoicedet.companyGstin ? 'Gstin: '+invoicedet.companyGstin:null }
             </li>
             <li>
-             {companydet.companyGstinStatename ? 'StateName: '+companydet.companyGstinStatename:null }
+             {invoicedet.companyGstinStatename ? 'StateName: '+invoicedet.companyGstinStatename:null }
             </li>
 
         </ul>
        
         <ul className="details invoicedetails">
             <li>
-            Invoice ID: {companydet.invoiceid}
+            Invoice ID: {invoicedet.invoiceid}
             </li>
             <li>
-            Invoice date: {companydet.invoicedate}
+            Invoice date: {invoicedet.invoicedate}
             </li>
             <li>
-            Payment mode: {companydet.paymentmode}
+            Payment mode: {invoicedet.paymentmode}
             </li>
             <li>
-            Payment Date: {companydet.paymentdate}
+            Payment Date: {invoicedet.paymentdate}
             </li>
         </ul>
     </div>

@@ -435,6 +435,7 @@ const EstimatestateContext = ({ children }) => {
     }
 
     const cleartallEstimateotal = () => {
+
         setclientAdd('');
         setclientName('');
         setclientPhno('');
@@ -462,6 +463,7 @@ const EstimatestateContext = ({ children }) => {
         setrows([]);
         setisotheritem(false);
         sethideotheritem(false);
+        toast.success('Estimate details are cleared in this screen');
     }
 
     const calculatetotal = (initalval, statevalue, type, fix) => {

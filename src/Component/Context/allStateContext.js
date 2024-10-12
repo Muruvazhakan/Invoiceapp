@@ -1,8 +1,9 @@
 import React, { createContext, useState, useEffect } from "react";
-import {  toast } from "react-toastify";
+import { toast } from "react-toastify";
 
 import { v4 as uuidv4 } from "uuid";
 import collect from "collect.js";
+import * as localstorage from '../Context/localStorageData';
 export const AllState = createContext();
 
 const AllStateContext = ({ children }) => {
@@ -34,6 +35,18 @@ const AllStateContext = ({ children }) => {
   const [per, setper] = useState('');
   const [disc, setdisc] = useState(15);
   const [amount, setamount] = useState(0);
+
+  const [clientName, setclientName] = useState('');
+  const [clientPhno, setclientPhno] = useState('');
+  const [clientAdd, setclientAdd] = useState('');
+
+  const [invoiceid, setinvoiceid] = useState('');
+  const [cleardetailoption, setcleardetailoption] = useState(true);
+  const [invoiceidcount, setinvoiceidount] = useState(1000);
+  const [invoicedate, setinvoicedate] = useState('');
+  const [paymentmode, setpaymentmode] = useState('');
+  const [paymentdate, setpaymentdate] = useState('');
+
   const [gstCgstitem, setgstCgstitem] = useState([{
     desc: 'OUTPUTCGST9%',
     name: 'cgst',
@@ -69,7 +82,22 @@ const AllStateContext = ({ children }) => {
   const [otherdesc, setotherdesc] = useState('');
   const [ischargedinhsn, setischargedinhsn] = useState(true);
   const [otherdescamt, setotherdescamt] = useState(0);
-  
+
+  const setval = (e, fun) => {
+    fun(e.target.value);
+  }
+
+  const setboxColors = (item, field) => {
+    if (field === 'color') {
+      return item.length === 0 || item === 0 ? 'error' : 'success';
+    }
+
+    else {
+      return item.length === 0 || item === 0 ? true : false;
+    }
+
+  }
+
   const calculateTotal = () => {
     if (list.length > 0) {
       const allItems = list.map((item) => item.amount);
@@ -170,8 +198,8 @@ const AllStateContext = ({ children }) => {
 
     }
     else if (type === 'add') {
-     
-      if (otherdesc.length > 0 && otherdescamt > 0 && ctrate>0 && strate >0) {
+
+      if (otherdesc.length > 0 && otherdescamt > 0 && ctrate > 0 && strate > 0) {
         let singleOtherItem = {
           id: uuidv4(),
           otheritemdesc: otherdesc,
@@ -184,11 +212,11 @@ const AllStateContext = ({ children }) => {
           ...otherchargedetail,
           singleOtherItem
         ]);
-       
+
 
         toast.success("Other Item added");
       }
-      else if(ctrate <=0 && strate <=0){
+      else if (ctrate <= 0 && strate <= 0) {
         toast.error("Please fill HSN Tax rate");
       }
       else {
@@ -286,14 +314,206 @@ const AllStateContext = ({ children }) => {
   }
 
   useEffect(() => {
+    // console.log('tabledet');
+    // console.log(tabledet);
+    let val;
+    if (quantity !== 0 || rateinctax !== 0 || disc !== 0) {
+      val = (rateinctax - ((disc * rateinctax) / 100));
+      setrate(val.toFixed(2));
+    }
+    // console.log(rate + " rate " + val);
+  }, [disc, rateinctax]);
+
+  const addOrUpdateItemHandler = (opt) => {
+    if (desc.length !== 0 && hsn.length !== 0 && quantity > 0 && rateinctax > 0 && rate > 0 && per.length !== 0 && disc > 0 && amount > 0 && ctrate > 0 && strate > 0) {
+      if (opt === 'Update') {
+        toast.success("Item updated");
+      } else {
+
+        let singleitem = {
+          id: uuidv4(),
+          desc: desc,
+          hsn: hsn,
+          quantity: quantity,
+          rateinctax: rateinctax,
+          rate: rate,
+          per: per,
+          disc: disc,
+          amount: amount
+        };
+        setList([
+          ...list,
+          singleitem
+        ]
+        );
+        let singlehsn = {
+          id: 1,
+          hsndesc: '',
+          taxvalue: 0,
+          ctrate: 0,
+          ctamount: 0,
+          strate: 0,
+          stamount: 0,
+          amount: 0
+        };
+        let currentsinglehsnitem = hsnlist;
+        //   console.log("currentsinglehsnitem" + currentsinglehsnitem);
+        //   console.log(currentsinglehsnitem);
+        if (currentsinglehsnitem.length > 0) {
+          let found = 0;
+          for (let i = 0; i < currentsinglehsnitem.length; i++) {
+            // console.log('inside1');
+            console.log(currentsinglehsnitem[i].hsndesc + " item " + singleitem.hsn);
+            if (currentsinglehsnitem[i].hsndesc == singleitem.hsn) {
+              console.log("before inside" + currentsinglehsnitem[i].taxvalue + " singleitem.amount : " + singleitem.amount);
+              let ingvalue = singleitem.amount;
+              currentsinglehsnitem[i].taxvalue = (ingvalue) * 1 + (currentsinglehsnitem[i].taxvalue) * 1;
+              // currentsinglehsnitem[i].taxvalue = 4 +currentsinglehsnitem[i].taxvalue;
+              console.log("after inside" + currentsinglehsnitem[i].taxvalue + " singleitem.amount : " + singleitem.amount);
+              // currentsinglehsnitem[i].ctrate
+              found = 1;
+            }
+          }
+          if (found == 0) {
+            // singlehsn = {
+            //     id: uuidv4(),
+            //     hsndesc: singleitem.hsn,
+            //     taxvalue: singleitem.amount,
+            //     ctrate: ctrate,
+            //     ctamount: ((singleitem.amount*1)*ctrate*1 )/100,
+            //     strate: strate,
+            //     stamount: ((singleitem.amount*1)*strate*1 )/100,
+            //     amount:((((singleitem.amount*1)*ctrate*1 )/100 ) + (((singleitem.amount*1)*strate*1 )/100) + (singleitem.amount*1)).toFixed(2)
+            // };
+            singlehsn = {
+              id: uuidv4(),
+              hsndesc: singleitem.hsn,
+              taxvalue: singleitem.amount,
+              ctrate: 0,
+              ctamount: 0,
+              strate: 0,
+              stamount: 0,
+              amount: singleitem.amount
+            };
+            sethsnList([
+              ...hsnlist,
+              singlehsn
+            ])
+          }
+          console.log("compl");
+          console.log(currentsinglehsnitem);
+        }
+        else {
+          singlehsn = {
+            id: uuidv4(),
+            hsndesc: singleitem.hsn,
+            taxvalue: singleitem.amount,
+            ctrate: 0,
+            ctamount: 0,
+            strate: 0,
+            stamount: 0,
+            amount: singleitem.amount
+          };
+
+          sethsnList([
+            ...hsnlist,
+            singlehsn
+          ])
+        }
+
+        toast.success("Item added");
+        if (cleardetailoption) {
+          clearlistcontent();
+        }
+
+
+      }
+
+    }
+    else {
+      toast.error("Please fill in all inputs in HSN and Add Goods tab");
+    }
+  }
+
+  const clearlistcontent = () => {
+    setdesc('');
+    sethsn('');
+    setquantity(0);
+    setrateinctax('');
+    setrate(0);
+    setper('');
+    setdisc(15);
+    setamount(0);
+  }
+
+  const addOtherItems = () => {
+    addOrEditOtherItems("", 'add');
+     if (cleardetailoption) {
+         clearOtherDetails();
+     }
+ }
+ 
+ 
+   const clearOtherDetails = () => {
+    setotherdesc('');
+    setotherdescamt(0);
+    setischargedinhsn(true);
+ }
+ 
+
+  const saveInvoice = () => {
+    console.log('saveInvoice');
+    let loginuserid = localstorage.addOrGetUserdetail('', 'userid', 'get');
+    let datas = {
+      userid: loginuserid,
+      invoiceid: invoiceid,
+      invoicedate: invoicedate,
+      invoicedate1: invoicedate,
+      paymentdate: paymentdate,
+      paymentdate1: paymentdate,
+      paymentmode: paymentmode,
+      list: list,
+      hsnlist: hsnlist,
+      otherchargedetail: otherchargedetail,
+      totalcentaxamt: totalcentaxamt,
+      totalstatetaxamt: totalstatetaxamt,
+      totalsubamt: totalsubamt,
+      totalamt: totalamt,
+      totalamtwords: totalamtwords,
+      totaltaxvalueamt: totaltaxvalueamt,
+      totalhsnamt: totalhsnamt,
+      totalhsnamtwords: totalhsnamtwords,
+      clientAdd: clientAdd,
+      clientName: clientName,
+      clientPhno: clientPhno,
+    }
+    console.log(datas);
+  }
+
+
+  useEffect(() => {
+    // console.log('amount');
+    // console.log(tabledet);
+    let val;
+    if (quantity !== 0 || rateinctax !== 0 || disc !== 0 || rate !== 0) {
+        val = (rate * quantity);
+        setamount(val.toFixed(2));
+    }
+    // console.log(rate + " rate " + val);
+}, [rate, quantity])
+
+
+
+  useEffect(() => {
     calculateHsn();
   }, [list, otherchargedetail]);
   const context = {
-    singleitem, setsingleitem, list, setList, totalamt, settotalamt, totalamtwords, settotalamtwords, singlehsnitem, setsinglehsnitem,
+    singleitem, setsingleitem, list, setList, totalamt, settotalamt, totalamtwords, settotalamtwords, singlehsnitem, setsinglehsnitem, setval, setboxColors, cleardetailoption, setcleardetailoption,
     desc, setdesc, hsn, sethsn, quantity, setquantity, rateinctax, setrateinctax, rate, setrate, per, setper, disc, setdisc, amount, setamount, otherdesc, setotherdesc, ischargedinhsn, setischargedinhsn, otherdescamt, setotherdescamt,
-    totalhsnamt, settotalhsnamt, hsnlist, sethsnList, totalhsnamtwords, settotalhsnamtwords, totalsubamt,
+    totalhsnamt, settotalhsnamt, hsnlist, sethsnList, totalhsnamtwords, settotalhsnamtwords, totalsubamt, saveInvoice, addOrUpdateItemHandler, clearlistcontent,clearOtherDetails,addOtherItems,
     setsubtotalamt, gstCgstitem, setgstCgstitem, ctrate, setctrate, strate, setstrate, ctatm, setctatm, statm, setstatm, totaltaxvalueamt, settotaltaxvalueamt,
-    totalcentaxamt, settotalcentaxamt, totalstatetaxamt, settotalstatetaxamt, isinstallationcharge, setisinstallationcharge, otherchargedetail, setOtherchargedetail, editListRows, addOrEditOtherItems
+    totalcentaxamt, settotalcentaxamt, totalstatetaxamt, settotalstatetaxamt, isinstallationcharge, setisinstallationcharge, otherchargedetail, setOtherchargedetail, editListRows, addOrEditOtherItems,
+    invoiceid, setinvoiceid, invoicedate, setinvoicedate, paymentmode, setpaymentmode, paymentdate, setpaymentdate, invoiceidcount, setinvoiceidount, clientName, setclientName, clientPhno, setclientPhno, clientAdd, setclientAdd,
   };
   return <AllState.Provider value={context}>{children}</AllState.Provider>;
 }
