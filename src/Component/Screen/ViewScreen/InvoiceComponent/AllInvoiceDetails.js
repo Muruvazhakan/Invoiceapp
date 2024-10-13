@@ -1,7 +1,6 @@
 import React, { useContext, useEffect } from "react";
 
 import '../../GeneralDetails/GeneralDetails.css';
-import { estimateState } from "../../../Context/EstimatestateContext";
 import { AllState } from "../../../Context/allStateContext";
 import Card from "../../../Style/Card/Card";
 import NoData from "../../NoData/NoData";
@@ -12,7 +11,6 @@ import { Link } from "react-router-dom";
 
 const AllInvoiceDetails = () => {
 
-    const estimatedet = useContext(estimateState);
     const invoiceDet = useContext(AllState);
 
     useEffect(()=>{
@@ -24,15 +22,15 @@ const AllInvoiceDetails = () => {
 
         <>
 
-            {invoiceDet.invoiceHistoryData === null ?
+            {invoiceDet.invoiceHistoryData.length === 0 ?
                 <>
 
-                    <NoData details="Estimation Found" />
+                    <NoData details="Invoice Found" />
 
                 </>
                 :
                 <div className="displayelements">
-                    {estimatedet.estimateHistoryData.map((item,index) => {
+                    {invoiceDet.invoiceHistoryData.map((item,index) => {
                         // console.log('item');
                         // console.log(item);
                         // console.log(item.estimateid + ' estimateid ' + item.clientName + ' companydet.loginuserid ' +companydet.loginuserid + 'item.userid ' + item.userid );
@@ -44,12 +42,22 @@ const AllInvoiceDetails = () => {
                                     <ul className="details invoicedetails details ">
 
                                         <li >
-                                            <div className="companyname"> Estimate ID: {item.estimateid}</div>
+                                            <div className="companyname"> Invoice ID: {item.invoiceid}</div>
                                         </li>
                                         <li>
-                                            <div className="companyname"> Estimate Date: {item.estimatedate}</div>
+                                            <div className="companyname"> Invoice Date: {item.invoicedate}</div>
 
                                         </li>
+                                        {item.paymentdate  && 
+                                        <li>
+                                            <div className="companyname"> Payment Date: {item.paymentdate}</div>
+
+                                        </li>}
+                                        {item.paymentmode  && 
+                                        <li>
+                                            <div className="companyname"> Payment Mode: {item.paymentmode}</div>
+
+                                        </li>}
                                     </ul>
                                     <ul className="details">
                                         <div className=" ">
@@ -67,32 +75,28 @@ const AllInvoiceDetails = () => {
                                     </ul>
                                     <ul className="details  ">
                                         <div className="">
-                                            <h3>Estimated Details</h3>
+                                            <h3>Invoice Details</h3>
                                             <li className="">
-                                                Total Sq.ft
-                                            </li> {item.granttotalsqft}
+                                                Total Amount
+                                            </li> 
+                                            <div className="nameheigh">{item.totalamt} </div>
                                             <li>
-                                                Total PVC Cost
-                                            </li> {item.grandtotalpvccost}
-                                            <li>
-                                                Total UPVC Cost
-                                            </li> {item.grandtotalupvccost}
-                                            <li>
-                                                Total Wood Cost
-                                            </li>{item.grandtotalwoodcost}
+                                                Total Tax Amount
+                                            </li> {item.totaltaxvalueamt}
                                         </div>
                                     </ul>
+                                    <ul>
                                     <Link  to={{
-                                        pathname: `/genestimate`
+                                        pathname: `/geninvoice`
                                     }}  
                                     >
                                         <Button className="gen-invoice" variant="outlined"
-                                            onClick={() => estimatedet.allEstimateEdit(item)} endIcon={<RiEditCircleFill />}  >
+                                            onClick={() => invoiceDet.selectedInvoiceEdit(item)} endIcon={<RiEditCircleFill />}  >
 
-                                            Edit Estimate</Button>
+                                            Edit Invoice</Button>
                                     </Link>
                                     {/* </div> */}
-
+                                    </ul>
                                 </Card>
                                
                                 </>
@@ -104,3 +108,21 @@ const AllInvoiceDetails = () => {
 }
 
 export default AllInvoiceDetails;
+
+// totalsubamt=singleinvoice.totalsubamt;        
+// totalamt=singleinvoice.totalamt;
+// totaltaxvalueamt=singleinvoice.totaltaxvalueamt;
+
+// list=singleinvoice.list;
+// hsnlist=singleinvoice.hsnlist;
+// otherchargedetail=singleinvoice.otherchargedetail;
+// totalcentaxamt=singleinvoice.totalcentaxamt;
+// totalstatetaxamt=singleinvoice.totalstatetaxamt;
+
+// totalamtwords=singleinvoice.totalamtwords;
+
+// totalhsnamt=singleinvoice.totalhsnamt;
+// totalhsnamtwords=singleinvoice.totalhsnamtwords;
+// clientAdd=singleinvoice.clientAdd;
+// clientName=singleinvoice.clientName;
+// clientPhno=singleinvoice.clientPhno;

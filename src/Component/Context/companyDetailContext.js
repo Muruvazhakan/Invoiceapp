@@ -379,13 +379,13 @@ const CompanyDetailContext = ({ children }) => {
             }
 
             let invoiceidcounter = localstore.addOrGetInvoiceid('', "get");
-            // console.log(invoiceidcounter + 'invoiceidcounter');
+            console.log(invoiceidcounter + 'invoiceidcounter');
             let getInvoiceIdfromDb = await invoiceDetailsDb.getInvoiceId(loginuserid);
-            // console.log(getEstimationIdfromDb );
+           
             if (getInvoiceIdfromDb.status === 200 && invoiceidcounter < getInvoiceIdfromDb.data) {
                 localstore.addOrGetInvoiceid(getInvoiceIdfromDb.data, "save");
-                estdetail.se(getInvoiceIdfromDb.data);
-                // console.log('saving');
+                invociedetail.setinvoiceidount(getInvoiceIdfromDb.data);
+                console.log('saving setinvoiceidount ' + getInvoiceIdfromDb.data);
 
             }
 
@@ -396,12 +396,14 @@ const CompanyDetailContext = ({ children }) => {
             console.log(invoiceHistoryData);
             console.log(getinvoicefromdb);
             if (getinvoicefromdb.status === 200) {
-                if (invoiceHistoryData === null || (invoiceHistoryData.length <= getinvoicefromdb.data.length)) {
+                
+                // if (invoiceHistoryData === null || (invoiceHistoryData.length <= getinvoicefromdb.data.length)) {
                     console.log(getinvoicefromdb.data);
+                    console.log('inside setinvoiceHistoryData');
                     localstore.addOrGetInvoiceHistoryData(getinvoicefromdb.data, 'save');
                     invociedetail.setinvoiceHistoryData(getinvoicefromdb.data);
                     refreshdata = true;
-                }
+                // }
                 // else {
                 //     estdetail.setinvoiceHistoryData(getinvoicefromdb.data);
                 // }

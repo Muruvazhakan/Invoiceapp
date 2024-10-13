@@ -12,11 +12,13 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <EstimatestateContext>
-      <CompanyDetailContext>
-        <AllStateContext>
+
+      <AllStateContext>
+        <CompanyDetailContext>
           <App />
-        </AllStateContext>
-      </CompanyDetailContext>
+        </CompanyDetailContext>
+      </AllStateContext>
+
     </EstimatestateContext>
   </React.StrictMode>
 );
