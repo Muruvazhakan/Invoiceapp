@@ -520,6 +520,8 @@ const AllStateContext = ({ children }) => {
     console.log('loginuserid + loginuserid');
     let datas = {
       authorization: header,
+      ctrate:ctrate,
+      strate:strate,
       invoiceid: invoiceid,
       invoicedate: invoicedate,
       invoicedate1: invoicedate,
@@ -590,7 +592,18 @@ const AllStateContext = ({ children }) => {
     setclientAdd(singleinvoice.clientAdd);
     setclientName(singleinvoice.clientName);
     setclientPhno(singleinvoice.clientPhno);
-
+    console.log('inside ctrate ' );
+    if(singleinvoice.ctrate){
+      let ctratelocal = singleinvoice.ctrate *1;
+      console.log('inside ctrate ' + ctratelocal);
+      setctrate(ctratelocal);
+    }
+    if(singleinvoice.strate){
+      let stratelocal = singleinvoice.strate*1;
+      console.log('inside ctrate ' + stratelocal);
+      setstrate(stratelocal);
+    }
+    
     // setcolumns(singleinvoice.columns);  
 
 

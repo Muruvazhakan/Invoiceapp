@@ -19,7 +19,7 @@ const CompanyDetailContext = ({ children }) => {
     const estdetail = useContext(estimateState);
     const invociedetail = useContext(AllState);
 
-   
+
     // const [companyName, setcompanyName] = useState('JR MODULAR ENTERPRISES');
     // const [companyTagLine, setcompanyTagLine] = useState('‘YOUR HOME OUR INTERIOR’');
     // const [companyAddress, setcompanyAddress] = useState('Address: No.1/4, Mummurti Nagar Main Road, Chromepet, Chennai-600044');
@@ -37,13 +37,13 @@ const CompanyDetailContext = ({ children }) => {
     const [companyOwner, setcompanyOwner] = useState('');
     const [companyDeleration, setcompanyDeleration] = useState('');
     const [companythankyou, setcompanythankyou] = useState('');
-   
+
     const [companyGstin, setcompanyGstin] = useState('');
     const [companyGstinStatename, setcompanyGstinStatename] = useState('');
 
     const [isloaded, setisloaded] = useState(true);
 
-    
+
     // let companydet = [
     //     { id: 1, title: 'Prices', isvisible: true, desc: 'Prices quoted are strictly as per the size, quantity and design SPECIFIED only, Any change in either one will result in change in quoted price, If any change in Government taxes & regulations it will be implicated in pricing as per actual.' },
     //     { id: 2, title: 'Billing format', isvisible: true, desc: 'Billing will be done for individual items & rates specified for individual items only tolerance of (+/-) 25mm will not affect the rate per Sqft quoted.' },
@@ -381,7 +381,7 @@ const CompanyDetailContext = ({ children }) => {
             let invoiceidcounter = localstore.addOrGetInvoiceid('', "get");
             console.log(invoiceidcounter + 'invoiceidcounter');
             let getInvoiceIdfromDb = await invoiceDetailsDb.getInvoiceId(loginuserid);
-           
+
             if (getInvoiceIdfromDb.status === 200 && invoiceidcounter < getInvoiceIdfromDb.data) {
                 localstore.addOrGetInvoiceid(getInvoiceIdfromDb.data, "save");
                 invociedetail.setinvoiceidount(getInvoiceIdfromDb.data);
@@ -396,13 +396,13 @@ const CompanyDetailContext = ({ children }) => {
             console.log(invoiceHistoryData);
             console.log(getinvoicefromdb);
             if (getinvoicefromdb.status === 200) {
-                
+
                 // if (invoiceHistoryData === null || (invoiceHistoryData.length <= getinvoicefromdb.data.length)) {
-                    console.log(getinvoicefromdb.data);
-                    console.log('inside setinvoiceHistoryData');
-                    localstore.addOrGetInvoiceHistoryData(getinvoicefromdb.data, 'save');
-                    invociedetail.setinvoiceHistoryData(getinvoicefromdb.data);
-                    refreshdata = true;
+                console.log(getinvoicefromdb.data);
+                console.log('inside setinvoiceHistoryData');
+                localstore.addOrGetInvoiceHistoryData(getinvoicefromdb.data, 'save');
+                invociedetail.setinvoiceHistoryData(getinvoicefromdb.data);
+                refreshdata = true;
                 // }
                 // else {
                 //     estdetail.setinvoiceHistoryData(getinvoicefromdb.data);
@@ -446,7 +446,7 @@ const CompanyDetailContext = ({ children }) => {
             setcompanydetaildesc(companydetail.companydetaildesc);
             setcompanymailid(companydetail.companymailid);
             setcompanythankyou(companydetail.companythankyou);
-            
+
             //console.log('companydetail.estimateidcount');
             //console.log(companydetail.estimateidcount);
             // if (companydetail.estimateidcount !== undefined && companydetail.estimateidcount > estdetail.estimateidcount) {
@@ -621,7 +621,7 @@ const CompanyDetailContext = ({ children }) => {
         companyName, setcompanyName,
         companyTagLine, setcompanyTagLine, companyAddress, setcompanyAddress, companyPhno, setcompanyPhno, companyGstin, setcompanyGstin, companyGstinStatename, setcompanyGstinStatename,
         updateBankDetailHandler, companyBankDetailHandler,
-        companyDeleration, setcompanyDeleration,  companymailid, setcompanymailid, companyOwner, setcompanyOwner, companydetails, setcompanydetails, companyBankdetails, setcompanyBankdetails,
+        companyDeleration, setcompanyDeleration, companymailid, setcompanymailid, companyOwner, setcompanyOwner, companydetails, setcompanydetails, companyBankdetails, setcompanyBankdetails,
         companythankyou, setcompanythankyou, companytitle, companyOtherDetailHandeler, companydetailtitle, setcompanydetailtitle, companydetaildesc, setcompanydetaildesc, setval, setboxColors,
         loginuser, setloginuser, loginUserPassword, setloginUserPassword, loginHandler, loginstatus, setloginstatus, loginId, setloginId, loginUserConfirmPassword, setloginUserConfirmPassword, tokenid, settokenid, logoutHandler,
         companyBankdetailtitle, setcompanyBankdetailtitle, companyBankdetailvalue, setcompanyBankdetailvalue, companyBankdetailIsVisible, setcompanyBankdetailIsVisible, companydetailIsVisible, setcompanydetailIsVisible,
