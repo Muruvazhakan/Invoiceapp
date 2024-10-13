@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import { v4 as uuidv4 } from "uuid";
 import collect from "collect.js";
 import * as localstorage from '../Context/localStorageData';
+import * as invoiceDb from '../DBconnection/invoiceDetailBD';
 export const AllState = createContext();
 
 const AllStateContext = ({ children }) => {
@@ -35,7 +36,7 @@ const AllStateContext = ({ children }) => {
   const [per, setper] = useState('');
   const [disc, setdisc] = useState(15);
   const [amount, setamount] = useState(0);
-
+  const [header,setheader] = useState('invoicerequest'); 
   const [clientName, setclientName] = useState('');
   const [clientPhno, setclientPhno] = useState('');
   const [clientAdd, setclientAdd] = useState('');
@@ -82,6 +83,9 @@ const AllStateContext = ({ children }) => {
   const [otherdesc, setotherdesc] = useState('');
   const [ischargedinhsn, setischargedinhsn] = useState(true);
   const [otherdescamt, setotherdescamt] = useState(0);
+
+  const [invoiceHistoryData, setinvoiceHistoryData] = useState(null);
+    const [invoiceHistroyUpdateFlag, setinvoiceHistroyUpdateFlag] = useState(false);
 
   const setval = (e, fun) => {
     fun(e.target.value);
@@ -461,11 +465,12 @@ const AllStateContext = ({ children }) => {
  }
  
 
-  const saveInvoice = () => {
+  const saveInvoice = async () => {
     console.log('saveInvoice');
     let loginuserid = localstorage.addOrGetUserdetail('', 'userid', 'get');
+    console.log('loginuserid + loginuserid');
     let datas = {
-      userid: loginuserid,
+      authorization:header,
       invoiceid: invoiceid,
       invoicedate: invoicedate,
       invoicedate1: invoicedate,
@@ -488,8 +493,54 @@ const AllStateContext = ({ children }) => {
       clientPhno: clientPhno,
     }
     console.log(datas);
+    localstorage.addOrGetInvoiceHistoryData(datas, "save");
+    let savedataresponse = await invoiceDb.saveInvoiceBD(datas,loginuserid);
+    if(savedataresponse.status !==200){
+      toast.warn("Issue in saving Invoice");
+      return;
+    }
+    console.log('savedataresponse');
+    console.log(savedataresponse);
+
+    localstorage.addOrGetInvoiceid(invoiceidcount, "save");
+    console.log(invoiceidcount + ' invoiceidcount');
+    let saveinvoiceidcountdataresponse = await invoiceDb.saveInvoiceId(invoiceidcount,loginuserid);
+    if(saveinvoiceidcountdataresponse.status !==200){
+      toast.warn("Issue in Update");
+      return;
+    }
+    console.log('saveinvoiceidcountdataresponse');
+    console.log(saveinvoiceidcountdataresponse);
+
+    toast.success("Invoice saved");
+
   }
 
+  const dateHandler = () => {
+    const today = new Date();
+    let todaydate;
+
+    const month = today.getMonth() + 1;
+    const year = today.getFullYear();
+    const date = today.getDate();
+
+    todaydate = `IN${year}${month}${date}${invoiceidcount}`;
+    let count = invoiceidcount * 1;
+    setinvoiceid(todaydate);
+    setinvoiceidount(++count);
+    // console.log("invoiceidcount: " + count);
+    // console.log("todaydate: " + todaydate);
+    // setinvoiceid()
+  }
+
+  useEffect(() => {
+    // //console.log('local invoice history');
+    let count = localstorage.addOrGetInvoiceid('', 'get');
+    if (count !== null) {
+        setinvoiceidount(count);
+    }
+    // console.log(count + 'invoice count');
+}, []);
 
   useEffect(() => {
     // console.log('amount');
@@ -502,8 +553,6 @@ const AllStateContext = ({ children }) => {
     // console.log(rate + " rate " + val);
 }, [rate, quantity])
 
-
-
   useEffect(() => {
     calculateHsn();
   }, [list, otherchargedetail]);
@@ -511,9 +560,10 @@ const AllStateContext = ({ children }) => {
     singleitem, setsingleitem, list, setList, totalamt, settotalamt, totalamtwords, settotalamtwords, singlehsnitem, setsinglehsnitem, setval, setboxColors, cleardetailoption, setcleardetailoption,
     desc, setdesc, hsn, sethsn, quantity, setquantity, rateinctax, setrateinctax, rate, setrate, per, setper, disc, setdisc, amount, setamount, otherdesc, setotherdesc, ischargedinhsn, setischargedinhsn, otherdescamt, setotherdescamt,
     totalhsnamt, settotalhsnamt, hsnlist, sethsnList, totalhsnamtwords, settotalhsnamtwords, totalsubamt, saveInvoice, addOrUpdateItemHandler, clearlistcontent,clearOtherDetails,addOtherItems,
-    setsubtotalamt, gstCgstitem, setgstCgstitem, ctrate, setctrate, strate, setstrate, ctatm, setctatm, statm, setstatm, totaltaxvalueamt, settotaltaxvalueamt,
+    setsubtotalamt, gstCgstitem, setgstCgstitem, ctrate, setctrate, strate, setstrate, ctatm, setctatm, statm, setstatm, totaltaxvalueamt, settotaltaxvalueamt,dateHandler,
     totalcentaxamt, settotalcentaxamt, totalstatetaxamt, settotalstatetaxamt, isinstallationcharge, setisinstallationcharge, otherchargedetail, setOtherchargedetail, editListRows, addOrEditOtherItems,
     invoiceid, setinvoiceid, invoicedate, setinvoicedate, paymentmode, setpaymentmode, paymentdate, setpaymentdate, invoiceidcount, setinvoiceidount, clientName, setclientName, clientPhno, setclientPhno, clientAdd, setclientAdd,
+    invoiceHistoryData, setinvoiceHistoryData,invoiceHistroyUpdateFlag, setinvoiceHistroyUpdateFlag
   };
   return <AllState.Provider value={context}>{children}</AllState.Provider>;
 }

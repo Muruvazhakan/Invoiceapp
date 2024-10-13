@@ -631,8 +631,11 @@ const EstimatestateContext = ({ children }) => {
         setestimateid(estimatedetails.estimateid);
         setestimatedate(estimatedetails.estimatedate);
         setestimatedate1(estimatedetails.estimatedate1);
-        if (estimatedetails.columns) {
+        if (estimatedetails.columns.length>0) {
             setcolumns(estimatedetails.columns);
+        }
+        else{
+            setcolumns(columnNames);
         }
 
     }

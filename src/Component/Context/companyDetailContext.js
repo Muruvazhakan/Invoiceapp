@@ -6,7 +6,9 @@ import * as Datas from '../Context/Datas';
 import * as localstore from './localStorageData';
 import * as companyDetailsDB from '../DBconnection/companyDetailsDB';
 import * as estimateDetailsDb from '../DBconnection/estimateDetailsDB';
+import * as invoiceDetailsDb from '../DBconnection/invoiceDetailBD';
 import { estimateState } from "./EstimatestateContext";
+import { AllState } from "./allStateContext";
 import { isbackendconnect } from "../DBconnection/dbproperties";
 export const CompanyDetail = createContext();
 
@@ -15,6 +17,7 @@ export const CompanyDetail = createContext();
 const CompanyDetailContext = ({ children }) => {
 
     const estdetail = useContext(estimateState);
+    const invociedetail = useContext(AllState);
 
    
     // const [companyName, setcompanyName] = useState('JR MODULAR ENTERPRISES');
@@ -34,7 +37,7 @@ const CompanyDetailContext = ({ children }) => {
     const [companyOwner, setcompanyOwner] = useState('');
     const [companyDeleration, setcompanyDeleration] = useState('');
     const [companythankyou, setcompanythankyou] = useState('');
-
+   
     const [companyGstin, setcompanyGstin] = useState('');
     const [companyGstinStatename, setcompanyGstinStatename] = useState('');
 
@@ -375,6 +378,40 @@ const CompanyDetailContext = ({ children }) => {
                 toast.warning(companyTermsAndConditionDetailsfromDB.data);
             }
 
+            let invoiceidcounter = localstore.addOrGetInvoiceid('', "get");
+            // console.log(invoiceidcounter + 'invoiceidcounter');
+            let getInvoiceIdfromDb = await invoiceDetailsDb.getInvoiceId(loginuserid);
+            // console.log(getEstimationIdfromDb );
+            if (getInvoiceIdfromDb.status === 200 && invoiceidcounter < getInvoiceIdfromDb.data) {
+                localstore.addOrGetInvoiceid(getInvoiceIdfromDb.data, "save");
+                estdetail.se(getInvoiceIdfromDb.data);
+                // console.log('saving');
+
+            }
+
+            let invoiceHistoryData = localstore.addOrGetInvoiceHistoryData('', 'get');
+
+            let getinvoicefromdb = await invoiceDetailsDb.getInvoiceDB(loginuserid);
+            console.log('invoiceHistoryData ' + invoiceHistoryData);
+            console.log(invoiceHistoryData);
+            console.log(getinvoicefromdb);
+            if (getinvoicefromdb.status === 200) {
+                if (invoiceHistoryData === null || (invoiceHistoryData.length <= getinvoicefromdb.data.length)) {
+                    console.log(getinvoicefromdb.data);
+                    localstore.addOrGetInvoiceHistoryData(getinvoicefromdb.data, 'save');
+                    invociedetail.setinvoiceHistoryData(getinvoicefromdb.data);
+                    refreshdata = true;
+                }
+                // else {
+                //     estdetail.setinvoiceHistoryData(getinvoicefromdb.data);
+                // }
+
+                // let invoicedetailscontext = localstorage.addOrGetInvoiceHistoryData('', 'get');
+                //console.log('invoicedetailscontext ****');
+                // console.log(invoicedetailscontext);
+
+            }
+
         }
 
         if (refreshdata === true) {
@@ -586,7 +623,7 @@ const CompanyDetailContext = ({ children }) => {
         companythankyou, setcompanythankyou, companytitle, companyOtherDetailHandeler, companydetailtitle, setcompanydetailtitle, companydetaildesc, setcompanydetaildesc, setval, setboxColors,
         loginuser, setloginuser, loginUserPassword, setloginUserPassword, loginHandler, loginstatus, setloginstatus, loginId, setloginId, loginUserConfirmPassword, setloginUserConfirmPassword, tokenid, settokenid, logoutHandler,
         companyBankdetailtitle, setcompanyBankdetailtitle, companyBankdetailvalue, setcompanyBankdetailvalue, companyBankdetailIsVisible, setcompanyBankdetailIsVisible, companydetailIsVisible, setcompanydetailIsVisible,
-        loginuserid, setloginuserid, saveHandler, getAlldataFromDB, getAlldataOnLogin, isloaded, setisloaded
+        loginuserid, setloginuserid, saveHandler, getAlldataFromDB, getAlldataOnLogin, isloaded, setisloaded,
     };
 
     return <CompanyDetail.Provider value={compDet} >{children}</CompanyDetail.Provider>;

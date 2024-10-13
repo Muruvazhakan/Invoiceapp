@@ -57,6 +57,7 @@ export const getCompanyTermsAndConditionHandler = () => {
     // console.log('get CompanyTermsAndCondition ');
     return JSON.parse(localStorage.getItem('companyTermsAndCondition'));
 }
+
 export const addOrGetCompanyBankDetailHandler = (props, type) => {
     //console.log(props);
     //console.log('saved data bank details');
@@ -75,13 +76,13 @@ export const addOrGetCompanyBankDetailHandler = (props, type) => {
 }
 
 export const addOrGetInvoiceHistoryData = (props, type) => {
-    //console.log(props);
+    console.log(props);
 
     if (type === 'save') {
         localStorage.setItem('companyinvoicehistory', JSON.stringify(props));
-        //  console.log('companyinvoicehistory details');
-        // let sto = JSON.parse(localStorage.getItem('companyinvoicehistory'));
-        // console.log(sto);
+         console.log('companyinvoicehistory details');
+        let sto = JSON.parse(localStorage.getItem('companyinvoicehistory'));
+        console.log(sto);
     }
     else if (type === 'get') {
         return JSON.parse(localStorage.getItem('companyinvoicehistory'));
@@ -115,5 +116,15 @@ export const addOrGetEstimateid = (props, type) => {
     }
     else if (type === 'get') {
         return JSON.parse(localStorage.getItem('companyestimateid'));
+    }
+}
+
+export const addOrGetInvoiceid = (props, type) => {
+    console.log(props);
+    if (type === 'save') {
+        localStorage.setItem('companyinvoiceid', JSON.stringify(props));
+    }
+    else if (type === 'get') {
+        return JSON.parse(localStorage.getItem('companyinvoiceid'));
     }
 }

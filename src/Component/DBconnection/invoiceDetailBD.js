@@ -1,15 +1,15 @@
 import * as dbprop from './dbproperties';
 import axios from 'axios';
 
-
 const config = {
     headers: {
         'Content-Type': 'application/json',
+        'Authorization': 'Invoiceapp'
     },
 };
 
-export const getEstimateDB = async (userid) => {
-    // console.log(`${dbprop.getEstimateUrl}/${userid}` + ' dbprop.userLoginUrl');
+export const getInvoiceDB = async (userid) => {
+    console.log(`${dbprop.getInvoiceUrl}/${userid}` + ' dbprop.getInvoiceIdUrl');
     // const data = {
     //     username: username,
     //     password: userpassword
@@ -17,7 +17,7 @@ export const getEstimateDB = async (userid) => {
     // console.log(data);
     let response;
     try {
-        response = await axios.get(`${dbprop.getEstimateUrl}/${userid}`, config);
+        response = await axios.post(`${dbprop.getInvoiceUrl}/${userid}`, config);
         // console.log(response);
         return response;
     } catch (err) {
@@ -26,8 +26,8 @@ export const getEstimateDB = async (userid) => {
     }
 };
 
-export const getEstimationId = async (userid) => {
-    // console.log(`${dbprop.getEstimateUrl}/${userid}` + ' dbprop.userLoginUrl');
+export const getInvoiceId = async (userid) => {
+    console.log(`${dbprop.getInvoiceIdUrl}/${userid}` + ' dbprop.getInvoiceId');
     // const data = {
     //     username: username,
     //     password: userpassword
@@ -35,7 +35,7 @@ export const getEstimationId = async (userid) => {
     // console.log(data);
     let response;
     try {
-        response = await axios.get(`${dbprop.getEstimationIdUrl}/${userid}`, config);
+        response = await axios.post(`${dbprop.getInvoiceIdUrl}/${userid}`, config);
         // console.log(response);
         return response;
     } catch (err) {
@@ -44,15 +44,16 @@ export const getEstimationId = async (userid) => {
     }
 };
 
-export const saveEstimationId = async (estimationcount,userid) => {
-    // console.log(`${dbprop.saveEstimationIdUrl}/${userid}` + ' dbprop.userLoginUrl');
+
+export const saveInvoiceId = async (invoicecount,userid) => {
+    console.log(`${dbprop.saveInvoiceIdUrl}/${userid}` + ' dbprop.saveInvoiceIdUrl');
     const data = {
-        estimationcount
+        invoicecount
     };
     console.log(data);
     let response;
     try {
-        response = await axios.post(`${dbprop.saveEstimationIdUrl}/${userid}`,data, config);
+        response = await axios.post(`${dbprop.saveInvoiceIdUrl}/${userid}`,data, config);
         // console.log(response);
         return response;
     } catch (err) {
@@ -62,16 +63,16 @@ export const saveEstimationId = async (estimationcount,userid) => {
 };
 
 
-export const saveEstimateDB = async (estimate,userid) => {
-    // console.log(`${dbprop.saveEstimateUrl}/${userid}` + ' dbprop.userLoginUrl');
+export const saveInvoiceBD = async (invoice,userid) => {
+    console.log(`${dbprop.saveInvoiceUrl}/${userid}` + ' dbprop.saveInvoiceUrl');
     const data = {
-        estimate
+        invoice
     };
-    // console.log(data);
+    console.log(data);
     let response;
     try {
-        response = await axios.post(`${dbprop.saveEstimateUrl}/${userid}`,data, config);
-        // console.log(response);
+        response = await axios.post(`${dbprop.saveInvoiceUrl}/${userid}`,data, config);
+        console.log(response);
         return response;
     } catch (err) {
         console.log(err);

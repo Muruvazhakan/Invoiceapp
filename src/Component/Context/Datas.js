@@ -32,6 +32,13 @@ export const navigationbarcontent = [
         image: estimation
     },
     {
+        screenname: 'All Invoice',
+        links: '/allinvoice',
+        altname: 'allinvoice',
+        displays: true,
+        image: allestimation
+    },
+    {
         screenname: 'All Estimates',
         links: '/allestimates',
         altname: 'allestimates',
