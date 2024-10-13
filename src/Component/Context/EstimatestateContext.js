@@ -183,12 +183,29 @@ const EstimatestateContext = ({ children }) => {
                 singleEstimation
             ]);
         }
-
+        updateestimateDB(singleEstimation);
         // localstorage.addOrGetEstimateHistoryData(estimateHistoryData, "save");
 
 
         // toast.success('Estimate Details are added');
 
+
+    }
+
+    const updateestimateDB = async (data) => {
+
+        let loginuserid = localstorage.addOrGetUserdetail('', 'userid', 'get');
+        if (isbackendconnect) {
+            setisloaded(false);
+            let storedataindb = await estimateDetailsDb.saveEstimateDB(data, loginuserid);
+
+            //console.log(storedataindb);
+            if (storedataindb.status !== 200 || storedataindb.data !== 'estimation saved') {
+                toast.error('Error in saving Estimate Details in DB');
+            }
+            setisloaded(true);
+        }
+        setestimateHistroyUpdateFlag(false);
 
     }
 
@@ -527,30 +544,15 @@ const EstimatestateContext = ({ children }) => {
         // console.log(count + 'count');
     }, []);
 
-    const updateestimate = async (data) => {
-
-        let loginuserid = localstorage.addOrGetUserdetail('', 'userid', 'get');
-        if (isbackendconnect) {
-            setisloaded(false);
-            let storedataindb = await estimateDetailsDb.saveEstimateDB(data, loginuserid);
-
-            //console.log(storedataindb);
-            if (storedataindb.status !== 200 || storedataindb.data !== 'estimation saved') {
-                toast.error('Error in saving Estimate Details in DB');
-            }
-            setisloaded(true);
-        }
-        setestimateHistroyUpdateFlag(false);
-
-    }
+    
     useEffect(() => {
         if (estimateHistoryData !== null) {
             localstorage.addOrGetEstimateHistoryData(estimateHistoryData, "save");
-            if (estimateHistroyUpdateFlag) {
-                updateestimate(estimateHistoryData);
-            }
-
-            //console.log("localstorage: ");
+            // if (estimateHistroyUpdateFlag) {
+            //     updateestimate(estimateHistoryData);
+            // }
+            console.log("localstorage: ");
+            console.log(estimateHistoryData);
             //console.log(localstorage.addOrGetEstimateHistoryData(estimateHistoryData, "get"));
         }
 

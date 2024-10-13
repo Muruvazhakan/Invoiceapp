@@ -93,11 +93,12 @@ export const addOrGetInvoiceHistoryData = (props, type) => {
 }
 
 export const addOrGetEstimateHistoryData = (props, type) => {
-    // console.log(props);
+    console.log('companyestimatehistory details');
+    console.log(props);
 
     if (type === 'save') {
         localStorage.setItem('companyestimatehistory', JSON.stringify(props));
-        // console.log('companyestimatehistory details');
+        
         // let sto = JSON.parse(localStorage.getItem('companyestimatehistory'));
         // console.log(sto);
     }
