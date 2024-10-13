@@ -53,7 +53,7 @@ const YourDetails = () => {
               </div> 
 
               <div className={'img-container'}>
-              {compayDet.companyImage ? "Replace the Company Logo" : "Select Company Logo"} 
+              {compayDet.companyImage ? "Replace the Company Logo: " : "Select Company Logo: "} 
               <input type="file" name="image" className="imageselector"
                 onChange={compayDet.selectCompanyImg}
               />

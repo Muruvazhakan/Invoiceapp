@@ -441,8 +441,10 @@ const CompanyDetailContext = ({ children }) => {
             setcompanydetails(companyTermsAndCondition);
         }
         let companydetail = localstore.getCompanyHandler();
-        console.log('companydetail local');
-        console.log(companydetail);
+        // console.log('companydetail local');
+        // console.log(companydetail);
+        // console.log('companydetail local2 ' + companydetail.companyImage);
+        // console.log('companydetail uploadimg ' + companydetail.uploadimg);
         if (companydetail !== null) {
             
             setcompanyName(companydetail.companyName);
@@ -526,8 +528,8 @@ const CompanyDetailContext = ({ children }) => {
 
     const saveHandler = async (funcs, item, type) => {
         setisloaded(false);
-        console.log('items');
-        console.log(item);
+        // console.log('items');
+        // console.log(item);
         if (funcs === 'addOrUpdateCompanyTermsAndConditionHandler') {
             localstore.addOrUpdateCompanyTermsAndConditionHandler(item, type);
             if (isbackendconnect) {

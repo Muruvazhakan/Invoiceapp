@@ -37,11 +37,11 @@ export const addOrUpdateCompanyHandler = (props,type,estimateidcount) => {
 }
 
 export const getCompanyHandler = () => {
-    console.log('get CompanyTermsAndCondition ');
+    // console.log('get CompanyTermsAndCondition ');
     return JSON.parse(localStorage.getItem('companydetail'));
 }
 export const addOrUpdateCompanyTermsAndConditionHandler = (props,type) => {
-    console.log(props);
+    // console.log(props);
     if(type ==="save"){
         localStorage.setItem('companyTermsAndCondition', JSON.stringify(props));
     // console.log('saved data');
@@ -121,7 +121,7 @@ export const addOrGetEstimateid = (props, type) => {
 }
 
 export const addOrGetInvoiceid = (props, type) => {
-    console.log(props);
+    //console.log(props);
     if (type === 'save') {
         localStorage.setItem('companyinvoiceid', JSON.stringify(props));
     }
