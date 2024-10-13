@@ -21,7 +21,7 @@ export const addOrUpdateCompanyHandler = (props,type,estimateidcount) => {
             companyGstin: props.companyGstin, companyGstinStatename: props.companyGstinStatename, companyName: props.companyName, companyOwner: props.companyOwner,
             companyPhno: props.companyPhno, companyTagLine: props.companyTagLine,
             companydetaildesc: props.companydetaildesc, companymailid: props.companymailid, companythankyou: props.companythankyou,estimateidcount:estimateidcount,
-            invoiceidcount:props.invoiceidcount,
+            invoiceidcount:props.invoiceidcount,companyImage: props.companyImage, uploadimg: props.uploadimg,
     
         }
         // console.log(props);
@@ -37,11 +37,11 @@ export const addOrUpdateCompanyHandler = (props,type,estimateidcount) => {
 }
 
 export const getCompanyHandler = () => {
-    // console.log('get CompanyTermsAndCondition ');
+    console.log('get CompanyTermsAndCondition ');
     return JSON.parse(localStorage.getItem('companydetail'));
 }
 export const addOrUpdateCompanyTermsAndConditionHandler = (props,type) => {
-    // console.log(props);
+    console.log(props);
     if(type ==="save"){
         localStorage.setItem('companyTermsAndCondition', JSON.stringify(props));
     // console.log('saved data');
@@ -76,13 +76,13 @@ export const addOrGetCompanyBankDetailHandler = (props, type) => {
 }
 
 export const addOrGetInvoiceHistoryData = (props, type) => {
-    console.log(props);
+    // console.log(props);
 
     if (type === 'save') {
         localStorage.setItem('companyinvoicehistory', JSON.stringify(props));
-         console.log('companyinvoicehistory details');
-        let sto = JSON.parse(localStorage.getItem('companyinvoicehistory'));
-        console.log(sto);
+        //  console.log('companyinvoicehistory details');
+        // let sto = JSON.parse(localStorage.getItem('companyinvoicehistory'));
+        // console.log(sto);
     }
     else if (type === 'get') {
         return JSON.parse(localStorage.getItem('companyinvoicehistory'));
@@ -93,8 +93,8 @@ export const addOrGetInvoiceHistoryData = (props, type) => {
 }
 
 export const addOrGetEstimateHistoryData = (props, type) => {
-    console.log('companyestimatehistory details');
-    console.log(props);
+    // console.log('companyestimatehistory details');
+    // console.log(props);
 
     if (type === 'save') {
         localStorage.setItem('companyestimatehistory', JSON.stringify(props));

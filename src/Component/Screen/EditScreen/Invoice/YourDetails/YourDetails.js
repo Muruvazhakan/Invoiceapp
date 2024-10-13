@@ -1,6 +1,6 @@
 
 import React, { useContext } from "react";
-import { FormGroup, FormControl, TextField, Box, Button } from '@mui/material';
+import { FormGroup, FormControl, TextField, Box, Button, ImageList, ImageListItem } from '@mui/material';
 
 import { MdOutlineSaveAlt } from "react-icons/md";
 
@@ -18,11 +18,11 @@ const YourDetails = () => {
 
   const setboxColors = (item, field) => {
     if (field === 'color') {
-      return (item ===undefined  || item.length > 0) ? 'success' :  'error';
+      return (item === undefined || item.length > 0) ? 'success' : 'error';
     }
 
     else {
-      return (item ===undefined  || item.length > 0)? false : true;
+      return (item === undefined || item.length > 0) ? false : true;
     }
 
   }
@@ -34,6 +34,45 @@ const YourDetails = () => {
         <Card>
           <h3>Company Details</h3>
           <Box component="form" sx={{ '& .MuiTextField-root': { m: 1, width: '45ch' } }} >
+            {/* companyImage, setcompanyImage */}
+           
+            {/* {compayDet.companyImage ?
+                <div> change</div>
+               
+            } */}
+                       
+              <div>
+              {compayDet.companyImage ?
+                <img
+                  className={"img-style"}
+                  alt="Company Images"
+                  src={compayDet.companyImage}
+                   loading="lazy"
+                // src={`${state.newimgurl }`} 
+                />: null}
+              </div> 
+
+              <div className={'img-container'}>
+              {compayDet.companyImage ? "Replace the Company Logo" : "Select Company Logo"} 
+              <input type="file" name="image" className="imageselector"
+                onChange={compayDet.selectCompanyImg}
+              />
+            </div>
+
+            {/* <ImageList >
+              <ImageListItem key={compayDet.companyImage} >
+               <div>
+                  {compayDet.companyImage ?
+                    <img
+                    className={"img-style"}
+                      alt="Company Images"
+                      src={compayDet.companyImage}
+                      loading="lazy"
+                    // src={`${state.newimgurl }`} 
+                    /> : null}
+              </div>
+              </ImageListItem>
+            </ImageList> */}
 
             <TextField required id="outlined-required" label="Company Name" value={compayDet.companyName}
               onChange={(e) => setval(e, compayDet.setcompanyName)}
@@ -90,7 +129,7 @@ const YourDetails = () => {
               System will automatically update..
             </h5>
             <Button variant="contained" color="info" endIcon={<MdOutlineSaveAlt />}
-              onClick={() =>  compayDet.saveHandler('addOrUpdateCompanyHandler',compayDet, "save")} >
+              onClick={() => compayDet.saveHandler('addOrUpdateCompanyHandler', compayDet, "save")} >
               Save the Changes
             </Button>
           </Box>

@@ -30,6 +30,8 @@ const CompanyDetailContext = ({ children }) => {
     // const [companythankyou, setcompanythankyou] = useState('Thanking you and assuring our best services at all times.');
 
     const [companyName, setcompanyName] = useState('');
+    const [uploadimg, setuploadimg] = useState('');
+    const [companyImage, setcompanyImage] = useState('');
     const [companyTagLine, setcompanyTagLine] = useState('');
     const [companyAddress, setcompanyAddress] = useState('');
     const [companyPhno, setcompanyPhno] = useState('Contact:');
@@ -274,6 +276,13 @@ const CompanyDetailContext = ({ children }) => {
 
     }
 
+    const selectCompanyImg = (event) =>{
+        console.log('event.target.files[0]');
+        console.log(event.target.files[0]);
+        setcompanyImage(URL.createObjectURL(event.target.files[0]));
+        setuploadimg(event.target.files[0]);
+            
+    }
     const getAlldataFromDB = async () => {
 
 
@@ -379,27 +388,27 @@ const CompanyDetailContext = ({ children }) => {
             }
 
             let invoiceidcounter = localstore.addOrGetInvoiceid('', "get");
-            console.log(invoiceidcounter + 'invoiceidcounter');
+            //console.log(invoiceidcounter + 'invoiceidcounter');
             let getInvoiceIdfromDb = await invoiceDetailsDb.getInvoiceId(loginuserid);
 
             if (getInvoiceIdfromDb.status === 200 && invoiceidcounter < getInvoiceIdfromDb.data) {
                 localstore.addOrGetInvoiceid(getInvoiceIdfromDb.data, "save");
                 invociedetail.setinvoiceidount(getInvoiceIdfromDb.data);
-                console.log('saving setinvoiceidount ' + getInvoiceIdfromDb.data);
+                //console.log('saving setinvoiceidount ' + getInvoiceIdfromDb.data);
 
             }
 
             let invoiceHistoryData = localstore.addOrGetInvoiceHistoryData('', 'get');
 
             let getinvoicefromdb = await invoiceDetailsDb.getInvoiceDB(loginuserid);
-            console.log('invoiceHistoryData ' + invoiceHistoryData);
-            console.log(invoiceHistoryData);
-            console.log(getinvoicefromdb);
+            //console.log('invoiceHistoryData ' + invoiceHistoryData);
+            //console.log(invoiceHistoryData);
+            //console.log(getinvoicefromdb);
             if (getinvoicefromdb.status === 200) {
 
                 // if (invoiceHistoryData === null || (invoiceHistoryData.length <= getinvoicefromdb.data.length)) {
-                console.log(getinvoicefromdb.data);
-                console.log('inside setinvoiceHistoryData');
+                //console.log(getinvoicefromdb.data);
+                //console.log('inside setinvoiceHistoryData');
                 localstore.addOrGetInvoiceHistoryData(getinvoicefromdb.data, 'save');
                 invociedetail.setinvoiceHistoryData(getinvoicefromdb.data);
                 refreshdata = true;
@@ -432,9 +441,13 @@ const CompanyDetailContext = ({ children }) => {
             setcompanydetails(companyTermsAndCondition);
         }
         let companydetail = localstore.getCompanyHandler();
-        //console.log(companydetail);
+        console.log('companydetail local');
+        console.log(companydetail);
         if (companydetail !== null) {
+            
             setcompanyName(companydetail.companyName);
+            setcompanyImage(companydetail.companyImage);
+            setuploadimg(companydetail.uploadimg);
             setcompanyAddress(companydetail.companyAddress);
 
             setcompanyDeleration(companydetail.companyDeleration);
@@ -513,6 +526,8 @@ const CompanyDetailContext = ({ children }) => {
 
     const saveHandler = async (funcs, item, type) => {
         setisloaded(false);
+        console.log('items');
+        console.log(item);
         if (funcs === 'addOrUpdateCompanyTermsAndConditionHandler') {
             localstore.addOrUpdateCompanyTermsAndConditionHandler(item, type);
             if (isbackendconnect) {
@@ -541,8 +556,8 @@ const CompanyDetailContext = ({ children }) => {
             localstore.addOrUpdateCompanyHandler(item, type, estimateidcount);
             if (isbackendconnect) {
                 let companyBasicDetails = await companyDetailsDB.saveCompanyBasicDetails(item, loginuserid, estimateidcount);
-                //console.log('companyBasicDetails');
-                //console.log(companyBasicDetails);
+                console.log('companyBasicDetails');
+                console.log(companyBasicDetails);
                 if (companyBasicDetails.status !== 201 && companyBasicDetails.status !== 200) {
                     toast.error(companyBasicDetails.data + " in saving DB");
                 }
@@ -625,7 +640,7 @@ const CompanyDetailContext = ({ children }) => {
         companythankyou, setcompanythankyou, companytitle, companyOtherDetailHandeler, companydetailtitle, setcompanydetailtitle, companydetaildesc, setcompanydetaildesc, setval, setboxColors,
         loginuser, setloginuser, loginUserPassword, setloginUserPassword, loginHandler, loginstatus, setloginstatus, loginId, setloginId, loginUserConfirmPassword, setloginUserConfirmPassword, tokenid, settokenid, logoutHandler,
         companyBankdetailtitle, setcompanyBankdetailtitle, companyBankdetailvalue, setcompanyBankdetailvalue, companyBankdetailIsVisible, setcompanyBankdetailIsVisible, companydetailIsVisible, setcompanydetailIsVisible,
-        loginuserid, setloginuserid, saveHandler, getAlldataFromDB, getAlldataOnLogin, isloaded, setisloaded,
+        loginuserid, setloginuserid, saveHandler, getAlldataFromDB, getAlldataOnLogin, isloaded, setisloaded,companyImage, setcompanyImage,selectCompanyImg,uploadimg, setuploadimg
     };
 
     return <CompanyDetail.Provider value={compDet} >{children}</CompanyDetail.Provider>;

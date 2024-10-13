@@ -45,10 +45,10 @@ const EstimateHeader = () => {
                         </div>
                     </li>
                 </ul>
-
+                {companydet.companyImage &&
                 <ul>
-                    <img src={logo} width="200" height="180"/>
-                </ul>
+                    <img src={companydet.companyImage} width="200" height="180"/>
+                </ul>}
 
                 {/* <li>
              {companydet.companyGstin ? 'Gstin: '+companydet.companyGstin:null }

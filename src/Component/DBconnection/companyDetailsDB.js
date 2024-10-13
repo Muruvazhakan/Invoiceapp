@@ -82,6 +82,8 @@ export const saveCompanyBasicDetails = async (basicdetail, userid,estimateidcoun
     //console.log(basicdetail);
     const data = {
         companyName: basicdetail.companyName,
+        companyImage: basicdetail.companyImage,
+        uploadimg: basicdetail.uploadimg,
         companyTagLine: basicdetail.companyTagLine,
         companyAddress: basicdetail.companyAddress,
         companyPhno: basicdetail.companyPhno,
