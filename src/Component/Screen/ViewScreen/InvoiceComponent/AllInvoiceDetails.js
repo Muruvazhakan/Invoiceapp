@@ -18,6 +18,7 @@ const AllInvoiceDetails = () => {
     useEffect(()=>{
         console.log('invoiceHistoryData');
         console.log(invoiceDet.invoiceHistoryData);
+        console.log(process.env.REACT_APP_NODE_ENV + 'process.env.REACT_APP_NODE_ENV');
     },[])
     
     if (!companydet.isloaded) {
