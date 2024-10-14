@@ -9,11 +9,12 @@ import Developer from './Component/Screen/ViewScreen/Developer';
 import { disableReactDevTools } from '@fvilers/disable-react-devtools';
 
 if (process.env.NODE_ENV === 'production') {
-  console.log(process.env );
   disableReactDevTools();
   console.log = () =>{};
 }
-
+else{
+  console.log(process.env );
+}
 function App() {
  
   return (
