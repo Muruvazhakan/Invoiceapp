@@ -626,6 +626,30 @@ const AllStateContext = ({ children }) => {
     // setinvoiceid()
   }
 
+  const cleartallInvoice = () =>{
+
+    setinvoicedate('');
+    setinvoiceid('');
+    // setinvoicedate1(singleinvoice.invoicedate1);
+    setpaymentdate('');
+    // setpaymentdate1(singleinvoice.paymentdate1);
+    setpaymentmode('');
+    setList([]);
+    sethsnList([]);
+    setOtherchargedetail([]);
+    settotalcentaxamt('');
+    settotalstatetaxamt('');
+    setsubtotalamt('');
+    settotalamt('');
+    settotalamtwords('');
+    settotaltaxvalueamt('');
+    settotalhsnamt('');
+    settotalhsnamtwords('');
+    setclientAdd('');
+    setclientName('');
+    setclientPhno('');
+
+  }
 
   //   useEffect(() => {
   //     if (invoiceHistoryData !== null) {
@@ -671,7 +695,7 @@ const AllStateContext = ({ children }) => {
     setsubtotalamt, gstCgstitem, setgstCgstitem, ctrate, setctrate, strate, setstrate, ctatm, setctatm, statm, setstatm, totaltaxvalueamt, settotaltaxvalueamt, dateHandler,
     totalcentaxamt, settotalcentaxamt, totalstatetaxamt, settotalstatetaxamt, isinstallationcharge, setisinstallationcharge, otherchargedetail, setOtherchargedetail, editListRows, addOrEditOtherItems,
     invoiceid, setinvoiceid, invoicedate, setinvoicedate, paymentmode, setpaymentmode, paymentdate, setpaymentdate, invoiceidcount, setinvoiceidount, clientName, setclientName, clientPhno, setclientPhno, clientAdd, setclientAdd,
-    invoiceHistoryData, setinvoiceHistoryData, invoiceHistroyUpdateFlag, setinvoiceHistroyUpdateFlag, selectedInvoiceEdit
+    invoiceHistoryData, setinvoiceHistoryData, invoiceHistroyUpdateFlag, setinvoiceHistroyUpdateFlag, selectedInvoiceEdit,cleartallInvoice
   };
   return <AllState.Provider value={context}>{children}</AllState.Provider>;
 }

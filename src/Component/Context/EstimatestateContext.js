@@ -526,7 +526,17 @@ const EstimatestateContext = ({ children }) => {
         localstorage.addOrGetUserdetail(++count, 'estimateidcount', 'save');
     }
 
+const specialItemHandler = () =>{
 
+    if(!isotheritem){
+        setlength(0);
+        setheight(0);
+        setperqsft(0);
+    }
+    setisotheritem(!isotheritem);
+   
+    
+};
 
     useEffect(() => {
         // //console.log('local Estimate history');
@@ -649,7 +659,7 @@ const EstimatestateContext = ({ children }) => {
         pvccostpsf, setpvccostpsf, totalpvccost, settotalpvccost, upvccostpsf, setupvccostpsf, totalupvccost, settotalupvccost, woodcostpsf, setwoodcostpsf, totalwoodcost, settotalwoodcost,
         remarks, setremarks, addOrUpdateEstimateItemHandler, updateTableView, estimatedate1, setestimatedate1, estimateHistoryData, setestimateHistoryData, addOrGetEstimateHistoryData, dateHandler,
         estimateSingleData, setestimateSingleData, allEstimateEdit, isNewDataSaveType, setisNewDataSaveType, orderno, setorderno, setval, setboxColors, sortorder,
-        estimateHistroyUpdateFlag, setestimateHistroyUpdateFlag, isloaded, setisloaded,cleartallEstimateotal
+        estimateHistroyUpdateFlag, setestimateHistroyUpdateFlag, isloaded, setisloaded,cleartallEstimateotal,specialItemHandler
     };
 
 

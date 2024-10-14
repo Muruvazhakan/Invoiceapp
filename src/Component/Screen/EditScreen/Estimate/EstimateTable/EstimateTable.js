@@ -107,13 +107,13 @@ const EstimateTable = (props) => {
                                         <TableRow className={subindex.index % 2 === 0 ? "table-body tablegrey" : "table-body"} key={subindex + 1000}>
                                             <TableCell align='center' >{chr}</TableCell>
                                             <TableCell align='center' >{subitem.desc}</TableCell>
-                                            {subitem.hideotheritem && subitem.isotheritem ? <TableCell ></TableCell> :
+                                            { ((subitem.hideotheritem && subitem.isotheritem) || (subitem.length <= 0)) ? <TableCell ></TableCell> :
                                                 <TableCell align='center' >{subitem.length}</TableCell>}
-                                            {subitem.hideotheritem && subitem.isotheritem ? <TableCell ></TableCell> :
+                                            { (subitem.hideotheritem && subitem.isotheritem) || (subitem.height <= 0) ? <TableCell ></TableCell> :
                                                 <TableCell align='center' >{subitem.height}</TableCell>}
-                                            {subitem.hideotheritem && subitem.isotheritem ? <TableCell ></TableCell> :
+                                            { ((subitem.hideotheritem && subitem.isotheritem) || (subitem.area <=0)) ? <TableCell ></TableCell> :
                                                 <TableCell align='center' >{subitem.area}</TableCell>}
-                                            {subitem.hideotheritem && subitem.isotheritem ? <TableCell ></TableCell> :
+                                            { ((subitem.hideotheritem && subitem.isotheritem)) || (subitem.perqsft <=0) ? <TableCell ></TableCell> :
                                                 <TableCell align='center' >{subitem.perqsft}</TableCell>}
                                             {pvcisisvisible.display === true && <>
                                                 <TableCell align='center' >{subitem.pvccostpsf}</TableCell>

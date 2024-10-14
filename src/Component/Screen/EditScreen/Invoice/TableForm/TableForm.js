@@ -128,6 +128,12 @@ const TableForm = () => {
                                 <Button variant="contained" color="success" size="medium" endIcon={<FaFileInvoice />}
                                     onClick={tabledet.saveInvoice}>Save Invoice</Button>
                             </div>
+
+                            <div className="button-warn buttonspace">
+
+                                <Button variant="contained" color="warning" size="medium" endIcon={<GrClearOption />}
+                                    onClick={tabledet.cleartallInvoice}> Reset Invoice Screen</Button>
+                            </div>
                         </Box>
                     </Card>
                     <Card>

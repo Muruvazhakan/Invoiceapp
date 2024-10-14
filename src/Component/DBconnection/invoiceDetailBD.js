@@ -9,7 +9,7 @@ const config = {
 };
 
 export const getInvoiceDB = async (userid) => {
-    console.log(`${dbprop.getInvoiceUrl}/${userid}` + ' dbprop.getInvoiceIdUrl');
+   //console.log(`${dbprop.getInvoiceUrl}/${userid}` + ' dbprop.getInvoiceIdUrl');
     // const data = {
     //     username: username,
     //     password: userpassword
@@ -27,7 +27,7 @@ export const getInvoiceDB = async (userid) => {
 };
 
 export const getInvoiceId = async (userid) => {
-    console.log(`${dbprop.getInvoiceIdUrl}/${userid}` + ' dbprop.getInvoiceId');
+   //console.log(`${dbprop.getInvoiceIdUrl}/${userid}` + ' dbprop.getInvoiceId');
     // const data = {
     //     username: username,
     //     password: userpassword
@@ -39,18 +39,18 @@ export const getInvoiceId = async (userid) => {
         // console.log(response);
         return response;
     } catch (err) {
-        console.log(err);
+       //console.log(err);
         return err;
     }
 };
 
 
 export const saveInvoiceId = async (invoicecount,userid) => {
-    console.log(`${dbprop.saveInvoiceIdUrl}/${userid}` + ' dbprop.saveInvoiceIdUrl');
+   //console.log(`${dbprop.saveInvoiceIdUrl}/${userid}` + ' dbprop.saveInvoiceIdUrl');
     const data = {
         invoicecount
     };
-    console.log(data);
+   //console.log(data);
     let response;
     try {
         response = await axios.post(`${dbprop.saveInvoiceIdUrl}/${userid}`,data, config);
@@ -64,15 +64,15 @@ export const saveInvoiceId = async (invoicecount,userid) => {
 
 
 export const saveInvoiceBD = async (invoice,userid) => {
-    console.log(`${dbprop.saveInvoiceUrl}/${userid}` + ' dbprop.saveInvoiceUrl');
+   //console.log(`${dbprop.saveInvoiceUrl}/${userid}` + ' dbprop.saveInvoiceUrl');
     const data = {
         invoice
     };
-    console.log(data);
+   //console.log(data);
     let response;
     try {
         response = await axios.post(`${dbprop.saveInvoiceUrl}/${userid}`,data, config);
-        console.log(response);
+       //console.log(response);
         return response;
     } catch (err) {
         console.log(err);

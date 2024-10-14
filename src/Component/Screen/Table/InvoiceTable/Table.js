@@ -188,7 +188,7 @@ const Tables = (props) =>{
             // sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
             <TableCell  ></TableCell>
-            <TableCell sx={{fontWeight:700}}>OUTPUTCGST9%</TableCell>
+            <TableCell sx={{fontWeight:700}}>OUTPUTCGST {tabledetails.ctrate}%</TableCell>
             <TableCell ></TableCell>
             <TableCell ></TableCell>
             <TableCell ></TableCell>
@@ -204,7 +204,7 @@ const Tables = (props) =>{
             // sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
             <TableCell  ></TableCell>
-            <TableCell sx={{fontWeight:700}}> OUTPUTSGST9%</TableCell>
+            <TableCell sx={{fontWeight:700}}> OUTPUTSGST {tabledetails.strate}%</TableCell>
             <TableCell ></TableCell>
             <TableCell ></TableCell>
             <TableCell ></TableCell>

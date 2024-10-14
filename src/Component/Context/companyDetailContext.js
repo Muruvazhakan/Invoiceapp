@@ -277,8 +277,8 @@ const CompanyDetailContext = ({ children }) => {
     }
 
     const selectCompanyImg = (event) =>{
-        console.log('event.target.files[0]');
-        console.log(event.target.files[0]);
+       //console.log('event.target.files[0]');
+       //console.log(event.target.files[0]);
         setcompanyImage(URL.createObjectURL(event.target.files[0]));
         setuploadimg(event.target.files[0]);
             
@@ -558,8 +558,8 @@ const CompanyDetailContext = ({ children }) => {
             localstore.addOrUpdateCompanyHandler(item, type, estimateidcount);
             if (isbackendconnect) {
                 let companyBasicDetails = await companyDetailsDB.saveCompanyBasicDetails(item, loginuserid, estimateidcount);
-                console.log('companyBasicDetails');
-                console.log(companyBasicDetails);
+                // console.log('companyBasicDetails');
+                // console.log(companyBasicDetails);
                 if (companyBasicDetails.status !== 201 && companyBasicDetails.status !== 200) {
                     toast.error(companyBasicDetails.data + " in saving DB");
                 }

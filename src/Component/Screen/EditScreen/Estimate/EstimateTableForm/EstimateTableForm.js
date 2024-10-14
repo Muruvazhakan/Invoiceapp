@@ -52,14 +52,14 @@ const EstimateTableForm = (props) => {
                             <TextField required id="outlined-required" label="Order number" value={estdetail.orderno} type="number"
                                 onChange={(e) => setval(e, estdetail.setorderno)}
                                 color={setboxColors(estdetail.orderno, 'color')}
-                                error={setboxColors(estdetail.orderno, 'error')}
+                                error={setboxColors(() => estdetail.setisotheritem(!estdetail.isotheritem).orderno, 'error')}
                             />
                             <h4 className="tagline">'Switch to Special item feature to add other than raw material' </h4>
                             <FormControlLabel
                                 control={
                                     <Switch
                                         checked={estdetail.isotheritem}
-                                        onChange={() => estdetail.setisotheritem(!estdetail.isotheritem)}
+                                        onChange={estdetail.specialItemHandler}
 
                                         name="isotheritem" />
                                 }
@@ -97,7 +97,7 @@ const EstimateTableForm = (props) => {
                                 error={setboxColors(estdetail.area, 'error')}
                             />
                             <TextField required id="outlined-required" label="Total Sq. feet" value={estdetail.perqsft}
-                                // onChange={(e) => setval(e, estdetail.setsubdesc)}
+                                onChange={(e) => setval(e, estdetail.setperqsft)}
 
                                 color={setboxColors(estdetail.perqsft, 'color')}
                                 error={setboxColors(estdetail.perqsft, 'error')}
@@ -221,7 +221,7 @@ const EstimateTableForm = (props) => {
                     <div className="button-warn buttonspace">
                       
                       <Button variant="contained" color="warning" size="medium" endIcon={<GrClearOption />}
-                          onClick={() => estdetail.cleartallEstimateotal()}>Clear Estimate</Button>
+                          onClick={() => estdetail.cleartallEstimateotal()}>Reset Estimate Screen</Button>
                   </div>
                 </FormControl>
             </FormGroup>
