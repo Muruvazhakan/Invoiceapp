@@ -4,20 +4,31 @@ import '../../GeneralDetails/GeneralDetails.css';
 import { AllState } from "../../../Context/allStateContext";
 import Card from "../../../Style/Card/Card";
 import NoData from "../../NoData/NoData";
-import { Button } from "@mui/material";
+import { Button, CircularProgress, Stack } from "@mui/material";
 import { RiEditCircleFill } from "react-icons/ri";
 import { Link } from "react-router-dom";
+import { CompanyDetail } from "../../../Context/companyDetailContext";
 // import img  from '.'
 
 const AllInvoiceDetails = () => {
 
     const invoiceDet = useContext(AllState);
+    const companydet = useContext(CompanyDetail);
 
     useEffect(()=>{
         console.log('invoiceHistoryData');
         console.log(invoiceDet.invoiceHistoryData);
     },[])
     
+    if (!companydet.isloaded) {
+
+        return (
+            <Stack sx={{ color: 'grey.500' }} spacing={2} alignItems={"center"} className="spinnerstyle">
+                <CircularProgress color="success" size={30}  />
+            </Stack>
+            )
+    }
+
     return (
 
         <>
