@@ -1,6 +1,6 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
-import { Box, Button, FormControl, FormControlLabel, FormGroup, Switch, TextField } from "@mui/material";
+import { Box, Button, FormControl, FormControlLabel, FormGroup, List, Switch, TextField } from "@mui/material";
 import { ToastContainer } from "react-toastify";
 import { GrClearOption } from "react-icons/gr";
 import "react-toastify/dist/ReactToastify.css";
@@ -8,10 +8,73 @@ import Card from "../../../../Style/Card/Card";
 import { BsSave } from "react-icons/bs";
 import { estimateState } from "../../../../Context/EstimatestateContext";
 import { FaFileInvoice } from "react-icons/fa";
+import Autocomplete, { createFilterOptions } from '@mui/material/Autocomplete';
 
+const filter = createFilterOptions();
 const EstimateTableForm = (props) => {
-
+    const [tit, setit] = useState([]);
+    const [sub, sesubtit] = useState([]);
+    let title, subtitle;
     const estdetail = useContext(estimateState);
+
+    const top100Films = [
+        { title: 'The Shawshank Redemption' },
+        { title: 'The Godfather' },
+        { title: 'The Godfather: Part II' },
+        { title: 'The Dark Knight' }];
+
+    useEffect(() => {
+        console.log('EstimateTableForm estimateState');
+        console.log(estdetail.estimateHistoryData);
+        autocompleTitle();
+        // console.log('top100Films');
+        // console.log(top100Films);
+
+        // let title = 
+    }, [estdetail])
+
+    const autocompleTitle = () => {
+        if (estdetail.estimateHistoryData !== null && estdetail.estimateHistoryData.length > 0) {
+            let rows = estdetail.estimateHistoryData.map((est) => {
+                return est.rows
+
+            });
+            console.log('EstimateTableForm title');
+            title = rows.map((row) => {
+                return row.map((allrows) => {
+                    return { title: allrows.title }
+                });
+            })
+            console.log(rows);
+            title = [].concat.apply([], title);
+            // console.log(title);
+            // var distinct = [];
+            const unique = [...new Set(title.map((item) => item.title))];
+            const ti = unique.map((allrows) => { return { title: allrows } });
+
+            subtitle = rows.map((row) => {
+                return row.map((allrows) => {
+                    return allrows.values.map((sub) => {
+                        return { title: sub.desc }
+                    });
+                });
+            })
+
+            subtitle = [].concat.apply([], subtitle);
+            subtitle = [].concat.apply([], subtitle);
+            const uniquesub = [...new Set(subtitle.map((item) => item.title))];
+            const sub = uniquesub.map((allrows) => { return { title: allrows } });
+            console.log(sub);
+            setit(ti);
+            sesubtit(sub);
+
+            // console.log(tit);
+            // console.log('unique');
+
+            // console.log(ti);
+        }
+    }
+
 
     const setval = (e, fun) => {
         fun(e.target.value);
@@ -28,6 +91,85 @@ const EstimateTableForm = (props) => {
 
     }
 
+
+    const [value, setValue] = React.useState(null);
+
+    const onChangeOnAutoComplete = (event, newValue,type) => {
+        // console.log(newValue);
+        // console.log(event);
+        if (newValue && newValue.inputValue) {
+            // Create a new value from the user input
+            setValue({
+                title: newValue.inputValue,
+            });
+            if(type ==='subdesc'){
+                estdetail.setsubdesc(newValue.inputValue);
+            }
+            else{
+                estdetail.settitle(newValue.inputValue);
+            }
+            
+            // estdetail.settitle(newValue.inputValue);
+        } else {
+            setValue(newValue);
+            // estdetail.settitle(newValue);
+            if (newValue != null) {
+                if(type ==='subdesc'){
+                    estdetail.setsubdesc(newValue.title);
+                }
+                else{
+                    estdetail.settitle(newValue.title);
+                }
+                
+            }
+
+
+        }
+
+
+    }
+
+    const filterOptionOnAutoComplete = (options, params) => {
+        // console.log(options);
+
+        // let filtered;
+        const filtered = filter(options, params);
+        // // let filtered;
+        const { inputValue } = params;
+        // console.log(inputValue);
+        // Suggest the creation of a new value
+        const isExisting = options.some((option) => inputValue === option.title);
+        // console.log(isExisting);
+        if (inputValue !== '' && !isExisting) {
+            filtered.push({
+                inputValue,
+                title: `Add "${inputValue}"`,
+            });
+        }
+        return filtered;
+    }
+
+    const getOptionLabelOnAutoComplete = (option) => {
+        // Value selected with enter, right from the input
+        if (typeof option === 'string') {
+            return option;
+        }
+        // Add "xxx" option created dynamically
+        if (option.inputValue) {
+            return option.inputValue;
+        }
+        // Regular option
+        return option.title;
+    }
+
+    const renderOptionOnAutoComplete = (props, option) => {
+        const { key, ...optionProps } = props;
+        return (
+            <li key={key} {...optionProps}>
+                {option.title}
+            </li>
+        );
+    }
     return <>
         <Card>
             <ToastContainer position="top-center" theme="colored" containerId="EstimateTableForm" />
@@ -38,11 +180,78 @@ const EstimateTableForm = (props) => {
                         <h3>Add details below for Estimation</h3>
                         <Box component="form" sx={{ '& .MuiTextField-root': { m: 1, width: '20ch' } }}>
 
-                            <TextField required id="outlined-required" label="Item Title" value={estdetail.title}
+                            <Autocomplete
+                                // value={value}
+                                value={estdetail.title}
+                                onChange={(event, newValue) => onChangeOnAutoComplete(event, newValue)}
+                                filterOptions={(options, params) => filterOptionOnAutoComplete(options, params)}
+                                selectOnFocus
+                                clearOnBlur
+                                handleHomeEndKeys
+                                id="free-solo-with-text"
+                                options={tit}
+                                getOptionLabel={(option) => getOptionLabelOnAutoComplete(option)}
+                                renderOption={(props, option) => renderOptionOnAutoComplete(props, option)}
+                                // sx={{ width: 300 }}
+                                freeSolo
+                                renderInput={(params) => (
+                                    // <TextField label="Title" />
+                                    <TextField required id="outlined-required" label="Item Title"
+                                        onChange={(e) => setval(e, estdetail.settitle)}
+                                        color={setboxColors(estdetail.title, 'color')}
+                                        error={setboxColors(estdetail.title, 'error')}  {...params}
+                                    />
+                                )}
+                            />
+
+                            {/* <Autocomplete
+                                // value={value}
+                                value={estdetail.subdesc}
+                                onChange={(event, newValue) => onChangeOnAutoComplete(event, newValue,'subdesc')}
+                                filterOptions={(options, params) => filterOptionOnAutoComplete(options, params)}
+                                selectOnFocus
+                                clearOnBlur
+                                handleHomeEndKeys
+                                id="free-solo-with-text"
+                                options={sub}
+                                getOptionLabel={(option) => getOptionLabelOnAutoComplete(option)}
+                                renderOption={(props, option) => renderOptionOnAutoComplete(props, option)}
+                                // sx={{ width: 300 }}
+                                freeSolo
+                                renderInput={(params) => (
+                                    // <TextField label="Title" />
+                                    <TextField required id="outlined-required" label="Sub Title"
+                                        onChange={(e) => setval(e, estdetail.settitle)}
+                                        color={setboxColors(estdetail.title, 'color')}
+                                        error={setboxColors(estdetail.title, 'error')}  {...params}
+                                    />
+                                )}
+                            /> */}
+                            {/* 
+                            <Autocomplete
+                                value={value}
+                                onChange={(event, newValue) => onChangeOnAutoComplete(event, newValue)}
+                                filterOptions={filterOptionOnAutoComplete}
+                                selectOnFocus
+                                clearOnBlur
+                                handleHomeEndKeys
+                                id="free-solo-with-text-demo"
+                                options={top100Films}
+                                getOptionLabel={getOptionLabelOnAutoComplete}
+                                renderOption={renderOptionOnAutoComplete}
+                                sx={{ width: 300 }}
+                                freeSolo
+                                renderInput={(params) => (
+                                    <TextField {...params} label="Free solo with text demo" />
+                                )}
+                            /> */}
+
+
+                            {/* <TextField required id="outlined-required" label="Item Title" value={estdetail.title}
                                 onChange={(e) => setval(e, estdetail.settitle)}
                                 color={setboxColors(estdetail.title, 'color')}
                                 error={setboxColors(estdetail.title, 'error')}
-                            />
+                            /> */}
                             <h4>Sub Details</h4>
                             <TextField required id="outlined-required" label="Sub description" value={estdetail.subdesc}
                                 onChange={(e) => setval(e, estdetail.setsubdesc)}
@@ -211,7 +420,7 @@ const EstimateTableForm = (props) => {
                     </Card>
 
                     <div className="button-warn buttonspace">
-                      
+
                         <Button variant="contained" color="success" size="medium" endIcon={<FaFileInvoice />}
                             onClick={() => estdetail.addOrGetEstimateHistoryData('', '', 'New')}>Save Complete Estimate</Button>
 
@@ -219,10 +428,10 @@ const EstimateTableForm = (props) => {
 
                     </div>
                     <div className="button-warn buttonspace">
-                      
-                      <Button variant="contained" color="warning" size="medium" endIcon={<GrClearOption />}
-                          onClick={() => estdetail.cleartallEstimateotal()}>Reset Estimate Screen</Button>
-                  </div>
+
+                        <Button variant="contained" color="warning" size="medium" endIcon={<GrClearOption />}
+                            onClick={() => estdetail.cleartallEstimateotal()}>Reset Estimate Screen</Button>
+                    </div>
                 </FormControl>
             </FormGroup>
         </Card>

@@ -18,7 +18,7 @@ export const getEstimateDB = async (userid) => {
     let response;
     try {
         response = await axios.get(`${dbprop.getEstimateUrl}/${userid}`, config);
-        // console.log(response);
+        console.log(response);
         return response;
     } catch (err) {
         console.log(err);
