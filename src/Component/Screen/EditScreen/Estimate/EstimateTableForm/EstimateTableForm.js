@@ -299,12 +299,12 @@ const EstimateTableForm = (props) => {
                                 color={setboxColors(estdetail.height, 'color')}
                                 error={setboxColors(estdetail.height, 'error')}
                             />
-                            <TextField required id="outlined-required" label="Area" value={estdetail.area} type="number"
+                            {/* <TextField required id="outlined-required" label="Area" value={estdetail.area} type="number"
                                 // onChange={(e) => setval(e, estdetail.setsubdesc)}
                                 disabled
                                 color={setboxColors(estdetail.area, 'color')}
                                 error={setboxColors(estdetail.area, 'error')}
-                            />
+                            /> */}
                             <TextField required id="outlined-required" label="Total Sq. feet" value={estdetail.perqsft}
                                 onChange={(e) => setval(e, estdetail.setperqsft)}
 

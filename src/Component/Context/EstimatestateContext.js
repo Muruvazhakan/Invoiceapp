@@ -575,9 +575,10 @@ const specialItemHandler = () =>{
 
     useEffect(() => {
         let ar = (length * height).toFixed(3);
-        let psf = (ar / 144).toFixed(3);
-        setarea(ar);
-        setperqsft(psf);
+        // let psf = (ar / 144).toFixed(3);
+        // setarea(ar);
+        // let psf = (ar / 144).toFixed(3);
+        setperqsft(ar);
     }, [length, height]);
 
     useEffect(() => {

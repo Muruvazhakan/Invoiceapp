@@ -40,11 +40,11 @@ const EstimateTable = (props) => {
                 <Table aria-label="simple table">
                     <TableHead sx={{ fontWeight: 1130, color: "white" }}>
                         <TableRow className="table-header" key="estimatetable" >
-
+                           
                             {estdetail.columns.map((item, index) => {
 
                                 return (<>
-                                    {item.display === true &&
+                                    {item.display === true && item.columnname !=='Area' &&
                                         <TableCell sx={{ fontWeight: 700 }} align='center' >{item.columnname}</TableCell>
                                     }
 
@@ -84,7 +84,7 @@ const EstimateTable = (props) => {
                                     <TableCell ></TableCell>
                                     <TableCell ></TableCell>
                                     <TableCell ></TableCell>
-                                    <TableCell ></TableCell>
+                                    {/* <TableCell ></TableCell> */}
                                     {pvcisisvisible.display === true && <>
                                         <TableCell ></TableCell>
                                         <TableCell ></TableCell></>}
@@ -111,8 +111,8 @@ const EstimateTable = (props) => {
                                                 <TableCell align='center' >{subitem.length}</TableCell>}
                                             { (subitem.hideotheritem && subitem.isotheritem) || (subitem.height <= 0) ? <TableCell ></TableCell> :
                                                 <TableCell align='center' >{subitem.height}</TableCell>}
-                                            { ((subitem.hideotheritem && subitem.isotheritem) || (subitem.area <=0)) ? <TableCell ></TableCell> :
-                                                <TableCell align='center' >{subitem.area}</TableCell>}
+                                            {/* { ((subitem.hideotheritem && subitem.isotheritem) || (subitem.area <=0)) ? <TableCell ></TableCell> :
+                                                <TableCell align='center' >{subitem.area}</TableCell>} */}
                                             { ((subitem.hideotheritem && subitem.isotheritem)) || (subitem.perqsft <=0) ? <TableCell ></TableCell> :
                                                 <TableCell align='center' >{subitem.perqsft}</TableCell>}
                                             {pvcisisvisible.display === true && <>
@@ -149,7 +149,7 @@ const EstimateTable = (props) => {
                                     <TableCell ></TableCell>
                                     <TableCell align='center' sx={{ fontWeight: 700 }}> Total</TableCell>
                                     <TableCell ></TableCell>
-                                    <TableCell ></TableCell>
+                                    {/* <TableCell ></TableCell> */}
                                     <TableCell ></TableCell>
                                     <TableCell align='center'>{item.sumtotalsqft}</TableCell>
                                     {pvcisisvisible.display === true && <>
@@ -175,7 +175,7 @@ const EstimateTable = (props) => {
                             <TableCell align='center' sx={{ fontWeight: 700 }}>Grand Total</TableCell>
                             <TableCell ></TableCell>
                             <TableCell ></TableCell>
-                            <TableCell ></TableCell>
+                            {/* <TableCell ></TableCell> */}
 
                             <TableCell align='center' sx={{ fontWeight: 700 }}>{estdetail.granttotalsqft}</TableCell>
                             {pvcisisvisible.display === true && <>
