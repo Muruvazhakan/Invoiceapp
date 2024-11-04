@@ -40,11 +40,11 @@ const EstimateTable = (props) => {
                 <Table aria-label="simple table">
                     <TableHead sx={{ fontWeight: 1130, color: "white" }}>
                         <TableRow className="table-header" key="estimatetable" >
-                           
+
                             {estdetail.columns.map((item, index) => {
 
                                 return (<>
-                                    {item.display === true && item.columnname !=='Area' &&
+                                    {item.display === true && item.columnname !== 'Area' &&
                                         <TableCell sx={{ fontWeight: 700 }} align='center' >{item.columnname}</TableCell>
                                     }
 
@@ -107,13 +107,13 @@ const EstimateTable = (props) => {
                                         <TableRow className={subindex.index % 2 === 0 ? "table-body tablegrey" : "table-body"} key={subindex + 1000}>
                                             <TableCell align='center' >{chr}</TableCell>
                                             <TableCell align='center' >{subitem.desc}</TableCell>
-                                            { ((subitem.hideotheritem && subitem.isotheritem) || (subitem.length <= 0)) ? <TableCell ></TableCell> :
+                                            {((subitem.hideotheritem && subitem.isotheritem) || (subitem.length <= 0)) ? <TableCell ></TableCell> :
                                                 <TableCell align='center' >{subitem.length}</TableCell>}
-                                            { (subitem.hideotheritem && subitem.isotheritem) || (subitem.height <= 0) ? <TableCell ></TableCell> :
+                                            {(subitem.hideotheritem && subitem.isotheritem) || (subitem.height <= 0) ? <TableCell ></TableCell> :
                                                 <TableCell align='center' >{subitem.height}</TableCell>}
                                             {/* { ((subitem.hideotheritem && subitem.isotheritem) || (subitem.area <=0)) ? <TableCell ></TableCell> :
                                                 <TableCell align='center' >{subitem.area}</TableCell>} */}
-                                            { ((subitem.hideotheritem && subitem.isotheritem)) || (subitem.perqsft <=0) ? <TableCell ></TableCell> :
+                                            {((subitem.hideotheritem && subitem.isotheritem)) || (subitem.perqsft <= 0) ? <TableCell ></TableCell> :
                                                 <TableCell align='center' >{subitem.perqsft}</TableCell>}
                                             {pvcisisvisible.display === true && <>
                                                 <TableCell align='center' >{subitem.pvccostpsf}</TableCell>
@@ -192,6 +192,30 @@ const EstimateTable = (props) => {
                                 <TableCell ></TableCell>}
 
                         </TableRow>
+                        {estdetail.discountedcheck &&
+                            <TableRow className={"table-body tableyellow"}>
+                                <TableCell ></TableCell>
+                                <TableCell align='center' sx={{ fontWeight: 700 }}>{estdetail.discountedText}</TableCell>
+                                <TableCell ></TableCell>
+                                <TableCell ></TableCell>
+                                {/* <TableCell ></TableCell> */}
+
+                                <TableCell align='center' sx={{ fontWeight: 700 }}>{estdetail.granttotalsqft}</TableCell>
+                                {pvcisisvisible.display === true && <>
+                                    <TableCell ></TableCell>
+                                    <TableCell align='center' sx={{ fontWeight: 700 }}>{estdetail.discountedTotalpvccost}</TableCell></>}
+                                {upvcisisvisible.display === true && <>
+                                    <TableCell ></TableCell>
+                                    <TableCell align='center' sx={{ fontWeight: 700 }}>{estdetail.discountedTotalupvccost}</TableCell></>}
+                                {woodisisvisible.display === true &&
+                                    <>
+                                        <TableCell ></TableCell>
+                                        <TableCell align='center' sx={{ fontWeight: 700 }}>{estdetail.discountedTotalwoodcost}</TableCell></>}
+                                {remarks.display === true &&
+                                    <TableCell ></TableCell>}
+
+                            </TableRow>
+                        }
                     </TableBody>
                 </Table>
             </TableContainer>

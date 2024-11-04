@@ -72,6 +72,12 @@ const EstimatestateContext = ({ children }) => {
     const [estimateHistroyUpdateFlag, setestimateHistroyUpdateFlag] = useState(false);
     const [estimateSingleData, setestimateSingleData] = useState(null);
 
+    const [discountedcheck, setdiscountedcheck] = useState(false);
+    const [discountedText, setdiscountedText] = useState('');
+    const [discountedTotalpvccost, setdiscountedTotalpvccost] = useState(0);
+    const [discountedTotalupvccost, setdiscountedTotalupvccost] = useState(0);
+    const [discountedTotalwoodcost, setdiscountedTotalwoodcost] = useState(0);
+
     const [estimateid, setestimateid] = useState('');
     const [estimateidcount, setestimateidcount] = useState(1000);
     const [estimatedate, setestimatedate] = useState('');
@@ -133,6 +139,11 @@ const EstimatestateContext = ({ children }) => {
             grandtotalpvccost: grandtotalpvccost,
             grandtotalupvccost: grandtotalupvccost,
             grandtotalwoodcost: grandtotalwoodcost,
+            discountedcheck:discountedcheck,
+            discountedText:discountedText,
+            discountedTotalpvccost:discountedTotalpvccost,
+            discountedTotalupvccost:discountedTotalupvccost,
+            discountedTotalwoodcost:discountedTotalwoodcost,
             // companytermsandcondition:companydet.companydetails,
             // companybankdet:companydet.companyBankdetails,
             iscontains: true,
@@ -158,6 +169,12 @@ const EstimatestateContext = ({ children }) => {
                     item.grandtotalpvccost = grandtotalpvccost;
                     item.grandtotalupvccost = grandtotalupvccost;
                     item.grandtotalwoodcost = grandtotalwoodcost;
+                    
+                    item.discountedcheck = discountedcheck;
+                    item.discountedText = discountedText;
+                    item.discountedTotalpvccost = discountedTotalpvccost;
+                    item.discountedTotalupvccost = discountedTotalupvccost;
+                    item.discountedTotalwoodcost = discountedTotalwoodcost;
                     iscontains = true;
                     // item.companytermsandcondition=companydet.companydetails;
                     // item.companybankdet=companydet.companyBankdetails;
@@ -660,9 +677,9 @@ const specialItemHandler = () =>{
         pvccostpsf, setpvccostpsf, totalpvccost, settotalpvccost, upvccostpsf, setupvccostpsf, totalupvccost, settotalupvccost, woodcostpsf, setwoodcostpsf, totalwoodcost, settotalwoodcost,
         remarks, setremarks, addOrUpdateEstimateItemHandler, updateTableView, estimatedate1, setestimatedate1, estimateHistoryData, setestimateHistoryData, addOrGetEstimateHistoryData, dateHandler,
         estimateSingleData, setestimateSingleData, allEstimateEdit, isNewDataSaveType, setisNewDataSaveType, orderno, setorderno, setval, setboxColors, sortorder,
-        estimateHistroyUpdateFlag, setestimateHistroyUpdateFlag, isloaded, setisloaded,cleartallEstimateotal,specialItemHandler
+        estimateHistroyUpdateFlag, setestimateHistroyUpdateFlag, isloaded, setisloaded,cleartallEstimateotal,specialItemHandler,discountedcheck, setdiscountedcheck,discountedText, setdiscountedText,
+        discountedTotalupvccost, setdiscountedTotalupvccost,discountedTotalpvccost, setdiscountedTotalpvccost,discountedTotalwoodcost, setdiscountedTotalwoodcost
     };
-
 
     return <estimateState.Provider value={estcontext} >{children}</estimateState.Provider>
 }

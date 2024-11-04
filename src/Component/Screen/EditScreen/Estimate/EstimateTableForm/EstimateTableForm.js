@@ -417,6 +417,45 @@ const EstimateTableForm = (props) => {
 
                             </div> */}
                         </Box>
+
+                        <h3>Discount the Grand Total</h3>
+
+                        <FormControlLabel
+                                control={
+                                    <Switch
+                                        checked={estdetail.discountedcheck}
+                                        onChange={() => estdetail.setdiscountedcheck(!estdetail.discountedcheck)}
+                                        //  checked={tabledet.ischargedinhsn} onChange={() => tabledet.setischargedinhsn(!tabledet.ischargedinhsn)} 
+                                        name="iscountedPricecheck" />
+                                }
+                                label="Discount Price Enable"
+                            />
+
+                        <Box component="form" sx={{ '& .MuiTextField-root': { m: 1, width: '15ch' } }}>
+                        <TextField required id="outlined-required" label="Discounted Text" value={estdetail.discountedText} 
+                                onChange={(e) => setval(e, estdetail.setdiscountedText)}
+                                color={setboxColors(estdetail.discountedText, 'color')}
+                                error={setboxColors(estdetail.discountedText, 'error')}
+                            />
+                        <TextField required id="outlined-required" label="Discounted Total Pvc cost" value={estdetail.discountedTotalpvccost} type="number"
+                                onChange={(e) => setval(e, estdetail.setdiscountedTotalpvccost)}
+                                color={setboxColors(estdetail.discountedTotalpvccost, 'color')}
+                                error={setboxColors(estdetail.discountedTotalpvccost, 'error')}
+                            />
+                            <TextField required id="outlined-required" label="Discounted Total Upvc cost" value={estdetail.discountedTotalupvccost} type="number"
+                                onChange={(e) => setval(e, estdetail.setdiscountedTotalupvccost)}
+                                color={setboxColors(estdetail.discountedTotalupvccost, 'color')}
+                                error={setboxColors(estdetail.discountedTotalupvccost, 'error')}
+                            />
+                            <TextField required id="outlined-required" label="Discounted Total Wood cost" value={estdetail.discountedTotalwoodcost} type="number"
+                                onChange={(e) => setval(e, estdetail.setdiscountedTotalwoodcost)}
+
+                                color={setboxColors(estdetail.discountedTotalwoodcost, 'color')}
+                                error={setboxColors(estdetail.discountedTotalwoodcost, 'error')}
+                            />
+                            
+                             
+                        </Box>
                     </Card>
 
                     <div className="button-warn buttonspace">
