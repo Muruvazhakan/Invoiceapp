@@ -139,11 +139,11 @@ const EstimatestateContext = ({ children }) => {
             grandtotalpvccost: grandtotalpvccost,
             grandtotalupvccost: grandtotalupvccost,
             grandtotalwoodcost: grandtotalwoodcost,
-            discountedcheck:discountedcheck,
-            discountedText:discountedText,
-            discountedTotalpvccost:discountedTotalpvccost,
-            discountedTotalupvccost:discountedTotalupvccost,
-            discountedTotalwoodcost:discountedTotalwoodcost,
+            discountedcheck: discountedcheck,
+            discountedText: discountedText,
+            discountedTotalpvccost: discountedTotalpvccost,
+            discountedTotalupvccost: discountedTotalupvccost,
+            discountedTotalwoodcost: discountedTotalwoodcost,
             // companytermsandcondition:companydet.companydetails,
             // companybankdet:companydet.companyBankdetails,
             iscontains: true,
@@ -169,7 +169,7 @@ const EstimatestateContext = ({ children }) => {
                     item.grandtotalpvccost = grandtotalpvccost;
                     item.grandtotalupvccost = grandtotalupvccost;
                     item.grandtotalwoodcost = grandtotalwoodcost;
-                    
+
                     item.discountedcheck = discountedcheck;
                     item.discountedText = discountedText;
                     item.discountedTotalpvccost = discountedTotalpvccost;
@@ -262,6 +262,8 @@ const EstimatestateContext = ({ children }) => {
                     sumtotalupvccost: calculatetotal(available[0].sumtotalupvccost, totalupvccost, 'sum', 2),
                     sumtotalwoodcost: calculatetotal(available[0].sumtotalwoodcost, totalwoodcost, 'sum', 2),
                     sumtotalsqft: calculatetotal(available[0].sumtotalsqft, perqsft, 'sum', 3),
+                    discountedcheck: discountedcheck, discountedText: discountedText, discountedTotalupvccost: discountedTotalupvccost, discountedTotalpvccost: discountedTotalpvccost,
+                    discountedTotalwoodcost: discountedTotalwoodcost,
                     values: [...available[0].values, exitsingleestimatevalue1]
                 };
 
@@ -288,6 +290,8 @@ const EstimatestateContext = ({ children }) => {
                     title: title,
                     orderno: orderno,
                     sumtotalpvccost: totalpvccost, sumtotalupvccost: totalupvccost, sumtotalwoodcost: totalwoodcost,
+                    discountedcheck: discountedcheck, discountedText: discountedText, discountedTotalupvccost: discountedTotalupvccost, discountedTotalpvccost: discountedTotalpvccost,
+                    discountedTotalwoodcost: discountedTotalwoodcost,
                     sumtotalsqft: perqsft,
                     values: [{
                         subid: uuidv4(), desc: subdesc, length: length, height: height, area: area, isotheritem: isotheritem, hideotheritem: hideotheritem,
@@ -418,6 +422,7 @@ const EstimatestateContext = ({ children }) => {
                         sumtotalupvccost: calculatetotal(available1[0].sumtotalupvccost, subtableava[0].totalupvccost, 'diff', 2),
                         sumtotalwoodcost: calculatetotal(available1[0].sumtotalwoodcost, subtableava[0].totalwoodcost, 'diff', 2),
                         sumtotalsqft: calculatetotal(available1[0].sumtotalsqft, subtableava[0].perqsft, 'diff', 3),
+
                         values: [...othersubtableava]
                     };
                     if (other1.length > 0) {
@@ -497,6 +502,10 @@ const EstimatestateContext = ({ children }) => {
         setrows([]);
         setisotheritem(false);
         sethideotheritem(false);
+        setdiscountedcheck(false);
+        setdiscountedTotalupvccost(0);
+        setdiscountedTotalpvccost(0);
+        setdiscountedTotalwoodcost(0);
         toast.success('Estimate details are cleared in this screen');
     }
 
@@ -543,17 +552,17 @@ const EstimatestateContext = ({ children }) => {
         localstorage.addOrGetUserdetail(++count, 'estimateidcount', 'save');
     }
 
-const specialItemHandler = () =>{
+    const specialItemHandler = () => {
 
-    if(!isotheritem){
-        setlength(0);
-        setheight(0);
-        setperqsft(0);
-    }
-    setisotheritem(!isotheritem);
-   
-    
-};
+        if (!isotheritem) {
+            setlength(0);
+            setheight(0);
+            setperqsft(0);
+        }
+        setisotheritem(!isotheritem);
+
+
+    };
 
     useEffect(() => {
         // //console.log('local Estimate history');
@@ -571,7 +580,7 @@ const specialItemHandler = () =>{
         // console.log(count + 'count');
     }, []);
 
-    
+
     useEffect(() => {
         if (estimateHistoryData !== null) {
             localstorage.addOrGetEstimateHistoryData(estimateHistoryData, "save");
@@ -661,11 +670,26 @@ const specialItemHandler = () =>{
         setestimateid(estimatedetails.estimateid);
         setestimatedate(estimatedetails.estimatedate);
         setestimatedate1(estimatedetails.estimatedate1);
-        if (estimatedetails.columns.length>0) {
+        
+        if (estimatedetails.columns.length > 0) {
             setcolumns(estimatedetails.columns);
         }
-        else{
+        else {
             setcolumns(columnNames);
+        }
+        if (estimatedetails.discountedcheck) {
+        setdiscountedcheck(estimatedetails.discountedcheck);
+        setdiscountedText(estimatedetails.discountedText)
+        setdiscountedTotalupvccost(estimatedetails.discountedTotalupvccost);
+        setdiscountedTotalpvccost(estimatedetails.discountedTotalpvccost);
+        setdiscountedTotalwoodcost(estimatedetails.discountedTotalwoodcost);
+        }      
+        else{
+            setdiscountedcheck(false);
+            setdiscountedText('');
+            setdiscountedTotalupvccost(0);
+            setdiscountedTotalpvccost(0);
+            setdiscountedTotalwoodcost(0);
         }
 
     }
@@ -677,8 +701,8 @@ const specialItemHandler = () =>{
         pvccostpsf, setpvccostpsf, totalpvccost, settotalpvccost, upvccostpsf, setupvccostpsf, totalupvccost, settotalupvccost, woodcostpsf, setwoodcostpsf, totalwoodcost, settotalwoodcost,
         remarks, setremarks, addOrUpdateEstimateItemHandler, updateTableView, estimatedate1, setestimatedate1, estimateHistoryData, setestimateHistoryData, addOrGetEstimateHistoryData, dateHandler,
         estimateSingleData, setestimateSingleData, allEstimateEdit, isNewDataSaveType, setisNewDataSaveType, orderno, setorderno, setval, setboxColors, sortorder,
-        estimateHistroyUpdateFlag, setestimateHistroyUpdateFlag, isloaded, setisloaded,cleartallEstimateotal,specialItemHandler,discountedcheck, setdiscountedcheck,discountedText, setdiscountedText,
-        discountedTotalupvccost, setdiscountedTotalupvccost,discountedTotalpvccost, setdiscountedTotalpvccost,discountedTotalwoodcost, setdiscountedTotalwoodcost
+        estimateHistroyUpdateFlag, setestimateHistroyUpdateFlag, isloaded, setisloaded, cleartallEstimateotal, specialItemHandler, discountedcheck, setdiscountedcheck, discountedText, setdiscountedText,
+        discountedTotalupvccost, setdiscountedTotalupvccost, discountedTotalpvccost, setdiscountedTotalpvccost, discountedTotalwoodcost, setdiscountedTotalwoodcost
     };
 
     return <estimateState.Provider value={estcontext} >{children}</estimateState.Provider>
