@@ -116,15 +116,15 @@ const EstimateTable = (props) => {
                                             {((subitem.hideotheritem && subitem.isotheritem)) || (subitem.perqsft <= 0) ? <TableCell ></TableCell> :
                                                 <TableCell align='center' >{subitem.perqsft}</TableCell>}
                                             {pvcisisvisible.display === true && <>
-                                                <TableCell align='center' >{subitem.pvccostpsf}</TableCell>
-                                                <TableCell align='center' >{subitem.totalpvccost}</TableCell></>}
+                                                <TableCell align='center' >{subitem.pvccostpsf > 0 ? subitem.pvccostpsf : '-'}</TableCell>
+                                                <TableCell align='center' >{subitem.totalpvccost>0? subitem.totalpvccost :'-'}</TableCell></>}
                                             {upvcisisvisible.display === true && <>
-                                                <TableCell align='center' >{subitem.upvccostpsf}</TableCell>
-                                                <TableCell align='center' >{subitem.totalupvccost}</TableCell></>}
+                                                <TableCell align='center' >{subitem.upvccostpsf>0? subitem.upvccostpsf : '-'}</TableCell>
+                                                <TableCell align='center' >{subitem.totalupvccost>0? subitem.totalupvccost : '-'}</TableCell></>}
                                             {woodisisvisible.display === true &&
                                                 <>
-                                                    <TableCell align='center' >{subitem.woodcostpsf}</TableCell>
-                                                    <TableCell align='center' >{subitem.totalwoodcost}</TableCell></>}
+                                                    <TableCell align='center' >{subitem.woodcostpsf>0? subitem.woodcostpsf : '-'}</TableCell>
+                                                    <TableCell align='center' >{subitem.totalwoodcost>0? subitem.totalwoodcost : '-'}</TableCell></>}
                                             {remarks.display === true &&
                                                 <TableCell align='center' >{subindex.remarks}</TableCell>}
 
