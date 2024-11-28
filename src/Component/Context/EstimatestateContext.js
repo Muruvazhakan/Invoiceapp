@@ -6,6 +6,7 @@ import collect from "collect.js";
 import * as localstorage from '../Context/localStorageData';
 import * as estimateDetailsDb from '../DBconnection/estimateDetailsDB';
 import { isbackendconnect } from "../DBconnection/dbproperties";
+
 // import { CompanyDetail } from "./companyDetailContext";
 export const estimateState = createContext();
 
@@ -33,6 +34,7 @@ const EstimatestateContext = ({ children }) => {
     const [grandtotalwoodcost, setgrandtotalwoodcost] = useState(0);
     const [isNewDataSaveType, setisNewDataSaveType] = useState(true);
     const [orderno, setorderno] = useState(0);
+   
     // let row = [{
     //     id: 1123, title: 'MODULAR KITCHEN', values: [{
     //         subid: 1, desc: '1', length: '1', height: '1', area: '1',
@@ -619,6 +621,7 @@ const EstimatestateContext = ({ children }) => {
 
     useEffect(() => {
         let costwood = ((woodcostpsf * 1) * perqsft).toFixed(2);
+
         settotalwoodcost(costwood);
     }, [perqsft, woodcostpsf]);
 

@@ -9,7 +9,8 @@ import * as estimateDetailsDb from '../DBconnection/estimateDetailsDB';
 import * as invoiceDetailsDb from '../DBconnection/invoiceDetailBD';
 import { estimateState } from "./EstimatestateContext";
 import { AllState } from "./allStateContext";
-import { isbackendconnect } from "../DBconnection/dbproperties";
+import { isbackendconnect,uploadImage } from "../DBconnection/dbproperties";
+import axios from "axios";
 export const CompanyDetail = createContext();
 
 
@@ -176,6 +177,45 @@ const CompanyDetailContext = ({ children }) => {
 
         //console.log(getresul);
         setcompanyBankdetails(getresul);
+    }
+
+    const uploadImage = async (props) => {
+        const formData = new FormData();
+        // formData.append('avatar', state.uploadimg);
+        // formData.append('avatar', {avatar:state.uploadimg,filename:'22.jpg'});
+        let  filename=companyName+'.jpg'; // img no
+        formData.append('uploadtype', props.screen);
+        formData.append('filename', filename);
+    
+        // console.log("insertImg from UploadComponent " +  state.uploadimg + state.newimgurl +props.selectedImage,props.screen);
+        // console.log(state.newimgurl);
+        // console.log( formData);
+        // uploadFile();
+        await    axios.post(uploadImage, formData, {
+            headers: {
+                'content-type': 'multipart/form-data'
+            }
+            }).then((res) => {
+            //    console.log('File uploaded!' );
+            //    console.log(res);
+            if (res.data == 'Image Added')
+            {
+                alert('Image Added');
+                // setstate('');
+                window.location.reload(false);
+            }
+            else if (res.data == 'Updated')
+            {
+                alert('Updated Image');
+                // setstate('');
+                window.location.reload(false);
+            }
+            else {
+                console.log('Issue');
+                alert('Issue in Uploading'); 
+            }
+           }) 
+
     }
 
     const loginHandler = async (type) => {
@@ -637,7 +677,7 @@ const CompanyDetailContext = ({ children }) => {
     const compDet = {
         companyName, setcompanyName,
         companyTagLine, setcompanyTagLine, companyAddress, setcompanyAddress, companyPhno, setcompanyPhno, companyGstin, setcompanyGstin, companyGstinStatename, setcompanyGstinStatename,
-        updateBankDetailHandler, companyBankDetailHandler,
+        updateBankDetailHandler, companyBankDetailHandler,uploadImage,
         companyDeleration, setcompanyDeleration, companymailid, setcompanymailid, companyOwner, setcompanyOwner, companydetails, setcompanydetails, companyBankdetails, setcompanyBankdetails,
         companythankyou, setcompanythankyou, companytitle, companyOtherDetailHandeler, companydetailtitle, setcompanydetailtitle, companydetaildesc, setcompanydetaildesc, setval, setboxColors,
         loginuser, setloginuser, loginUserPassword, setloginUserPassword, loginHandler, loginstatus, setloginstatus, loginId, setloginId, loginUserConfirmPassword, setloginUserConfirmPassword, tokenid, settokenid, logoutHandler,

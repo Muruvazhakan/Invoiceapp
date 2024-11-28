@@ -25,6 +25,7 @@ export const saveInvoiceUrl = `${backendUrl}/invoice/createorupdateinvoice`;
 export const getInvoiceIdUrl = `${backendUrl}/invoice/getinvoiceid`;
 export const saveInvoiceIdUrl = `${backendUrl}/invoice/saveinvoiceid`;
 
+export const uploadImage = `${backendUrl}/invoice/getinvoiceid`;
 
 // router.post('/:userid',invoicecont.getallinvoice);
 // router.post('/createorupdateinvoice/:userid',invoicecont.createorupdateinvoice);

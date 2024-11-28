@@ -17,7 +17,9 @@ import { estimateState } from "../../../../Context/EstimatestateContext";
 const EstimateTable = (props) => {
     // const estdetail = useContext(estimateState);
     const estdetail = useContext(estimateState);
-
+    const digit2options = {  maximumFractionDigits: 2   }   
+    const digit3options = {  maximumFractionDigits: 3   } 
+   
 
     useEffect(() => {
         // console.log('estdetail.columns[8].values');
@@ -27,7 +29,7 @@ const EstimateTable = (props) => {
         // console.log(estdetail.columns);
         // let upvcisisvisible = estdetail.columns.map(item =>item.columnname==='UPVC cost Psf')
         // console.log(upvcisisvisible); 
-
+       
     }, [])
     let pvcisisvisible = estdetail.columns[6];
     let upvcisisvisible = estdetail.columns[8];
@@ -114,17 +116,17 @@ const EstimateTable = (props) => {
                                             {/* { ((subitem.hideotheritem && subitem.isotheritem) || (subitem.area <=0)) ? <TableCell ></TableCell> :
                                                 <TableCell align='center' >{subitem.area}</TableCell>} */}
                                             {((subitem.hideotheritem && subitem.isotheritem)) || (subitem.perqsft <= 0) ? <TableCell ></TableCell> :
-                                                <TableCell align='center' >{subitem.perqsft}</TableCell>}
+                                                <TableCell align='center' >{Intl.NumberFormat("en-IN",digit2options).format(subitem.perqsft)}</TableCell>}
                                             {pvcisisvisible.display === true && <>
-                                                <TableCell align='center' >{subitem.pvccostpsf > 0 ? subitem.pvccostpsf : '-'}</TableCell>
-                                                <TableCell align='center' >{subitem.totalpvccost>0? subitem.totalpvccost :'-'}</TableCell></>}
+                                                <TableCell align='center' >{subitem.pvccostpsf > 0 ? Intl.NumberFormat("en-IN",digit2options).format(subitem.pvccostpsf) : '-'}</TableCell>
+                                                <TableCell align='center' >{subitem.totalpvccost>0? Intl.NumberFormat("en-IN",digit2options).format(subitem.totalpvccost) :'-'}</TableCell></>}
                                             {upvcisisvisible.display === true && <>
-                                                <TableCell align='center' >{subitem.upvccostpsf>0? subitem.upvccostpsf : '-'}</TableCell>
-                                                <TableCell align='center' >{subitem.totalupvccost>0? subitem.totalupvccost : '-'}</TableCell></>}
+                                                <TableCell align='center' >{subitem.upvccostpsf>0? Intl.NumberFormat("en-IN",digit3options).format(subitem.upvccostpsf) : '-'}</TableCell>
+                                                <TableCell align='center' >{subitem.totalupvccost>0? Intl.NumberFormat("en-IN",digit2options).format(subitem.totalupvccost) : '-'}</TableCell></>}
                                             {woodisisvisible.display === true &&
                                                 <>
-                                                    <TableCell align='center' >{subitem.woodcostpsf>0? subitem.woodcostpsf : '-'}</TableCell>
-                                                    <TableCell align='center' >{subitem.totalwoodcost>0? subitem.totalwoodcost : '-'}</TableCell></>}
+                                                    <TableCell align='center' >{subitem.woodcostpsf>0? Intl.NumberFormat("en-IN",digit3options).format(subitem.woodcostpsf) : '-'}</TableCell>
+                                                    <TableCell align='center' >{subitem.totalwoodcost>0? Intl.NumberFormat("en-IN",digit2options).format(subitem.totalwoodcost) : '-'}</TableCell></>}
                                             {remarks.display === true &&
                                                 <TableCell align='center' >{subindex.remarks}</TableCell>}
 
@@ -151,17 +153,17 @@ const EstimateTable = (props) => {
                                     <TableCell ></TableCell>
                                     {/* <TableCell ></TableCell> */}
                                     <TableCell ></TableCell>
-                                    <TableCell align='center'>{item.sumtotalsqft}</TableCell>
+                                    <TableCell align='center'>{Intl.NumberFormat("en-IN",digit3options).format(item.sumtotalsqft)}</TableCell>
                                     {pvcisisvisible.display === true && <>
                                         <TableCell></TableCell>
-                                        <TableCell align='center'>{item.sumtotalpvccost}</TableCell></>}
+                                        <TableCell align='center'>{item.sumtotalpvccost>0? Intl.NumberFormat("en-IN",digit2options).format(item.sumtotalpvccost) : '-'}</TableCell></>}
                                     {upvcisisvisible.display === true && <>
                                         <TableCell ></TableCell>
-                                        <TableCell align='center'>{item.sumtotalupvccost}</TableCell></>}
+                                        <TableCell align='center'>{item.sumtotalupvccost>0? Intl.NumberFormat("en-IN",digit2options).format(item.sumtotalupvccost) : '-'}</TableCell></>}
                                     {woodisisvisible.display === true &&
                                         <>
                                             <TableCell ></TableCell>
-                                            <TableCell align='center'>{item.sumtotalwoodcost}</TableCell></>}
+                                            <TableCell align='center'>{item.sumtotalwoodcost>0? Intl.NumberFormat("en-IN",digit2options).format(item.sumtotalwoodcost) : '-'}</TableCell></>}
                                     {remarks.display === true &&
                                         <TableCell ></TableCell>}
 
@@ -170,47 +172,47 @@ const EstimateTable = (props) => {
                             </>
                             )
                         })}
-                        <TableRow className={"table-body tableyellow"}>
+                        <TableRow className={"table-body tabledis"}>
                             <TableCell ></TableCell>
                             <TableCell align='center' sx={{ fontWeight: 700 }}>Grand Total</TableCell>
                             <TableCell ></TableCell>
                             <TableCell ></TableCell>
                             {/* <TableCell ></TableCell> */}
 
-                            <TableCell align='center' sx={{ fontWeight: 700 }}>{estdetail.granttotalsqft}</TableCell>
+                            <TableCell align='center' sx={{ fontWeight: 700 }}>{Intl.NumberFormat("en-IN",digit3options).format(estdetail.granttotalsqft)}</TableCell>
                             {pvcisisvisible.display === true && <>
                                 <TableCell ></TableCell>
-                                <TableCell align='center' sx={{ fontWeight: 700 }}>{estdetail.grandtotalpvccost}</TableCell></>}
+                                <TableCell align='center' sx={{ fontWeight: 700 }}>{estdetail.grandtotalpvccost>0? Intl.NumberFormat("en-IN",digit2options).format(estdetail.grandtotalpvccost) : '-'}</TableCell></>}
                             {upvcisisvisible.display === true && <>
                                 <TableCell ></TableCell>
-                                <TableCell align='center' sx={{ fontWeight: 700 }}>{estdetail.grandtotalupvccost}</TableCell></>}
+                                <TableCell align='center' sx={{ fontWeight: 700 }}>{estdetail.grandtotalupvccost>0? Intl.NumberFormat("en-IN",digit2options).format(estdetail.grandtotalupvccost) : '-'}</TableCell></>}
                             {woodisisvisible.display === true &&
                                 <>
                                     <TableCell ></TableCell>
-                                    <TableCell align='center' sx={{ fontWeight: 700 }}>{estdetail.grandtotalwoodcost}</TableCell></>}
+                                    <TableCell align='center' sx={{ fontWeight: 700 }}>{estdetail.grandtotalwoodcost>0? Intl.NumberFormat("en-IN",digit2options).format(estdetail.grandtotalwoodcost) : '-'}</TableCell></>}
                             {remarks.display === true &&
                                 <TableCell ></TableCell>}
 
                         </TableRow>
                         {estdetail.discountedcheck &&
-                            <TableRow className={"table-body tableyellow"}>
+                            <TableRow className={"table-body  tableyellow"}>
                                 <TableCell ></TableCell>
-                                <TableCell align='center' sx={{ fontWeight: 700 }}>{estdetail.discountedText}</TableCell>
+                                <TableCell align='center' sx={{ fontWeight: 700 }}>{Intl.NumberFormat("en-IN",digit3options).format(estdetail.discountedText)}</TableCell>
                                 <TableCell ></TableCell>
                                 <TableCell ></TableCell>
                                 {/* <TableCell ></TableCell> */}
 
-                                <TableCell align='center' sx={{ fontWeight: 700 }}>{estdetail.granttotalsqft}</TableCell>
+                                <TableCell align='center' sx={{ fontWeight: 700 }}>{Intl.NumberFormat("en-IN",digit3options).format(estdetail.granttotalsqft)}</TableCell>
                                 {pvcisisvisible.display === true && <>
                                     <TableCell ></TableCell>
-                                    <TableCell align='center' sx={{ fontWeight: 700 }}>{estdetail.discountedTotalpvccost}</TableCell></>}
+                                    <TableCell align='center' sx={{ fontWeight: 700 }}>{estdetail.discountedTotalpvccost>0? Intl.NumberFormat("en-IN",digit2options).format(estdetail.discountedTotalpvccost) : '-'}</TableCell></>}
                                 {upvcisisvisible.display === true && <>
                                     <TableCell ></TableCell>
-                                    <TableCell align='center' sx={{ fontWeight: 700 }}>{estdetail.discountedTotalupvccost}</TableCell></>}
+                                    <TableCell align='center' sx={{ fontWeight: 700 }}>{estdetail.discountedTotalupvccost>0? Intl.NumberFormat("en-IN",digit2options).format(estdetail.discountedTotalupvccost) : '-'}</TableCell></>}
                                 {woodisisvisible.display === true &&
                                     <>
                                         <TableCell ></TableCell>
-                                        <TableCell align='center' sx={{ fontWeight: 700 }}>{estdetail.discountedTotalwoodcost}</TableCell></>}
+                                        <TableCell align='center' sx={{ fontWeight: 700 }}>{estdetail.discountedTotalwoodcost>0?  Intl.NumberFormat("en-IN",digit2options).format(estdetail.discountedTotalwoodcost)  : '-'}</TableCell></>}
                                 {remarks.display === true &&
                                     <TableCell ></TableCell>}
 

@@ -35,25 +35,34 @@ const YourDetails = () => {
           <h3>Company Details</h3>
           <Box component="form" sx={{ '& .MuiTextField-root': { m: 1, width: '45ch' } }} >
             {/* companyImage, setcompanyImage */}
-           
+
             {/* {compayDet.companyImage ?
                 <div> change</div>
                
             } */}
-                       
-              <div>
-              {compayDet.companyImage ?
-                <img
-                  className={"img-style"}
-                  alt="Company Images"
-                  src={compayDet.companyImage}
-                   loading="lazy"
-                // src={`${state.newimgurl }`} 
-                />: null}
-              </div> 
 
-              <div className={'img-container'}>
-              {compayDet.companyImage ? "Replace the Company Logo: " : "Select Company Logo: "} 
+            <div>
+              {compayDet.companyImage ?
+                <>
+                  <img
+                    className={"img-style"}
+                    alt="Company Images"
+                    src={compayDet.companyImage}
+                    loading="lazy"
+                  // src={`${state.newimgurl }`} 
+                  />
+
+                  <div>
+                  <Button variant="outlined" color="info" endIcon={<MdOutlineSaveAlt />}
+                    onClick={() => compayDet.uploadImage("upload")} >
+                    Upload Image
+                  </Button>
+                  </div>
+                </> : null}
+            </div>
+
+            <div className={'img-container'}>
+              {compayDet.companyImage ? "Replace the Company Logo: " : "Select Company Logo: "}
               <input type="file" name="image" className="imageselector"
                 onChange={compayDet.selectCompanyImg}
               />
