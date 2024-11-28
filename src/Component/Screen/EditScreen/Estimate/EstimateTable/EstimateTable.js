@@ -197,7 +197,7 @@ const EstimateTable = (props) => {
                         {estdetail.discountedcheck &&
                             <TableRow className={"table-body  tableyellow"}>
                                 <TableCell ></TableCell>
-                                <TableCell align='center' sx={{ fontWeight: 700 }}>{Intl.NumberFormat("en-IN",digit3options).format(estdetail.discountedText)}</TableCell>
+                                <TableCell align='center' sx={{ fontWeight: 700 }}>{estdetail.discountedText}</TableCell>
                                 <TableCell ></TableCell>
                                 <TableCell ></TableCell>
                                 {/* <TableCell ></TableCell> */}
