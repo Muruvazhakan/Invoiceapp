@@ -2,7 +2,7 @@ import React, { useState, useEffect, createContext } from "react";
 import { toast } from "react-toastify";
 import { v4 as uuidv4 } from "uuid";
 import collect from "collect.js";
-
+import * as XLSX from "xlsx";
 import * as localstorage from '../Context/localStorageData';
 import * as estimateDetailsDb from '../DBconnection/estimateDetailsDB';
 import { isbackendconnect } from "../DBconnection/dbproperties";
@@ -34,7 +34,7 @@ const EstimatestateContext = ({ children }) => {
     const [grandtotalwoodcost, setgrandtotalwoodcost] = useState(0);
     const [isNewDataSaveType, setisNewDataSaveType] = useState(true);
     const [orderno, setorderno] = useState(0);
-   
+
     // let row = [{
     //     id: 1123, title: 'MODULAR KITCHEN', values: [{
     //         subid: 1, desc: '1', length: '1', height: '1', area: '1',
@@ -462,6 +462,38 @@ const EstimatestateContext = ({ children }) => {
 
     };
 
+    const handleExportXlsx = () => {
+
+        let filtercolumn = estimateHistoryData.map(data => {
+            return {
+                Estimate_id: data.estimateid,
+                Estimate_date: data.estimatedate,
+                Client_Name: data.clientName,
+                Client_PhoneNo: data.clientPhno,
+                Client_Address: data.clientAdd,
+                Granttotalsqft: data.granttotalsqft,
+                Grandtotalpvccost: data.grandtotalpvccost,
+                Grand_totalupvccost: data.grandtotalupvccost,
+                Grand_totalwoodcost: data.grandtotalwoodcost,
+                Discounted_Text: data.discountedText,
+                Discounted_Totalpvccost: data.discountedTotalpvccost,
+                Discounted_Totalupvccost: data.discountedTotalupvccost,
+                Discounted_Totalwoodcost: data.discountedTotalwoodcost,
+            }
+        })
+        console.log(filtercolumn);
+        // console.log(estimateHistoryData);
+        // console.log(estimateHistoryData.length);
+        var wb = XLSX.utils.book_new(),
+            ws = XLSX.utils.json_to_sheet(filtercolumn);
+
+        XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
+        let date = (new Date());
+        console.log(date);
+        var estimatedDate =
+            date.getDate() + "_" + date.getMonth() + "_" + date.getFullYear();
+        XLSX.writeFile(wb, `MyEstimation_${estimatedDate}.xlsx`);
+    }
     const sortorder = () => {
         const sortedrows = rows.sort((a, b) => a.orderno > b.orderno ? 1 : -1);
         // console.log('sortedrow');
@@ -673,7 +705,7 @@ const EstimatestateContext = ({ children }) => {
         setestimateid(estimatedetails.estimateid);
         setestimatedate(estimatedetails.estimatedate);
         setestimatedate1(estimatedetails.estimatedate1);
-        
+
         if (estimatedetails.columns.length > 0) {
             setcolumns(estimatedetails.columns);
         }
@@ -681,13 +713,13 @@ const EstimatestateContext = ({ children }) => {
             setcolumns(columnNames);
         }
         if (estimatedetails.discountedcheck) {
-        setdiscountedcheck(estimatedetails.discountedcheck);
-        setdiscountedText(estimatedetails.discountedText)
-        setdiscountedTotalupvccost(estimatedetails.discountedTotalupvccost);
-        setdiscountedTotalpvccost(estimatedetails.discountedTotalpvccost);
-        setdiscountedTotalwoodcost(estimatedetails.discountedTotalwoodcost);
-        }      
-        else{
+            setdiscountedcheck(estimatedetails.discountedcheck);
+            setdiscountedText(estimatedetails.discountedText)
+            setdiscountedTotalupvccost(estimatedetails.discountedTotalupvccost);
+            setdiscountedTotalpvccost(estimatedetails.discountedTotalpvccost);
+            setdiscountedTotalwoodcost(estimatedetails.discountedTotalwoodcost);
+        }
+        else {
             setdiscountedcheck(false);
             setdiscountedText('');
             setdiscountedTotalupvccost(0);
@@ -705,7 +737,7 @@ const EstimatestateContext = ({ children }) => {
         remarks, setremarks, addOrUpdateEstimateItemHandler, updateTableView, estimatedate1, setestimatedate1, estimateHistoryData, setestimateHistoryData, addOrGetEstimateHistoryData, dateHandler,
         estimateSingleData, setestimateSingleData, allEstimateEdit, isNewDataSaveType, setisNewDataSaveType, orderno, setorderno, setval, setboxColors, sortorder,
         estimateHistroyUpdateFlag, setestimateHistroyUpdateFlag, isloaded, setisloaded, cleartallEstimateotal, specialItemHandler, discountedcheck, setdiscountedcheck, discountedText, setdiscountedText,
-        discountedTotalupvccost, setdiscountedTotalupvccost, discountedTotalpvccost, setdiscountedTotalpvccost, discountedTotalwoodcost, setdiscountedTotalwoodcost
+        discountedTotalupvccost, setdiscountedTotalupvccost, discountedTotalpvccost, setdiscountedTotalpvccost, discountedTotalwoodcost, setdiscountedTotalwoodcost, handleExportXlsx
     };
 
     return <estimateState.Provider value={estcontext} >{children}</estimateState.Provider>

@@ -5,7 +5,9 @@
   min-height: 97vh;
 }
 
-
+.exportExcelbttn{
+  padding-top: 10px;
+}
 .App-logo {
   height: 40vmin;
   pointer-events: none;

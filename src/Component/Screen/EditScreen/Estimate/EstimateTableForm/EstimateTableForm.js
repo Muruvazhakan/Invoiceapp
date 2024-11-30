@@ -94,7 +94,7 @@ const EstimateTableForm = (props) => {
 
     const [value, setValue] = React.useState(null);
 
-    const onChangeOnAutoComplete = (event, newValue,type) => {
+    const onChangeOnAutoComplete = (event, newValue, type) => {
         // console.log(newValue);
         // console.log(event);
         if (newValue && newValue.inputValue) {
@@ -102,25 +102,25 @@ const EstimateTableForm = (props) => {
             setValue({
                 title: newValue.inputValue,
             });
-            if(type ==='subdesc'){
+            if (type === 'subdesc') {
                 estdetail.setsubdesc(newValue.inputValue);
             }
-            else{
+            else {
                 estdetail.settitle(newValue.inputValue);
             }
-            
+
             // estdetail.settitle(newValue.inputValue);
         } else {
             setValue(newValue);
             // estdetail.settitle(newValue);
             if (newValue != null) {
-                if(type ==='subdesc'){
+                if (type === 'subdesc') {
                     estdetail.setsubdesc(newValue.title);
                 }
-                else{
+                else {
                     estdetail.settitle(newValue.title);
                 }
-                
+
             }
 
 
@@ -421,23 +421,23 @@ const EstimateTableForm = (props) => {
                         <h3>Discount the Grand Total</h3>
 
                         <FormControlLabel
-                                control={
-                                    <Switch
-                                        checked={estdetail.discountedcheck}
-                                        onChange={() => estdetail.setdiscountedcheck(!estdetail.discountedcheck)}
-                                        //  checked={tabledet.ischargedinhsn} onChange={() => tabledet.setischargedinhsn(!tabledet.ischargedinhsn)} 
-                                        name="iscountedPricecheck" />
-                                }
-                                label="Discount Price Enable"
-                            />
+                            control={
+                                <Switch
+                                    checked={estdetail.discountedcheck}
+                                    onChange={() => estdetail.setdiscountedcheck(!estdetail.discountedcheck)}
+                                    //  checked={tabledet.ischargedinhsn} onChange={() => tabledet.setischargedinhsn(!tabledet.ischargedinhsn)} 
+                                    name="iscountedPricecheck" />
+                            }
+                            label="Discount Price Enable"
+                        />
 
                         <Box component="form" sx={{ '& .MuiTextField-root': { m: 1, width: '15ch' } }}>
-                        <TextField required id="outlined-required" label="Discounted Text" value={estdetail.discountedText} 
+                            <TextField required id="outlined-required" label="Discounted Text" value={estdetail.discountedText}
                                 onChange={(e) => setval(e, estdetail.setdiscountedText)}
                                 color={setboxColors(estdetail.discountedText, 'color')}
                                 error={setboxColors(estdetail.discountedText, 'error')}
                             />
-                        <TextField required id="outlined-required" label="Discounted Total Pvc cost" value={estdetail.discountedTotalpvccost} type="number"
+                            <TextField required id="outlined-required" label="Discounted Total Pvc cost" value={estdetail.discountedTotalpvccost} type="number"
                                 onChange={(e) => setval(e, estdetail.setdiscountedTotalpvccost)}
                                 color={setboxColors(estdetail.discountedTotalpvccost, 'color')}
                                 error={setboxColors(estdetail.discountedTotalpvccost, 'error')}
@@ -453,8 +453,8 @@ const EstimateTableForm = (props) => {
                                 color={setboxColors(estdetail.discountedTotalwoodcost, 'color')}
                                 error={setboxColors(estdetail.discountedTotalwoodcost, 'error')}
                             />
-                            
-                             
+
+
                         </Box>
                     </Card>
 
@@ -470,7 +470,10 @@ const EstimateTableForm = (props) => {
 
                         <Button variant="contained" color="warning" size="medium" endIcon={<GrClearOption />}
                             onClick={() => estdetail.cleartallEstimateotal()}>Reset Estimate Screen</Button>
+
+                        
                     </div>
+                    
                 </FormControl>
             </FormGroup>
         </Card>
