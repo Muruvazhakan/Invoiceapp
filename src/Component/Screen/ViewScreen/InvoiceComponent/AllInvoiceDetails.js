@@ -8,6 +8,7 @@ import { Button, CircularProgress, Stack } from "@mui/material";
 import { RiEditCircleFill } from "react-icons/ri";
 import { Link } from "react-router-dom";
 import { CompanyDetail } from "../../../Context/companyDetailContext";
+import { BsFiletypeXlsx } from "react-icons/bs";
 // import img  from '.'
 
 const AllInvoiceDetails = () => {
@@ -15,19 +16,19 @@ const AllInvoiceDetails = () => {
     const invoiceDet = useContext(AllState);
     const companydet = useContext(CompanyDetail);
 
-    useEffect(()=>{
+    useEffect(() => {
         console.log('invoiceHistoryData');
         console.log(invoiceDet.invoiceHistoryData);
         console.log(process.env.REACT_APP_NODE_ENV + 'process.env.REACT_APP_NODE_ENV');
-    },[])
-    
+    }, [])
+
     if (!companydet.isloaded) {
 
         return (
             <Stack sx={{ color: 'grey.500' }} spacing={2} alignItems={"center"} className="spinnerstyle">
-                <CircularProgress color="success" size={30}  />
+                <CircularProgress color="success" size={30} />
             </Stack>
-            )
+        )
     }
 
     return (
@@ -41,13 +42,18 @@ const AllInvoiceDetails = () => {
 
                 </>
                 :
-                <div className="displayelements">
-                    {invoiceDet.invoiceHistoryData.map((item,index) => {
-                        // console.log('item');
-                        // console.log(item);
-                        // console.log(item.estimateid + ' estimateid ' + item.clientName + ' companydet.loginuserid ' +companydet.loginuserid + 'item.userid ' + item.userid );
-                        return <>
-                           
+                < >
+                    <div className="exportExcelbttn" >
+                        <Button variant="contained" color="success" size="medium" endIcon={<BsFiletypeXlsx />}
+                            onClick={() => invoiceDet.handleInvoiceExportXlsx()}>Export Invoice to Excel</Button>
+                    </div>
+                    <div className="displayelements">
+                        {invoiceDet.invoiceHistoryData.map((item, index) => {
+                            // console.log('item');
+                            // console.log(item);
+                            // console.log(item.estimateid + ' estimateid ' + item.clientName + ' companydet.loginuserid ' +companydet.loginuserid + 'item.userid ' + item.userid );
+                            return <>
+
                                 <Card className="  allestimatedisplay" key={index}>
                                     {/* <div className="generaldetails "> */}
 
@@ -60,16 +66,16 @@ const AllInvoiceDetails = () => {
                                             <div className="companyname"> Invoice Date: {item.invoicedate}</div>
 
                                         </li>
-                                        {item.paymentdate  && 
-                                        <li>
-                                            <div className="companyname"> Payment Date: {item.paymentdate}</div>
+                                        {item.paymentdate &&
+                                            <li>
+                                                <div className="companyname"> Payment Date: {item.paymentdate}</div>
 
-                                        </li>}
-                                        {item.paymentmode  && 
-                                        <li>
-                                            <div className="companyname"> Payment Mode: {item.paymentmode}</div>
+                                            </li>}
+                                        {item.paymentmode &&
+                                            <li>
+                                                <div className="companyname"> Payment Mode: {item.paymentmode}</div>
 
-                                        </li>}
+                                            </li>}
                                     </ul>
                                     <ul className="details">
                                         <div className=" ">
@@ -90,7 +96,7 @@ const AllInvoiceDetails = () => {
                                             <h3>Invoice Details</h3>
                                             <li className="">
                                                 Total Amount
-                                            </li> 
+                                            </li>
                                             <div className="nameheigh">{item.totalamt} </div>
                                             <li>
                                                 Total Tax Amount
@@ -98,23 +104,24 @@ const AllInvoiceDetails = () => {
                                         </div>
                                     </ul>
                                     <ul>
-                                    <Link  to={{
-                                        pathname: `/geninvoice`
-                                    }}  
-                                    >
-                                        <Button className="gen-invoice" variant="outlined"
-                                            onClick={() => invoiceDet.selectedInvoiceEdit(item)} endIcon={<RiEditCircleFill />}  >
+                                        <Link to={{
+                                            pathname: `/geninvoice`
+                                        }}
+                                        >
+                                            <Button className="gen-invoice" variant="outlined"
+                                                onClick={() => invoiceDet.selectedInvoiceEdit(item)} endIcon={<RiEditCircleFill />}  >
 
-                                            Edit Invoice</Button>
-                                    </Link>
-                                    {/* </div> */}
+                                                Edit Invoice</Button>
+                                        </Link>
+                                        {/* </div> */}
                                     </ul>
                                 </Card>
-                               
-                                </>
-                    })}
 
-                </div>
+                            </>
+                        })}
+
+                    </div>
+                </>
             }
         </>)
 }

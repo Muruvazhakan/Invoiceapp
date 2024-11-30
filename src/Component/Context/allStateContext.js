@@ -3,6 +3,8 @@ import { toast } from "react-toastify";
 
 import { v4 as uuidv4 } from "uuid";
 import collect from "collect.js";
+import * as XLSX from "xlsx";
+
 import * as localstorage from '../Context/localStorageData';
 import * as invoiceDb from '../DBconnection/invoiceDetailBD';
 
@@ -520,8 +522,8 @@ const AllStateContext = ({ children }) => {
     console.log('loginuserid + loginuserid');
     let datas = {
       authorization: header,
-      ctrate:ctrate,
-      strate:strate,
+      ctrate: ctrate,
+      strate: strate,
       invoiceid: invoiceid,
       invoicedate: invoicedate,
       invoicedate1: invoicedate,
@@ -545,7 +547,7 @@ const AllStateContext = ({ children }) => {
     }
     console.log(datas);
     saveLocalInvoice(datas);
-    
+
     let savedataresponse = await invoiceDb.saveInvoiceBD(datas, loginuserid);
     if (savedataresponse.status !== 200) {
       toast.warn("Issue in saving Invoice");
@@ -592,23 +594,59 @@ const AllStateContext = ({ children }) => {
     setclientAdd(singleinvoice.clientAdd);
     setclientName(singleinvoice.clientName);
     setclientPhno(singleinvoice.clientPhno);
-    console.log('inside ctrate ' );
-    if(singleinvoice.ctrate){
-      let ctratelocal = singleinvoice.ctrate *1;
+    console.log('inside ctrate ');
+    if (singleinvoice.ctrate) {
+      let ctratelocal = singleinvoice.ctrate * 1;
       console.log('inside ctrate ' + ctratelocal);
       setctrate(ctratelocal);
     }
-    if(singleinvoice.strate){
-      let stratelocal = singleinvoice.strate*1;
+    if (singleinvoice.strate) {
+      let stratelocal = singleinvoice.strate * 1;
       console.log('inside ctrate ' + stratelocal);
       setstrate(stratelocal);
     }
-    
+
     // setcolumns(singleinvoice.columns);  
 
 
   }
 
+  const handleInvoiceExportXlsx = () => {
+
+    let filtercolumn = invoiceHistoryData.map(data => {
+      return {
+       
+        Invoice_id: data.invoiceid,
+        Invoice_date: data.invoicedate,
+        Payment_date: data.paymentdate,
+        Payment_mode: data.paymentmode,
+        Client_Name: data.clientName,
+        Client_PhoneNo: data.clientPhno,
+        Client_Address: data.clientAdd,
+        Central_taxrate: data.ctrate,
+        State_taxrate: data.strate,
+        Total_centralaxamt: data.totalcentaxamt,
+        Total_statetaxamt: data.totalstatetaxamt,
+        Total_amount: data.totalamt,
+        Total_amountwords: data.totalamtwords,
+        Total_taxvalueamount: data.totaltaxvalueamt,
+        Total_hsnamount: data.totalhsnamt,
+        Total_hsnamountwords: data.totalhsnamtwords,
+      }
+    })
+    console.log(filtercolumn);
+    // console.log(estimateHistoryData);
+    // console.log(estimateHistoryData.length);
+    var wb = XLSX.utils.book_new(),
+      ws = XLSX.utils.json_to_sheet(filtercolumn);
+
+    XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
+    let date = (new Date());
+    console.log(date);
+    var invoiceDate =
+      date.getDate() + "_" + date.getMonth() + "_" + date.getFullYear();
+    XLSX.writeFile(wb, `MyInvoice_${invoiceDate}.xlsx`);
+  }
   const dateHandler = () => {
     const today = new Date();
     let todaydate;
@@ -626,7 +664,7 @@ const AllStateContext = ({ children }) => {
     // setinvoiceid()
   }
 
-  const cleartallInvoice = () =>{
+  const cleartallInvoice = () => {
 
     setinvoicedate('');
     setinvoiceid('');
@@ -695,7 +733,7 @@ const AllStateContext = ({ children }) => {
     setsubtotalamt, gstCgstitem, setgstCgstitem, ctrate, setctrate, strate, setstrate, ctatm, setctatm, statm, setstatm, totaltaxvalueamt, settotaltaxvalueamt, dateHandler,
     totalcentaxamt, settotalcentaxamt, totalstatetaxamt, settotalstatetaxamt, isinstallationcharge, setisinstallationcharge, otherchargedetail, setOtherchargedetail, editListRows, addOrEditOtherItems,
     invoiceid, setinvoiceid, invoicedate, setinvoicedate, paymentmode, setpaymentmode, paymentdate, setpaymentdate, invoiceidcount, setinvoiceidount, clientName, setclientName, clientPhno, setclientPhno, clientAdd, setclientAdd,
-    invoiceHistoryData, setinvoiceHistoryData, invoiceHistroyUpdateFlag, setinvoiceHistroyUpdateFlag, selectedInvoiceEdit,cleartallInvoice
+    invoiceHistoryData, setinvoiceHistoryData, invoiceHistroyUpdateFlag, setinvoiceHistroyUpdateFlag, selectedInvoiceEdit, cleartallInvoice, handleInvoiceExportXlsx
   };
   return <AllState.Provider value={context}>{children}</AllState.Provider>;
 }
