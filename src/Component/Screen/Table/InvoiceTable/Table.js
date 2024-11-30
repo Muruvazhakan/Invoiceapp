@@ -16,7 +16,9 @@ import { AllState } from "../../../Context/allStateContext";
 const Tables = (props) =>{
 
   const tabledetails=useContext(AllState);
-    
+  const digit2options = {  maximumFractionDigits: 2   }   
+  const digit3options = {  maximumFractionDigits: 3   } 
+ 
     // const list=[{
     //     sno:1,
     //     desc:"Description of Goods",
@@ -116,7 +118,7 @@ const Tables = (props) =>{
                 <TableCell className="table-header-td">{item.rate}</TableCell>
                 <TableCell className="table-header-td">{item.per}</TableCell>
                
-                <TableCell className="table-header-td">{item.amount}</TableCell>
+                <TableCell className="table-header-td">{Intl.NumberFormat("en-IN",digit2options).format(item.amount)}</TableCell>
                 { props.screen ==="update" && 
                 <>
                 <TableCell className="table-edit" onClick={() =>tabledetails.editListRows(item,"update")} >
@@ -146,7 +148,7 @@ const Tables = (props) =>{
             <TableCell ></TableCell>
             <TableCell ></TableCell>
             <TableCell ></TableCell>
-            <TableCell sx={{fontWeight:700}} >{tabledetails.totalsubamt}</TableCell>
+            <TableCell sx={{fontWeight:700}} >{Intl.NumberFormat("en-IN",digit2options).format(tabledetails.totalsubamt)}</TableCell>
 
             
        </TableRow>
@@ -166,7 +168,7 @@ const Tables = (props) =>{
               <TableCell ></TableCell>
               <TableCell ></TableCell>
               <TableCell ></TableCell>         
-              <TableCell >{item.otherdesctaxamt}</TableCell>
+              <TableCell >{Intl.NumberFormat("en-IN",digit2options).format(item.otherdesctaxamt)}</TableCell>
               { props.screen ==="update" && 
                 <>
                 <TableCell className="table-edit" onClick={() =>tabledetails.addOrEditOtherItems(item,"update")} >
@@ -195,7 +197,7 @@ const Tables = (props) =>{
             <TableCell ></TableCell>
             <TableCell ></TableCell>
             <TableCell ></TableCell>
-            <TableCell sx={{fontWeight:700}} >{tabledetails.totalcentaxamt}</TableCell>
+            <TableCell sx={{fontWeight:700}} >{Intl.NumberFormat("en-IN",digit2options).format(tabledetails.totalcentaxamt)}</TableCell>
 
             
        </TableRow>
@@ -211,7 +213,7 @@ const Tables = (props) =>{
             <TableCell ></TableCell>
             <TableCell ></TableCell>
             <TableCell ></TableCell>
-            <TableCell sx={{fontWeight:700}} >{tabledetails.totalstatetaxamt}</TableCell>
+            <TableCell sx={{fontWeight:700}} >{Intl.NumberFormat("en-IN",digit2options).format(tabledetails.totalstatetaxamt)}</TableCell>
 
             
        </TableRow>
@@ -241,7 +243,7 @@ const Tables = (props) =>{
             <TableCell ></TableCell>
             <TableCell ></TableCell>
             <TableCell ></TableCell>
-            <TableCell sx={{fontSize:18,fontWeight:700}} className="table-amount">₹{tabledetails.totalamt}</TableCell>
+            <TableCell sx={{fontSize:18,fontWeight:700}} className="table-amount">₹{Intl.NumberFormat("en-IN",digit2options).format(tabledetails.totalamt)}</TableCell>
        </TableRow>
         </TableBody>
       </Table>
@@ -288,12 +290,12 @@ const Tables = (props) =>{
             >
             <TableCell className="table-header-td">{key+1}</TableCell>
             <TableCell className="table-header-td">{item.hsndesc}</TableCell>
-            <TableCell className="table-header-td">{item.taxvalue}</TableCell>
+            <TableCell className="table-header-td">{Intl.NumberFormat("en-IN",digit2options).format(item.taxvalue)}</TableCell>
             <TableCell className="table-header-td">{item.ctrate}</TableCell>
-            <TableCell className="table-header-td">{item.ctamount}</TableCell>
+            <TableCell className="table-header-td">{Intl.NumberFormat("en-IN",digit2options).format(item.ctamount)}</TableCell>
             <TableCell className="table-header-td">{item.strate}</TableCell>
-            <TableCell className="table-header-td">{item.stamount}</TableCell>
-            <TableCell className="table-header-td">{item.amount}</TableCell>
+            <TableCell className="table-header-td">{Intl.NumberFormat("en-IN",digit2options).format(item.stamount)}</TableCell>
+            <TableCell className="table-header-td">{Intl.NumberFormat("en-IN",digit2options).format(item.amount)}</TableCell>
        </TableRow>
           ))}
 
@@ -307,12 +309,12 @@ const Tables = (props) =>{
             >
             <TableCell></TableCell>
             <TableCell>{item.otheritemdesc}</TableCell>
-            <TableCell >{item.otherdesctaxamt}</TableCell>
+            <TableCell >{Intl.NumberFormat("en-IN",digit2options).format(item.otherdesctaxamt)}</TableCell>
             <TableCell >{item.ctrate}</TableCell>
-            <TableCell >{item.ctamount}</TableCell>
+            <TableCell >{Intl.NumberFormat("en-IN",digit2options).format(item.ctamount)}</TableCell>
             <TableCell >{item.strate}</TableCell>
-            <TableCell >{item.stamount}</TableCell>
-            <TableCell>{item.otherdescamt}</TableCell>
+            <TableCell >{Intl.NumberFormat("en-IN",digit2options).format(item.stamount)}</TableCell>
+            <TableCell>{Intl.NumberFormat("en-IN",digit2options).format(item.otherdescamt)}</TableCell>
        </TableRow>}
        </>
       )} 
@@ -323,12 +325,12 @@ const Tables = (props) =>{
             >
             <TableCell ></TableCell>
             <TableCell sx={{fontSize:18,fontWeight:700}}>Total</TableCell>
-            <TableCell sx={{fontSize:18,fontWeight:700}}>{tabledetails.totaltaxvalueamt}</TableCell>
+            <TableCell sx={{fontSize:18,fontWeight:700}}>{Intl.NumberFormat("en-IN",digit2options).format(tabledetails.totaltaxvalueamt)}</TableCell>
             <TableCell ></TableCell>
-            <TableCell sx={{fontSize:18,fontWeight:700}}>{tabledetails.totalcentaxamt}</TableCell>
+            <TableCell sx={{fontSize:18,fontWeight:700}}>{Intl.NumberFormat("en-IN",digit2options).format(tabledetails.totalcentaxamt)}</TableCell>
             <TableCell ></TableCell>
-            <TableCell sx={{fontSize:18,fontWeight:700}}>{tabledetails.totalstatetaxamt}</TableCell>
-            <TableCell sx={{fontSize:18,fontWeight:700}}>₹{tabledetails.totalhsnamt}</TableCell>
+            <TableCell sx={{fontSize:18,fontWeight:700}}>{Intl.NumberFormat("en-IN",digit2options).format(tabledetails.totalstatetaxamt)}</TableCell>
+            <TableCell sx={{fontSize:18,fontWeight:700}}>₹{Intl.NumberFormat("en-IN",digit2options).format(tabledetails.totalhsnamt)}</TableCell>
        </TableRow>
         </TableBody>
       </Table>
