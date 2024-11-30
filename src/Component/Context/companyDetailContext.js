@@ -473,7 +473,7 @@ const CompanyDetailContext = ({ children }) => {
     };
 
     const getAlldataOnLogin = () => {
-        setisloaded(false);
+        
         let companyTermsAndCondition = localstore.getCompanyTermsAndConditionHandler();
 
         if (companyTermsAndCondition !== null) {
@@ -520,7 +520,7 @@ const CompanyDetailContext = ({ children }) => {
             setcompanyBankdetails(companyBankdetail);
         }
 
-
+        setisloaded(false);
 
     }
 
