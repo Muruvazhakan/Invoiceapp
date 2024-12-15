@@ -175,10 +175,10 @@ export const saveCompanyTermsAndConditionDetails = async (termsAndCondition,user
 export const uploadCompanyLogo = async (companylogo,userid) => {
     //console.log(`${dbprop.saveCompanyTermsAndConditionDetailsUrl}/${userid}` + ' dbprop.saveCompanyTermsAndConditionDetailsUrl');
     console.log("companylogo");
-    console.log(companylogo);
+    console.log(companylogo + `${dbprop.uploadCompanyLogo}`);
     let response;
     try {
-        response = await axios.post(`${dbprop.uploadCompanyLogo}/${userid}`,companylogo, imageconfig);
+        response = await axios.post(`${dbprop.uploadCompanyLogo}`,companylogo, imageconfig);
         // response = await axios.post(`${dbprop.uploadCompanyLogo}`,"", imageconfig);
         console.log(response);
         return response;
