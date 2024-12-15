@@ -1,7 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { v4 as uuidv4 } from "uuid";
-
 import * as Datas from '../Context/Datas';
 import * as localstore from './localStorageData';
 import * as companyDetailsDB from '../DBconnection/companyDetailsDB';
@@ -9,7 +8,7 @@ import * as estimateDetailsDb from '../DBconnection/estimateDetailsDB';
 import * as invoiceDetailsDb from '../DBconnection/invoiceDetailBD';
 import { estimateState } from "./EstimatestateContext";
 import { AllState } from "./allStateContext";
-import { isbackendconnect,uploadImage } from "../DBconnection/dbproperties";
+import { isbackendconnect, imageBaseUrl } from "../DBconnection/dbproperties";
 import axios from "axios";
 export const CompanyDetail = createContext();
 
@@ -33,6 +32,7 @@ const CompanyDetailContext = ({ children }) => {
     const [companyName, setcompanyName] = useState('');
     const [uploadimg, setuploadimg] = useState('');
     const [companyImage, setcompanyImage] = useState('');
+    const [companyImageUrl, setcompanyImageUrl] = useState('');
     const [companyTagLine, setcompanyTagLine] = useState('');
     const [companyAddress, setcompanyAddress] = useState('');
     const [companyPhno, setcompanyPhno] = useState('Contact:');
@@ -180,42 +180,52 @@ const CompanyDetailContext = ({ children }) => {
     }
 
     const uploadImage = async (props) => {
+        setisloaded(false);
         const formData = new FormData();
         // formData.append('avatar', state.uploadimg);
         // formData.append('avatar', {avatar:state.uploadimg,filename:'22.jpg'});
-        let  filename=companyName+'.jpg'; // img no
-        formData.append('uploadtype', props.screen);
-        formData.append('filename', filename);
-    
-        // console.log("insertImg from UploadComponent " +  state.uploadimg + state.newimgurl +props.selectedImage,props.screen);
-        // console.log(state.newimgurl);
-        // console.log( formData);
-        // uploadFile();
-        await    axios.post(uploadImage, formData, {
-            headers: {
-                'content-type': 'multipart/form-data'
-            }
-            }).then((res) => {
-            //    console.log('File uploaded!' );
-            //    console.log(res);
-            if (res.data == 'Image Added')
-            {
-                alert('Image Added');
-                // setstate('');
-                window.location.reload(false);
-            }
-            else if (res.data == 'Updated')
-            {
-                alert('Updated Image');
-                // setstate('');
-                window.location.reload(false);
-            }
-            else {
-                console.log('Issue');
-                alert('Issue in Uploading'); 
-            }
-           }) 
 
+        console.log(props); //companyImage
+        let filename = companyName.trim() + '.jpg'; // img no
+        filename = filename.replace(/\s+/g, '');
+        console.log(filename + " filename");
+        formData.append('filename', filename);
+        formData.append('file', uploadimg)//companyImage, uploadimg
+
+        // console.log("insertImg from UploadComponent " +  state.uploadimg + state.newimgurl +props.selectedImage,props.screen);
+        console.log("uploadimg");
+        console.log(uploadimg);
+        console.log("formData");
+        console.log(formData);
+
+        let response = await companyDetailsDB.uploadCompanyLogo(formData, loginuserid);
+        //   const response = await axios.post(`${uploadCompanyLogo}/${loginuserid}`, formData, {
+        //     headers: {
+        //       "Content-Type": "multipart/form-data",
+        //     },
+        //   });
+        console.log('response .. ');
+        console.log(response);
+        if (response.status === 200) {
+            // setstate('');
+            toast.success("Image Uploaded!");
+            // const reader = new FileReader();
+            // reader.addEventListener('load', () => {
+            //     localStorage.setItem('recent-image', reader.result);
+            //     localstore.addOrGetCompanyImage(companyImage, "save");
+            // })
+            // reader.readAsDataURL(file);
+            localstore.addOrGetCompanyImage(companyImage, "save");
+            setcompanyImageUrl(`${imageBaseUrl}/${response.data}`);
+            console.log(companyImageUrl);
+            //BillEdge/CompanyLogo/ITsolution.jpg
+            setcompanyImage(`${imageBaseUrl}/${response.data}`);
+            // setuploadimg(event.target.files[0]);           
+        }
+        else {
+            toast.warning(" Something went wrong" + response.data);
+        }
+        setisloaded(true);
     }
 
     const loginHandler = async (type) => {
@@ -316,12 +326,12 @@ const CompanyDetailContext = ({ children }) => {
 
     }
 
-    const selectCompanyImg = (event) =>{
-       //console.log('event.target.files[0]');
-       //console.log(event.target.files[0]);
+    const selectCompanyImg = (event) => {
+        //console.log('event.target.files[0]');
+        //console.log(event.target.files[0]);
         setcompanyImage(URL.createObjectURL(event.target.files[0]));
         setuploadimg(event.target.files[0]);
-            
+
     }
     const getAlldataFromDB = async () => {
 
@@ -369,15 +379,22 @@ const CompanyDetailContext = ({ children }) => {
 
             let companyBasicDetailslocal = localstore.getCompanyHandler();
             let companyBasicDetailsfromdb = await companyDetailsDB.getCompanyBasicDetails(loginuserid);
-            //console.log('companyBasicDetailslocal ');
-            //console.log(companyBasicDetailslocal);
+            console.log('companyBasicDetailslocal ');
+            console.log(companyBasicDetailslocal);
 
             if (companyBasicDetailsfromdb.status === 200) {
                 if (!companyBasicDetailslocal || (companyBasicDetailsfromdb && companyBasicDetailsfromdb.data[0].companyAddress !== companyBasicDetailslocal.companyAddress)) {
                     localstore.addOrUpdateCompanyHandler(companyBasicDetailsfromdb.data[0], "save", companyBasicDetailsfromdb.data[0].estimateidcount);
-                    //console.log("company basic details updated");
+                    console.log("company basic details updated");
+                    console.log(companyBasicDetailsfromdb);
                     refreshdata = true;
                 }
+                // let getCompanyImage = await localstore.addOrGetCompanyImage('', "get");
+                // console.log('getCompanyImage');
+                // console.log(getCompanyImage);
+                // if(getCompanyImage){
+                //     setcompanyImage(getCompanyImage);
+                // }
             }
             else {
                 toast.warning(companyBasicDetailsfromdb.data);
@@ -390,7 +407,7 @@ const CompanyDetailContext = ({ children }) => {
             //console.log('companyBankDetailslocal ');
             //console.log(companyBankDetailslocal);
 
-            if (companyBasicDetailsfromdb.status === 200) {
+            if (companyBankDetailsfromdb.status === 200) {
                 if (!companyBankDetailslocal || (companyBankDetailsfromdb.data
                     && companyBankDetailsfromdb.data.length > companyBankDetailslocal.length)) {
                     localstore.addOrGetCompanyBankDetailHandler(companyBankDetailsfromdb.data, "save");
@@ -462,7 +479,6 @@ const CompanyDetailContext = ({ children }) => {
                 // console.log(invoicedetailscontext);
 
             }
-
         }
 
         if (refreshdata === true) {
@@ -473,7 +489,7 @@ const CompanyDetailContext = ({ children }) => {
     };
 
     const getAlldataOnLogin = () => {
-        
+
         let companyTermsAndCondition = localstore.getCompanyTermsAndConditionHandler();
 
         if (companyTermsAndCondition !== null) {
@@ -481,12 +497,12 @@ const CompanyDetailContext = ({ children }) => {
             setcompanydetails(companyTermsAndCondition);
         }
         let companydetail = localstore.getCompanyHandler();
-        // console.log('companydetail local');
-        // console.log(companydetail);
+        console.log('companydetail getAlldataOnLogin');
+        console.log(companydetail);
         // console.log('companydetail local2 ' + companydetail.companyImage);
         // console.log('companydetail uploadimg ' + companydetail.uploadimg);
         if (companydetail !== null) {
-            
+
             setcompanyName(companydetail.companyName);
             setcompanyImage(companydetail.companyImage);
             setuploadimg(companydetail.uploadimg);
@@ -595,11 +611,12 @@ const CompanyDetailContext = ({ children }) => {
         }
         if (funcs === 'addOrUpdateCompanyHandler') {
             let estimateidcount = localstore.addOrGetEstimateid('', 'get');
+            console.log(item);
             localstore.addOrUpdateCompanyHandler(item, type, estimateidcount);
             if (isbackendconnect) {
                 let companyBasicDetails = await companyDetailsDB.saveCompanyBasicDetails(item, loginuserid, estimateidcount);
-                // console.log('companyBasicDetails');
-                // console.log(companyBasicDetails);
+                console.log('companyBasicDetails');
+                console.log(companyBasicDetails);
                 if (companyBasicDetails.status !== 201 && companyBasicDetails.status !== 200) {
                     toast.error(companyBasicDetails.data + " in saving DB");
                 }
@@ -663,6 +680,10 @@ const CompanyDetailContext = ({ children }) => {
         setisloaded(false);
     }, []);
 
+    useEffect(() =>{
+        console.log(companyImageUrl);
+
+    },[companyImageUrl])
     useEffect(() => {
         getAlldataOnLogin();
         if (isbackendconnect) {
@@ -677,12 +698,12 @@ const CompanyDetailContext = ({ children }) => {
     const compDet = {
         companyName, setcompanyName,
         companyTagLine, setcompanyTagLine, companyAddress, setcompanyAddress, companyPhno, setcompanyPhno, companyGstin, setcompanyGstin, companyGstinStatename, setcompanyGstinStatename,
-        updateBankDetailHandler, companyBankDetailHandler,uploadImage,
+        updateBankDetailHandler, companyBankDetailHandler, uploadImage,
         companyDeleration, setcompanyDeleration, companymailid, setcompanymailid, companyOwner, setcompanyOwner, companydetails, setcompanydetails, companyBankdetails, setcompanyBankdetails,
         companythankyou, setcompanythankyou, companytitle, companyOtherDetailHandeler, companydetailtitle, setcompanydetailtitle, companydetaildesc, setcompanydetaildesc, setval, setboxColors,
         loginuser, setloginuser, loginUserPassword, setloginUserPassword, loginHandler, loginstatus, setloginstatus, loginId, setloginId, loginUserConfirmPassword, setloginUserConfirmPassword, tokenid, settokenid, logoutHandler,
         companyBankdetailtitle, setcompanyBankdetailtitle, companyBankdetailvalue, setcompanyBankdetailvalue, companyBankdetailIsVisible, setcompanyBankdetailIsVisible, companydetailIsVisible, setcompanydetailIsVisible,
-        loginuserid, setloginuserid, saveHandler, getAlldataFromDB, getAlldataOnLogin, isloaded, setisloaded,companyImage, setcompanyImage,selectCompanyImg,uploadimg, setuploadimg
+        loginuserid, setloginuserid, saveHandler, getAlldataFromDB, getAlldataOnLogin, isloaded, setisloaded, companyImage, setcompanyImage, selectCompanyImg, uploadimg, setuploadimg
     };
 
     return <CompanyDetail.Provider value={compDet} >{children}</CompanyDetail.Provider>;

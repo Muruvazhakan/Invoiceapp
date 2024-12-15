@@ -129,3 +129,13 @@ export const addOrGetInvoiceid = (props, type) => {
         return JSON.parse(localStorage.getItem('companyinvoiceid'));
     }
 }
+
+export const addOrGetCompanyImage = (props, type) => {
+    //console.log(props);
+    if (type === 'save') {
+        localStorage.setItem('companyinvoiceid', JSON.stringify(props));
+    }
+    else if (type === 'get') {
+        return JSON.parse(localStorage.getItem('companyinvoiceid'));
+    }
+}

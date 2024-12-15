@@ -1,6 +1,7 @@
 export const isbackendconnect = true;
-// export const backendUrl = "http://localhost:4000";
-export const backendUrl = "https://billedgebackend.onrender.com";
+export const backendUrl = "http://localhost:4000";
+export const imageBaseUrl = "https://storage.googleapis.com/helpone-9bf33.appspot.com";
+// export const backendUrl = "https://billedgebackend.onrender.com";
 export const userLoginUrl = `${backendUrl}/user/login`;
 export const userSigninUrl = `${backendUrl}/user/signin`;
 
@@ -12,7 +13,8 @@ export const saveCompanyBankDetailsUrl = `${backendUrl}/user/savecompanybank`;
 
 export const getCompanyTermsAndConditionDetailsUrl = `${backendUrl}/user/gettermsandconditioncompany`;
 export const saveCompanyTermsAndConditionDetailsUrl = `${backendUrl}/user/savetermsandconditioncompany`;
-
+export const uploadCompanyLogo = `${backendUrl}/uploadCompanyLogo`;
+// export const uploadCompanyLogo = `${backendUrl}/upload`;
 export const getEstimateUrl = `${backendUrl}/estimate`;
 export const saveEstimateUrl = `${backendUrl}/estimate/createorupateestimate`;
 
@@ -25,7 +27,7 @@ export const saveInvoiceUrl = `${backendUrl}/invoice/createorupdateinvoice`;
 export const getInvoiceIdUrl = `${backendUrl}/invoice/getinvoiceid`;
 export const saveInvoiceIdUrl = `${backendUrl}/invoice/saveinvoiceid`;
 
-export const uploadImage = `${backendUrl}/invoice/getinvoiceid`;
+
 
 // router.post('/:userid',invoicecont.getallinvoice);
 // router.post('/createorupdateinvoice/:userid',invoicecont.createorupdateinvoice);

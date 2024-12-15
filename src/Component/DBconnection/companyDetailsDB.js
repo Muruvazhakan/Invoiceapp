@@ -2,7 +2,16 @@ import * as dbprop from './dbproperties';
 import axios from 'axios';
 const config = {
     headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
         'Content-Type': 'application/json',
+    },
+};
+const imageconfig = {
+    headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+        "Content-Type": "multipart/form-data",
     },
 };
 export const loginUser = async (username, userpassword) => {
@@ -156,6 +165,22 @@ export const saveCompanyTermsAndConditionDetails = async (termsAndCondition,user
     try {
         response = await axios.post(`${dbprop.saveCompanyTermsAndConditionDetailsUrl}/${userid}`,termsAndCondition, config);
         //console.log(response);
+        return response;
+    } catch (err) {
+        console.log(err);
+        return err;
+    }
+};
+
+export const uploadCompanyLogo = async (companylogo,userid) => {
+    //console.log(`${dbprop.saveCompanyTermsAndConditionDetailsUrl}/${userid}` + ' dbprop.saveCompanyTermsAndConditionDetailsUrl');
+    console.log("companylogo");
+    console.log(companylogo);
+    let response;
+    try {
+        response = await axios.post(`${dbprop.uploadCompanyLogo}/${userid}`,companylogo, imageconfig);
+        // response = await axios.post(`${dbprop.uploadCompanyLogo}`,"", imageconfig);
+        console.log(response);
         return response;
     } catch (err) {
         console.log(err);
