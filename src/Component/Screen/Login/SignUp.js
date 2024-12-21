@@ -1,4 +1,4 @@
-import { Box, Button, TextField } from "@mui/material";
+import { Box, Button, InputLabel, MenuItem, Select, TextField } from "@mui/material";
 import React, { useContext } from "react";
 import './Login.css';
 import { MdLogin } from "react-icons/md";
@@ -28,18 +28,52 @@ const SignUp = (props) => {
                     error={logindet.setboxColors(logindet.loginUserPassword, 'error')}
                 />
                 <div>
-                <TextField required id="outlined-required" label="Confirm Password" value={logindet.loginUserConfirmPassword} type="password"
-                    onChange={(e) => logindet.setval(e, logindet.setloginUserConfirmPassword)}
-                    color={logindet.setboxColors(logindet.loginUserConfirmPassword, 'color')}
-                    error={logindet.setboxColors(logindet.loginUserConfirmPassword, 'error')}
-                /></div>
-                <TextField required id="outlined-required" label="Token id" value={logindet.tokenid} 
+                    <TextField required id="outlined-required" label="Confirm Password" value={logindet.loginUserConfirmPassword} type="password"
+                        onChange={(e) => logindet.setval(e, logindet.setloginUserConfirmPassword)}
+                        color={logindet.setboxColors(logindet.loginUserConfirmPassword, 'color')}
+                        error={logindet.setboxColors(logindet.loginUserConfirmPassword, 'error')}
+                    /></div>
+                <TextField required id="outlined-required" label="Token id" value={logindet.tokenid}
                     onChange={(e) => logindet.setval(e, logindet.settokenid)}
                     color={logindet.setboxColors(logindet.tokenid, 'color')}
                     error={logindet.setboxColors(logindet.tokenid, 'error')}
                 />
+                <div>
+                    <TextField required id="outlined-required" label="Role" value={logindet.role}
+                        onChange={(e) => logindet.setval(e, logindet.setrole)}
+                        color={logindet.setboxColors(logindet.role, 'color')}
+                        error={logindet.setboxColors(logindet.role, 'error')}
+                    />
+                </div>
+                {/* <TextField required id="outlined-required" label="Role" value={logindet.type}
+                    onChange={(e) => logindet.setval(e, logindet.setrole)}
+                    color={logindet.setboxColors(logindet.role, 'color')}
+                    error={logindet.setboxColors(logindet.role, 'error')}
+                /> */}
+                
+                <div>
+                    <TextField required id="outlined-required" label="Oraganisation Name" value={logindet.oraganisationName}
+                        onChange={(e) => logindet.setval(e, logindet.setoraganisationName)}
+                        color={logindet.setboxColors(logindet.oraganisationName, 'color')}
+                        error={logindet.setboxColors(logindet.oraganisationName, 'error')}
+                    />
+                </div>
+                <div>
+                    <InputLabel id="demo-simple-select-label">Type</InputLabel>
+                    <Select
+                        labelId="Type"
+                        id="Type"
+                        value={logindet.type}
+                        label="Type"
+                        onChange={(e) => logindet.setval(e, logindet.settype)}
+
+                    >
+                        <MenuItem value={"temp"}>Temperary</MenuItem>
+                        <MenuItem value={"perm"}>Permanent</MenuItem>
+                    </Select>
+                </div>
                 <div className="loginbutton">
-                    <Button variant="contained" color="success" endIcon={< GoSignIn />} 
+                    <Button variant="contained" color="success" endIcon={< GoSignIn />}
                         onClick={(e) => logindet.loginHandler('sigin')}
                     >SignUp</Button>
                 </div>

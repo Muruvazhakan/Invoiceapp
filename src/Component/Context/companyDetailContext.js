@@ -46,6 +46,9 @@ const CompanyDetailContext = ({ children }) => {
 
     const [isloaded, setisloaded] = useState(true);
 
+    const [role, setrole] = useState('');
+    const [type, settype] = useState('temp');
+    const [oraganisationName, setoraganisationName] = useState('');
 
     // let companydet = [
     //     { id: 1, title: 'Prices', isvisible: true, desc: 'Prices quoted are strictly as per the size, quantity and design SPECIFIED only, Any change in either one will result in change in quoted price, If any change in Government taxes & regulations it will be implicated in pricing as per actual.' },
@@ -61,7 +64,6 @@ const CompanyDetailContext = ({ children }) => {
 
 
     const [companydetails, setcompanydetails] = useState([]);
-
     const [companydetailtitle, setcompanydetailtitle] = useState('');
     const [companydetaildesc, setcompanydetaildesc] = useState('');
     const [companydetailIsVisible, setcompanydetailIsVisible] = useState(false);
@@ -228,7 +230,7 @@ const CompanyDetailContext = ({ children }) => {
         setisloaded(true);
     }
 
-    const loginHandler = async (type) => {
+    const loginHandler = async (logintype) => {
         //console.log('login handler' + loginuser.length +'loginuser.length ' +loginUserPassword.length );
 
         if (loginuser.length > 0 && loginUserPassword.length > 0) {
@@ -251,7 +253,7 @@ const CompanyDetailContext = ({ children }) => {
             const encrypted_pass = crypt("salt", loginUserPassword);
             //console.log('encrypted_pass');
             //console.log(encrypted_pass);
-            if (type === 'login') {
+            if (logintype === 'login') {
 
                 userExsist = await companyDetailsDB.loginUser(loginuser, encrypted_pass);
                 //console.log(userExsist);
@@ -269,7 +271,10 @@ const CompanyDetailContext = ({ children }) => {
 
                 } else if (userExsist.status === 224) {
                     toast.warning("User Not Found");
-                } else {
+                }  else if (userExsist.status === 250) {
+                    toast.warning("Sorry! Your account Expired");
+                }
+                else {
                     toast.warning(userExsist.data);
                 }
             } else {
@@ -281,7 +286,7 @@ const CompanyDetailContext = ({ children }) => {
                     toast.error("Invalid Token");
                     return;
                 }
-                userExsist = await companyDetailsDB.siginUser(loginuser, encrypted_pass);
+                userExsist = await companyDetailsDB.siginUser(loginuser, encrypted_pass,type,role,oraganisationName);
                 //console.log(userExsist);
                 if (userExsist.data === "User already exist") {
                     toast.error(" User already exist");
@@ -703,7 +708,8 @@ const CompanyDetailContext = ({ children }) => {
         companythankyou, setcompanythankyou, companytitle, companyOtherDetailHandeler, companydetailtitle, setcompanydetailtitle, companydetaildesc, setcompanydetaildesc, setval, setboxColors,
         loginuser, setloginuser, loginUserPassword, setloginUserPassword, loginHandler, loginstatus, setloginstatus, loginId, setloginId, loginUserConfirmPassword, setloginUserConfirmPassword, tokenid, settokenid, logoutHandler,
         companyBankdetailtitle, setcompanyBankdetailtitle, companyBankdetailvalue, setcompanyBankdetailvalue, companyBankdetailIsVisible, setcompanyBankdetailIsVisible, companydetailIsVisible, setcompanydetailIsVisible,
-        loginuserid, setloginuserid, saveHandler, getAlldataFromDB, getAlldataOnLogin, isloaded, setisloaded, companyImage, setcompanyImage, selectCompanyImg, uploadimg, setuploadimg
+        loginuserid, setloginuserid, saveHandler, getAlldataFromDB, getAlldataOnLogin, isloaded, setisloaded, companyImage, setcompanyImage, selectCompanyImg, uploadimg, setuploadimg,
+        role, setrole,type, settype,oraganisationName, setoraganisationName
     };
 
     return <CompanyDetail.Provider value={compDet} >{children}</CompanyDetail.Provider>;
