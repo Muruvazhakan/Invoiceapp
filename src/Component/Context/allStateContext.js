@@ -47,6 +47,8 @@ const AllStateContext = ({ children }) => {
 
   const [invoiceid, setinvoiceid] = useState('');
   const [cleardetailoption, setcleardetailoption] = useState(true);
+  const [gstincluded, setgstincluded] = useState(true);
+  const [displayhsntable, setdisplayhsntable] = useState(false);
   const [invoiceidcount, setinvoiceidount] = useState(1000);
   const [invoicedate, setinvoicedate] = useState('');
   const [paymentmode, setpaymentmode] = useState('');
@@ -146,7 +148,15 @@ const AllStateContext = ({ children }) => {
       sethsn(item.hsn);
       setquantity(item.quantity);
       setrateinctax(item.rateinctax);
-      setrate(item.rate);
+     
+      if(gstincluded){
+        let orgctrate = ((item.rate * 1)/(1+ (ctrate/100)+(strate/100))).toFixed(2);
+        setrate(orgctrate);
+      }
+      else{
+        setrate(item.rate);
+      }
+     
       setper(item.per);
       setdisc(item.disc);
       setamount(item.amount);
@@ -266,31 +276,46 @@ const AllStateContext = ({ children }) => {
         item.hsndesc = item.hsndesc;
         item.taxvalue = item.taxvalue;
         item.ctrate = ctrate;
-
-        item.ctamount = (((item.taxvalue * 1) * ctrate * 1) / 100).toFixed(2);
         item.strate = strate;
-        item.stamount = (((item.taxvalue * 1) * strate * 1) / 100).toFixed(2);
+        if(gstincluded){
+          let orgctrate = ((item.taxvalue * 1)/(1+ (ctrate/100)+(strate/100))).toFixed(2);
+          // console.log(" orgctrate after "+orgctrate);
+          item.ctamount = (((orgctrate * 1) * ctrate * 1) / 100).toFixed(2);  
+          // console.log(" ctamount after "+item.ctamount);
+          item.stamount = (((orgctrate * 1) * strate * 1) / 100).toFixed(2);
+          // console.log(" stamount after "+item.stamount);
+          item.amount = ((((orgctrate * 1) * ctrate * 1) / 100) + (((orgctrate * 1) * strate * 1) / 100)).toFixed(2)
 
-        item.amount = ((((item.taxvalue * 1) * ctrate * 1) / 100) + (((item.taxvalue * 1) * strate * 1) / 100)).toFixed(2)
+          // console.log(" item ");
+          // console.log(item);
+        }
+        else{
+          item.ctamount = (((item.taxvalue * 1) * ctrate * 1) / 100).toFixed(2);
+          item.stamount = (((item.taxvalue * 1) * strate * 1) / 100).toFixed(2);
+          item.amount = ((((item.taxvalue * 1) * ctrate * 1) / 100) + (((item.taxvalue * 1) * strate * 1) / 100)).toFixed(2)
+        }
 
       });
-      // console.log(" hsnlist after "+hsnlist);
+      console.log(" hsnlist after "+hsnlist);
 
       // console.log(" otherchargedetail before " + otherchargedetail);
       otherchargedetail.map((item) => {
-
-
         item.otheritemdesc = item.otheritemdesc;
         item.otherdesctaxamt = item.otherdesctaxamt;
         item.ctrate = ctrate;
-
-        item.ctamount = (((item.otherdesctaxamt * 1) * ctrate * 1) / 100).toFixed(2);
         item.strate = strate;
-        item.stamount = (((item.otherdesctaxamt * 1) * strate * 1) / 100).toFixed(2);
-
-        item.otherdescamt = ((((item.otherdesctaxamt * 1) * ctrate * 1) / 100) + (((item.otherdesctaxamt * 1) * strate * 1) / 100)).toFixed(2)
-
-
+        if(gstincluded){
+          let orgctrate = ((item.otherdesctaxamt * 1)/(1+ (ctrate/100)+(strate/100))).toFixed(2);
+          item.ctamount = (((orgctrate * 1) * ctrate * 1) / 100).toFixed(2);
+          item.stamount = (((orgctrate * 1) * strate * 1) / 100).toFixed(2);
+          item.otherdescamt = ((((orgctrate * 1) * ctrate * 1) / 100) + (((orgctrate * 1) * strate * 1) / 100)).toFixed(2)
+        }
+        else{
+          item.ctamount = (((item.otherdesctaxamt * 1) * ctrate * 1) / 100).toFixed(2);
+          item.stamount = (((item.otherdesctaxamt * 1) * strate * 1) / 100).toFixed(2);
+          item.otherdescamt = ((((item.otherdesctaxamt * 1) * ctrate * 1) / 100) + (((item.otherdesctaxamt * 1) * strate * 1) / 100)).toFixed(2)
+        }
+       
       });
       // console.log(" otherchargedetail after " + otherchargedetail);
 
@@ -309,8 +334,14 @@ const AllStateContext = ({ children }) => {
       settotalstatetaxamt((collect(hsnlist.map((item) => item.stamount)).sum() + (collect(allItemsstateinclueshsn).sum())).toFixed(2));
       settotaltaxvalueamt(((collect(hsnlist.map((item) => item.taxvalue)).sum()) + (collect(allItemstaxinclueshsn).sum())).toFixed(2));
       // settotalamt(((totalhsnamt)+(totalsubamt)).toFixed(2));
-      settotalamt(((collect(hsnlist.map((item) => item.amount)).sum()) + (collect(list.map((item) => item.amount)).sum()) + (collect(allItemamount).sum()) + (collect(allItemsinclueshsn).sum())).toFixed(2));
-      // settotalamt(((collect(hsnlist.map((item) => item.amount)).sum())+(collect(list.map((item) => item.amount)).sum())+(collect(allItemsexclueshsn).sum())).toFixed(2));
+      if(gstincluded){
+        settotalamt(((collect(list.map((item) => item.amount)).sum()) + (collect(allItemamount).sum())).toFixed(2));
+      }
+      else{
+        settotalamt(((collect(hsnlist.map((item) => item.amount)).sum()) + (collect(list.map((item) => item.amount)).sum()) + (collect(allItemamount).sum()) + (collect(allItemsinclueshsn).sum())).toFixed(2));
+     
+      }
+     // settotalamt(((collect(hsnlist.map((item) => item.amount)).sum())+(collect(list.map((item) => item.amount)).sum())+(collect(allItemsexclueshsn).sum())).toFixed(2));
       // settotalhsnamt(((collect(hsnlist.map((item) => item.amount)).sum())+(collect(allItemsinclueshsn.map((item) => item.taxvalue)).sum())).toFixed(2));
       // settotalcentaxamt(((collect(hsnlist.map((item) => item.ctamount)).sum())+(collect(allItemsinclueshsn.map((item) => item.ctamount)).sum())).toFixed(2));
       // settotalstatetaxamt(((collect(hsnlist.map((item) => item.ctamount)).sum())+(collect(allItemsinclueshsn.map((item) => item.ctamount)).sum())).toFixed(2));
@@ -327,13 +358,38 @@ const AllStateContext = ({ children }) => {
     let val;
     if (quantity !== 0 || rateinctax !== 0 || disc !== 0) {
       val = (rateinctax - ((disc * rateinctax) / 100));
-      setrate(val.toFixed(2));
+      let calamt = quantity*val;
+      if(gstincluded){
+        let orgctrate = ((val * 1)/(1+ (ctrate/100)+(strate/100))).toFixed(2);
+        setrate(orgctrate);
+        
+        setamount(calamt.toFixed(2));
+      }
+      else{
+        setrate(val.toFixed(2));
+        
+      }
     }
+    else if(disc == 0 && rateinctax !== 0){
+      if(gstincluded){
+        let calamt = quantity*rateinctax;
+        let orgctrate = ((val * 1)/(1+ (ctrate/100)+(strate/100))).toFixed(2);
+        setrate(orgctrate);
+        setamount(calamt.toFixed(2));
+      }
+      else{
+      setrate(rateinctax.toFixed(2));
+      }
+    }
+     
     // console.log(rate + " rate " + val);
-  }, [disc, rateinctax]);
+  }, [disc, rateinctax,quantity]);
 
   const addOrUpdateItemHandler = (opt) => {
-    if (desc.length !== 0 && hsn.length !== 0 && quantity > 0 && rateinctax > 0 && rate > 0 && per.length !== 0 && disc > 0 && amount > 0 && ctrate > 0 && strate > 0) {
+    if (desc.length !== 0 && hsn.length !== 0 && quantity > 0 && rateinctax > 0 && rate > 0 && per.length !== 0 && amount > 0 
+      // && ctrate > 0 && strate > 0
+
+    ) {
       if (opt === 'Update') {
         toast.success("Item updated");
       } else {
@@ -715,11 +771,20 @@ const AllStateContext = ({ children }) => {
   useEffect(() => {
     // console.log('amount');
     // console.log(tabledet);
-    let val;
-    if (quantity !== 0 || rateinctax !== 0 || disc !== 0 || rate !== 0) {
-      val = (rate * quantity);
-      setamount(val.toFixed(2));
+    if(!gstincluded){
+      let val;
+      if (quantity !== 0 || rateinctax !== 0 || disc !== 0 || rate !== 0) {
+        if(gstincluded){
+          val = (rateinctax * quantity);
+        }
+        else{
+          val = (rate * quantity);
+        }
+       
+        setamount(val.toFixed(2));
+      }
     }
+    
     // console.log(rate + " rate " + val);
   }, [rate, quantity])
 
@@ -730,10 +795,10 @@ const AllStateContext = ({ children }) => {
     singleitem, setsingleitem, list, setList, totalamt, settotalamt, totalamtwords, settotalamtwords, singlehsnitem, setsinglehsnitem, setval, setboxColors, cleardetailoption, setcleardetailoption,
     desc, setdesc, hsn, sethsn, quantity, setquantity, rateinctax, setrateinctax, rate, setrate, per, setper, disc, setdisc, amount, setamount, otherdesc, setotherdesc, ischargedinhsn, setischargedinhsn, otherdescamt, setotherdescamt,
     totalhsnamt, settotalhsnamt, hsnlist, sethsnList, totalhsnamtwords, settotalhsnamtwords, totalsubamt, saveInvoice, addOrUpdateItemHandler, clearlistcontent, clearOtherDetails, addOtherItems,
-    setsubtotalamt, gstCgstitem, setgstCgstitem, ctrate, setctrate, strate, setstrate, ctatm, setctatm, statm, setstatm, totaltaxvalueamt, settotaltaxvalueamt, dateHandler,
+    setsubtotalamt, gstCgstitem, setgstCgstitem, ctrate, setctrate, strate, setstrate, ctatm, setctatm, statm, setstatm, totaltaxvalueamt, settotaltaxvalueamt, dateHandler,gstincluded, setgstincluded,
     totalcentaxamt, settotalcentaxamt, totalstatetaxamt, settotalstatetaxamt, isinstallationcharge, setisinstallationcharge, otherchargedetail, setOtherchargedetail, editListRows, addOrEditOtherItems,
     invoiceid, setinvoiceid, invoicedate, setinvoicedate, paymentmode, setpaymentmode, paymentdate, setpaymentdate, invoiceidcount, setinvoiceidount, clientName, setclientName, clientPhno, setclientPhno, clientAdd, setclientAdd,
-    invoiceHistoryData, setinvoiceHistoryData, invoiceHistroyUpdateFlag, setinvoiceHistroyUpdateFlag, selectedInvoiceEdit, cleartallInvoice, handleInvoiceExportXlsx
+    invoiceHistoryData, setinvoiceHistoryData, invoiceHistroyUpdateFlag, setinvoiceHistroyUpdateFlag, selectedInvoiceEdit, cleartallInvoice, handleInvoiceExportXlsx,displayhsntable, setdisplayhsntable
   };
   return <AllState.Provider value={context}>{children}</AllState.Provider>;
 }

@@ -99,6 +99,19 @@ const TableForm = () => {
                                 />
 
                                 {tabledet.cleardetailoption ? <div className="notcharge"> "Form will be cleared after adding" </div> : "This section is to avoid the clearing the details in the form"}
+                                <FormControlLabel
+                                    control={
+                                        <Switch checked={tabledet.gstincluded} onChange={() => tabledet.setgstincluded(!tabledet.gstincluded)} name="gstaddeditem" />
+                                    }
+                                    label="GST added Item"
+                                />
+
+                                <FormControlLabel
+                                    control={
+                                        <Switch checked={tabledet.displayhsntable} onChange={() => tabledet.setdisplayhsntable(!tabledet.displayhsntable)} name="displayhsntable" />
+                                    }
+                                    label="Display HSN Table"
+                                />
                             </div>
 
                             <div className="button-warn">
