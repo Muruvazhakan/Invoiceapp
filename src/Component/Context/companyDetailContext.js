@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, { createContext, useContext, useEffect, useState, useTimeout } from "react";
 import { toast } from "react-toastify";
 import { v4 as uuidv4 } from "uuid";
 import * as Datas from '../Context/Datas';
@@ -264,6 +264,9 @@ const CompanyDetailContext = ({ children }) => {
                     setloginuserid(userExsist.data);
                     localstore.addOrGetUserdetail(loginuser, 'loginuser', "save");
                     localstore.addOrGetUserdetail(userExsist.data, 'userid', "save");
+                    // localstore.addOrGetUserdetail(type, 'type', "save");
+                    // localstore.addOrGetUserdetail(role, 'role', "save");
+                    // localstore.addOrGetUserdetail(oraganisationName, 'oraganisationName', "save");
                     //console.log(userExsist.data);
                     setloginstatus(true);
                     // window.location.href = '/';
@@ -271,8 +274,8 @@ const CompanyDetailContext = ({ children }) => {
 
                 } else if (userExsist.status === 224) {
                     toast.warning("User Not Found");
-                }  else if (userExsist.status === 250) {
-                    toast.warning("Sorry! Your account Expired");
+                } else if (userExsist.status === 250) {
+                    toast.warning("Sorry! Your account Expired. Contact your System Admin.");
                 }
                 else {
                     toast.warning(userExsist.data);
@@ -286,7 +289,7 @@ const CompanyDetailContext = ({ children }) => {
                     toast.error("Invalid Token");
                     return;
                 }
-                userExsist = await companyDetailsDB.siginUser(loginuser, encrypted_pass,type,role,oraganisationName);
+                userExsist = await companyDetailsDB.siginUser(loginuser, encrypted_pass, type, role, oraganisationName);
                 //console.log(userExsist);
                 if (userExsist.data === "User already exist") {
                     toast.error(" User already exist");
@@ -338,6 +341,13 @@ const CompanyDetailContext = ({ children }) => {
         setuploadimg(event.target.files[0]);
 
     }
+
+    const handletimeoutLogin = (delayDuration) => {
+        // Use setTimeout to simulate a delayed action
+        setTimeout(() => {
+            logoutHandler();
+        }, delayDuration);
+    };
     const getAlldataFromDB = async () => {
 
 
@@ -384,8 +394,8 @@ const CompanyDetailContext = ({ children }) => {
 
             let companyBasicDetailslocal = localstore.getCompanyHandler();
             let companyBasicDetailsfromdb = await companyDetailsDB.getCompanyBasicDetails(loginuserid);
-            console.log('companyBasicDetailslocal ');
-            console.log(companyBasicDetailslocal);
+            console.log('companyBasicDetailsfromdb ');
+            console.log(companyBasicDetailsfromdb);
 
             if (companyBasicDetailsfromdb.status === 200) {
                 if (!companyBasicDetailslocal || (companyBasicDetailsfromdb && companyBasicDetailsfromdb.data[0].companyAddress !== companyBasicDetailslocal.companyAddress)) {
@@ -400,6 +410,13 @@ const CompanyDetailContext = ({ children }) => {
                 // if(getCompanyImage){
                 //     setcompanyImage(getCompanyImage);
                 // }
+            } else if (companyBasicDetailsfromdb.status === 250) {
+                toast.warning("Sorry! Your account Expired, You will be logout in 5 sec");
+                // useTimeout(()=>{
+                //     logoutHandler();
+                // }, 5000)
+                handletimeoutLogin(5000);
+                return false;
             }
             else {
                 toast.warning(companyBasicDetailsfromdb.data);
@@ -685,10 +702,10 @@ const CompanyDetailContext = ({ children }) => {
         setisloaded(false);
     }, []);
 
-    useEffect(() =>{
+    useEffect(() => {
         console.log(companyImageUrl);
 
-    },[companyImageUrl])
+    }, [companyImageUrl])
     useEffect(() => {
         getAlldataOnLogin();
         if (isbackendconnect) {
@@ -709,7 +726,7 @@ const CompanyDetailContext = ({ children }) => {
         loginuser, setloginuser, loginUserPassword, setloginUserPassword, loginHandler, loginstatus, setloginstatus, loginId, setloginId, loginUserConfirmPassword, setloginUserConfirmPassword, tokenid, settokenid, logoutHandler,
         companyBankdetailtitle, setcompanyBankdetailtitle, companyBankdetailvalue, setcompanyBankdetailvalue, companyBankdetailIsVisible, setcompanyBankdetailIsVisible, companydetailIsVisible, setcompanydetailIsVisible,
         loginuserid, setloginuserid, saveHandler, getAlldataFromDB, getAlldataOnLogin, isloaded, setisloaded, companyImage, setcompanyImage, selectCompanyImg, uploadimg, setuploadimg,
-        role, setrole,type, settype,oraganisationName, setoraganisationName
+        role, setrole, type, settype, oraganisationName, setoraganisationName
     };
 
     return <CompanyDetail.Provider value={compDet} >{children}</CompanyDetail.Provider>;
