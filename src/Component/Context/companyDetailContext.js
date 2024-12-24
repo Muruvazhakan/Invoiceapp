@@ -285,11 +285,11 @@ const CompanyDetailContext = ({ children }) => {
                     toast.error("Password is not match iwth Confirm Password");
                     return;
                 }
-                if (tokenid !== 'Billedge123') {
-                    toast.error("Invalid Token");
-                    return;
-                }
-                userExsist = await companyDetailsDB.siginUser(loginuser, encrypted_pass, type, role, oraganisationName);
+                // if (tokenid !== 'Billedge123') {
+                //     toast.error("Invalid Token");
+                //     return;
+                // }
+                userExsist = await companyDetailsDB.siginUser(loginuser, encrypted_pass, type, role, oraganisationName,tokenid);
                 //console.log(userExsist);
                 if (userExsist.data === "User already exist") {
                     toast.error(" User already exist");

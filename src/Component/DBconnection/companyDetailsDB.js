@@ -34,7 +34,7 @@ export const loginUser = async (username, userpassword) => {
 
 
 
-export const siginUser = async (username, userpassword,type,role,oraganisationName) => {
+export const siginUser = async (username, userpassword,type,role,oraganisationName,tokenid) => {
     //console.log(username, userpassword);
     // fetch(dbprop.userSigninUrl,
     //     {
@@ -62,6 +62,7 @@ export const siginUser = async (username, userpassword,type,role,oraganisationNa
         type:type,
         role:role,
         oraganisationName:oraganisationName,
+        tokenid:tokenid
     };
     //console.log(data);
     let response
