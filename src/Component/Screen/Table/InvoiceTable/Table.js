@@ -105,7 +105,7 @@ const Tables = (props) => {
             {tabledetails.list.map((item, index) => {
 
               return (
-                <TableRow className={item.index % 2 === 0 ? "table-body tablegrey" : "table-body"} key={item.id}
+                <TableRow className={index % 2 !== 0 ? "table-body table-subcolum" : "table-body"} key={item.id}
                 // sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                 >
                   <TableCell align='center' className="table-header-td">{index + 1}</TableCell>

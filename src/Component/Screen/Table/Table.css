@@ -2,7 +2,7 @@
     /* padding: 2%; */
 }
 .table-total{
-    background-color: rgba(237, 233, 233, 0.614);
+    background: linear-gradient(#a3d8a4, #b8e1727d);
     font-weight: 900;
 }
 .table-style{
@@ -13,9 +13,10 @@
     font-size: 20;
 }
 .table-header{
-    background-color: rgb(197 197 197 / 59%);
-   
-   
+    background:linear-gradient(#e1e23e, #8fd3cf94);
+}
+.table-subcolum{
+    background-color: #e4e4e4bc;
 }
 .table-edit{
     cursor: pointer;

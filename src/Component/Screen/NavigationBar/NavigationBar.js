@@ -1,15 +1,36 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 import { IconContext } from 'react-icons/lib';
 import * as Datas from '../../Context/Datas';
+import { FaBars, FaTimes } from 'react-icons/fa';
 import { PiInvoiceThin } from "react-icons/pi";
 import './NavigationBar.css';
 import { CompanyDetail } from "../../Context/companyDetailContext";
 
 const NavigationBar = (props) => {
 
+  const [button, setButton] = useState(true);
+  const showButton = () => {
+    if (window.innerWidth <= 960) {
+      setButton(false);
+    } else {
+      setButton(true);
+    }
+  };
+  const closeMobileMenu = () => setClick(false);
+  useEffect(() => {
+    showButton();
+    window.addEventListener('resize', showButton);
+    return (
+      window.removeEventListener('resize', showButton)
+    )
+
+  }, []);
   const logindet = useContext(CompanyDetail);
+  // const [state, setState] = useState(initialState);
+  const [click, setClick] = useState(false);
+  const handleClick = () => setClick(!click);
  
 
   return <>
@@ -30,8 +51,10 @@ const NavigationBar = (props) => {
               BillEdge</div>
 
           </Link>
-
-          <ul className={'nav-menu  nav-active  active'}>
+          <div className='menu-icon' onClick={handleClick}>
+              {click ? <FaTimes /> : <FaBars />}
+            </div>
+          <ul className={click ? 'nav-menu  nav-active  active' : 'nav-menu '}>
             {logindet.loginstatus ?
               <>
                 {Datas.navigationbarcontent.map((item, index) => {
@@ -46,7 +69,7 @@ const NavigationBar = (props) => {
                         < Link className='nav-links' to={{ pathname: item.altname }}
                           duration={1000} activeClass="nav-active" spy={true} offset={-50}
                           smooth
-                        // onClick={closeMobileMenu}
+                        onClick={closeMobileMenu}
                         >
                           {item.screenname}
                         </Link>
@@ -92,10 +115,13 @@ const NavigationBar = (props) => {
 
 
             <div className='nav-item menu-icon2'
-            //   onClick={handleClick}
+              onClick={handleClick}
             >
 
             </div>
+            <div className='nav-item menu-icon2' onClick={handleClick}>
+                {click ? <FaTimes size="40px" /> : <FaBars />}
+              </div>
             {/* {state.useredits === '66656d6364' ?
                   <div className='nav-item nav-links'
                 //    onClick={handleLogout}

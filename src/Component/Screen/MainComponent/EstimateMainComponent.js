@@ -26,12 +26,21 @@ const EstimateMainComponent = (props) => {
         // console.log(location.state.estimate);
 
     },[])
-
+    const Gridmenu = (props) => {
+        return <>
+            {window.innerWidth <= 960 ?
+                <>  {props.children} </>
+                : <Grid container spacing={2}>
+                    {props.children}
+                </Grid>
+            }
+        </>
+    }
     const componentRef = useRef();
     return <>
      <h2>Estimate Generator</h2>
         <Box sx={{ flexGrow: 1 }}>
-            <Grid container spacing={2}>
+            <Gridmenu>
                 <Grid item xs={7}>
 
                     <Card >
@@ -48,7 +57,7 @@ const EstimateMainComponent = (props) => {
                     </>
                 </Grid>
 
-            </Grid>
+            </Gridmenu>
             <EstimateDetailEdit />
             <Card>
                 <ReactToPrint

@@ -12,10 +12,21 @@ import Tables from "../Table/InvoiceTable/Table";
 
 const InvoiceMainComponent = (props) => {
     const componentRef = useRef();
+    const Gridmenu = (props) => {
+        return <>
+            {window.innerWidth <= 960 ?
+                <>  {props.children} </>
+                : <Grid container spacing={2}>
+                    {props.children}
+                </Grid>
+            }
+        </>
+    }
+
     return <>
     <h2>Generate Invoice</h2>
         <Box sx={{ flexGrow: 1 }}>
-            <Grid container spacing={2}>
+            <Gridmenu>
                 <Grid item xs={7}>
 
                     <Card >
@@ -29,7 +40,7 @@ const InvoiceMainComponent = (props) => {
                     </>
                 </Grid>
 
-            </Grid>
+            </Gridmenu>
             <Card>
                 <ReactToPrint
                     trigger={() => (
