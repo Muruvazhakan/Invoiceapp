@@ -13,15 +13,16 @@ import { CompanyDetail } from "../../Context/companyDetailContext";
 const DisplayAllComponent = (props) => {
 
     const logindet = useContext(CompanyDetail);
-    
+
 
     return <>
+        {!logindet.isloaded &&
+            <Stack sx={{ color: 'grey.500' }} spacing={2} alignItems={"center"} className="spinnerstyle">
+                <CircularProgress color="success" size={30} />
+            </Stack>
+        }
         <div className=" displayelements" >
-            {!logindet.isloaded &&
-                <Stack sx={{ color: 'grey.500' }} spacing={2} alignItems={"center"} className="spinnerstyle">
-                    <CircularProgress color="success" size={30} />
-                </Stack>
-            }
+
             {Datas.navigationbarcontent.map((items, index) => {
                 if (items.screenname !== "Home") {
                     return (
