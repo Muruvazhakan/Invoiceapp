@@ -2,7 +2,7 @@ import companyperson from '../../Image/companydetails.png';
 import invocie from '../../Image/invoice.png';
 import estimation from '../../Image/estimationgen.png';
 import allestimation from '../../Image/allestimation.png';
-import allinvoice from '../../Image/allinvoice.png';
+import allinvoice from '../../Image/allinvoiceg.png';
 
 export const navigationbarcontent = [
     {
