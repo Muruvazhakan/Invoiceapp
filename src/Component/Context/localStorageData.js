@@ -139,3 +139,125 @@ export const addOrGetCompanyImage = (props, type) => {
         return JSON.parse(localStorage.getItem('companyinvoiceid'));
     }
 }
+
+export const addOrGetstockHistoryData = (props, type) => {
+    // console.log(props);
+
+    if (type === 'save') {
+        localStorage.setItem('companystockhistory', JSON.stringify(props));
+        //  console.log('companyinvoicehistory details');
+        // let sto = JSON.parse(localStorage.getItem('companyinvoicehistory'));
+        // console.log(sto);
+    }
+    else if (type === 'get') {
+        return JSON.parse(localStorage.getItem('companystockhistory'));
+    }
+    else {
+        localStorage.removeItem('companystockhistory');
+    }
+}
+
+export const addOrGetSaleStockHistoryData = (props, type) => {
+    // console.log(props);
+
+    if (type === 'save') {
+        localStorage.setItem('companysalestockhistory', JSON.stringify(props));
+        //  console.log('companyinvoicehistory details');
+        // let sto = JSON.parse(localStorage.getItem('companyinvoicehistory'));
+        // console.log(sto);
+    }
+    else if (type === 'get') {
+        return JSON.parse(localStorage.getItem('companysalestockhistory'));
+    }
+    else {
+        localStorage.removeItem('companysalestockhistory');
+    }
+}
+
+export const addOrGetAllClientData = (props, type) => {
+    // console.log(props);
+
+    if (type === 'save') {
+        localStorage.setItem('allClientData', JSON.stringify(props));
+        //  console.log('companyinvoicehistory details');
+        // let sto = JSON.parse(localStorage.getItem('companyinvoicehistory'));
+        // console.log(sto);
+    }
+    else if (type === 'get') {
+        return JSON.parse(localStorage.getItem('allClientData'));
+    }
+    else {
+        localStorage.removeItem('allClientData');
+    }
+}
+
+export const addOrGetAllStockData = (props, type) => {
+    // console.log(props);
+
+    if (type === 'save') {
+        localStorage.setItem('allStockData', JSON.stringify(props));
+        //  console.log('companyinvoicehistory details');
+        // let sto = JSON.parse(localStorage.getItem('companyinvoicehistory'));
+        // console.log(sto);
+    }
+    else if (type === 'get') {
+        return JSON.parse(localStorage.getItem('allStockData'));
+    }
+    else {
+        localStorage.removeItem('allStockData');
+    }
+}
+
+export const addOrGetAllHistoryStockData = (props, type) => {
+    // console.log(props);
+
+    if (type === 'save') {
+        localStorage.setItem('allHistoryStockData', JSON.stringify(props));
+        //  console.log('companyinvoicehistory details');
+        // let sto = JSON.parse(localStorage.getItem('companyinvoicehistory'));
+        // console.log(sto);
+    }
+    else if (type === 'get') {
+        return JSON.parse(localStorage.getItem('allHistoryStockData'));
+    }
+    else {
+        localStorage.removeItem('allHistoryStockData');
+    }
+}
+
+export const addOrGetAllHistorySalesStockData = (props, type) => {
+    // console.log(props);
+
+    if (type === 'save') {
+        localStorage.setItem('allHistorySalesStockData', JSON.stringify(props));
+        //  console.log('companyinvoicehistory details');
+        // let sto = JSON.parse(localStorage.getItem('companyinvoicehistory'));
+        // console.log(sto);
+    }
+    else if (type === 'get') {
+        return JSON.parse(localStorage.getItem('allHistorySalesStockData'));
+    }
+    else {
+        localStorage.removeItem('allHistorySalesStockData');
+    }
+}
+
+export const addOrGetSaleStockid = (props, type) => {
+    //console.log(props);
+    if (type === 'save') {
+        localStorage.setItem('salestocksid', JSON.stringify(props));
+    }
+    else if (type === 'get') {
+        return JSON.parse(localStorage.getItem('salestocksid'));
+    }
+}
+
+export const addOrGetStockid = (props, type) => {
+    //console.log(props);
+    if (type === 'save') {
+        localStorage.setItem('stocksid', JSON.stringify(props));
+    }
+    else if (type === 'get') {
+        return JSON.parse(localStorage.getItem('stocksid'));
+    }
+}

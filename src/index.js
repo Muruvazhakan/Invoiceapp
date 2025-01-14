@@ -7,10 +7,12 @@ import reportWebVitals from './reportWebVitals';
 import CompanyDetailContext from './Component/Context/companyDetailContext';
 import AllStateContext from './Component/Context/allStateContext';
 import EstimatestateContext from './Component/Context/EstimatestateContext';
+import StocksContext from './Component/Context/StocksContex';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
+    <StocksContext>
     <EstimatestateContext>
 
       <AllStateContext>
@@ -20,6 +22,7 @@ root.render(
       </AllStateContext>
 
     </EstimatestateContext>
+    </StocksContext>
   </React.StrictMode>
 );
 

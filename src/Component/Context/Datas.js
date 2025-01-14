@@ -46,7 +46,13 @@ export const navigationbarcontent = [
         displays: true,
         image: allestimation
     },
-
+    {
+        screenname: 'Stocks',
+        links: '/stocks',
+        altname: 'stocks',
+        displays: true,
+        image: allestimation
+    },
 ];
 
 export const userLogin = [

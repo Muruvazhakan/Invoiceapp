@@ -31,6 +31,7 @@ const CompanyDetailContext = ({ children }) => {
 
     const [companyName, setcompanyName] = useState('');
     const [uploadimg, setuploadimg] = useState('');
+    const [useraccess, setuseraccess] = useState('');
     const [companyImage, setcompanyImage] = useState('');
     const [companyImageUrl, setcompanyImageUrl] = useState('');
     const [companyTagLine, setcompanyTagLine] = useState('');
@@ -48,6 +49,7 @@ const CompanyDetailContext = ({ children }) => {
 
     const [role, setrole] = useState('');
     const [type, settype] = useState('temp');
+    const [tier, settier] = useState('normal');
     const [oraganisationName, setoraganisationName] = useState('');
 
     // let companydet = [
@@ -260,10 +262,16 @@ const CompanyDetailContext = ({ children }) => {
                 if (userExsist.status === 200) {
                     toast.success(" Welcome " + loginuser + "!");
                     // localStorage.setItem('loginuser', loginuser);
-                    //console.log(userExsist[0].userid + ' userExsist.userid');
-                    setloginuserid(userExsist.data);
-                    localstore.addOrGetUserdetail(loginuser, 'loginuser', "save");
-                    localstore.addOrGetUserdetail(userExsist.data, 'userid', "save");
+                    console.log("userExsist");
+                    console.log(userExsist);
+                    setloginuserid(userExsist.data.userid);
+                    let tier = userExsist.data.tier !== null ? userExsist.data.tier : null;
+                    if (tier != null) {
+                        settier(tier);
+                        localstore.addOrGetUserdetail(tier, 'tier', "save");
+                    }
+                    localstore.addOrGetUserdetail(loginuser, 'loginuser', "save");;
+                    localstore.addOrGetUserdetail(userExsist.data.userid, 'userid', "save");
                     // localstore.addOrGetUserdetail(type, 'type', "save");
                     // localstore.addOrGetUserdetail(role, 'role', "save");
                     // localstore.addOrGetUserdetail(oraganisationName, 'oraganisationName', "save");
@@ -289,7 +297,7 @@ const CompanyDetailContext = ({ children }) => {
                 //     toast.error("Invalid Token");
                 //     return;
                 // }
-                userExsist = await companyDetailsDB.siginUser(loginuser, encrypted_pass, type, role, oraganisationName,tokenid);
+                userExsist = await companyDetailsDB.siginUser(loginuser, encrypted_pass, type, role, oraganisationName, tokenid);
                 //console.log(userExsist);
                 if (userExsist.data === "User already exist") {
                     toast.error(" User already exist");
@@ -321,6 +329,7 @@ const CompanyDetailContext = ({ children }) => {
 
         localstore.addOrGetUserdetail('', 'loginuser', 'remove');
         localstore.addOrGetUserdetail('', 'userid', 'remove');
+        localstore.addOrGetUserdetail('', 'tier', 'remove');
         localstore.addOrUpdateCompanyHandler('', 'remove');
         localstore.addOrUpdateCompanyTermsAndConditionHandler('', 'remove');
         localstore.addOrGetCompanyBankDetailHandler('', 'remove');
@@ -689,12 +698,14 @@ const CompanyDetailContext = ({ children }) => {
 
         let useralreadyloggedin = localstore.addOrGetUserdetail('', 'loginuser', "get");
         let loginuserids = localstore.addOrGetUserdetail('', 'userid', "get");
-
+        let tieruserids = localstore.addOrGetUserdetail('', 'tier', "get");
         //console.log(loginuserids);
         if (useralreadyloggedin !== null && useralreadyloggedin !== '') {
             setloginstatus(true);
             setloginuserid(loginuserids);
             setloginuser(useralreadyloggedin);
+            if (tieruserids !== null)
+                settier(tieruserids);
             // toast.success('Welcome Back ' +useralreadyloggedin);
         }
         //    //console.log(useralreadyloggedin);
@@ -725,8 +736,8 @@ const CompanyDetailContext = ({ children }) => {
         companythankyou, setcompanythankyou, companytitle, companyOtherDetailHandeler, companydetailtitle, setcompanydetailtitle, companydetaildesc, setcompanydetaildesc, setval, setboxColors,
         loginuser, setloginuser, loginUserPassword, setloginUserPassword, loginHandler, loginstatus, setloginstatus, loginId, setloginId, loginUserConfirmPassword, setloginUserConfirmPassword, tokenid, settokenid, logoutHandler,
         companyBankdetailtitle, setcompanyBankdetailtitle, companyBankdetailvalue, setcompanyBankdetailvalue, companyBankdetailIsVisible, setcompanyBankdetailIsVisible, companydetailIsVisible, setcompanydetailIsVisible,
-        loginuserid, setloginuserid, saveHandler, getAlldataFromDB, getAlldataOnLogin, isloaded, setisloaded, companyImage, setcompanyImage, selectCompanyImg, uploadimg, setuploadimg,
-        role, setrole, type, settype, oraganisationName, setoraganisationName
+        loginuserid, setloginuserid, saveHandler, getAlldataFromDB, getAlldataOnLogin, isloaded, setisloaded, companyImage, setcompanyImage, selectCompanyImg, uploadimg, setuploadimg, useraccess, setuseraccess,
+        role, setrole, type, settype, oraganisationName, setoraganisationName, tier, settier
     };
 
     return <CompanyDetail.Provider value={compDet} >{children}</CompanyDetail.Provider>;

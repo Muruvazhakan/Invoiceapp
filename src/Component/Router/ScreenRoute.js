@@ -15,6 +15,9 @@ import Developer from "../Screen/ViewScreen/Developer";
 import { ToastContainer } from "react-toastify";
 import AllEstimateDetails from "../Screen/ViewScreen/EstimateComponent/AllEstimateDetails";
 import AllInvoiceDetails from "../Screen/ViewScreen/InvoiceComponent/AllInvoiceDetails";
+import AddStocks from "../Screen/AddStocks/AddStocks";
+import AllStocks from "../Screen/MainComponent/AllStocks/AllStocks";
+import ListOfAddedStocks from "../Screen/AddStocks/ListOfAddedStocks/ListOfAddedStocks";
 const ScreenRoute = (props) => {
     const logindet = useContext(CompanyDetail);
     return <>
@@ -35,6 +38,9 @@ const ScreenRoute = (props) => {
                         <>
                         <Route exact path='/' Component={DisplayAllComponent} />
                         <Route path='/yourdetail' Component={CompanyEditeScreen} />
+                        <Route path='/stocks' Component={AllStocks} />
+                        <Route path='/addstock' Component={AddStocks} />
+                        <Route path='/listofaddedstocks' Component={ListOfAddedStocks} />
                         <Route path='/geninvoice' Component={InvoiceMainComponent} />
                         <Route path='/genestimate' Component={EstimateMainComponent} />
                         <Route path='/allinvoice' Component={AllInvoiceDetails} />
