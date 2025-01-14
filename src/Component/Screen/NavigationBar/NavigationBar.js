@@ -6,6 +6,7 @@ import * as Datas from '../../Context/Datas';
 import { FaBars, FaTimes } from 'react-icons/fa';
 import { PiInvoiceThin } from "react-icons/pi";
 import './NavigationBar.css';
+import EELogo from '../../../Image/iconc.png';
 import { CompanyDetail } from "../../Context/companyDetailContext";
 
 const NavigationBar = (props) => {
@@ -40,13 +41,13 @@ const NavigationBar = (props) => {
         <div className="navbar-container container ">
 
           <Link to='/' className='navbar-logo'>
-            <PiInvoiceThin className='logo logo-name' size={30} />
+            {/* <PiInvoiceThin className='logo logo-name' size={30} /> */}
             <div
 
               className='logo-name'>
-              {/* <img className='logo' src={Datas.EELogo}
+              <img className='logo' src={EELogo}
                   alt="EE_Logo"
-                /> */}
+                />
 
               BillEdge</div>
 

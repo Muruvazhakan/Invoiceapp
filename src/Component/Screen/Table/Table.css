@@ -6,7 +6,9 @@
     font-weight: 900;
 }
 .table-style{
-    width: '98%'; overflow: 'hidden';margin:'5px 0px 5px 5px' ;padding:'10px'; borderRadius:'10px' 
+    width: '98%'; overflow: 'hidden';margin:'5px 0px 5px 5px' ;
+    padding:'10px'; 
+    /* border-radius:'10px'  */
 }
 .table-amount{
     font-weight: 900;
