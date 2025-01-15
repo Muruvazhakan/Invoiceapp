@@ -30,7 +30,9 @@ const AllStateContext = ({ children }) => {
   const [list, setList] = useState([]);
   const [totalsubamt, setsubtotalamt] = useState(0);
   const [totalamt, settotalamt] = useState(0);
+  const [productid, setproductid] = useState('');
   const [totaltaxvalueamt, settotaltaxvalueamt] = useState(0);
+  const [availablestock, setavailablestock] = useState(0);
   const [totalamtwords, settotalamtwords] = useState('');
   const [desc, setdesc] = useState('');
   const [hsn, sethsn] = useState(0);
@@ -73,9 +75,9 @@ const AllStateContext = ({ children }) => {
     stamount: 0,
     amount: 0
   });
-  const [ctrate, setctrate] = useState(0);
+  const [ctrate, setctrate] = useState(9);
   const [ctatm, setctatm] = useState(0);
-  const [strate, setstrate] = useState(0);
+  const [strate, setstrate] = useState(9);
   const [statm, setstatm] = useState(0);
 
   const [totalhsnamt, settotalhsnamt] = useState(0);
@@ -354,13 +356,19 @@ const AllStateContext = ({ children }) => {
 
   useEffect(() => {
     // console.log('tabledet');
+    let val ;
+    // let orgctrate = ((val * 1)/(1+(((ctrate*1)+(strate*1))/100))).toFixed(2);
+    //     console.log('orgctrate');
+    //     console.log(orgctrate);
     // console.log(tabledet);
-    let val;
+    
     if (quantity !== 0 || rateinctax !== 0 || disc !== 0) {
       val = (rateinctax - ((disc * rateinctax) / 100));
       let calamt = quantity*val;
       if(gstincluded){
         let orgctrate = ((val * 1)/(1+ (ctrate/100)+(strate/100))).toFixed(2);
+        // console.log('orgctrate222%%%%');
+        // console.log(orgctrate);
         setrate(orgctrate);
         
         setamount(calamt.toFixed(2));
@@ -374,6 +382,8 @@ const AllStateContext = ({ children }) => {
       if(gstincluded){
         let calamt = quantity*rateinctax;
         let orgctrate = ((val * 1)/(1+ (ctrate/100)+(strate/100))).toFixed(2);
+    //     console.log('orgctrate');
+    // console.log(orgctrate);
         setrate(orgctrate);
         setamount(calamt.toFixed(2));
       }
@@ -386,7 +396,7 @@ const AllStateContext = ({ children }) => {
   }, [disc, rateinctax,quantity]);
 
   const addOrUpdateItemHandler = (opt) => {
-    if (desc.length !== 0 && hsn.length !== 0 && quantity > 0 && rateinctax > 0 && rate > 0 && per.length !== 0 && amount > 0 
+    if (desc.length !== 0 && hsn.length !== 0 && quantity > 0 && rateinctax > 0 && rate > 0 &&  amount > 0 
       // && ctrate > 0 && strate > 0
 
     ) {
@@ -396,6 +406,7 @@ const AllStateContext = ({ children }) => {
 
         let singleitem = {
           id: uuidv4(),
+          productid:productid,
           desc: desc,
           hsn: hsn,
           quantity: quantity,
@@ -798,7 +809,8 @@ const AllStateContext = ({ children }) => {
     setsubtotalamt, gstCgstitem, setgstCgstitem, ctrate, setctrate, strate, setstrate, ctatm, setctatm, statm, setstatm, totaltaxvalueamt, settotaltaxvalueamt, dateHandler,gstincluded, setgstincluded,
     totalcentaxamt, settotalcentaxamt, totalstatetaxamt, settotalstatetaxamt, isinstallationcharge, setisinstallationcharge, otherchargedetail, setOtherchargedetail, editListRows, addOrEditOtherItems,
     invoiceid, setinvoiceid, invoicedate, setinvoicedate, paymentmode, setpaymentmode, paymentdate, setpaymentdate, invoiceidcount, setinvoiceidount, clientName, setclientName, clientPhno, setclientPhno, clientAdd, setclientAdd,
-    invoiceHistoryData, setinvoiceHistoryData, invoiceHistroyUpdateFlag, setinvoiceHistroyUpdateFlag, selectedInvoiceEdit, cleartallInvoice, handleInvoiceExportXlsx,displayhsntable, setdisplayhsntable
+    invoiceHistoryData, setinvoiceHistoryData, invoiceHistroyUpdateFlag, setinvoiceHistroyUpdateFlag, selectedInvoiceEdit, cleartallInvoice, handleInvoiceExportXlsx,displayhsntable, setdisplayhsntable,availablestock, setavailablestock,
+    productid, setproductid
   };
   return <AllState.Provider value={context}>{children}</AllState.Provider>;
 }

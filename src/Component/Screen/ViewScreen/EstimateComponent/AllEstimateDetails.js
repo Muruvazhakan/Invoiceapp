@@ -12,6 +12,7 @@ import { Link } from "react-router-dom";
 import { BsFiletypeXlsx } from "react-icons/bs";
 import { TbFileInvoice } from "react-icons/tb";
 import { RiAiGenerate } from "react-icons/ri";
+import StyleHeader from "../../Header/StyleHeader";
 // import img  from '.'
 
 const AllEstimateDetails = () => {
@@ -33,14 +34,16 @@ const AllEstimateDetails = () => {
         )
     }
     return (
-
         <>
+            <StyleHeader>
+                Estimate Details
+            </StyleHeader>
             <div className="displayelements">
                 < Link className='nav-links' to={{ pathname: '/genestimate' }}
                     duration={1000} activeClass="nav-active" spy={true} offset={-50}
                     smooth
                 >
-                    <Button variant="outlined" color="warning" size="medium" endIcon={<TbFileInvoice />} startIcon ={<RiAiGenerate/>}
+                    <Button variant="outlined" color="warning" size="medium" endIcon={<TbFileInvoice />} startIcon={<RiAiGenerate />}
                     >Generate Estimate </Button>
                 </Link>
             </div>

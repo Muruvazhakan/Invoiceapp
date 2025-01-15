@@ -7,6 +7,7 @@ import { MdOutlineSaveAlt } from "react-icons/md";
 import { CompanyDetail } from "../../../../Context/companyDetailContext";
 import './YourDetails.css';
 import Card from "../../../../Style/Card/Card";
+import StyleHeader from "../../../Header/StyleHeader";
 
 
 const YourDetails = () => {
@@ -32,7 +33,10 @@ const YourDetails = () => {
     <FormGroup>
       <FormControl>
         <Card>
-          <h3>Company Details</h3>
+        <StyleHeader>
+        Company Details
+        </StyleHeader>
+          {/* <h3>Company Details</h3> */}
           <Box component="form" sx={{ '& .MuiTextField-root': { m: 1, width: '45ch' } }} >
             {/* companyImage, setcompanyImage */}
 

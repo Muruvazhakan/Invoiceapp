@@ -6,6 +6,7 @@ import Card from "../../../Style/Card/Card";
 import { Box, Button, FormControlLabel, Switch, TextField } from "@mui/material";
 import { MdDeleteForever, MdOutlineSaveAlt } from "react-icons/md";
 import { FaRegSave } from "react-icons/fa";
+import StyleHeader from "../../Header/StyleHeader";
 const CompanyOtherDetailEdit = () => {
 
 
@@ -19,68 +20,74 @@ const CompanyOtherDetailEdit = () => {
     return (
 
         <Card >
-            <h2>Terms And Conditions</h2>
+            {/* <h2>Terms And Conditions</h2> */}
+            <StyleHeader>
+                Terms And Conditions
+            </StyleHeader>
             {companydet.companydetails.map((item, index) => {
                 return (<Box className="  " key={item.id}
                     sx={{ '& .MuiTextField-root': { m: 2, width: '45ch' } }}
-                >    
-                        <div className=" companyotherdeta companyindex" key={item.id}>
-                            <div className="companyindex ">
-                                {index + 1}</div>
+                >
+                    <div className=" companyotherdeta companyindex" key={item.id}>
+                        <div className="companyindex ">
+                            {index + 1}</div>
 
-                            <TextField id="outlined-required" label="Title" value={item.title}
-                                onChangeCapture={(e) => {
+                        <TextField id="outlined-required" label="Title" value={item.title}
+                            onChangeCapture={(e) => {
 
-                                    companydet.companytitle(item.id, e.target.value, 'title');
-                                }}
-                            />
-                            <TextField id="outlined-required" label="Details" multiline value={item.desc}
-                                onChange={(e) => {
+                                companydet.companytitle(item.id, e.target.value, 'title');
+                            }}
+                        />
+                        <TextField id="outlined-required" label="Details" multiline value={item.desc}
+                            onChange={(e) => {
 
-                                    companydet.companytitle(item.id, e.target.value, 'desc');
-                                }}
-                            />
+                                companydet.companytitle(item.id, e.target.value, 'desc');
+                            }}
+                        />
 
-                            <FormControlLabel
-                                control={
-                                    <Switch checked={item.isvisible}
-                                        onChange={(e) => {
-                                            companydet.companytitle(item.id, e, 'visible');
-                                        }}
-                                        name="Visibility" />
-                                }
-                            // label="Is Visible?"
-                            />
-                            <h5 className="tagline isvisible">{item.isvisible ? 'Visible' : 'Hidden'}</h5>
+                        <FormControlLabel
+                            control={
+                                <Switch checked={item.isvisible}
+                                    onChange={(e) => {
+                                        companydet.companytitle(item.id, e, 'visible');
+                                    }}
+                                    name="Visibility" />
+                            }
+                        // label="Is Visible?"
+                        />
+                        <h5 className="tagline isvisible">{item.isvisible ? 'Visible' : 'Hidden'}</h5>
 
-                            {/* <TableCell className="table-edit" onClick={() => companydet.companyOtherDetailHandeler(item.id, companydetailtitle, companydetaildesc, companydetailid, "save")}
+                        {/* <TableCell className="table-edit" onClick={() => companydet.companyOtherDetailHandeler(item.id, companydetailtitle, companydetaildesc, companydetailid, "save")}
                             >
 
                                 <FaRegSave size={20} />
 
                             </TableCell> */}
-                            <Button variant="contained" color="error" endIcon={<MdDeleteForever />}
-                                onClick={() => companydet.companyOtherDetailHandeler(item.id, "delete")} >
-                                Delete
-                            </Button>
+                        <Button variant="contained" color="error" endIcon={<MdDeleteForever />}
+                            onClick={() => companydet.companyOtherDetailHandeler(item.id, "delete")} >
+                            Delete
+                        </Button>
 
 
 
-                        </div>
-                    
+                    </div>
+
 
                 </Box>
                 )
             })}
-             <h5 className="notetext" >
-              New Item will not be automatically saved until you save!! 
+            <h5 className="notetext" >
+                New Item will not be automatically saved until you save!!
             </h5>
             <Button variant="contained" color="info" endIcon={<MdOutlineSaveAlt />}
-                onClick={() => companydet.saveHandler('addOrUpdateCompanyTermsAndConditionHandler',companydet.companydetails, "save")} >
+                onClick={() => companydet.saveHandler('addOrUpdateCompanyTermsAndConditionHandler', companydet.companydetails, "save")} >
                 Save the Changes
             </Button>
             <Card >
-                <h2 >Add New Terms And Conditions</h2>
+                <StyleHeader>
+                    Add New Terms And Conditions
+                </StyleHeader>
+                {/* <h2 >Add New Terms And Conditions</h2> */}
                 <Box component="form" sx={{ '& .MuiTextField-root': { m: 2, width: '35ch' } }}>
                     <div className=" companyotherdeta companyindex">
                         <TextField id="outlined-required" label="Title" value={companydet.companydetailtitle}
@@ -110,7 +117,7 @@ const CompanyOtherDetailEdit = () => {
                         />
                         <div className="tagline isvisible">
                             {companydet.companydetailIsVisible ? 'Visible in the screen' : <>Details will be hidden...
-                            <h5> Switch to Visible </h5>  </>}
+                                <h5> Switch to Visible </h5>  </>}
                         </div>
 
 

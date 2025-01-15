@@ -1,46 +1,40 @@
 import React, { useRef } from "react";
 import Card from "../../Style/Card/Card";
 import ReactToPrint from "react-to-print";
-import { Button } from "@mui/material";
-import Grid from '@mui/material/Grid';
+import { Button, Stack } from "@mui/material";
 import Box from '@mui/material/Box';
 import { BsFileEarmarkPdfFill } from "react-icons/bs";
 
 import InvoiceDetails from "../InvoiceDetails/InvoiceDetails";
 import InvoiceDeatilsEdit from "../InvoiceDetails/InvoiceDeatilsEdit";
 import Tables from "../Table/InvoiceTable/Table";
+import StyleHeader from "../Header/StyleHeader";
 
 const InvoiceMainComponent = (props) => {
     const componentRef = useRef();
-    const Gridmenu = (props) => {
-        return <>
-            {window.innerWidth <= 960 ?
-                <>  {props.children} </>
-                : <Grid container spacing={2}>
-                    {props.children}
-                </Grid>
-            }
-        </>
-    }
 
     return <>
-    <h2>Generate Invoice</h2>
-        <Box sx={{ flexGrow: 1 }}>
-            <Gridmenu>
-                <Grid item xs={7}>
+        <StyleHeader>
+            {/* <Header name="Current Stocks" /> */}
+            Generate Invoice
+        </StyleHeader>
 
-                    <Card >
+        <Box sx={{ flexGrow: 1 }}>
+
+            <Stack direction={{ xs: 'column', sm: 'row' }}
+                useFlexGap
+                spacing={{ xs: 1, sm: 1, md: 0 }}>
+                <Stack width={window.innerWidth <= 960 ? "100%" : "70%"}
+                >
+                    <Card>
                         <h2>Edit/Preview Section</h2>
                         <Tables screen="update" />
                     </Card>
-                </Grid>
-                <Grid item xs={5}>
-                    < >
-                        <InvoiceDeatilsEdit />
-                    </>
-                </Grid>
-
-            </Gridmenu>
+                </Stack>
+                <Stack item width={window.innerWidth <= 960 ? "100%" : "30%"}>
+                    <InvoiceDeatilsEdit />
+                </Stack>
+            </Stack>
             <Card>
                 <ReactToPrint
                     trigger={() => (

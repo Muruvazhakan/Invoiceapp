@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 import { Box, Button, FormControl, FormControlLabel, FormGroup, Switch, TextField } from "@mui/material";
 import { ToastContainer } from "react-toastify";
@@ -6,15 +6,130 @@ import { GrClearOption } from "react-icons/gr";
 import { MdOutlineAddToPhotos } from "react-icons/md";
 import { FaFileInvoice } from "react-icons/fa";
 import { BsSave } from "react-icons/bs";
+import Autocomplete, { createFilterOptions } from '@mui/material/Autocomplete';
+
 import "react-toastify/dist/ReactToastify.css";
 import Card from "../../../../Style/Card/Card";
 import { AllState } from "../../../../Context/allStateContext";
-
+import { Stocks } from "../../../../Context/StocksContex";
 import './TableForm.css';
-const TableForm = () => {
+
+const filter = createFilterOptions();
+const TableForm = (props) => {
 
     // const [singleDesc, setSingleDesc] = useState();
     const tabledet = useContext(AllState);
+    const stockedet = useContext(Stocks);
+    const [value, setValue] = useState(null);
+
+    const [tit, setit] = useState([]);
+    useEffect(() => {
+        console.log('tabledet TableForm');
+        console.log(tabledet);
+        autocompleTitle();
+        // console.log('top100Films');
+        // console.log(top100Films);
+
+        // let title = 
+    }, [tabledet]);
+    const filterProdIdAndGetDesc = (prodid) => {
+
+        let filterdata = stockedet.allStockData.find(data => {
+            return data.productid == prodid
+        })
+        console.log(filterdata);
+        if (filterdata) {
+            tabledet.setdesc(filterdata.desc);
+            tabledet.setavailablestock(filterdata.quantity);
+            tabledet.sethsn(filterdata.hsn);
+            tabledet.setrateinctax(filterdata.salerate);
+        }
+    }
+    const autocompleTitle = () => {
+        if (stockedet.allStockData !== null && stockedet.allStockData.length > 0) {
+
+            // console.log('autocompleTitle title');
+            let productid = stockedet.allStockData.map((row) => {
+                return { productid: row.productid }
+            })
+            // console.log(productid);
+            productid = [].concat.apply([], productid);
+            // console.log(productid);
+            // var distinct = [];
+            // const unique = [...new Set(productid.map((item) => item))];
+            // const ti = unique.map((allrows) => { return { productid: allrows } });
+
+            // tabledet.setproductIdList(productid);
+
+
+            // console.log(productid);
+            // console.log('unique');
+
+            setit(productid);
+        }
+    }
+    const onChangeOnAutoComplete = (event, newValue, type) => {
+        // console.log("newValue");
+        // console.log(newValue);
+        // console.log("event");
+
+        // console.log(event);
+        if (newValue && newValue.inputValue) {
+            // Create a new value from the user input
+            setValue({
+                productid: newValue.inputValue,
+            });
+            tabledet.setproductid(newValue.inputValue);
+            // filterProdIdAndGetDesc(newValue.inputValue);
+        }
+        else {
+            if (newValue.productid != null) {
+                setValue(newValue.productid);
+                tabledet.setproductid(newValue.productid);
+                filterProdIdAndGetDesc(newValue.productid);
+            }
+        }
+
+    }
+
+    const filterOptionOnAutoComplete = (options, params) => {
+        const filtered = filter(options, params);
+        // // let filtered;
+        const { inputValue } = params;
+        // Suggest the creation of a new value
+        const isExisting = options.some((option) => inputValue === option.title);
+        // console.log(isExisting);
+        if (inputValue !== '' && !isExisting) {
+            filtered.push({
+                inputValue,
+                productid: `Add "${inputValue}"`,
+            });
+        }
+
+        return filtered;
+    }
+
+    const getOptionLabelOnAutoComplete = (option) => {
+        // Value selected with enter, right from the input
+        if (typeof option == 'string') {
+            return option;
+        }
+        // Add "xxx" option created dynamically
+        if (option.inputValue) {
+            return option.inputValue;
+        }
+        // Regular option
+        return option.productid;
+    }
+
+    const renderOptionOnAutoComplete = (props, option) => {
+        const { key, ...optionProps } = props;
+        return (
+            <li key={key} {...optionProps}>
+                {option.productid}
+            </li>
+        );
+    }
 
     return <>
         <Card >
@@ -42,16 +157,50 @@ const TableForm = () => {
                         <h3>Add Goods details below</h3>
                         <Box component="form" sx={{ '& .MuiTextField-root': { m: 1, width: '20ch' } }}>
 
+
+                            <Autocomplete
+                                // value={value}
+                                value={tabledet.productid}
+                                onChange={(event, newValue) => onChangeOnAutoComplete(event, newValue)}
+                                filterOptions={(options, params) => filterOptionOnAutoComplete(options, params)}
+                                selectOnFocus
+                                clearOnBlur
+                                handleHomeEndKeys
+                                id="free-solo-with-text"
+                                options={tit}
+                                getOptionLabel={(option) => getOptionLabelOnAutoComplete(option)}
+                                renderOption={(props, option) => renderOptionOnAutoComplete(props, option)}
+                                // sx={{ width: 300 }}
+                                freeSolo
+                                renderInput={(params) => (
+                                    // <TextField label="Title" />
+                                    <TextField required id="outlined-required" label="Product Id"
+                                        onChange={(e) => tabledet.setval(e, tabledet.setproductid)}
+                                        color={tabledet.setboxColors(tabledet.productid, 'color')}
+                                        error={tabledet.setboxColors(tabledet.productid, 'error')}  {...params}
+                                    />
+                                )}
+                            />
+
                             <TextField required id="outlined-required" label="Item description" value={tabledet.desc}
                                 onChange={(e) => tabledet.setval(e, tabledet.setdesc)}
                                 color={tabledet.setboxColors(tabledet.desc, 'color')}
                                 error={tabledet.setboxColors(tabledet.desc, 'error')}
                             />
 
+
+
                             <TextField required id="outlined-required" label="HSN" value={tabledet.hsn}
                                 onChange={(e) => tabledet.setval(e, tabledet.sethsn)}
                                 color={tabledet.setboxColors(tabledet.hsn, 'color')}
                                 error={tabledet.setboxColors(tabledet.hsn, 'error')}
+                            />
+
+                            <TextField id="outlined-required" label="Available Quantity" value={tabledet.availablestock} type="number"
+                                // onChange={(e) => tabledet.setval(e, tabledet.setavailablestock)}
+                                disabled
+                                color={tabledet.setboxColors(tabledet.availablestock, 'color')}
+                                error={tabledet.setboxColors(tabledet.availablestock, 'error')}
                             />
 
                             <TextField required id="outlined-required" label="Quantity" value={tabledet.quantity} type="number"
@@ -72,11 +221,11 @@ const TableForm = () => {
                                 error={tabledet.setboxColors(tabledet.rate, 'error')}
                             />
 
-                            <TextField required id="outlined-required" label="Per" value={tabledet.per}
+                            {/* <TextField required id="outlined-required" label="Per" value={tabledet.per}
                                 onChange={(e) => tabledet.setval(e, tabledet.setper)}
                                 color={tabledet.setboxColors(tabledet.per, 'color')}
                                 error={tabledet.setboxColors(tabledet.per, 'error')}
-                            />
+                            /> */}
 
                             <TextField required id="outlined-required" label="Discount" value={tabledet.disc} type="number"
                                 onChange={(e) => tabledet.setval(e, tabledet.setdisc)}

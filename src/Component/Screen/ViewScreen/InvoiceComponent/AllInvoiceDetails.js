@@ -11,6 +11,7 @@ import { CompanyDetail } from "../../../Context/companyDetailContext";
 import { BsFiletypeXlsx } from "react-icons/bs";
 import { FaFileInvoice } from "react-icons/fa";
 import { RiAiGenerate } from "react-icons/ri";
+import StyleHeader from "../../Header/StyleHeader";
 // import img  from '.'
 
 const AllInvoiceDetails = () => {
@@ -36,6 +37,9 @@ const AllInvoiceDetails = () => {
     return (
 
         <>
+        <StyleHeader>
+           Invoice Details
+        </StyleHeader>
             <div className="displayelements">
                 < Link className='nav-links' to={{ pathname: '/geninvoice' }}
                     duration={1000} activeClass="nav-active" spy={true} offset={-50}
@@ -138,21 +142,3 @@ const AllInvoiceDetails = () => {
 }
 
 export default AllInvoiceDetails;
-
-// totalsubamt=singleinvoice.totalsubamt;        
-// totalamt=singleinvoice.totalamt;
-// totaltaxvalueamt=singleinvoice.totaltaxvalueamt;
-
-// list=singleinvoice.list;
-// hsnlist=singleinvoice.hsnlist;
-// otherchargedetail=singleinvoice.otherchargedetail;
-// totalcentaxamt=singleinvoice.totalcentaxamt;
-// totalstatetaxamt=singleinvoice.totalstatetaxamt;
-
-// totalamtwords=singleinvoice.totalamtwords;
-
-// totalhsnamt=singleinvoice.totalhsnamt;
-// totalhsnamtwords=singleinvoice.totalhsnamtwords;
-// clientAdd=singleinvoice.clientAdd;
-// clientName=singleinvoice.clientName;
-// clientPhno=singleinvoice.clientPhno;

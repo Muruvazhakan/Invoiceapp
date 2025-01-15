@@ -1,11 +1,12 @@
 
-import React, { useContext,useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { CompanyDetail } from "../../../Context/companyDetailContext";
 import './CompanyOtherDetailEdit.css';
 import Card from "../../../Style/Card/Card";
 import { Box, Button, FormControlLabel, Switch, TextField } from "@mui/material";
 import { MdDeleteForever, MdOutlineSaveAlt } from "react-icons/md";
 import { FaRegSave } from "react-icons/fa";
+import StyleHeader from "../../Header/StyleHeader";
 const CompanyBankDetailEdit = () => {
 
 
@@ -20,9 +21,12 @@ const CompanyBankDetailEdit = () => {
     return (
 
         <Card >
-            <h2>Company Bank Detail</h2>
+            <StyleHeader>
+                Company Bank Detail
+            </StyleHeader>
+            {/* <h2>Company Bank Detail</h2> */}
             {companydet.companyBankdetails.map((item, index) => {
-                return (<Box className="  "  key={item.id}
+                return (<Box className="  " key={item.id}
                     sx={{ '& .MuiTextField-root': { m: 2, width: '45ch' } }}
                 >
                     <div className=" companyotherdeta companyindex" key={item.id}>
@@ -48,9 +52,9 @@ const CompanyBankDetailEdit = () => {
                                     }}
                                     name="Visibility" />
                             }
-                            // label="Is Visible?"
+                        // label="Is Visible?"
                         />
-                        <h5 className="tagline isvisible">{item.isvisible? 'Visible':'Hidden'}</h5>
+                        <h5 className="tagline isvisible">{item.isvisible ? 'Visible' : 'Hidden'}</h5>
                         <Button variant="contained" color="error" endIcon={<MdDeleteForever />}
                             onClick={() => companydet.companyBankDetailHandler(item.id, "delete")} >
                             Delete
@@ -60,10 +64,10 @@ const CompanyBankDetailEdit = () => {
                 )
             })}
             <h5 className="notetext" >
-              New Item will not be automatically saved until you save!! 
+                New Item will not be automatically saved until you save!!
             </h5>
             <Button variant="contained" color="info" endIcon={<MdOutlineSaveAlt />}
-                onClick={() => companydet.saveHandler('addOrGetCompanyBankDetailHandler',companydet.companyBankdetails, "save")} >
+                onClick={() => companydet.saveHandler('addOrGetCompanyBankDetailHandler', companydet.companyBankdetails, "save")} >
                 Save the Changes
             </Button>
             <Card >
@@ -83,7 +87,7 @@ const CompanyBankDetailEdit = () => {
                                 companydet.setcompanyBankdetailvalue(e.target.value)
                             }}
 
-                        /> 
+                        />
 
                         <FormControlLabel
                             control={
@@ -96,7 +100,7 @@ const CompanyBankDetailEdit = () => {
                             label="Is Visible?"
                         />
                         <div className="tagline isvisible">
-                        {companydet.companyBankdetailIsVisible ? 'Visible in the screen': <>Details will be hidden...<h5> Please click switch to Visible </h5>  </>}
+                            {companydet.companyBankdetailIsVisible ? 'Visible in the screen' : <>Details will be hidden...<h5> Please click switch to Visible </h5>  </>}
                         </div>
                         <Button variant="contained" color="success" endIcon={<FaRegSave />}
                             onClick={() => companydet.companyBankDetailHandler('', "new")} >

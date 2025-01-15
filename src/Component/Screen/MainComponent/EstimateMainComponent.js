@@ -1,5 +1,5 @@
 
-import React, { useRef,useEffect } from "react";
+import React, { useRef, useEffect } from "react";
 import Card from "../../Style/Card/Card";
 import ReactToPrint from "react-to-print";
 import { Button } from "@mui/material";
@@ -12,20 +12,21 @@ import EstimateDetailEdit from "../EditScreen/Estimate/EstimateDetail/EstimateDe
 import EstimateDetail from "../EditScreen/Estimate/EstimateDetail/EstimateDetail";
 import EstimateTable from "../EditScreen/Estimate/EstimateTable/EstimateTable";
 import EstimateTableForm from "../EditScreen/Estimate/EstimateTableForm/EstimateTableForm";
+import StyleHeader from "../Header/StyleHeader";
 
 
 const EstimateMainComponent = (props) => {
-   
-    useEffect(()=>{
+
+    useEffect(() => {
         // console.log('EstimateMainComponent');
-       
-       
+
+
 
         // console.log(props); 
         // console.log(location.state);
         // console.log(location.state.estimate);
 
-    },[])
+    }, [])
     const Gridmenu = (props) => {
         return <>
             {window.innerWidth <= 960 ?
@@ -38,22 +39,25 @@ const EstimateMainComponent = (props) => {
     }
     const componentRef = useRef();
     return <>
-     <h2>Estimate Generator</h2>
+        <StyleHeader>
+            Estimate Generator
+        </StyleHeader>
+
         <Box sx={{ flexGrow: 1 }}>
             <Gridmenu>
                 <Grid item xs={7}>
 
                     <Card >
                         <h2>Edit/Preview Section</h2>
-                        <EstimateTable screen="update" 
-                       
-                         />
+                        <EstimateTable screen="update"
+
+                        />
                     </Card>
                 </Grid>
                 <Grid item xs={5}>
                     < >
-                    <EstimateTableForm />
-                       
+                        <EstimateTableForm />
+
                     </>
                 </Grid>
 
