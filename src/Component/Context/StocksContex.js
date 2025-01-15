@@ -153,9 +153,11 @@ const StocksContext = ({ children }) => {
 
     if (type === "update") {
       setproductid(item.productid);
+      sethsn(item.hsn);
       setdesc(item.desc);
       setquantity(item.quantity);
       setrate(item.rate);
+      setsalerate(item.salerate);
       setamount(item.amount);
       let filterdata = allStockData.find(data => {
         return data.productid == item.productid
@@ -301,11 +303,11 @@ const StocksContext = ({ children }) => {
           let singleitem = {
             id: uuidv4(),
             productid: productid,
-            hsn:hsn,
+            hsn: hsn,
             desc: desc,
             quantity: quantity,
             rate: rate,
-            salerate:salerate,
+            salerate: salerate,
             amount: amount
           };
 
@@ -346,7 +348,7 @@ const StocksContext = ({ children }) => {
           let singleitem = {
             id: uuidv4(),
             productid: productid,
-            hsn:hsn,
+            hsn: hsn,
             desc: desc,
             quantity: quantity,
             rate: rate,
@@ -433,6 +435,20 @@ const StocksContext = ({ children }) => {
     }
   }
 
+  const getStockIdCounter = async (loginuserid) => {
+    let stockidcounter = localstorage.addOrGetStockid('', "get");
+    console.log(stockidcounter + ' addOrGetStockid');
+    let getStockfromDb = await stockDb.getStockidDB(loginuserid);
+    console.log('getStockfromDb.data');
+    console.log(getStockfromDb);
+    if (getStockfromDb.status === 200 && stockidcounter < getStockfromDb.data) {
+      localstorage.addOrGetStockid(getStockfromDb.data, "save");
+      setstockidcount(getStockfromDb.data);
+      console.log('saving setinvoiceidount ' + getStockfromDb.data);
+      return true;
+    }
+    return false;
+  }
 
   const clearOtherDetails = () => {
     setotherdesc('');
@@ -707,7 +723,7 @@ const StocksContext = ({ children }) => {
 
   const handleExportXlsx = (screen) => {
     let filtercolumn = [];
-    let localsumqty1 = 0, localsumqty2 = 0, sumpurchaseamt = 0;
+    let localsumqty1 = 0, localsumqty2 = 0, sumpurchaseamt = 0, expectedprofitsum = 0;
 
     let displaylist = (screen === "allstocks" ? allStockList
       :
@@ -739,9 +755,11 @@ const StocksContext = ({ children }) => {
     );
     let localsumqty = displaylist.map((item, index) => {
       localsumqty1 = localsumqty1 + (item.quantity * 1);
-      if (screen === "allProfit")
+      if (screen === "allProfit") {
         localsumqty2 = localsumqty2 + (item.salequantity * 1);
-      sumpurchaseamt = sumpurchaseamt + (item.purchaceamount * 1);
+        sumpurchaseamt = sumpurchaseamt + (item.purchaceamount * 1);
+      }
+      expectedprofitsum = expectedprofitsum + (item.quantity * item.salerate * 1 * 1);
     });
 
     if (screen === "allstocks") {
@@ -749,19 +767,25 @@ const StocksContext = ({ children }) => {
         return {
           Sno: index + 1,
           Productid: data.productid,
+          HSN: data.hsn,
           ProductDescription: data.desc,
           Quantity: data.quantity,
           Rate: data.rate,
-          Amount: data.quantity * data.rate * 1
+          SaleRate: data.salerate,
+          Amount: data.amount * 1,
+          ExpectedProfit: data.quantity * 1 * data.salerate
         }
       })
       let lastcolumn = {
         Sno: "Total Amount",
         Productid: '',
+        HSN:'',
         ProductDescription: '',
         Quantity: localsumqty1,
         Rate: '',
-        Amount: localsum
+        SaleRate:'',
+        Amount: localsum,
+        ExpectedProfit:expectedprofitsum
       }
       filtercolumn.push(lastcolumn);
       console.log("filtercolumn");
@@ -1297,7 +1321,7 @@ const StocksContext = ({ children }) => {
     setTimeout(() => {
       deriveProfitStock();
     }, 1000)
-  }, [allStockSalesList,allStockAddedList]);
+  }, [allStockSalesList, allStockAddedList]);
 
   const context = {
     list, setList, totalamt, settotalamt, totalamtwords, settotalamtwords, singlehsnitem, setsinglehsnitem, setval, setboxColors, cleardetailoption, setcleardetailoption,
@@ -1306,14 +1330,15 @@ const StocksContext = ({ children }) => {
     setsubtotalamt, gstCgstitem, setgstCgstitem, ctrate, setctrate, strate, setstrate, ctatm, setctatm, statm, setstatm, totaltaxvalueamt, settotaltaxvalueamt, dateHandler, gstincluded, setgstincluded,
     totalcentaxamt, settotalcentaxamt, totalstatetaxamt, settotalstatetaxamt, isinstallationcharge, setisinstallationcharge, otherchargedetail, setOtherchargedetail, editListRows, addOrEditOtherItems,
     stockid, setstockid, stockdate, setstockdate, paymentmode, setpaymentmode, paymentdate, setpaymentdate, stockidcount, setstockidcount, clientName, setclientName, clientPhno, setclientPhno, clientAdd, setclientAdd,
-    stockHistoryData, setstockHistoryData, invoiceHistroyUpdateFlag, setinvoiceHistroyUpdateFlag, selectedStockEdit, cleartallStock,  displayhsntable, setdisplayhsntable,
+    stockHistoryData, setstockHistoryData, invoiceHistroyUpdateFlag, setinvoiceHistroyUpdateFlag, selectedStockEdit, cleartallStock, displayhsntable, setdisplayhsntable,
 
 
     singlestockitem, setsinglestockitem, desc, setdesc, productid, setproductid, allStockData, setallStockData, productIdList, setproductIdList, clientid, setclientid, clientList, setclientList,
     getAllStocks, allStockList, setallStockList, allstockstotalamt, setallstockstotalamt, calculateSum, getAllStockData, handleExportXlsx, getAllHistoryStockData, allStockHistoryEdit, saleslist, setSalesList,
     allStockSalesList, setallStockSalesList, allstockssalestotalamt, setallstockssalestotalamt, totalsalesamt, settotalsalesamt, salestockidcount, setsalestockidcount, salestockid, setsalestockid, getAllClientList,
     availablestock, setavailablestock, salestockdate, setsalestockdate, getAllSalesCount, salesStockHistoryData, setSalesstockHistoryData, getAllHistorySalesStockData, allSaleStockHistoryEdit, handleHistoryExportXlsx,
-    allStockAddedList, setallStockAddedList, alladdedstockstotalamt, setaddedallstockstotalamt, isloading, setisloading, allProfitStockList, setAllProfitStockList, totalprofiramt, settotalprofiramt,salerate, setsalerate
+    allStockAddedList, setallStockAddedList, alladdedstockstotalamt, setaddedallstockstotalamt, isloading, setisloading, allProfitStockList, setAllProfitStockList, totalprofiramt, settotalprofiramt, salerate, setsalerate,
+    getStockIdCounter
   };
   return <Stocks.Provider value={context}>{children}</Stocks.Provider>;
 }

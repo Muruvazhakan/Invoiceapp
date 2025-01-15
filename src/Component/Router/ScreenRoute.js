@@ -43,8 +43,8 @@ const ScreenRoute = (props) => {
                         <Route path='/listofaddedstocks' Component={ListOfAddedStocks} />
                         <Route path='/geninvoice' Component={InvoiceMainComponent} />
                         <Route path='/genestimate' Component={EstimateMainComponent} />
-                        <Route path='/allinvoice' Component={AllInvoiceDetails} />
-                        <Route path='/allestimates' Component={AllEstimateDetails} /> 
+                        <Route path='/invoice' Component={AllInvoiceDetails} />
+                        <Route path='/estimates' Component={AllEstimateDetails} /> 
                         <Route path='/login' Component={Login} />
                         <Route path='/' Component={NoData} />
                         </> }

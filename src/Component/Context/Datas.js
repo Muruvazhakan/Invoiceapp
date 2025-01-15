@@ -18,31 +18,31 @@ export const navigationbarcontent = [
         displays: true,
         image: companyperson
     },
+    // {
+    //     screenname: 'Generate Invocie',
+    //     links: '/geninvoice',
+    //     altname: 'geninvoice',
+    //     displays: true,
+    //     image: invocie
+    // },
+    // {
+    //     screenname: 'Generate Estimate',
+    //     links: '/genestimate',
+    //     altname: 'genestimate',
+    //     displays: true,
+    //     image: estimation
+    // },
     {
-        screenname: 'Generate Invocie',
-        links: '/geninvoice',
-        altname: 'geninvoice',
+        screenname: 'Invoice',
+        links: '/invoice',
+        altname: 'invoice',
         displays: true,
         image: invocie
     },
     {
-        screenname: 'Generate Estimate',
-        links: '/genestimate',
-        altname: 'genestimate',
-        displays: true,
-        image: estimation
-    },
-    {
-        screenname: 'All Invoice',
-        links: '/allinvoice',
-        altname: 'allinvoice',
-        displays: true,
-        image: allinvoice
-    },
-    {
-        screenname: 'All Estimates',
-        links: '/allestimates',
-        altname: 'allestimates',
+        screenname: 'Estimates',
+        links: '/estimates',
+        altname: 'estimates',
         displays: true,
         image: allestimation
     },

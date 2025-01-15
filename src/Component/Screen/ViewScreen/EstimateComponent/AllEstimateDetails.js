@@ -10,6 +10,7 @@ import { Button, CircularProgress, Stack } from "@mui/material";
 import { RiEditCircleFill } from "react-icons/ri";
 import { Link } from "react-router-dom";
 import { BsFiletypeXlsx } from "react-icons/bs";
+import { TbFileInvoice } from "react-icons/tb";
 // import img  from '.'
 
 const AllEstimateDetails = () => {
@@ -33,13 +34,22 @@ const AllEstimateDetails = () => {
     return (
 
         <>
+            <div className="displayelements">
+                < Link className='nav-links' to={{ pathname: '/genestimate' }}
+                    duration={1000} activeClass="nav-active" spy={true} offset={-50}
+                    smooth
+                >
+                    <Button variant="outlined" color="warning" size="medium" endIcon={<TbFileInvoice />}
+                    >Generate Estimate </Button>
+                </Link>
+            </div>
             {estimatedet.estimateHistoryData === null ?
                 <>
                     <NoData details="Estimation Found" />
                 </>
                 :
                 < >
-                    <div className="exportExcelbttn" >
+                    <div className="listofstickexcelbtn" >
                         <Button variant="contained" color="success" size="medium" endIcon={<BsFiletypeXlsx />}
                             onClick={() => estimatedet.handleExportXlsx()}>Export Estimation to Excel</Button>
                     </div>

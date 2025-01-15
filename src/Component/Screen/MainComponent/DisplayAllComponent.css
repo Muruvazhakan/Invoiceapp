@@ -13,6 +13,9 @@
 
   /* height: 100px; */
 }
+.listofstickexcelbtn {
+  margin-top: 10px;
+}
 
 .displayelements {
   display: flex;

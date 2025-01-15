@@ -9,6 +9,7 @@ import { RiEditCircleFill } from "react-icons/ri";
 import { Link } from "react-router-dom";
 import { CompanyDetail } from "../../../Context/companyDetailContext";
 import { BsFiletypeXlsx } from "react-icons/bs";
+import { FaFileInvoice } from "react-icons/fa";
 // import img  from '.'
 
 const AllInvoiceDetails = () => {
@@ -34,7 +35,16 @@ const AllInvoiceDetails = () => {
     return (
 
         <>
+            <div className="displayelements">
+                < Link className='nav-links' to={{ pathname: '/geninvoice' }}
+                    duration={1000} activeClass="nav-active" spy={true} offset={-50}
+                    smooth
 
+                >
+                    <Button variant="outlined" color="warning" size="medium" endIcon={<FaFileInvoice />}
+                    >Generate Invoice </Button>
+                </Link>
+            </div>
             {invoiceDet.invoiceHistoryData.length === 0 ?
                 <>
 
@@ -43,7 +53,7 @@ const AllInvoiceDetails = () => {
                 </>
                 :
                 < >
-                    <div className="exportExcelbttn" >
+                    <div className="listofstickexcelbtn" >
                         <Button variant="contained" color="success" size="medium" endIcon={<BsFiletypeXlsx />}
                             onClick={() => invoiceDet.handleInvoiceExportXlsx()}>Export Invoice to Excel</Button>
                     </div>

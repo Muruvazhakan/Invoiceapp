@@ -5,8 +5,10 @@
   min-height: 97vh;
 }
 
+
 .exportExcelbttn{
-  padding-top: 20px;
+    display: flex;
+    justify-content: space-around;
 }
 .App-logo {
   height: 40vmin;

@@ -9,6 +9,7 @@ import * as invoiceDetailsDb from '../DBconnection/invoiceDetailBD';
 import { estimateState } from "./EstimatestateContext";
 import { AllState } from "./allStateContext";
 import { isbackendconnect, imageBaseUrl } from "../DBconnection/dbproperties";
+import { Stocks } from "./StocksContex";
 import axios from "axios";
 export const CompanyDetail = createContext();
 
@@ -18,7 +19,7 @@ const CompanyDetailContext = ({ children }) => {
 
     const estdetail = useContext(estimateState);
     const invociedetail = useContext(AllState);
-
+    const stockDetail = useContext(Stocks);
 
     // const [companyName, setcompanyName] = useState('JR MODULAR ENTERPRISES');
     // const [companyTagLine, setcompanyTagLine] = useState('‘YOUR HOME OUR INTERIOR’');
@@ -510,6 +511,30 @@ const CompanyDetailContext = ({ children }) => {
                 // console.log(invoicedetailscontext);
 
             }
+            
+
+
+            let resultsgetStockIdCounter = stockDetail.getStockIdCounter(loginuserid);
+            if(resultsgetStockIdCounter){
+                refreshdata = true;
+            }
+
+
+            let results = stockDetail.getAllStockData(loginuserid);
+            if(results){
+                refreshdata = true;
+            }
+
+            let resultsgetAllSalesCount = stockDetail.getAllSalesCount(loginuserid);
+            if(resultsgetAllSalesCount){
+                refreshdata = true;
+            }
+
+            let resultsgetAllClientList = stockDetail.getAllClientList(loginuserid,"default");
+            if(resultsgetAllClientList){
+                refreshdata = true;
+            }
+
         }
 
         if (refreshdata === true) {

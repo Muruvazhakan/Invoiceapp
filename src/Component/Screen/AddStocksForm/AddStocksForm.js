@@ -42,7 +42,7 @@ const AddStocksForm = (props) => {
         if (filterdata) {
             tabledet.setdesc(filterdata.desc);
             tabledet.setavailablestock(filterdata.quantity);
-
+            tabledet.sethsn(filterdata.hsn);
         }
     }
     const autocompleTitle = () => {
@@ -252,7 +252,7 @@ const AddStocksForm = (props) => {
 
                             <div className="button-warn">
                                 <Button variant="contained" color="success" size="medium" endIcon={<BsSave />}
-                                    onClick={() => tabledet.addOrUpdateItemHandler('Add', props.screen)}>Add Item</Button>
+                                    onClick={() => tabledet.addOrUpdateItemHandler('add', props.screen)}>Add Item</Button>
                             </div>
                             <Button variant="contained" color="warning" size="medium" endIcon={<GrClearOption />}
                                 onClick={() => tabledet.clearlistcontent()}>Clear Form</Button>
