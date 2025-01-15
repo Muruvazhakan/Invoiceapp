@@ -10,6 +10,7 @@ import { Link } from "react-router-dom";
 import { CompanyDetail } from "../../../Context/companyDetailContext";
 import { BsFiletypeXlsx } from "react-icons/bs";
 import { FaFileInvoice } from "react-icons/fa";
+import { RiAiGenerate } from "react-icons/ri";
 // import img  from '.'
 
 const AllInvoiceDetails = () => {
@@ -41,7 +42,7 @@ const AllInvoiceDetails = () => {
                     smooth
 
                 >
-                    <Button variant="outlined" color="warning" size="medium" endIcon={<FaFileInvoice />}
+                    <Button variant="outlined" color="warning" size="medium" endIcon={<FaFileInvoice />} startIcon ={<RiAiGenerate/>}
                     >Generate Invoice </Button>
                 </Link>
             </div>
@@ -54,7 +55,7 @@ const AllInvoiceDetails = () => {
                 :
                 < >
                     <div className="listofstickexcelbtn" >
-                        <Button variant="contained" color="success" size="medium" endIcon={<BsFiletypeXlsx />}
+                        <Button variant="contained" color="success" size="medium" endIcon={<BsFiletypeXlsx />}  
                             onClick={() => invoiceDet.handleInvoiceExportXlsx()}>Export Invoice to Excel</Button>
                     </div>
                     <div className="displayelements">

@@ -1,8 +1,7 @@
 import companyperson from '../../Image/companydetails.png';
 import invocie from '../../Image/invoice.png';
-import estimation from '../../Image/estimationgen.png';
-import allestimation from '../../Image/allestimation.png';
-import allinvoice from '../../Image/allinvoiceg.png';
+import estimate from '../../Image/estimates.png';
+import stocks from '../../Image/stocks.png';
 
 export const navigationbarcontent = [
     {
@@ -44,14 +43,14 @@ export const navigationbarcontent = [
         links: '/estimates',
         altname: 'estimates',
         displays: true,
-        image: allestimation
+        image: estimate
     },
     {
         screenname: 'Stocks',
         links: '/stocks',
         altname: 'stocks',
         displays: true,
-        image: allestimation
+        image: stocks
     },
 ];
 

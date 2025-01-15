@@ -11,6 +11,7 @@ import { RiEditCircleFill } from "react-icons/ri";
 import { Link } from "react-router-dom";
 import { BsFiletypeXlsx } from "react-icons/bs";
 import { TbFileInvoice } from "react-icons/tb";
+import { RiAiGenerate } from "react-icons/ri";
 // import img  from '.'
 
 const AllEstimateDetails = () => {
@@ -39,7 +40,7 @@ const AllEstimateDetails = () => {
                     duration={1000} activeClass="nav-active" spy={true} offset={-50}
                     smooth
                 >
-                    <Button variant="outlined" color="warning" size="medium" endIcon={<TbFileInvoice />}
+                    <Button variant="outlined" color="warning" size="medium" endIcon={<TbFileInvoice />} startIcon ={<RiAiGenerate/>}
                     >Generate Estimate </Button>
                 </Link>
             </div>
