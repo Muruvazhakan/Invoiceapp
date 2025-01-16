@@ -55,7 +55,7 @@ const ScreenRoute = (props) => {
         </Router>
         
         </div>
-        <Developer />
+        {/* <Developer /> */}
     </>
 }
 

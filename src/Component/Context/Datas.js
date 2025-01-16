@@ -15,7 +15,8 @@ export const navigationbarcontent = [
         links: '/yourdetail',
         altname: 'yourdetail',
         displays: true,
-        image: companyperson
+        image: companyperson,
+        tier: ['silver','gold','platinum']
     },
     // {
     //     screenname: 'Generate Invocie',
@@ -36,21 +37,24 @@ export const navigationbarcontent = [
         links: '/invoice',
         altname: 'invoice',
         displays: true,
-        image: invocie
+        image: invocie,
+        tier: ['gold','platinum']
     },
     {
         screenname: 'Estimates',
         links: '/estimates',
         altname: 'estimates',
         displays: true,
-        image: estimate
+        image: estimate,
+        tier: ['silver','gold','platinum']
     },
     {
         screenname: 'Stocks',
         links: '/stocks',
         altname: 'stocks',
         displays: true,
-        image: stocks
+        image: stocks,
+        tier: ['platinum']
     },
 ];
 

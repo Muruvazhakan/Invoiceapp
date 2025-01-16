@@ -24,23 +24,26 @@ const DisplayAllComponent = (props) => {
         <div className=" displayelements" >
 
             {Datas.navigationbarcontent.map((items, index) => {
-                if (items.screenname !== "Home") {
-                    return (
+                let tier = logindet.tier;
+                if (items.tier && items.tier.includes(tier)) {
+                    if (items.screenname !== "Home") {
+                        return (
 
-                        <Card className='displayscreenname' key={index} >
-                            <Link className="displayelements linkdecor" to={{ pathname: items.altname }} key={index}>
-                                <img src={items.image} height={350} width={350} alt={items.altname} />
-                                {/* <div className="cardline">
+                            <Card className='displayscreenname' key={index} >
+                                <Link className="displayelements linkdecor" to={{ pathname: items.altname }} key={index}>
+                                    <img src={items.image} height={350} width={350} alt={items.altname} />
+                                    {/* <div className="cardline">
                             {items.screenname}
                             </div> */}
 
-                            </Link>
+                                </Link>
 
-                        </Card>
+                            </Card>
 
-                    )
-                } else return null;
+                        )
+                    } else return null;
 
+                }
             })}
 
         </div>
