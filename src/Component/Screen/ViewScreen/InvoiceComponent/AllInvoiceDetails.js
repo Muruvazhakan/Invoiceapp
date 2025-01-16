@@ -25,6 +25,8 @@ const AllInvoiceDetails = () => {
         console.log(process.env.REACT_APP_NODE_ENV + 'process.env.REACT_APP_NODE_ENV');
     }, [])
 
+    if (companydet.tier && (companydet.tier !=="gold" && companydet.tier !=="platinum")) 
+       return <StyleHeader>No Access for this User</StyleHeader>
     if (!companydet.isloaded) {
 
         return (

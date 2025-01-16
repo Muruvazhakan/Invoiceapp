@@ -6,10 +6,13 @@ import { Box, CircularProgress, Stack } from "@mui/material";
 import Card from "../../Style/Card/Card";
 import { Stocks } from "../../Context/StocksContex";
 import StyleHeader from "../Header/StyleHeader";
+import { CompanyDetail } from "../../Context/companyDetailContext";
 
 const AddStocks = (props) => {
     const statckdet = useContext(Stocks);
-
+     const logindet = useContext(CompanyDetail);
+     if (logindet.tier && logindet.tier !=="platinum") 
+        return <StyleHeader>No Access for this User</StyleHeader>
     return <>
 
         <Box sx={{ flexGrow: 1, width: "100%" }}>

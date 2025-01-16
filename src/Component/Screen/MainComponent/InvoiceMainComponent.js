@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useContext, useRef } from "react";
 import Card from "../../Style/Card/Card";
 import ReactToPrint from "react-to-print";
 import { Button, Stack } from "@mui/material";
@@ -9,10 +9,13 @@ import InvoiceDetails from "../InvoiceDetails/InvoiceDetails";
 import InvoiceDeatilsEdit from "../InvoiceDetails/InvoiceDeatilsEdit";
 import Tables from "../Table/InvoiceTable/Table";
 import StyleHeader from "../Header/StyleHeader";
+import { CompanyDetail } from "../../Context/companyDetailContext";
 
 const InvoiceMainComponent = (props) => {
     const componentRef = useRef();
-
+    const logindet = useContext(CompanyDetail);
+    if (logindet.tier && (logindet.tier !=="gold" && logindet.tier !=="platinum")) 
+       return <StyleHeader>No Access for this User</StyleHeader>
     return <>
         <StyleHeader>
             {/* <Header name="Current Stocks" /> */}

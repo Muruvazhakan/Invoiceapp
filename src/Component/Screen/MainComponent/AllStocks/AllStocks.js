@@ -12,15 +12,20 @@ import './AllStocks.css';
 import { Link } from "react-router-dom";
 import Header from "../../Header/Header";
 import StyleHeader from "../../Header/StyleHeader";
+import { CompanyDetail } from "../../../Context/companyDetailContext";
+import * as Datas from '../../../Context/Datas';
 const AllStocks = (props) => {
     const tabledet = useContext(Stocks);
     const [viewAllAddedStock, setviewAllAddedStock] = useState(false);
-
+    
+ const logindet = useContext(CompanyDetail);
     useEffect(() => {
         console.log(" useEffect AllStocks ");
         tabledet.getAllStocks("allstocks");
     }, [tabledet.allStockData, tabledet.allstockstotalamt, tabledet.stockHistoryData, tabledet.allStockList]);
     const componentRef = useRef();
+    if (logindet.tier && logindet.tier !=="platinum") 
+        return <StyleHeader>No Access for this User</StyleHeader>
     return <>
         <Box className="allstocksdisplaytable" sx={{ flexGrow: 1 }}>
 
@@ -118,7 +123,9 @@ const AllStocks = (props) => {
 
 
         </Box>
-    </>
+    </> 
+   
+
 }
 
 export default AllStocks;

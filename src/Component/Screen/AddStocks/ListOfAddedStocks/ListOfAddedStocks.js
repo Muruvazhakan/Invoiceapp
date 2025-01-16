@@ -24,6 +24,8 @@ const ListOfAddedStocks = () => {
         console.log(stocksdet.stockHistoryData);
 
     }, [])
+    if (companydet.tier && companydet.tier !=="platinum") 
+       return <StyleHeader>No Access for this User</StyleHeader>
 
     if (!companydet.isloaded) {
 
