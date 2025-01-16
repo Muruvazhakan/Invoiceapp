@@ -37,6 +37,8 @@ const TableForm = (props) => {
         let filterdata = stockedet.allStockData.find(data => {
             return data.productid == prodid
         })
+        console.log("filterdata");
+        // console.log('top100Films');
         console.log(filterdata);
         if (filterdata) {
             tabledet.setdesc(filterdata.desc);

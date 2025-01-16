@@ -46,7 +46,7 @@ const AllStateContext = ({ children }) => {
   const [clientName, setclientName] = useState('');
   const [clientPhno, setclientPhno] = useState('');
   const [clientAdd, setclientAdd] = useState('');
-
+  const [clientid, setclientid] = useState(null);
   const [invoiceid, setinvoiceid] = useState('');
   const [cleardetailoption, setcleardetailoption] = useState(true);
   const [gstincluded, setgstincluded] = useState(true);
@@ -150,15 +150,15 @@ const AllStateContext = ({ children }) => {
       sethsn(item.hsn);
       setquantity(item.quantity);
       setrateinctax(item.rateinctax);
-     
-      if(gstincluded){
-        let orgctrate = ((item.rate * 1)/(1+ (ctrate/100)+(strate/100))).toFixed(2);
+
+      if (gstincluded) {
+        let orgctrate = ((item.rate * 1) / (1 + (ctrate / 100) + (strate / 100))).toFixed(2);
         setrate(orgctrate);
       }
-      else{
+      else {
         setrate(item.rate);
       }
-     
+
       setper(item.per);
       setdisc(item.disc);
       setamount(item.amount);
@@ -279,10 +279,10 @@ const AllStateContext = ({ children }) => {
         item.taxvalue = item.taxvalue;
         item.ctrate = ctrate;
         item.strate = strate;
-        if(gstincluded){
-          let orgctrate = ((item.taxvalue * 1)/(1+ (ctrate/100)+(strate/100))).toFixed(2);
+        if (gstincluded) {
+          let orgctrate = ((item.taxvalue * 1) / (1 + (ctrate / 100) + (strate / 100))).toFixed(2);
           // console.log(" orgctrate after "+orgctrate);
-          item.ctamount = (((orgctrate * 1) * ctrate * 1) / 100).toFixed(2);  
+          item.ctamount = (((orgctrate * 1) * ctrate * 1) / 100).toFixed(2);
           // console.log(" ctamount after "+item.ctamount);
           item.stamount = (((orgctrate * 1) * strate * 1) / 100).toFixed(2);
           // console.log(" stamount after "+item.stamount);
@@ -291,14 +291,14 @@ const AllStateContext = ({ children }) => {
           // console.log(" item ");
           // console.log(item);
         }
-        else{
+        else {
           item.ctamount = (((item.taxvalue * 1) * ctrate * 1) / 100).toFixed(2);
           item.stamount = (((item.taxvalue * 1) * strate * 1) / 100).toFixed(2);
           item.amount = ((((item.taxvalue * 1) * ctrate * 1) / 100) + (((item.taxvalue * 1) * strate * 1) / 100)).toFixed(2)
         }
 
       });
-      console.log(" hsnlist after "+hsnlist);
+      console.log(" hsnlist after " + hsnlist);
 
       // console.log(" otherchargedetail before " + otherchargedetail);
       otherchargedetail.map((item) => {
@@ -306,18 +306,18 @@ const AllStateContext = ({ children }) => {
         item.otherdesctaxamt = item.otherdesctaxamt;
         item.ctrate = ctrate;
         item.strate = strate;
-        if(gstincluded){
-          let orgctrate = ((item.otherdesctaxamt * 1)/(1+ (ctrate/100)+(strate/100))).toFixed(2);
+        if (gstincluded) {
+          let orgctrate = ((item.otherdesctaxamt * 1) / (1 + (ctrate / 100) + (strate / 100))).toFixed(2);
           item.ctamount = (((orgctrate * 1) * ctrate * 1) / 100).toFixed(2);
           item.stamount = (((orgctrate * 1) * strate * 1) / 100).toFixed(2);
           item.otherdescamt = ((((orgctrate * 1) * ctrate * 1) / 100) + (((orgctrate * 1) * strate * 1) / 100)).toFixed(2)
         }
-        else{
+        else {
           item.ctamount = (((item.otherdesctaxamt * 1) * ctrate * 1) / 100).toFixed(2);
           item.stamount = (((item.otherdesctaxamt * 1) * strate * 1) / 100).toFixed(2);
           item.otherdescamt = ((((item.otherdesctaxamt * 1) * ctrate * 1) / 100) + (((item.otherdesctaxamt * 1) * strate * 1) / 100)).toFixed(2)
         }
-       
+
       });
       // console.log(" otherchargedetail after " + otherchargedetail);
 
@@ -336,14 +336,14 @@ const AllStateContext = ({ children }) => {
       settotalstatetaxamt((collect(hsnlist.map((item) => item.stamount)).sum() + (collect(allItemsstateinclueshsn).sum())).toFixed(2));
       settotaltaxvalueamt(((collect(hsnlist.map((item) => item.taxvalue)).sum()) + (collect(allItemstaxinclueshsn).sum())).toFixed(2));
       // settotalamt(((totalhsnamt)+(totalsubamt)).toFixed(2));
-      if(gstincluded){
+      if (gstincluded) {
         settotalamt(((collect(list.map((item) => item.amount)).sum()) + (collect(allItemamount).sum())).toFixed(2));
       }
-      else{
+      else {
         settotalamt(((collect(hsnlist.map((item) => item.amount)).sum()) + (collect(list.map((item) => item.amount)).sum()) + (collect(allItemamount).sum()) + (collect(allItemsinclueshsn).sum())).toFixed(2));
-     
+
       }
-     // settotalamt(((collect(hsnlist.map((item) => item.amount)).sum())+(collect(list.map((item) => item.amount)).sum())+(collect(allItemsexclueshsn).sum())).toFixed(2));
+      // settotalamt(((collect(hsnlist.map((item) => item.amount)).sum())+(collect(list.map((item) => item.amount)).sum())+(collect(allItemsexclueshsn).sum())).toFixed(2));
       // settotalhsnamt(((collect(hsnlist.map((item) => item.amount)).sum())+(collect(allItemsinclueshsn.map((item) => item.taxvalue)).sum())).toFixed(2));
       // settotalcentaxamt(((collect(hsnlist.map((item) => item.ctamount)).sum())+(collect(allItemsinclueshsn.map((item) => item.ctamount)).sum())).toFixed(2));
       // settotalstatetaxamt(((collect(hsnlist.map((item) => item.ctamount)).sum())+(collect(allItemsinclueshsn.map((item) => item.ctamount)).sum())).toFixed(2));
@@ -356,47 +356,47 @@ const AllStateContext = ({ children }) => {
 
   useEffect(() => {
     // console.log('tabledet');
-    let val ;
+    let val;
     // let orgctrate = ((val * 1)/(1+(((ctrate*1)+(strate*1))/100))).toFixed(2);
     //     console.log('orgctrate');
     //     console.log(orgctrate);
     // console.log(tabledet);
-    
+
     if (quantity !== 0 || rateinctax !== 0 || disc !== 0) {
       val = (rateinctax - ((disc * rateinctax) / 100));
-      let calamt = quantity*val;
-      if(gstincluded){
-        let orgctrate = ((val * 1)/(1+ (ctrate/100)+(strate/100))).toFixed(2);
+      let calamt = quantity * val;
+      if (gstincluded) {
+        let orgctrate = ((val * 1) / (1 + (ctrate / 100) + (strate / 100))).toFixed(2);
         // console.log('orgctrate222%%%%');
         // console.log(orgctrate);
         setrate(orgctrate);
-        
+
         setamount(calamt.toFixed(2));
       }
-      else{
+      else {
         setrate(val.toFixed(2));
-        
+
       }
     }
-    else if(disc == 0 && rateinctax !== 0){
-      if(gstincluded){
-        let calamt = quantity*rateinctax;
-        let orgctrate = ((val * 1)/(1+ (ctrate/100)+(strate/100))).toFixed(2);
-    //     console.log('orgctrate');
-    // console.log(orgctrate);
+    else if (disc == 0 && rateinctax !== 0) {
+      if (gstincluded) {
+        let calamt = quantity * rateinctax;
+        let orgctrate = ((val * 1) / (1 + (ctrate / 100) + (strate / 100))).toFixed(2);
+        //     console.log('orgctrate');
+        // console.log(orgctrate);
         setrate(orgctrate);
         setamount(calamt.toFixed(2));
       }
-      else{
-      setrate(rateinctax.toFixed(2));
+      else {
+        setrate(rateinctax.toFixed(2));
       }
     }
-     
+
     // console.log(rate + " rate " + val);
-  }, [disc, rateinctax,quantity]);
+  }, [disc, rateinctax, quantity]);
 
   const addOrUpdateItemHandler = (opt) => {
-    if (desc.length !== 0 && hsn.length !== 0 && quantity > 0 && rateinctax > 0 && rate > 0 &&  amount > 0 
+    if (desc.length !== 0 && hsn.length !== 0 && quantity > 0 && rateinctax > 0 && rate > 0 && amount > 0
       // && ctrate > 0 && strate > 0
 
     ) {
@@ -406,7 +406,7 @@ const AllStateContext = ({ children }) => {
 
         let singleitem = {
           id: uuidv4(),
-          productid:productid,
+          productid: productid,
           desc: desc,
           hsn: hsn,
           quantity: quantity,
@@ -559,6 +559,7 @@ const AllStateContext = ({ children }) => {
           item.clientAdd = clientAdd;
           item.clientName = clientName;
           item.clientPhno = clientPhno;
+          item.clientid = clientid;
           iscontains = true;
         }
         return item;
@@ -587,6 +588,14 @@ const AllStateContext = ({ children }) => {
     console.log('saveInvoice');
     let loginuserid = localstorage.addOrGetUserdetail('', 'userid', 'get');
     console.log('loginuserid + loginuserid');
+
+    let clientidtemp;
+      if (clientid == null) {
+        clientidtemp = uuidv4();
+        setclientid(clientidtemp);
+      } else {
+        clientidtemp = clientid;
+      }
     let datas = {
       authorization: header,
       ctrate: ctrate,
@@ -611,6 +620,7 @@ const AllStateContext = ({ children }) => {
       clientAdd: clientAdd,
       clientName: clientName,
       clientPhno: clientPhno,
+      clientid: clientidtemp,
     }
     console.log(datas);
     saveLocalInvoice(datas);
@@ -661,6 +671,7 @@ const AllStateContext = ({ children }) => {
     setclientAdd(singleinvoice.clientAdd);
     setclientName(singleinvoice.clientName);
     setclientPhno(singleinvoice.clientPhno);
+    setclientid(singleinvoice.clientid);
     console.log('inside ctrate ');
     if (singleinvoice.ctrate) {
       let ctratelocal = singleinvoice.ctrate * 1;
@@ -682,7 +693,7 @@ const AllStateContext = ({ children }) => {
 
     let filtercolumn = invoiceHistoryData.map(data => {
       return {
-       
+
         Invoice_id: data.invoiceid,
         Invoice_date: data.invoicedate,
         Payment_date: data.paymentdate,
@@ -753,6 +764,7 @@ const AllStateContext = ({ children }) => {
     setclientAdd('');
     setclientName('');
     setclientPhno('');
+    setclientid('');
 
   }
 
@@ -782,20 +794,20 @@ const AllStateContext = ({ children }) => {
   useEffect(() => {
     // console.log('amount');
     // console.log(tabledet);
-    if(!gstincluded){
+    if (!gstincluded) {
       let val;
       if (quantity !== 0 || rateinctax !== 0 || disc !== 0 || rate !== 0) {
-        if(gstincluded){
+        if (gstincluded) {
           val = (rateinctax * quantity);
         }
-        else{
+        else {
           val = (rate * quantity);
         }
-       
+
         setamount(val.toFixed(2));
       }
     }
-    
+
     // console.log(rate + " rate " + val);
   }, [rate, quantity])
 
@@ -806,11 +818,11 @@ const AllStateContext = ({ children }) => {
     singleitem, setsingleitem, list, setList, totalamt, settotalamt, totalamtwords, settotalamtwords, singlehsnitem, setsinglehsnitem, setval, setboxColors, cleardetailoption, setcleardetailoption,
     desc, setdesc, hsn, sethsn, quantity, setquantity, rateinctax, setrateinctax, rate, setrate, per, setper, disc, setdisc, amount, setamount, otherdesc, setotherdesc, ischargedinhsn, setischargedinhsn, otherdescamt, setotherdescamt,
     totalhsnamt, settotalhsnamt, hsnlist, sethsnList, totalhsnamtwords, settotalhsnamtwords, totalsubamt, saveInvoice, addOrUpdateItemHandler, clearlistcontent, clearOtherDetails, addOtherItems,
-    setsubtotalamt, gstCgstitem, setgstCgstitem, ctrate, setctrate, strate, setstrate, ctatm, setctatm, statm, setstatm, totaltaxvalueamt, settotaltaxvalueamt, dateHandler,gstincluded, setgstincluded,
+    setsubtotalamt, gstCgstitem, setgstCgstitem, ctrate, setctrate, strate, setstrate, ctatm, setctatm, statm, setstatm, totaltaxvalueamt, settotaltaxvalueamt, dateHandler, gstincluded, setgstincluded,
     totalcentaxamt, settotalcentaxamt, totalstatetaxamt, settotalstatetaxamt, isinstallationcharge, setisinstallationcharge, otherchargedetail, setOtherchargedetail, editListRows, addOrEditOtherItems,
     invoiceid, setinvoiceid, invoicedate, setinvoicedate, paymentmode, setpaymentmode, paymentdate, setpaymentdate, invoiceidcount, setinvoiceidount, clientName, setclientName, clientPhno, setclientPhno, clientAdd, setclientAdd,
-    invoiceHistoryData, setinvoiceHistoryData, invoiceHistroyUpdateFlag, setinvoiceHistroyUpdateFlag, selectedInvoiceEdit, cleartallInvoice, handleInvoiceExportXlsx,displayhsntable, setdisplayhsntable,availablestock, setavailablestock,
-    productid, setproductid
+    invoiceHistoryData, setinvoiceHistoryData, invoiceHistroyUpdateFlag, setinvoiceHistroyUpdateFlag, selectedInvoiceEdit, cleartallInvoice, handleInvoiceExportXlsx, displayhsntable, setdisplayhsntable, availablestock, setavailablestock,
+    productid, setproductid, clientid, setclientid
   };
   return <AllState.Provider value={context}>{children}</AllState.Provider>;
 }
