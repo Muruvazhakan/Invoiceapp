@@ -9,4 +9,9 @@
 }
 .items{
     margin: 10px;
+    font-weight: bolder;    
+}
+.singlebankitem{
+    display: flex;
+   font-weight: bolder;
 }

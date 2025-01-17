@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -8,12 +8,43 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { FiEdit } from "react-icons/fi";
 import { MdDelete } from "react-icons/md";
-
+import { TransitionProps } from '@mui/material/transitions';
 import { Stocks } from "../../Context/StocksContex";
 import './StockTable.css';
+import { Box, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Slide } from "@mui/material";
+
+const Transition = React.forwardRef(function Transition(
+    props: TransitionProps & {
+        children: React.ReactElement<any, any>;
+    },
+    ref: React.Ref<unknown>,
+) {
+    return <Slide direction="up" ref={ref} {...props} />;
+});
+
 const StockTable = (props) => {
 
+
     const tabledetails = useContext(Stocks);
+
+    const [open, setOpen] = useState(false);
+
+    const [item, setItem] = useState([]);
+
+    const handleClickOpen = (items) => {
+        setOpen(true);
+        setItem(items);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+
+    const handleYes = (item) => {
+        setOpen(false);
+        tabledetails.deleteStock(item, props.screen, displaylist, "delete")
+    };
+
     useEffect(() => {
         console.log("refresh");
     }, []);
@@ -83,11 +114,11 @@ const StockTable = (props) => {
                             <TableCell sx={{ fontWeight: 700 }}>Product Id</TableCell>
                             <TableCell sx={{ fontWeight: 700 }}>HSN/SAC</TableCell>
                             <TableCell sx={{ fontWeight: 700 }}>Product Description</TableCell>
-                            
+
                             {props.screen !== "allProfit" && <>
                                 <TableCell align='center' sx={{ fontWeight: 700 }}>Quantity</TableCell>
                             </>}
-                           
+
                             <TableCell sx={{ fontWeight: 700 }}>Purchace Rate</TableCell>
                             <TableCell sx={{ fontWeight: 700 }}>Selling Rate</TableCell>
                             {props.screen !== "allProfit" && <>
@@ -100,6 +131,14 @@ const StockTable = (props) => {
                                     </TableCell>
                                     <TableCell sx={{ fontWeight: 700 }} >Delete rows
 
+                                    </TableCell>
+                                </>
+                            }
+                            {props.screen === "allstocks" && props.iseditable &&
+                                <>
+                                    {/* <TableCell sx={{ fontWeight: 700 }} >Edit rows
+                                    </TableCell> */}
+                                    <TableCell sx={{ fontWeight: 700 }} >Delete rows
                                     </TableCell>
                                 </>
                             }
@@ -116,7 +155,7 @@ const StockTable = (props) => {
                         {displaylist.map((item, index) => {
                             let sum = Intl.NumberFormat("en-IN", digit2options).format(item.amount);
                             let othersum = Intl.NumberFormat("en-IN", digit2options).format(item.quantity * item.rate * 1);
-                            if (item.quantity === 0 && props.screen == "allstocks")
+                            if (item.quantity === 0 && props.screen == "allstocks" && item.status  !== 'deleted'  )
                                 return null;
 
                             return (
@@ -130,11 +169,11 @@ const StockTable = (props) => {
                                     <TableCell className="table-header-td">{item.productid}</TableCell>
                                     <TableCell sx={{ fontWeight: 700 }}>{item.hsn}</TableCell>
                                     <TableCell className="table-header-td">{item.desc}</TableCell>
-                                   
+
                                     {props.screen !== "allProfit" && <>
                                         <TableCell align='center' className="table-header-td">{item.quantity}</TableCell>
                                     </>}
-                                   
+
                                     <TableCell className="table-header-td">{item.rate}</TableCell>
                                     <TableCell className="table-header-td">{item.salerate}</TableCell>
                                     {props.screen !== "allProfit" && <>
@@ -157,6 +196,20 @@ const StockTable = (props) => {
                                                 <MdDelete size={18} />
                                             </TableCell>
                                         </>}
+
+                                    {props.screen === "allstocks" && props.iseditable &&
+                                        <>
+                                            {/* <TableCell sx={{ fontWeight: 700 }} >Edit rows
+                                    </TableCell> */}
+
+                                            <TableCell className="table-edit"
+                                                onClick={() => handleClickOpen(item)}
+                                            //  onClick={() => tabledetails.editListRows(item, props.screen, displaylist, "delete")} 
+                                            >
+                                                <MdDelete size={18} />
+                                            </TableCell>
+                                        </>
+                                    }
                                     {props.screen === "allProfit" && <>
                                         <TableCell >{item.purchaceamount}</TableCell>
                                         <TableCell align='center' >{item.salequantity}</TableCell>
@@ -175,7 +228,7 @@ const StockTable = (props) => {
                             <TableCell></TableCell>
                             <TableCell sx={{ fontSize: 18, fontWeight: 700 }} >Total Amount</TableCell>
                             <TableCell ></TableCell>
-                            
+
                             <TableCell ></TableCell>
                             {props.screen !== "allProfit" && <>
                                 <TableCell align='center' className="table-header-td" sx={{ fontSize: 18, fontWeight: 700 }}> {localsumqty1}</TableCell>
@@ -183,15 +236,22 @@ const StockTable = (props) => {
                             <TableCell ></TableCell>
                             <TableCell ></TableCell>
                             {props.screen === "allProfit" && <>
-                                <TableCell  sx={{ fontSize: 18, fontWeight: 700 }}>{sumpurchaseamt}</TableCell> 
+                                <TableCell sx={{ fontSize: 18, fontWeight: 700 }}>{sumpurchaseamt}</TableCell>
                                 {/* <TableCell align='center' >{tabledetails.alladdedstockstotalamt} </TableCell> */}
-                                <TableCell  sx={{ fontSize: 18, fontWeight: 700 }} align='center'  >{localsumqty2}</TableCell>
+                                <TableCell sx={{ fontSize: 18, fontWeight: 700 }} align='center'  >{localsumqty2}</TableCell>
                                 <TableCell ></TableCell>
                                 <TableCell sx={{ fontSize: 18, fontWeight: 700 }}  >{tabledetails.allstockssalestotalamt}</TableCell>
 
                             </>}
                             <TableCell sx={{ fontSize: 18, fontWeight: 700 }} className="table-amount">₹{Intl.NumberFormat("en-IN", digit2options).format(localsum)}</TableCell>
-
+                            {props.screen === "allstocks" && props.iseditable &&
+                                <>
+                                    {/* <TableCell sx={{ fontWeight: 700 }} >Edit rows
+                                    </TableCell> */}
+                                    <TableCell sx={{ fontWeight: 700 }} >
+                                    </TableCell>
+                                </>
+                            }
                         </TableRow>
                     </TableBody>
                 </Table>
@@ -200,6 +260,27 @@ const StockTable = (props) => {
             </TableContainer>
 
         </Paper >
+
+        <Dialog
+            open={open}
+            TransitionComponent={Transition}
+            keepMounted
+            onClose={handleClose}
+            aria-describedby="alert-dialog-slide-description"
+        >
+            <DialogTitle>{"Do you want to Delete?"}</DialogTitle>
+            <DialogContent>
+                <DialogContentText id="alert-dialog-slide-description">
+                    System will permanently delete this product.
+                </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+                <Button onClick={handleClose}>NO</Button>
+                <Button onClick={() => handleYes(item)}>YES</Button>
+            </DialogActions>
+        </Dialog>
+
+
     </>
 }
 

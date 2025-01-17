@@ -4,6 +4,7 @@ import GeneralDetails from "../GeneralDetails/GeneralDetails";
 import Tables from "../Table/InvoiceTable/Table";
 import TableFooters from "../Table/InvoiceTable/TableFooter";
 import StyleHeader from "../Header/StyleHeader";
+import CompanyBankDetail from "../ViewScreen/CompanyotherDetail/CompanyBankDetail";
 
 const InvoiceDetails = (props) => {
 
@@ -14,7 +15,7 @@ const InvoiceDetails = (props) => {
     </StyleHeader> */}
     <GeneralDetails />
     <Tables screen="new" />
-
+    <CompanyBankDetail  />
     <TableFooters />
   </>
   )

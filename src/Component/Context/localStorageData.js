@@ -21,7 +21,7 @@ export const addOrUpdateCompanyHandler = (props,type,estimateidcount) => {
             companyGstin: props.companyGstin, companyGstinStatename: props.companyGstinStatename, companyName: props.companyName, companyOwner: props.companyOwner,
             companyPhno: props.companyPhno, companyTagLine: props.companyTagLine,
             companydetaildesc: props.companydetaildesc, companymailid: props.companymailid, companythankyou: props.companythankyou,estimateidcount:estimateidcount,
-            invoiceidcount:props.invoiceidcount,companyImage: props.companyImage, uploadimg: props.uploadimg,
+            invoiceidcount:props.invoiceidcount,companyImage: props.companyImage, uploadimg: props.uploadimg,companymsme: props.companymsme
     
         }
         // console.log(props);

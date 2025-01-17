@@ -41,6 +41,21 @@ const GeneralDetails = () => {
                         {companydet.companymailid}
                     </div>
                 </li>
+                <li>
+                    <div className="estimateheader">
+                    {companydet.companyGstin ? 'Gstin: '+companydet.companyGstin:null }
+                    </div>
+                </li>
+                <li>
+                    <div className="estimateheader">
+                    {companydet.companyGstinStatename ? 'State Name: '+companydet.companyGstinStatename:null }
+                    </div>
+                </li>
+                <li>
+                    <div className="estimateheader">
+                    {companydet.companyGstinStatename ? 'Msme No: '+companydet.companymsme:null }
+                    </div>
+                </li>
             </ul>
             {companydet.companyImage &&
                 <ul>

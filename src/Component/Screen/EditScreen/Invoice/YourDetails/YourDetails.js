@@ -33,9 +33,9 @@ const YourDetails = () => {
     <FormGroup>
       <FormControl>
         <Card>
-        <StyleHeader>
-        Company Details
-        </StyleHeader>
+          <StyleHeader>
+            Company Details
+          </StyleHeader>
           {/* <h3>Company Details</h3> */}
           <Box component="form" sx={{ '& .MuiTextField-root': { m: 1, width: '45ch' } }} >
             {/* companyImage, setcompanyImage */}
@@ -57,10 +57,10 @@ const YourDetails = () => {
                   />
 
                   <div>
-                  <Button variant="outlined" color="info" endIcon={<MdOutlineSaveAlt />}
-                    onClick={() => compayDet.uploadImage("upload")} >
-                    Upload Image
-                  </Button>
+                    <Button variant="outlined" color="info" endIcon={<MdOutlineSaveAlt />}
+                      onClick={() => compayDet.uploadImage("upload")} >
+                      Upload Image
+                    </Button>
                   </div>
                 </> : null}
             </div>
@@ -131,6 +131,12 @@ const YourDetails = () => {
               onChange={(e) => setval(e, compayDet.setcompanyGstinStatename)}
             //  color ={setboxColors(compayDet.companyGstinStatename,'color')}
             //  error={setboxColors(compayDet.companyGstinStatename,'error')}
+            />
+
+            <TextField id="outlined-required" label="Company Msme No" value={compayDet.companymsme}
+              onChange={(e) => setval(e, compayDet.setcompanymsme)}
+            //  color ={setboxColors(compayDet.companyGstin,'color')}
+            //  error={setboxColors(compayDet.companyGstin,'error')}
             />
 
             <TextField id="outlined-required" label="Company Declaration" value={compayDet.companyDeleration} multiline rows={3}

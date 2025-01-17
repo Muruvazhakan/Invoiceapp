@@ -1,8 +1,9 @@
-import companyperson from '../../Image/companydetails.png';
-import invocie from '../../Image/invoice.png';
+import companyperson from '../../Image/companyf.png';
+import invocie from '../../Image/invoicef.png';
 import estimate from '../../Image/estimates.png';
 import stocks from '../../Image/stocks.png';
-
+// import estimate from '../../Image/estimates.png';
+import salesf from '../../Image/salesf.png';
 export const navigationbarcontent = [
     {
         screenname: 'Home',

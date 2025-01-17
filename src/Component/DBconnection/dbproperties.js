@@ -35,7 +35,7 @@ export const getStockHistoryUrl = `${backendUrl}/stock/getallstocks`;
 
 export const getStockidUrl = `${backendUrl}/stock/getstockid`;
 export const saveStockIdUrl = `${backendUrl}/stock/savestockid`;
-
+export const deleteStockUrl = `${backendUrl}/stock/deletestock`;
 export const getAllHistorySalesStockUrl = `${backendUrl}/stock/getallhistorysalesstocks`;
 
 export const getSalesStockidUrl = `${backendUrl}/stock/getsalesstockid`;

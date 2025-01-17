@@ -1235,6 +1235,22 @@ const StocksContext = ({ children }) => {
     }
   }
 
+  const deleteStock = async (item, screen, displaylist, type)=>{
+    setisloading(true);
+    console.log("deleteStock");
+    console.log(item);
+    let datas = {
+      authorization: header,
+      stocklist: item,
+    }
+    console.log(datas);
+    saveLocalStock(datas, "add");
+
+    let savedataresponse = await stockDb.deleteStockBD(datas, loginuser);
+    console.log("savedataresponse");
+    console.log(savedataresponse);
+    setisloading(false);
+  }
   const deriveStockAddedFromHistory = (prop) => {
     console.log("props");
     let accumalatevalue = [];
@@ -1338,7 +1354,7 @@ const StocksContext = ({ children }) => {
     allStockSalesList, setallStockSalesList, allstockssalestotalamt, setallstockssalestotalamt, totalsalesamt, settotalsalesamt, salestockidcount, setsalestockidcount, salestockid, setsalestockid, getAllClientList,
     availablestock, setavailablestock, salestockdate, setsalestockdate, getAllSalesCount, salesStockHistoryData, setSalesstockHistoryData, getAllHistorySalesStockData, allSaleStockHistoryEdit, handleHistoryExportXlsx,
     allStockAddedList, setallStockAddedList, alladdedstockstotalamt, setaddedallstockstotalamt, isloading, setisloading, allProfitStockList, setAllProfitStockList, totalprofiramt, settotalprofiramt, salerate, setsalerate,
-    getStockIdCounter
+    getStockIdCounter,deleteStock
   };
   return <Stocks.Provider value={context}>{children}</Stocks.Provider>;
 }

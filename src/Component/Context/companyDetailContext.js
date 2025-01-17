@@ -42,7 +42,7 @@ const CompanyDetailContext = ({ children }) => {
     const [companyOwner, setcompanyOwner] = useState('');
     const [companyDeleration, setcompanyDeleration] = useState('');
     const [companythankyou, setcompanythankyou] = useState('');
-
+    const [companymsme, setcompanymsme] = useState('');
     const [companyGstin, setcompanyGstin] = useState('');
     const [companyGstinStatename, setcompanyGstinStatename] = useState('');
 
@@ -408,12 +408,12 @@ const CompanyDetailContext = ({ children }) => {
             console.log(companyBasicDetailsfromdb);
 
             if (companyBasicDetailsfromdb.status === 200) {
-                if (!companyBasicDetailslocal || (companyBasicDetailsfromdb && companyBasicDetailsfromdb.data[0].companyAddress !== companyBasicDetailslocal.companyAddress)) {
+                // if (!companyBasicDetailslocal || (companyBasicDetailsfromdb && companyBasicDetailsfromdb.data[0].companyAddress !== companyBasicDetailslocal.companyAddress)) {
                     localstore.addOrUpdateCompanyHandler(companyBasicDetailsfromdb.data[0], "save", companyBasicDetailsfromdb.data[0].estimateidcount);
                     console.log("company basic details updated");
                     console.log(companyBasicDetailsfromdb);
                     refreshdata = true;
-                }
+                
                 // let getCompanyImage = await localstore.addOrGetCompanyImage('', "get");
                 // console.log('getCompanyImage');
                 // console.log(getCompanyImage);
@@ -573,6 +573,7 @@ const CompanyDetailContext = ({ children }) => {
             setcompanydetaildesc(companydetail.companydetaildesc);
             setcompanymailid(companydetail.companymailid);
             setcompanythankyou(companydetail.companythankyou);
+            setcompanymsme(companydetail.companymsme);
 
             //console.log('companydetail.estimateidcount');
             //console.log(companydetail.estimateidcount);
@@ -762,7 +763,7 @@ const CompanyDetailContext = ({ children }) => {
         loginuser, setloginuser, loginUserPassword, setloginUserPassword, loginHandler, loginstatus, setloginstatus, loginId, setloginId, loginUserConfirmPassword, setloginUserConfirmPassword, tokenid, settokenid, logoutHandler,
         companyBankdetailtitle, setcompanyBankdetailtitle, companyBankdetailvalue, setcompanyBankdetailvalue, companyBankdetailIsVisible, setcompanyBankdetailIsVisible, companydetailIsVisible, setcompanydetailIsVisible,
         loginuserid, setloginuserid, saveHandler, getAlldataFromDB, getAlldataOnLogin, isloaded, setisloaded, companyImage, setcompanyImage, selectCompanyImg, uploadimg, setuploadimg, useraccess, setuseraccess,
-        role, setrole, type, settype, oraganisationName, setoraganisationName, tier, settier
+        role, setrole, type, settype, oraganisationName, setoraganisationName, tier, settier,companymsme, setcompanymsme
     };
 
     return <CompanyDetail.Provider value={compDet} >{children}</CompanyDetail.Provider>;

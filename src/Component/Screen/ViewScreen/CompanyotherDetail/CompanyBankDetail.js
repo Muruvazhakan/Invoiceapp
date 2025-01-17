@@ -12,14 +12,17 @@ const CompanyBankDetail = () => {
         <Card className="  ">
             <div className="header">Bank Details</div>
             {companydet.companyBankdetails.map((item, index) => {
+                console.log("companyBankdetails items");
+                console.log(item.length);
+                console.log(item);
                 return (
                     <>
-                        {item.value.length >1 ?
+                        {item ?
                             <div key={index} className="items">
                                 {(item.isvisible === true || item.isvisible === "true") &&
-                                    <>
-                                        {item.title} :  {item.value}
-                                    </>
+                                    <div classname="singlebankitem">
+                                       <>{item.title}  : </> <>{item.value} </> 
+                                    </div>
                                 }
                             </div>
                             :
