@@ -48,7 +48,7 @@ const AddStocksForm = (props) => {
     const autocompleTitle = () => {
         if (tabledet.allStockData !== null && tabledet.allStockData.length > 0) {
 
-            // console.log('autocompleTitle title');
+           
             let productid = tabledet.allStockData.map((row) => {
                 return { productid: row.productid }
             })

@@ -15,6 +15,7 @@ import Header from "../../Header/Header";
 import StyleHeader from "../../Header/StyleHeader";
 import { CompanyDetail } from "../../../Context/companyDetailContext";
 import * as Datas from '../../../Context/Datas';
+import { FiEdit } from "react-icons/fi";
 
 
 
@@ -116,8 +117,8 @@ const AllStocks = (props) => {
                     <Button variant="contained" color="success" size="medium" endIcon={<BsFiletypeXlsx />}
                         onClick={() => tabledet.handleExportXlsx("allstocks")}>Export Current Stocks to Excel</Button>
 
-                    <Button variant="contained" color="success" size="medium" 
-                    // endIcon={<BsFiletypeXlsx />}
+                    <Button variant= {iseditable?"outlined":"contained" } color="warning" size="medium" 
+                    endIcon={<FiEdit size={18} />} 
                         onClick={() => setiseditable(!iseditable)}
                        
                         >Edit Stocks</Button>

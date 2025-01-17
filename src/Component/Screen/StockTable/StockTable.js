@@ -155,7 +155,9 @@ const StockTable = (props) => {
                         {displaylist.map((item, index) => {
                             let sum = Intl.NumberFormat("en-IN", digit2options).format(item.amount);
                             let othersum = Intl.NumberFormat("en-IN", digit2options).format(item.quantity * item.rate * 1);
-                            if (item.quantity === 0 && props.screen == "allstocks" && item.status  !== 'deleted'  )
+                            // console.log("displaylist menu");
+                            // console.log(displaylist)
+                            if ((item.quantity === 0 || item.status  === 'deleted' ) && props.screen === "allstocks"  )
                                 return null;
 
                             return (

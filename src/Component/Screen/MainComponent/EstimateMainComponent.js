@@ -2,7 +2,7 @@
 import React, { useRef, useEffect } from "react";
 import Card from "../../Style/Card/Card";
 import ReactToPrint from "react-to-print";
-import { Button } from "@mui/material";
+import { Button, Stack } from "@mui/material";
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import { BsFileEarmarkPdfFill } from "react-icons/bs";
@@ -44,24 +44,23 @@ const EstimateMainComponent = (props) => {
         </StyleHeader>
 
         <Box sx={{ flexGrow: 1 }}>
-            <Gridmenu>
-                <Grid item xs={7}>
 
-                    <Card >
+        <Stack direction={{ xs: 'column', sm: 'row' }}
+                useFlexGap
+                spacing={{ xs: 1, sm: 1, md: 0 }}>
+                <Stack width={window.innerWidth <= 960 ? "100%" : "70%"}
+                >
+                    <Card>
                         <h2>Edit/Preview Section</h2>
                         <EstimateTable screen="update"
 
                         />
                     </Card>
-                </Grid>
-                <Grid item xs={5}>
-                    < >
-                        <EstimateTableForm />
-
-                    </>
-                </Grid>
-
-            </Gridmenu>
+                </Stack>
+                <Stack item width={window.innerWidth <= 960 ? "100%" : "30%"}>
+                <EstimateTableForm />
+                </Stack>
+            </Stack>
             <EstimateDetailEdit />
             <Card>
                 <ReactToPrint
@@ -73,7 +72,7 @@ const EstimateMainComponent = (props) => {
                     content={() => componentRef.current}
                 />
                 <div ref={componentRef}>
-                    <EstimateDetail screen="display" />
+                <EstimateDetail screen="display" />
 
                 </div>
             </Card>

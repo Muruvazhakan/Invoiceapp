@@ -1249,6 +1249,7 @@ const StocksContext = ({ children }) => {
     let savedataresponse = await stockDb.deleteStockBD(datas, loginuser);
     console.log("savedataresponse");
     console.log(savedataresponse);
+    getAllStockData(loginuser);
     setisloading(false);
   }
   const deriveStockAddedFromHistory = (prop) => {
