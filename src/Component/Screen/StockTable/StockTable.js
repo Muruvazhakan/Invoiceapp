@@ -106,7 +106,7 @@ const StockTable = (props) => {
 
 
     return <>
-        {!tabledetails.isloading &&
+        {tabledetails.isloading &&
             <Stack sx={{ color: 'grey.500' }} spacing={2} alignItems={"center"} className="spinnerstyle">
                 <CircularProgress color="success" size={30} />
             </Stack>

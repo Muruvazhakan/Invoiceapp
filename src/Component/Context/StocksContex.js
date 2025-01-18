@@ -963,7 +963,7 @@ const StocksContext = ({ children }) => {
   }
 
   const getAllStockData = async (loginuserid, type) => {
-    // setisloading(true);
+    setisloading(true);
     let allStockData = localstorage.addOrGetAllStockData('', 'get');
     if (loginuserid != '' || loginuserid != null)
       setloginuser(loginuserid);
@@ -1001,7 +1001,7 @@ const StocksContext = ({ children }) => {
 
 
   const getAllHistoryStockData = async (loginuserid, clientdata, stockdetail) => {
-    setisloading(true);
+    // setisloading(true);
     let allHistoryStockData = localstorage.addOrGetAllHistoryStockData('', 'get');
     if (loginuserid != '' || loginuserid != null)
       setloginuser(loginuserid);
@@ -1009,7 +1009,7 @@ const StocksContext = ({ children }) => {
     console.log('getAllHistoryStockDB !!!!!');
     console.log(allHistoryStockData);
     console.log(getstockfromdb);
-    setisloading(false);
+    // setisloading(false);
     if (getstockfromdb.status === 200) {
       console.log(getstockfromdb.data);
       console.log('inside allHistoryStockData');
@@ -1329,6 +1329,7 @@ const StocksContext = ({ children }) => {
     setallStockAddedList(accumalatevalue);
     let localsum = calculateSum(accumalatevalue);
     setaddedallstockstotalamt(localsum);
+    setisloading(false);
     // setallstockssalestotalamt(totalsaleamt);  
   }
   const getAllSalesCount = async (loginuserid) => {
