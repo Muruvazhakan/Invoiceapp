@@ -409,11 +409,11 @@ const CompanyDetailContext = ({ children }) => {
 
             if (companyBasicDetailsfromdb.status === 200) {
                 // if (!companyBasicDetailslocal || (companyBasicDetailsfromdb && companyBasicDetailsfromdb.data[0].companyAddress !== companyBasicDetailslocal.companyAddress)) {
-                    localstore.addOrUpdateCompanyHandler(companyBasicDetailsfromdb.data[0], "save", companyBasicDetailsfromdb.data[0].estimateidcount);
-                    console.log("company basic details updated");
-                    console.log(companyBasicDetailsfromdb);
-                    refreshdata = true;
-                
+                localstore.addOrUpdateCompanyHandler(companyBasicDetailsfromdb.data[0], "save", companyBasicDetailsfromdb.data[0].estimateidcount);
+                console.log("company basic details updated");
+                console.log(companyBasicDetailsfromdb);
+                refreshdata = true;
+
                 // let getCompanyImage = await localstore.addOrGetCompanyImage('', "get");
                 // console.log('getCompanyImage');
                 // console.log(getCompanyImage);
@@ -511,29 +511,26 @@ const CompanyDetailContext = ({ children }) => {
                 // console.log(invoicedetailscontext);
 
             }
-            
+
 
 
             let resultsgetStockIdCounter = stockDetail.getStockIdCounter(loginuserid);
-            if(resultsgetStockIdCounter){
+            if (resultsgetStockIdCounter) {
                 refreshdata = true;
             }
 
 
-            let results = stockDetail.getAllStockData(loginuserid);
-            if(results){
+            let results = stockDetail.getAllStockData(loginuserid,"default");
+            if (results) {
                 refreshdata = true;
             }
 
             let resultsgetAllSalesCount = stockDetail.getAllSalesCount(loginuserid);
-            if(resultsgetAllSalesCount){
+            if (resultsgetAllSalesCount) {
                 refreshdata = true;
             }
 
-            let resultsgetAllClientList = stockDetail.getAllClientList(loginuserid,"default");
-            if(resultsgetAllClientList){
-                refreshdata = true;
-            }
+
 
         }
 
@@ -763,7 +760,7 @@ const CompanyDetailContext = ({ children }) => {
         loginuser, setloginuser, loginUserPassword, setloginUserPassword, loginHandler, loginstatus, setloginstatus, loginId, setloginId, loginUserConfirmPassword, setloginUserConfirmPassword, tokenid, settokenid, logoutHandler,
         companyBankdetailtitle, setcompanyBankdetailtitle, companyBankdetailvalue, setcompanyBankdetailvalue, companyBankdetailIsVisible, setcompanyBankdetailIsVisible, companydetailIsVisible, setcompanydetailIsVisible,
         loginuserid, setloginuserid, saveHandler, getAlldataFromDB, getAlldataOnLogin, isloaded, setisloaded, companyImage, setcompanyImage, selectCompanyImg, uploadimg, setuploadimg, useraccess, setuseraccess,
-        role, setrole, type, settype, oraganisationName, setoraganisationName, tier, settier,companymsme, setcompanymsme
+        role, setrole, type, settype, oraganisationName, setoraganisationName, tier, settier, companymsme, setcompanymsme
     };
 
     return <CompanyDetail.Provider value={compDet} >{children}</CompanyDetail.Provider>;

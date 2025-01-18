@@ -12,17 +12,19 @@ import StocksContext from './Component/Context/StocksContex';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <StocksContext>
+    
     <EstimatestateContext>
 
       <AllStateContext>
+      <StocksContext>
         <CompanyDetailContext>
           <App />
         </CompanyDetailContext>
+        </StocksContext>
       </AllStateContext>
 
     </EstimatestateContext>
-    </StocksContext>
+   
   </React.StrictMode>
 );
 

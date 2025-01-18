@@ -57,6 +57,14 @@ export const navigationbarcontent = [
         image: stocks,
         tier: ['platinum']
     },
+    {
+        screenname: 'Profits',
+        links: '/profits',
+        altname: 'profits',
+        displays: true,
+        image: stocks,
+        tier: ['platinum']
+    },
 ];
 
 export const userLogin = [
