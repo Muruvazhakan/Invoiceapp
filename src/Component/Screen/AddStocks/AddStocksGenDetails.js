@@ -13,7 +13,7 @@ const AddStocksGenDetails = (props) => {
 
     const stockdet = useContext(Stocks);
     const [value, setValue] = React.useState(null);
-
+    const [isbuttonClicked, setisbuttonClicked] = useState(false);
     const [tit, setit] = useState([]);
     let title;
 
@@ -33,7 +33,7 @@ const AddStocksGenDetails = (props) => {
             return data.clientName == clname
         })
         console.log("filterProdIdAndGetDesc");
-        console.log(filterdata); 
+        console.log(filterdata);
         if (filterdata) {
             stockdet.setclientPhno(filterdata.clientPhno);
             stockdet.setclientAdd(filterdata.clientAdd);
@@ -138,6 +138,14 @@ const AddStocksGenDetails = (props) => {
         );
     }
 
+    const onSaveHander = () => {
+        setisbuttonClicked(true);
+        stockdet.saveStock(props.screen);
+        setTimeout(() => {
+            setisbuttonClicked(false);
+        }, [5000])
+    }
+
     return <>
         <FormGroup>
             <FormControl>
@@ -191,7 +199,7 @@ const AddStocksGenDetails = (props) => {
                     </Box>
 
                     <h3>
-                    {props.screen === "add" ? "Stocks Details" : "Sale Stocks Details"} 
+                        {props.screen === "add" ? "Stocks Details" : "Sale Stocks Details"}
                     </h3>
                     <Box component="form" sx={{ '& .MuiTextField-root': { m: 1, width: '15ch', height: '5ch' } }} >
                         {props.screen == "add" ? <>
@@ -218,9 +226,10 @@ const AddStocksGenDetails = (props) => {
 
                         <div className="button-warn">
                             <Button variant="contained" color="success" size="medium" endIcon={<FaFileInvoice />}
-                                onClick={() => stockdet.saveStock(props.screen)}>
-                                    {props.screen === "add" ? "Save Stocks" : "Save Sale Stocks"}
-                                </Button>
+                                disabled={isbuttonClicked}
+                                onClick={() => onSaveHander()}>
+                                {props.screen === "add" ? "Save Stocks" : "Save Sale Stocks"}
+                            </Button>
                         </div>
 
                         <div className="button-warn buttonspace">

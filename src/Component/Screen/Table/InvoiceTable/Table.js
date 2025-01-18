@@ -12,67 +12,28 @@ import '../Table.css';
 
 
 import { AllState } from "../../../Context/allStateContext";
-
+import { Stocks } from "../../../Context/StocksContex";
 const Tables = (props) => {
 
   const tabledetails = useContext(AllState);
+  const stockedet = useContext(Stocks);
+
   const digit2options = { maximumFractionDigits: 2 }
   const digit3options = { maximumFractionDigits: 3 }
 
-  // const list=[{
-  //     sno:1,
-  //     desc:"Description of Goods",
-  //     hsn:"200",
-  //     quantity:20,
-  //     rateoftax:2,
-  //     rate:100,
-  //     per:"PCS",
-  //     disc:"15%",
-  //     amount:"1000"
-  // },{
-  //     sno:2,
-  //     desc:"Description of Goods",
-  //     hsn:"200",
-  //     quantity:20,
-  //     rateoftax:2,
-  //     rate:100,
-  //     per:"PCS",
-  //     disc:"15%",
-  //     amount:"1000"
-  // },{
-  //     sno:3,
-  //     desc:"Description of Goods",
-  //     hsn:"200",
-  //     quantity:20,
-  //     rateoftax:2,
-  //     rate:100,
-  //     per:"PCS",
-  //     disc:"15%",
-  //     amount:"1000"
-  // }];
-
-
-  // const hsnlist=[{
-  //     sno:1,
-  //     hsn:2000,
-  //     taxableValue:1000,
-  //     centaxrate:10,
-  //     centaxamt:110,
-  //     satetaxrate:10,
-  //     statetaxamt:110,
-  //     totaltaxamt:200
-  // }]
+  const onEditHandler = (item) => {
+    let filterdata = stockedet.allStockData.find(data => {
+      return data.productid == item.productid
+    })
+    console.log("filterdata onEditHandler");
+    console.log(filterdata);
+    if (filterdata) {
+      tabledetails.setavailablestock(((filterdata.quantity * 1) - (item.quantity * 1)));
+    }
+    tabledetails.editListRows(item, "update")
+  }
   return <>
-    {/* <Paper sx={{ height: 400, width: '100%' }}>
-  <DataGrid
-    rows={rows}
-    columns={columns}
-    initialState={{ pagination: { paginationModel } }}
-    pageSizeOptions={[5, 10]}
-    checkboxSelection
-    sx={{ border: 0 }}
-  />
-</Paper> */}
+
     <Paper sx={{ width: '98%', overflow: 'hidden', padding: '5px', borderRadius: '10px' }}>
       <TableContainer sx={{ minWidth: 650, borderRadius: '10px' }}>
         <Table aria-label="simple table">
@@ -121,7 +82,7 @@ const Tables = (props) => {
                   <TableCell className="table-header-td">{Intl.NumberFormat("en-IN", digit2options).format(item.amount)}</TableCell>
                   {props.screen === "update" &&
                     <>
-                      <TableCell className="table-edit" onClick={() => tabledetails.editListRows(item, "update")} >
+                      <TableCell className="table-edit" onClick={() => onEditHandler(item)} >
 
                         <FiEdit size={18} />
 

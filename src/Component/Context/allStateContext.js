@@ -40,7 +40,7 @@ const AllStateContext = ({ children }) => {
   const [rateinctax, setrateinctax] = useState(0);
   const [rate, setrate] = useState(0);
   const [per, setper] = useState('');
-  const [disc, setdisc] = useState(15);
+  const [disc, setdisc] = useState(0);
   const [amount, setamount] = useState(0);
   const [header, setheader] = useState('invoicerequest');
   const [clientName, setclientName] = useState('');
@@ -55,6 +55,7 @@ const AllStateContext = ({ children }) => {
   const [invoicedate, setinvoicedate] = useState('');
   const [paymentmode, setpaymentmode] = useState('');
   const [paymentdate, setpaymentdate] = useState('');
+  const [isEditInvoice, setisEditInvoice] = useState(false);
 
   const [gstCgstitem, setgstCgstitem] = useState([{
     desc: 'OUTPUTCGST9%',
@@ -126,8 +127,8 @@ const AllStateContext = ({ children }) => {
   };
 
   const editListRows = (item, type) => {
-    // console.log("item ");
-    // console.log(item);
+    console.log("item ");
+    console.log(item);
     const removedist = list.filter((alllist) => {
       return alllist.id != item.id;
     })
@@ -150,7 +151,8 @@ const AllStateContext = ({ children }) => {
       sethsn(item.hsn);
       setquantity(item.quantity);
       setrateinctax(item.rateinctax);
-
+      if (item.productid)
+        setproductid(item.productid)
       if (gstincluded) {
         let orgctrate = ((item.rate * 1) / (1 + (ctrate / 100) + (strate / 100))).toFixed(2);
         setrate(orgctrate);
@@ -514,10 +516,12 @@ const AllStateContext = ({ children }) => {
     setdesc('');
     sethsn('');
     setquantity(0);
+    setavailablestock(0);
+    setproductid('');
     setrateinctax('');
     setrate(0);
     setper('');
-    setdisc(15);
+    setdisc(0);
     setamount(0);
   }
 
@@ -590,12 +594,12 @@ const AllStateContext = ({ children }) => {
     console.log('loginuserid + loginuserid');
 
     let clientidtemp;
-      if (clientid == null) {
-        clientidtemp = uuidv4();
-        setclientid(clientidtemp);
-      } else {
-        clientidtemp = clientid;
-      }
+    if (clientid == null) {
+      clientidtemp = uuidv4();
+      setclientid(clientidtemp);
+    } else {
+      clientidtemp = clientid;
+    }
     let datas = {
       authorization: header,
       ctrate: ctrate,
@@ -649,7 +653,7 @@ const AllStateContext = ({ children }) => {
 
   const selectedInvoiceEdit = (props) => {
     console.log(props);
-
+    setisEditInvoice(true);
     let singleinvoice = props;
     setinvoicedate(singleinvoice.invoicedate);
     setinvoiceid(singleinvoice.invoiceid);
@@ -672,6 +676,7 @@ const AllStateContext = ({ children }) => {
     setclientName(singleinvoice.clientName);
     setclientPhno(singleinvoice.clientPhno);
     setclientid(singleinvoice.clientid);
+    // setproductid(singleinvoice.productid);
     console.log('inside ctrate ');
     if (singleinvoice.ctrate) {
       let ctratelocal = singleinvoice.ctrate * 1;
@@ -765,7 +770,7 @@ const AllStateContext = ({ children }) => {
     setclientName('');
     setclientPhno('');
     setclientid('');
-
+    setisEditInvoice(false);
   }
 
   //   useEffect(() => {
@@ -822,7 +827,7 @@ const AllStateContext = ({ children }) => {
     totalcentaxamt, settotalcentaxamt, totalstatetaxamt, settotalstatetaxamt, isinstallationcharge, setisinstallationcharge, otherchargedetail, setOtherchargedetail, editListRows, addOrEditOtherItems,
     invoiceid, setinvoiceid, invoicedate, setinvoicedate, paymentmode, setpaymentmode, paymentdate, setpaymentdate, invoiceidcount, setinvoiceidount, clientName, setclientName, clientPhno, setclientPhno, clientAdd, setclientAdd,
     invoiceHistoryData, setinvoiceHistoryData, invoiceHistroyUpdateFlag, setinvoiceHistroyUpdateFlag, selectedInvoiceEdit, cleartallInvoice, handleInvoiceExportXlsx, displayhsntable, setdisplayhsntable, availablestock, setavailablestock,
-    productid, setproductid, clientid, setclientid
+    productid, setproductid, clientid, setclientid, isEditInvoice, setisEditInvoice
   };
   return <AllState.Provider value={context}>{children}</AllState.Provider>;
 }

@@ -203,6 +203,7 @@ const AddStocksForm = (props) => {
                                 renderOption={(props, option) => renderOptionOnAutoComplete(props, option)}
                                 // sx={{ width: 300 }}
                                 freeSolo
+                                disabled={tabledet.isEditStock &&tabledet.stockid!==''}
                                 renderInput={(params) => (
                                     // <TextField label="Title" />
                                     <TextField required id="outlined-required" label="Product Id"

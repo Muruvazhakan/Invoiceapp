@@ -14,6 +14,8 @@ import { CompanyDetail } from "../../Context/companyDetailContext";
 const InvoiceMainComponent = (props) => {
     const componentRef = useRef();
     const logindet = useContext(CompanyDetail);
+    // const { screen } = props.location?props.location:null;
+   
     if (logindet.tier && (logindet.tier !=="gold" && logindet.tier !=="platinum")) 
        return <StyleHeader>No Access for this User</StyleHeader>
     return <>

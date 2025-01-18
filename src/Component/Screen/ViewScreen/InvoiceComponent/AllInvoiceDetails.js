@@ -122,7 +122,7 @@ const AllInvoiceDetails = () => {
                                     </ul>
                                     <ul>
                                         <Link to={{
-                                            pathname: `/geninvoice`
+                                            pathname: `/geninvoice`, screen:"editscreen"
                                         }}
                                         >
                                             <Button className="gen-invoice" variant="outlined"

@@ -111,7 +111,7 @@ const StockTable = (props) => {
                 <CircularProgress color="success" size={30} />
             </Stack>
         }
-        <Paper sx={{ width: '98%', overflow: 'hidden', borderRadius: '10px', marginTop: "10px" }}>
+        <Paper sx={{ width: '100%', overflow: 'hidden', borderRadius: '10px', marginTop: "10px" }}>
 
             <TableContainer sx={{ minWidth: 650, borderRadius: '10px' }}>
 

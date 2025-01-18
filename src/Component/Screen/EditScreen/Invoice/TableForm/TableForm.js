@@ -21,6 +21,7 @@ const TableForm = (props) => {
     const tabledet = useContext(AllState);
     const stockedet = useContext(Stocks);
     const [value, setValue] = useState(null);
+    const [isbuttonClicked, setisbuttonClicked] = useState(false);
 
     const [tit, setit] = useState([]);
     useEffect(() => {
@@ -133,6 +134,13 @@ const TableForm = (props) => {
         );
     }
 
+    const onSaveHander =()=>{
+        setisbuttonClicked(true);
+        tabledet.saveInvoice();
+        setTimeout(()=>{
+            setisbuttonClicked(false);
+        },[5000])
+    }
     return <>
         <Card >
             <ToastContainer position="top-center" theme="colored" containerId="Invoice" />
@@ -174,6 +182,7 @@ const TableForm = (props) => {
                                 renderOption={(props, option) => renderOptionOnAutoComplete(props, option)}
                                 // sx={{ width: 300 }}
                                 freeSolo
+                                disabled={tabledet.isEditInvoice &&tabledet.invoiceid!==''}
                                 renderInput={(params) => (
                                     // <TextField label="Title" />
                                     <TextField required id="outlined-required" label="Product Id"
@@ -229,7 +238,7 @@ const TableForm = (props) => {
                                 error={tabledet.setboxColors(tabledet.per, 'error')}
                             /> */}
 
-                            <TextField required id="outlined-required" label="Discount" value={tabledet.disc} type="number"
+                            <TextField id="outlined-required" label="Discount" value={tabledet.disc} type="number"
                                 onChange={(e) => tabledet.setval(e, tabledet.setdisc)}
                                 color={tabledet.setboxColors(tabledet.disc, 'color')}
                                 error={tabledet.setboxColors(tabledet.disc, 'error')}
@@ -290,7 +299,8 @@ const TableForm = (props) => {
 
                             <div className="button-warn">
                                 <Button variant="contained" color="success" size="medium" endIcon={<FaFileInvoice />}
-                                    onClick={tabledet.saveInvoice}>Save Invoice</Button>
+                                disabled={isbuttonClicked}
+                                    onClick={onSaveHander}>Save Invoice</Button>
                             </div>
 
                             <div className="button-warn buttonspace">
