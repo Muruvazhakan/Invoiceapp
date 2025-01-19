@@ -14,6 +14,7 @@ const filter = createFilterOptions();
 const EstimateTableForm = (props) => {
     const [tit, setit] = useState([]);
     const [sub, sesubtit] = useState([]);
+    const [isbuttonClicked, setisbuttonClicked] = useState(false);
     let title, subtitle;
     const estdetail = useContext(estimateState);
 
@@ -169,6 +170,14 @@ const EstimateTableForm = (props) => {
                 {option.title}
             </li>
         );
+    }
+
+    const onSaveHander = () => {
+        setisbuttonClicked(true);
+        estdetail.addOrGetEstimateHistoryData('', '', 'New');
+        setTimeout(() => {
+            setisbuttonClicked(false);
+        }, [5000])
     }
     return <>
         <Card>
@@ -461,7 +470,10 @@ const EstimateTableForm = (props) => {
                     <div className="button-warn buttonspace">
 
                         <Button variant="contained" color="success" size="medium" endIcon={<FaFileInvoice />}
-                            onClick={() => estdetail.addOrGetEstimateHistoryData('', '', 'New')}>Save Complete Estimate</Button>
+                            // onClick={() => estdetail.addOrGetEstimateHistoryData('', '', 'New')}
+                            disabled={isbuttonClicked}
+                                onClick={() => onSaveHander()}
+                            >Save Complete Estimate</Button>
 
                         {estdetail.estimateid.length === 0 && <div className="displaysmalldata"> Estimate Id is not generates</div>}
 

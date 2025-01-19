@@ -130,9 +130,6 @@ const StockTable = (props) => {
                             </>}
 
                             <TableCell sx={{ fontWeight: 700 }}>Purchace Rate</TableCell>
-                            {props.screen === "allProfit" && <>
-                                <TableCell sx={{ fontWeight: 700 }}>Selling Rate</TableCell>
-                            </>}
 
                             {props.screen !== "allProfit" && <>
                                 <TableCell sx={{ fontWeight: 700 }}>Amount (₹)</TableCell>
@@ -194,9 +191,7 @@ const StockTable = (props) => {
                                     </>}
 
                                     <TableCell className="table-header-td">{item.rate}</TableCell>
-                                    {props.screen === "allProfit" && <>
-                                        <TableCell className="table-header-td">{item.salerate}</TableCell>
-                                    </>}
+                                    
                                     {props.screen !== "allProfit" && <>
                                         <TableCell className="table-header-td">
 
@@ -247,24 +242,23 @@ const StockTable = (props) => {
                         // sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                         >
                             <TableCell></TableCell>
-                            <TableCell sx={{ fontSize: 18, fontWeight: 700 }} >Total Amount</TableCell>
+                            <TableCell sx={{ fontSize: 18, fontWeight: 700 }} >Total</TableCell>
                             <TableCell ></TableCell>
                             {props.screen !== "allProfit" &&
                                 <TableCell ></TableCell>}
+                            
+                            <TableCell ></TableCell>
                             {props.screen !== "allProfit" && <>
-                                <TableCell align='center' className="table-header-td" sx={{ fontSize: 18, fontWeight: 700 }}> {localsumqty1}</TableCell>
+                                <TableCell align='center' className="table-header-td" sx={{ fontSize: 18, fontWeight: 700 }}>{localsumqty1} Qty</TableCell>
                             </>}
                             <TableCell ></TableCell>
-                            <TableCell ></TableCell>
-                            {props.screen === "allProfit" &&
-                                <TableCell ></TableCell>
-                            }
+                            
                             {props.screen === "allProfit" && <>
-                                <TableCell sx={{ fontSize: 18, fontWeight: 700 }}>{sumpurchaseamt}</TableCell>
+                                <TableCell sx={{ fontSize: 18, fontWeight: 700 }}>₹{sumpurchaseamt}</TableCell>
                                 {/* <TableCell align='center' >{tabledetails.alladdedstockstotalamt} </TableCell> */}
-                                <TableCell sx={{ fontSize: 18, fontWeight: 700 }} align='center'  >{localsumqty2}</TableCell>
+                                <TableCell sx={{ fontSize: 18, fontWeight: 700 }} align='center'  >{localsumqty2} Qty</TableCell>
                                 <TableCell ></TableCell>
-                                <TableCell sx={{ fontSize: 18, fontWeight: 700 }}  >{tabledetails.allstockssalestotalamt}</TableCell>
+                                <TableCell sx={{ fontSize: 18, fontWeight: 700 }}  >{tabledetails.allstockssalestotalamt>0&& "₹"+tabledetails.allstockssalestotalamt}</TableCell>
 
                             </>}
                             <TableCell sx={{ fontSize: 18, fontWeight: 700 }} className="table-amount">₹{Intl.NumberFormat("en-IN", digit2options).format(localsum)}</TableCell>

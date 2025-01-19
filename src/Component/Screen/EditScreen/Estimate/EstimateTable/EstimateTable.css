@@ -1,11 +1,17 @@
 .tableyellow{
-    background-color: rgb(210, 210, 53);
+    /* background-color: rgb(210, 210, 53); */
+    background: radial-gradient(#faff1a, #bd9358);
 }
 .tableblue{
-    background-color: rgb(93, 194, 237);
+/* background: radial-gradient(#f69d3c, #3f87a6); */
+background: radial-gradient(#1ad8ff, #5f5f5ffa);
+
+/* background: conic-gradient(#f69d3c, #3f87a6); */
+
 }
 .tabledis{
-    background-color:  rgb(204 204 100 / 64%);
+    background: linear-gradient(#a3d8a4, #b8e1727d);
+    
 }
 .buttonspace{
     margin: 10px;

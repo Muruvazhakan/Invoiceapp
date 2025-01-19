@@ -27,16 +27,7 @@ const EstimateMainComponent = (props) => {
         // console.log(location.state.estimate);
 
     }, [])
-    const Gridmenu = (props) => {
-        return <>
-            {window.innerWidth <= 960 ?
-                <>  {props.children} </>
-                : <Grid container spacing={2}>
-                    {props.children}
-                </Grid>
-            }
-        </>
-    }
+
     const componentRef = useRef();
     return <>
         <StyleHeader>
@@ -45,7 +36,7 @@ const EstimateMainComponent = (props) => {
 
         <Box sx={{ flexGrow: 1 }}>
 
-        <Stack direction={{ xs: 'column', sm: 'row' }}
+            <Stack direction={{ xs: 'column', sm: 'row' }}
                 useFlexGap
                 spacing={{ xs: 1, sm: 1, md: 0 }}>
                 <Stack width={window.innerWidth <= 960 ? "100%" : "70%"}
@@ -58,7 +49,7 @@ const EstimateMainComponent = (props) => {
                     </Card>
                 </Stack>
                 <Stack item width={window.innerWidth <= 960 ? "100%" : "30%"}>
-                <EstimateTableForm />
+                    <EstimateTableForm />
                 </Stack>
             </Stack>
             <EstimateDetailEdit />
@@ -72,7 +63,7 @@ const EstimateMainComponent = (props) => {
                     content={() => componentRef.current}
                 />
                 <div ref={componentRef}>
-                <EstimateDetail screen="display" />
+                    <EstimateDetail screen="display" />
 
                 </div>
             </Card>

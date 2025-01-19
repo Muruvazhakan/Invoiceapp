@@ -23,7 +23,7 @@ const StocksContext = ({ children }) => {
     amount: 0
   });
   const [productid, setproductid] = useState('');
-  const [isloading, setisloading] = useState(false);
+  const [isloading, setisloading] = useState(true);
   const [list, setList] = useState([]);
   const [saleslist, setSalesList] = useState([]);
   const [allStockList, setallStockList] = useState([]);

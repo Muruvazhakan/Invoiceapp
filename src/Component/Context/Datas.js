@@ -4,6 +4,7 @@ import estimate from '../../Image/estimates.png';
 import stocks from '../../Image/stocks.png';
 // import estimate from '../../Image/estimates.png';
 import salesf from '../../Image/salesf.png';
+import profitsf from '../../Image/profitsf.png';
 export const navigationbarcontent = [
     {
         screenname: 'Home',
@@ -62,7 +63,7 @@ export const navigationbarcontent = [
         links: '/profits',
         altname: 'profits',
         displays: true,
-        image: stocks,
+        image: profitsf,
         tier: ['platinum']
     },
 ];
