@@ -781,9 +781,8 @@ const StocksContext = ({ children }) => {
           Sno: index + 1,
           Productid: data.productid,
           HSN: data.hsn,
-
           ProductDescription: data.desc,
-          status: data.status,
+          Status: data.status,
           Quantity: data.quantity,
           Rate: data.rate,
           SaleRate: data.salerate,
@@ -795,9 +794,8 @@ const StocksContext = ({ children }) => {
         Sno: "Total",
         Productid: '',
         HSN: '',
-
         ProductDescription: '',
-        status: '',
+        Status: '',
         Quantity: localsumqty1,
         Rate: '',
         SaleRate: '',
@@ -807,7 +805,8 @@ const StocksContext = ({ children }) => {
       filtercolumn.push(lastcolumn);
       console.log("filtercolumn");
       console.log(filtercolumn);
-    } else if (screen === "allsalestocks") {
+    } 
+    else if (screen === "allsalestocks") {
       let filtercolumn = allStockSalesList.map((data, index) => {
         return {
           Sno: index + 1,
@@ -830,12 +829,14 @@ const StocksContext = ({ children }) => {
       console.log("filtercolumn");
       console.log(filtercolumn);
 
-    } else if (screen === "alladdedstocks") {
+    } 
+    else if (screen === "alladdedstocks") {
       let filtercolumn = allStockAddedList.map((data, index) => {
         return {
           Sno: index + 1,
           Productid: data.productid,
           ProductDescription: data.desc,
+          Status: data.status,
           Quantity: data.quantity,
           Rate: data.rate,
           Amount: data.quantity * data.rate * 1
@@ -845,6 +846,7 @@ const StocksContext = ({ children }) => {
         Sno: "Total",
         Productid: '',
         ProductDescription: '',
+        Status:'',
         Quantity: localsumqty1,
         Rate: '',
         Amount: localsum
@@ -853,7 +855,8 @@ const StocksContext = ({ children }) => {
       console.log("filtercolumn");
       console.log(filtercolumn);
 
-    } else if (screen === "allProfit") {
+    } 
+    else if (screen === "allProfit") {
 
       let filtercolumn = allProfitStockList.map((data, index) => {
         return {
