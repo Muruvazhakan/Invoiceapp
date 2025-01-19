@@ -192,14 +192,14 @@ const StocksContext = ({ children }) => {
       if (allStockData && allStockData.length > 0) {
         // setList(allStockData);
         setallStockList(allStockData);
-        let localsum = calculateSum(allStockData);
-        setallstockstotalamt(localsum);
+        let localsum = calculateSum(allStockData,"allstocks");
+        // setallstockstotalamt(localsum);
       }
 
     }
   };
 
-  const calculateSum = (alllistdata) => {
+  const calculateSum = (alllistdata,screen) => {
     let localsum = 0, sum = 0;
     let val;
     let singleval = alllistdata;
@@ -207,11 +207,18 @@ const StocksContext = ({ children }) => {
       // console.log("****calculateSum****");
       // console.log(singleval[0].rate);
       for (let i = 0; i < singleval.length; i++) {
-        // console.log("singleval*****");
-        // console.log(singleval[i]);
+        console.log("singleval***** + screen " + screen);
+        console.log(singleval[i]);
         // if(singleval[i].rate){
-        val = ((singleval[i].rate * singleval[i].quantity * 1));
-        localsum = localsum + val;
+        if((singleval[i].quantity === 0 || singleval[i].quantity === 'deleted' || singleval[i].status === 'Deleted') && screen === "allstocks"){
+          console.log("inside calcum deleted");
+          console.log(singleval[i]);
+          
+        } else {
+          val = ((singleval[i].rate * singleval[i].quantity * 1));
+          localsum = localsum + val;
+        }
+       
         // }
 
       }
@@ -695,7 +702,7 @@ const StocksContext = ({ children }) => {
   }
 
   const getAllClientList = async (loginuserid, type, stockdetail) => {
-    
+
     let allClientData = localstorage.addOrGetAllClientData('', 'get');
     console.log('loginuserid &&&& ' + loginuserid);
     if (loginuserid != '' || loginuserid != null)
@@ -705,7 +712,7 @@ const StocksContext = ({ children }) => {
     // setclientList(allClientData);
     console.log('**** getallClientDatafromdb &&&& ');
     console.log(getallClientDatafromdb);
-    
+
     if (getallClientDatafromdb.status === 200) {
       // localstorage.addOrGetAllClientData(getallClientDatafromdb.data, 'save');
       setclientList(getallClientDatafromdb.data);
@@ -728,7 +735,10 @@ const StocksContext = ({ children }) => {
     let filtercolumn = [];
     let localsumqty1 = 0, localsumqty2 = 0, sumpurchaseamt = 0, expectedprofitsum = 0;
 
-    let displaylist = (screen === "allstocks" ? allStockList
+    let displaylist = (screen === "allstocks" ? allStockList.map((item, index) => {
+      if ((item.quantity === 0 || item.status === 'deleted') && screen === "allstocks") { }
+      else return item
+    }).filter(x => x !== undefined)
       :
       (screen === "alladdedstocks" ? allStockAddedList
         :
@@ -766,7 +776,7 @@ const StocksContext = ({ children }) => {
     });
 
     if (screen === "allstocks") {
-      filtercolumn = allStockList.map((data, index) => {
+      filtercolumn = displaylist.map((data, index) => {
         return {
           Sno: index + 1,
           Productid: data.productid,
@@ -782,7 +792,7 @@ const StocksContext = ({ children }) => {
         }
       })
       let lastcolumn = {
-        Sno: "Total Amount",
+        Sno: "Total",
         Productid: '',
         HSN: '',
 
@@ -832,7 +842,7 @@ const StocksContext = ({ children }) => {
         }
       })
       let lastcolumn = {
-        Sno: "Total Amount",
+        Sno: "Total",
         Productid: '',
         ProductDescription: '',
         Quantity: localsumqty1,
@@ -862,7 +872,7 @@ const StocksContext = ({ children }) => {
         }
       })
       let lastcolumn = {
-        Sno: "Total Amount",
+        Sno: "Total",
         Productid: '',
         HSN: '',
         ProductDescription: '',
@@ -980,7 +990,7 @@ const StocksContext = ({ children }) => {
       localstorage.addOrGetAllStockData(getstockfromdb.data, 'save');
       setallStockData(getstockfromdb.data);
       setallStockList(getstockfromdb.data);
-      let localsum = calculateSum(getstockfromdb.data);
+      let localsum = calculateSum(getstockfromdb.data,"allstocks");
       setallstockstotalamt(localsum);
       getAllClientList(loginuserid, type, getstockfromdb.data);
 
@@ -996,7 +1006,7 @@ const StocksContext = ({ children }) => {
 
     }
     return false;
-    
+
   }
 
 
@@ -1019,7 +1029,7 @@ const StocksContext = ({ children }) => {
       deriveStockAddedFromHistory(deriveClientDetailValue, stockdetail);
       return true;
     }
-    
+
     return false;
   }
 

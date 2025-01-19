@@ -48,10 +48,15 @@ const StockTable = (props) => {
     useEffect(() => {
         console.log("refresh");
     }, []);
+    let sum1=0;
     let displaylist = (props.screen == "allstocks" ?
         tabledetails.allStockList.map((item, index) => {
             if ((item.quantity === 0 || item.status === 'deleted') && props.screen === "allstocks") { }
-            else return item
+            else {
+                sum1=sum1+(item.quantity*1*item.rate)
+                return item;
+               
+            } 
         }).filter(x => x !== undefined)
         :
         (props.screen == "alladdedstocks" ? tabledetails.allStockAddedList
@@ -67,7 +72,7 @@ const StockTable = (props) => {
     );
     console.log("displaylist  " + " ^^^" + displaylist);
     console.log(displaylist)
-    let localsum = (props.screen === "allstocks" ? tabledetails.allstockstotalamt
+    let localsum = (props.screen === "allstocks" ? sum1
         :
         (props.screen == "alladdedstocks" ? tabledetails.alladdedstockstotalamt
             :
@@ -83,6 +88,7 @@ const StockTable = (props) => {
         )
     );
 
+    
 
     let localsumqty1 = 0, localsumqty2 = 0, sumpurchaseamt = 0;
 
@@ -261,7 +267,7 @@ const StockTable = (props) => {
                                 <TableCell sx={{ fontSize: 18, fontWeight: 700 }}  >{tabledetails.allstockssalestotalamt>0&& "₹"+tabledetails.allstockssalestotalamt}</TableCell>
 
                             </>}
-                            <TableCell sx={{ fontSize: 18, fontWeight: 700 }} className="table-amount">₹{Intl.NumberFormat("en-IN", digit2options).format(localsum)}</TableCell>
+                            <TableCell sx={{ fontSize: 18, fontWeight: 700 }} className="table-amount">₹ {Intl.NumberFormat("en-IN", digit2options).format(localsum)}</TableCell>
                             {props.screen === "allstocks" && props.iseditable &&
                                 <>
                                     {/* <TableCell sx={{ fontWeight: 700 }} >Edit rows
