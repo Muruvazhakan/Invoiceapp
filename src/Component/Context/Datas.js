@@ -82,9 +82,9 @@ export const userLogin = [
         displays: true
     },
     {
-        screenname: 'Password Rest',
-        links: '/resetpassword',
-        altname: 'resetpassword',
+        screenname: 'Rest Password',
+        links: '/passwordreset',
+        altname: 'passwordreset',
         displays: true
     },
 ]

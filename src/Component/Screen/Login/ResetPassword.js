@@ -1,8 +1,7 @@
 import { Box, Button, TextField } from "@mui/material";
 import React, { useContext } from "react";
 import './Login.css';
-import { GoSignIn } from "react-icons/go";
-
+import { MdLockReset } from "react-icons/md";
 import Card from "../../Style/Card/Card";
 import { CompanyDetail } from "../../Context/companyDetailContext";
 import { ToastContainer } from "react-toastify";
@@ -14,7 +13,7 @@ const ResetPassword = (props) => {
         <ToastContainer position="top-center" theme="colored" containerId="Signin" autoClose={1000} />
         <Card className="logincard displaycontent">
             <Box component="form" sx={{ '& .MuiTextField-root': { m: 1.5, width: '35ch' } }}>
-                <h2 className="logintext">Sign Up</h2>
+                <h2 className="resetlogintext">Reset Password</h2>
                 <div>
                     <TextField required id="outlined-required" label="User Name" value={logindet.loginuser}
                         onChange={(e) => logindet.setval(e, logindet.setloginuser)}
@@ -45,7 +44,7 @@ const ResetPassword = (props) => {
                 /> */}
 
                 <div className="loginbutton">
-                    <Button variant="contained" color="success" endIcon={< GoSignIn />}
+                    <Button variant="contained" color="success" endIcon={< MdLockReset />}
                         onClick={(e) => logindet.loginHandler('reset')}
                     >Reset Password</Button>
                 </div>

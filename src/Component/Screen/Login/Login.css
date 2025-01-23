@@ -11,10 +11,13 @@
     margin-top: 5%;
 }
 .logintext{
-    color: rgb(17, 87, 68);
+    color: rgb(36 87 116);
 }
 .loginbutton{
     margin-top:15px;
+}
+.resetlogintext{
+    color: rgb(170 103 42);  
 }
 .linkstyle{
     font-style: italic;
