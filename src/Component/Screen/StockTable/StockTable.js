@@ -51,7 +51,7 @@ const StockTable = (props) => {
     let sum1=0;
     let displaylist = (props.screen == "allstocks" ?
         tabledetails.allStockList.map((item, index) => {
-            if ((item.quantity === 0 || item.status === 'deleted') && props.screen === "allstocks") { }
+            if ((item.quantity === 0 || item.status === 'deleted' || item.status === 'Deleted') && props.screen === "allstocks") { }
             else {
                 sum1=sum1+(item.quantity*1*item.rate)
                 return item;
@@ -174,7 +174,7 @@ const StockTable = (props) => {
                             let othersum = Intl.NumberFormat("en-IN", digit2options).format(item.quantity * item.rate * 1);
                             // console.log("displaylist menu");
                             // console.log(displaylist)
-                            if ((item.quantity === 0 || item.status === 'deleted') && props.screen === "allstocks")
+                            if ((item.quantity === 0 || item.status === 'deleted' || item.status === 'Deleted') && props.screen === "allstocks")
                                 return null;
 
                             return (

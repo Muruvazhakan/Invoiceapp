@@ -289,7 +289,8 @@ const CompanyDetailContext = ({ children }) => {
                 else {
                     toast.warning(userExsist.data);
                 }
-            } else {
+            }
+            else if (logintype === 'sigin') {
                 if (loginUserPassword !== loginUserConfirmPassword) {
                     toast.error("Password is not match iwth Confirm Password");
                     return;
@@ -306,6 +307,27 @@ const CompanyDetailContext = ({ children }) => {
                 } else if (userExsist.status === 201) {
 
                     toast.success(" User successfully registered");
+                    //console.log(userExsist.data);
+                } else {
+                    toast.warning(userExsist.data);
+                }
+            } else if (logintype === 'reset') {
+                if (loginUserPassword !== loginUserConfirmPassword) {
+                    toast.error("Password is not match with Confirm Password");
+                    return;
+                }
+                // if (tokenid !== 'Billedge123') {
+                //     toast.error("Invalid Token");
+                //     return;
+                // }
+                userExsist = await companyDetailsDB.passwordReset(loginuser, encrypted_pass, tokenid);
+                //console.log(userExsist);
+                if (userExsist.data === "User does not exist") {
+                    toast.error("User does not exist");
+                    // setloginstatus(true);
+                } else if (userExsist.status === 201) {
+
+                    toast.success("Password Changed!");
                     //console.log(userExsist.data);
                 } else {
                     toast.warning(userExsist.data);
@@ -367,6 +389,7 @@ const CompanyDetailContext = ({ children }) => {
         //console.log('loginuserid');
         //console.log(loginuserid);
         let refreshdata = false;
+        stockDetail.setisloading(true);
         if (loginuserid !== null && loginuserid !== '') {
 
             let estimateidcounter = localstore.addOrGetEstimateid('', "get");

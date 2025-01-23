@@ -102,8 +102,8 @@ const NavigationBar = (props) => {
               </> :
               <>
                 {Datas.userLogin.map((item, index) => {
-                  let tier = logindet.tier;
-                  if (item.tier && item.tier.includes(tier)) {
+                  // let tier = logindet.tier;
+                  // if (item.tier && item.tier.includes(tier)) {
                     return (
                       <div className='nav-item  nav-active'>
                         <li className='nav-item  nav-active'>
@@ -116,7 +116,7 @@ const NavigationBar = (props) => {
                         </li>
                       </div>
                     )
-                  }
+                  // }
                 })}
               </>}
 

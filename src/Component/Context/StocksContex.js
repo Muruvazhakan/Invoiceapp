@@ -359,7 +359,7 @@ const StocksContext = ({ children }) => {
             quantity: quantity,
             rate: rate,
             amount: amount,
-
+            status: "Active"
           };
           let found = false;
           let highquantity = false;
@@ -385,6 +385,7 @@ const StocksContext = ({ children }) => {
               data.rate = avgrate;
               data.quantity = avgquantity;
               data.amount = avgamt;
+              data.status = data.status?data.status:"Active";
             }
             return data
           });
@@ -736,7 +737,7 @@ const StocksContext = ({ children }) => {
     let localsumqty1 = 0, localsumqty2 = 0, sumpurchaseamt = 0, expectedprofitsum = 0;
 
     let displaylist = (screen === "allstocks" ? allStockList.map((item, index) => {
-      if ((item.quantity === 0 || item.status === 'deleted') && screen === "allstocks") { }
+      if ((item.quantity === 0 || item.status === 'deleted'|| item.status === 'Deleted') && screen === "allstocks") { }
       else return item
     }).filter(x => x !== undefined)
       :
