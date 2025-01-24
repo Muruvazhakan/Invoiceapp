@@ -147,7 +147,7 @@ const InvoiceGenDetails = () => {
 
             <Autocomplete
               // value={value}
-              value={stockdet.clientName}
+              value={invoicedet.clientName}
               onChange={(event, newValue) => onChangeOnAutoComplete(event, newValue)}
               filterOptions={(options, params) => filterOptionOnAutoComplete(options, params)}
               selectOnFocus
@@ -162,9 +162,9 @@ const InvoiceGenDetails = () => {
               renderInput={(params) => (
                 // <TextField label="Title" />
                 <TextField required id="outlined-required" label="Client Name"
-                  onChange={(e) => stockdet.setval(e, stockdet.setclientName)}
-                  color={stockdet.setboxColors(stockdet.clientName, 'color')}
-                  error={stockdet.setboxColors(stockdet.clientName, 'error')}  {...params}
+                  onChange={(e) => invoicedet.setval(e, invoicedet.setclientName)}
+                  color={invoicedet.setboxColors(invoicedet.clientName, 'color')}
+                  error={invoicedet.setboxColors(invoicedet.clientName, 'error')}  {...params}
                 />
               )}
             />

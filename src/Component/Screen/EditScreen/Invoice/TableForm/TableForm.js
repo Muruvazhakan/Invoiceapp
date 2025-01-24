@@ -32,7 +32,8 @@ const TableForm = (props) => {
         // console.log(top100Films);
 
         // let title = 
-    }, [tabledet]);
+    }, [tabledet, stockedet]);
+
     const filterProdIdAndGetDesc = (prodid) => {
 
         let filterdata = stockedet.allStockData.find(data => {
@@ -134,13 +135,14 @@ const TableForm = (props) => {
         );
     }
 
-    const onSaveHander =()=>{
+    const onSaveHander = async () => {
         setisbuttonClicked(true);
-        tabledet.saveInvoice();
-        setTimeout(()=>{
+        stockedet.saveInvoiceFromStock();
+        setTimeout(() => {          
             setisbuttonClicked(false);
-        },[5000])
+        }, [5000])
     }
+
     return <>
         <Card >
             <ToastContainer position="top-center" theme="colored" containerId="Invoice" />
@@ -182,7 +184,7 @@ const TableForm = (props) => {
                                 renderOption={(props, option) => renderOptionOnAutoComplete(props, option)}
                                 // sx={{ width: 300 }}
                                 freeSolo
-                                disabled={tabledet.isEditInvoice &&tabledet.invoiceid!==''}
+                                disabled={tabledet.isEditInvoice && tabledet.invoiceid !== ''}
                                 renderInput={(params) => (
                                     // <TextField label="Title" />
                                     <TextField required id="outlined-required" label="Product Id"
@@ -299,7 +301,7 @@ const TableForm = (props) => {
 
                             <div className="button-warn">
                                 <Button variant="contained" color="success" size="medium" endIcon={<FaFileInvoice />}
-                                disabled={isbuttonClicked}
+                                    disabled={isbuttonClicked}
                                     onClick={onSaveHander}>Save Invoice</Button>
                             </div>
 
