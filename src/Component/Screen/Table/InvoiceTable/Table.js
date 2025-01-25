@@ -19,16 +19,19 @@ const Tables = (props) => {
   const stockedet = useContext(Stocks);
 
   const digit2options = { maximumFractionDigits: 2 }
-  const digit3options = { maximumFractionDigits: 3 }
+  // const digit3options = { maximumFractionDigits: 3 }
 
   const onEditHandler = (item) => {
     let filterdata = stockedet.allStockData.find(data => {
-      return data.productid == item.productid
+      return data.productid === item.productid
     })
     console.log("filterdata onEditHandler");
     console.log(filterdata);
     if (filterdata) {
-      tabledetails.setavailablestock(((filterdata.quantity * 1) - (item.quantity * 1)));
+      
+      tabledetails.setavailablestock(((filterdata.quantity * 1) - (!tabledetails.isEditInvoice ? item.quantity * 1:item.quantity * -1)));
+      console.log("edited vale");
+      console.log(((filterdata.quantity * 1) - (!tabledetails.isEditInvoice ? item.quantity * 1:0)));
     }
     tabledetails.editListRows(item, "update")
   }
