@@ -867,8 +867,18 @@ const StocksContext = ({ children }) => {
 
     }
     else if (screen === "allProfit") {
+      let localsumqty2=0, sumpurchaseamt = 0, purchaceAmount1 = 0, soldAmount1 = 0,sumSaleAmt=0,profitAmount1=0,sumProfitAmount=0;
 
-      let filtercolumn = allProfitStockList.map((data, index) => {
+      filtercolumn = allProfitStockList.map((data, index) => {
+        localsumqty2 = localsumqty2 + (data.soldquantity? data.soldquantity * 1:0);
+        purchaceAmount1 = (data.rate * 1 * data.soldquantity ? data.rate * 1 * data.soldquantity : 0);
+        soldAmount1 = (data.salerate * 1 * data.soldquantity ? data.salerate * 1 * data.soldquantity : 0);
+        sumpurchaseamt = sumpurchaseamt + (purchaceAmount1*1);
+        profitAmount1=(soldAmount1*1)-(purchaceAmount1*1);
+        sumProfitAmount=(sumProfitAmount*1)+(profitAmount1*1);
+        console.log("soldAmount1 "+ soldAmount1);
+
+        sumSaleAmt = sumSaleAmt + (soldAmount1);
         return {
           Sno: index + 1,
           Productid: data.productid,
@@ -876,34 +886,34 @@ const StocksContext = ({ children }) => {
           ProductDescription: data.desc,
           TotalQuantity: data.quantity,
           PurchaceRate: data.rate,
-          TotalPurchaceAmount: data.amount,
+          TotalPurchaceAmount:(data.quantity*1) * (data.rate*1),
           SaleRate: data.salerate,
-          SaleQuantity: data.salequantity,
-          SaleAmount: data.saleamount,
-          PurchaceAmount: data.purchaceamount,
-          Profit: data.profit,
+          SaleQuantity: data.soldquantity,
+          SaleAmount: soldAmount1,
+          PurchaceAmount: purchaceAmount1,
+          Profit: profitAmount1,
         }
-      })
+      });
       let lastcolumn = {
         Sno: "Total",
         Productid: '',
         HSN: '',
         ProductDescription: '',
-        TotalQuantity: localsumqty1,
+        TotalQuantity: localsumqty1 + " Qty",
         PurchaceRate: '',
-        TotalPurchaceAmount: alladdedstockstotalamt,
+        TotalPurchaceAmount: "₹"+alladdedstockstotalamt,
         SaleRate: '',
-        SaleQuantity: localsumqty2,
-        SaleAmount: allstockssalestotalamt,
-        PurchaceAmount: sumpurchaseamt,
-        Profit: localsum,
+        SaleQuantity: localsumqty2 + " Qty",
+        SaleAmount: "₹"+sumSaleAmt,
+        PurchaceAmount: "₹"+sumpurchaseamt,
+        Profit: "₹"+sumProfitAmount,
       }
       filtercolumn.push(lastcolumn);
-      console.log("filtercolumn");
-      console.log(filtercolumn);
+      
 
     }
-
+    console.log("filtercolumn");
+    console.log(filtercolumn);
     // console.log(estimateHistoryData);
     // console.log(estimateHistoryData.length);
     var wb = XLSX.utils.book_new(),
@@ -1006,6 +1016,7 @@ const StocksContext = ({ children }) => {
       let localsum = calculateSum(getstockfromdb.data, "allstocks");
       setallstockstotalamt(localsum);
       getAllClientList(loginuserid, type, getstockfromdb.data);
+      deriveProfitStock(getstockfromdb.data);
 
       // }
       // else {
@@ -1236,50 +1247,44 @@ const StocksContext = ({ children }) => {
     // allstockssalestotalamt
   }
 
-  const deriveProfitStock = () => {
+  const deriveProfitStock = (allStockListdata) => {
 
     console.log("allStockAddedList");
     console.log(allStockAddedList);
-    console.log("invociedetail.invoiceHistoryData");
-    console.log(invociedetail.invoiceHistoryData);
+      //  let profitsum = 0;
+    if (allStockListdata.length > 0) {
+     
+      // const mergedArray = singlesales.map((obj1) => {
+      //   // Find the corresponding object in array2 by Productid
+      //   const obj2 = allStockAddedList.find((item) => item.productid === obj1.productid);
+      //   console.log("obj1");
+      //   console.log(obj1);
+      //   console.log("obj2");
+      //   console.log(obj2);
+      //   // console.log("obj1.rate + " + obj1.rate * 1 + " obj2.rate " + obj2.rate);
+      //   if (obj2 !== undefined) {
 
-    let profitsum = 0;
-    if (invociedetail.invoiceHistoryData.length > 0 && allStockAddedList.length > 0) {
-      let singlesales = deriveSaleStockFromHistory(invociedetail.invoiceHistoryData);
-      const mergedArray = singlesales.map((obj1) => {
-        // Find the corresponding object in array2 by Productid
-        const obj2 = allStockAddedList.find((item) => item.productid === obj1.productid);
-        console.log("obj1");
-        console.log(obj1);
-        console.log("obj2");
-        console.log(obj2);
-        // console.log("obj1.rate + " + obj1.rate * 1 + " obj2.rate " + obj2.rate);
-        if (obj2 !== undefined) {
-
-          let profits = ((obj1.quantity * 1 * (obj1.rateinctax * 1)) - ((obj1.quantity * 1 * (obj2.rate * 1))));
-          profitsum = profitsum + profits;
-          return {
-            productid: obj2.productid,
-            desc: obj2.desc,
-            quantity: obj2.quantity * 1,
-            hsn: obj2.hsn,
-            rate: obj2.rate * 1,
-            amount: (obj2.rate * 1 * obj2.quantity),
-            // If a match is found in array2, merge its properties
-            salerate: obj1 ? obj1.rateinctax * 1 : undefined,
-            saleamount: obj1 ? obj1.amount * 1 : undefined,
-            purchaceamount: obj1 ? obj1.quantity * 1 * obj2.rate : undefined,
-            salequantity: obj1 ? obj1.quantity * 1 : undefined,
-            profit: profits,
-          };
-        }
-      }).filter(x => x !== undefined);
-      console.log("mergedArray");
-      console.log(mergedArray);
-      console.log("profitsum");
-      console.log(profitsum);
-      setAllProfitStockList(mergedArray);
-      settotalprofiramt(profitsum.toFixed(2));
+      //     let profits = ((obj1.quantity * 1 * (obj1.rateinctax * 1)) - ((obj1.quantity * 1 * (obj2.rate * 1))));
+      //     profitsum = profitsum + profits;
+      //     return {
+      //       productid: obj2.productid,
+      //       desc: obj2.desc,
+      //       quantity: obj2.quantity * 1,
+      //       hsn: obj2.hsn,
+      //       rate: obj2.rate * 1,
+      //       amount: (obj2.rate * 1 * obj2.quantity),
+      //       // If a match is found in array2, merge its properties
+      //       salerate: obj1 ? obj1.rateinctax * 1 : undefined,
+      //       saleamount: obj1 ? obj1.amount * 1 : undefined,
+      //       purchaceamount: obj1 ? obj1.quantity * 1 * obj2.rate : undefined,
+      //       salequantity: obj1 ? obj1.quantity * 1 : undefined,
+      //       profit: profits,
+      //     };
+      //   }
+      // }).filter(x => x !== undefined);
+     
+      setAllProfitStockList(allStockListdata);
+      // settotalprofiramt(profitsum.toFixed(2));
     }
   }
 
@@ -1381,15 +1386,12 @@ const StocksContext = ({ children }) => {
   }, []);
 
   useEffect(() => {
-    deriveProfitStock();
-  }, [invociedetail.invoiceHistoryData])
-  useEffect(() => {
-    console.log('amount');
+    // console.log('amount');
 
     let val;
     val = (rate * quantity);
     setamount(val.toFixed(2));
-    console.log(rate + " rate " + val);
+    // console.log(rate + " rate " + val);
   }, [rate, quantity])
 
   useEffect(() => {
@@ -1401,11 +1403,11 @@ const StocksContext = ({ children }) => {
   }, [saleslist])
   // 
 
-  useEffect(() => {
-    setTimeout(() => {
-      deriveProfitStock();
-    }, 1000)
-  }, [allStockSalesList, allStockAddedList]);
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     deriveProfitStock();
+  //   }, 1000)
+  // }, [allStockSalesList, allStockAddedList]);
 
   const context = {
     list, setList, totalamt, settotalamt, totalamtwords, settotalamtwords, singlehsnitem, setsinglehsnitem, setval, setboxColors, cleardetailoption, setcleardetailoption,

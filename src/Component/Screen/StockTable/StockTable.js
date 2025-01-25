@@ -48,15 +48,15 @@ const StockTable = (props) => {
     useEffect(() => {
         console.log("refresh");
     }, []);
-    let sum1=0;
+    let sum1 = 0;
     let displaylist = (props.screen == "allstocks" ?
         tabledetails.allStockList.map((item, index) => {
             if ((item.quantity === 0 || item.status === 'deleted' || item.status === 'Deleted') && props.screen === "allstocks") { }
             else {
-                sum1=sum1+(item.quantity*1*item.rate)
+                sum1 = sum1 + (item.quantity * 1 * item.rate)
                 return item;
-               
-            } 
+
+            }
         }).filter(x => x !== undefined)
         :
         (props.screen == "alladdedstocks" ? tabledetails.allStockAddedList
@@ -72,11 +72,33 @@ const StockTable = (props) => {
     );
     console.log("displaylist  " + " ^^^" + displaylist);
     console.log(displaylist)
+    
+
+
+    let localsumqty1 = 0, localsumqty2 = 0, sumpurchaseamt = 0, purchaceAmount1 = 0, soldAmount1 = 0,sumSaleAmt=0,profitAmount1=0,sumProfitAmount=0;
+
+    let localsumqty = displaylist.map((item, index) => {
+        localsumqty1 = localsumqty1 + (item.quantity * 1);
+        if (props.screen === "allProfit") {
+            localsumqty2 = localsumqty2 + (item.soldquantity? item.soldquantity * 1:0);
+            purchaceAmount1 = (item.rate * 1 * item.soldquantity ? item.rate * 1 * item.soldquantity : 0);
+            soldAmount1 = (item.salerate * 1 * item.soldquantity ? item.salerate * 1 * item.soldquantity : 0);
+            sumpurchaseamt = sumpurchaseamt + (purchaceAmount1*1);
+            profitAmount1=(soldAmount1*1)-(purchaceAmount1*1);
+            sumProfitAmount=(sumProfitAmount*1)+(profitAmount1*1);
+            console.log("soldAmount1 "+ soldAmount1);
+
+            sumSaleAmt = sumSaleAmt + (soldAmount1);
+            console.log("sumSaleAmt 11 "+ sumSaleAmt);
+        }
+        // sumpurchaseamt = sumpurchaseamt + ((item.salerate * 1 * item.soldquantity) - (item.rate * 1 * item.soldquantity));
+
+    });
     let localsum = (props.screen === "allstocks" ? sum1
         :
         (props.screen == "alladdedstocks" ? tabledetails.alladdedstockstotalamt
             :
-            (props.screen === "allProfit" ? tabledetails.totalprofiramt
+            (props.screen === "allProfit" ? sumProfitAmount
                 :
                 (props.screen == "add" ? tabledetails.totalamt
                     :
@@ -88,16 +110,6 @@ const StockTable = (props) => {
         )
     );
 
-    
-
-    let localsumqty1 = 0, localsumqty2 = 0, sumpurchaseamt = 0;
-
-    let localsumqty = displaylist.map((item, index) => {
-        localsumqty1 = localsumqty1 + (item.quantity * 1);
-        if (props.screen === "allProfit")
-            localsumqty2 = localsumqty2 + (item.salequantity * 1);
-        sumpurchaseamt = sumpurchaseamt + (item.purchaceamount * 1);
-    });
     // let localtotal1 = 0;
     // let localtotal = displaylist.map((item, index) => {
     //     localtotal1 = localtotal1 + (item.quantity * 1 * item.rate);
@@ -172,6 +184,10 @@ const StockTable = (props) => {
                         {displaylist.map((item, index) => {
                             let sum = Intl.NumberFormat("en-IN", digit2options).format(item.amount);
                             let othersum = Intl.NumberFormat("en-IN", digit2options).format(item.quantity * item.rate * 1);
+                            let purchaceAmount = 0, soldAmount = 0,profitAmount=0;
+                            purchaceAmount = (item.rate * 1 * item.soldquantity ? item.rate * 1 * item.soldquantity : 0);
+                            soldAmount = (item.salerate * 1 * item.soldquantity ? item.salerate * 1 * item.soldquantity : 0);
+                            profitAmount=(soldAmount*1)-(purchaceAmount*1);
                             // console.log("displaylist menu");
                             // console.log(displaylist)
                             if ((item.quantity === 0 || item.status === 'deleted' || item.status === 'Deleted') && props.screen === "allstocks")
@@ -197,7 +213,7 @@ const StockTable = (props) => {
                                     </>}
 
                                     <TableCell className="table-header-td">{item.rate}</TableCell>
-                                    
+
                                     {props.screen !== "allProfit" && <>
                                         <TableCell className="table-header-td">
 
@@ -233,11 +249,12 @@ const StockTable = (props) => {
                                         </>
                                     }
                                     {props.screen === "allProfit" && <>
-                                        <TableCell >{item.purchaceamount}</TableCell>
-                                        <TableCell align='center' >{item.salequantity}</TableCell>
+
+                                        <TableCell >{item.rate * 1 * item.soldquantity ? item.rate * 1 * item.soldquantity : 0}</TableCell>
+                                        <TableCell align='center' >{item.soldquantity ? item.soldquantity : 0}</TableCell>
                                         <TableCell >{item.salerate}</TableCell>
-                                        <TableCell >{item.saleamount}</TableCell>
-                                        <TableCell >{Intl.NumberFormat("en-IN", digit2options).format(item.profit)}</TableCell>
+                                        <TableCell >{item.salerate * 1 * item.soldquantity}</TableCell>
+                                        <TableCell >{Intl.NumberFormat("en-IN", digit2options).format(profitAmount)}</TableCell>
                                     </>}
                                 </TableRow>
                             )
@@ -252,19 +269,19 @@ const StockTable = (props) => {
                             <TableCell ></TableCell>
                             {props.screen !== "allProfit" &&
                                 <TableCell ></TableCell>}
-                            
+
                             <TableCell ></TableCell>
                             {props.screen !== "allProfit" && <>
                                 <TableCell align='center' className="table-header-td" sx={{ fontSize: 18, fontWeight: 700 }}>{localsumqty1} Qty</TableCell>
                             </>}
                             <TableCell ></TableCell>
-                            
+
                             {props.screen === "allProfit" && <>
                                 <TableCell sx={{ fontSize: 18, fontWeight: 700 }}>₹{sumpurchaseamt}</TableCell>
                                 {/* <TableCell align='center' >{tabledetails.alladdedstockstotalamt} </TableCell> */}
                                 <TableCell sx={{ fontSize: 18, fontWeight: 700 }} align='center'  >{localsumqty2} Qty</TableCell>
                                 <TableCell ></TableCell>
-                                <TableCell sx={{ fontSize: 18, fontWeight: 700 }}  >{tabledetails.allstockssalestotalamt>0&& "₹"+tabledetails.allstockssalestotalamt}</TableCell>
+                                <TableCell sx={{ fontSize: 18, fontWeight: 700 }}  >₹{sumSaleAmt}</TableCell>
 
                             </>}
                             <TableCell sx={{ fontSize: 18, fontWeight: 700 }} className="table-amount">₹ {Intl.NumberFormat("en-IN", digit2options).format(localsum)}</TableCell>
