@@ -24,10 +24,10 @@ const TotalSalesScreen = (props) => {
   const successlight = "rgb(230,255,250)";
 
   const chartDatas = props.data.allProfitStockList.map(
-    (stockDetail) => stockDetail.profit 
+    (stockDetail) => stockDetail.profit
   );
-  const chartDatas1 = [1,20,20,50,60];
-  const chartLabels1 = ['aa','asd','qwe','qwe','qwe'];
+  const chartDatas1 = [1, 20, 20, 50, 60];
+  const chartLabels1 = ["aa", "asd", "qwe", "qwe", "qwe"];
   console.log("chartDatas");
   console.log(chartDatas);
   const chartLabels = props.data.allProfitStockList.map(
@@ -42,7 +42,7 @@ const TotalSalesScreen = (props) => {
           <Typography variant="subtitle2" color="textSecondary">
             Sales Profit
           </Typography>
-          {/* <Typography variant="h5">₹ {props.data.totalprofiramt}</Typography> */}
+          <Typography variant="h5">₹ {props.data.totalprofiramt}</Typography>
           {/* <Linechart
             chartLabel={"Profit per product"}
             labels={chartDatas}
@@ -56,8 +56,6 @@ const TotalSalesScreen = (props) => {
             datas={chartDatas}
             style={{ height: "300px" }}
           />
-
-       
         </CardContent>
       </Card>
     </Container>

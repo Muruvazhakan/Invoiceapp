@@ -1412,7 +1412,7 @@ const StocksContext = ({ children }) => {
             let purchaceamount1 = (obj1.quantity * 1 * obj2.rate).toFixed(2);
             let saleamount = (obj1.amount * 1).toFixed(2);
             let profits = (saleamount - purchaceamount1).toFixed(2);
-            profitsum = profitsum + profits;
+            profitsum = profitsum * 1 + profits * 1;
             return {
               productid: obj2.productid,
               desc: obj2.desc,
