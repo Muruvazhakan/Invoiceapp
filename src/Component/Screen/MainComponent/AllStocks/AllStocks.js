@@ -16,6 +16,7 @@ import StyleHeader from "../../Header/StyleHeader";
 import { CompanyDetail } from "../../../Context/companyDetailContext";
 import * as Datas from '../../../Context/Datas';
 import { FiEdit } from "react-icons/fi";
+import AutoStockTable from "../../StockTable/AutoStockTable";
 
 
 
@@ -96,8 +97,8 @@ const AllStocks = (props) => {
                             All Stocks
                         </StyleHeader>
                         {/* <div> All Stocks   </div> */}
-                        <StockTable screen="alladdedstocks" from="add" />
-
+                        {/* <StockTable screen="alladdedstocks" from="add" /> */}
+                        <AutoStockTable screen="alladdedstocks" from="add" />
                     </div>
                 </Card>
             }
@@ -129,7 +130,10 @@ const AllStocks = (props) => {
                     <StyleHeader>
                         Current Stocks
                     </StyleHeader>
-                    <StockTable screen="allstocks" from="add" iseditable={iseditable} />
+                    {/* <StockTable screen="allstocks" from="add" iseditable={iseditable} /> */}
+
+                    <AutoStockTable screen="allstocks" from="add" iseditable={iseditable} />
+
 
                 </div>
             </Card>

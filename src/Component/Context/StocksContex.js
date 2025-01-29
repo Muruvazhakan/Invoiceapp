@@ -113,6 +113,7 @@ const StocksContext = ({ children }) => {
   const [stockHistoryData, setstockHistoryData] = useState([]);
   const [salesStockHistoryData, setSalesstockHistoryData] = useState([]);
   const [invoiceHistroyUpdateFlag, setinvoiceHistroyUpdateFlag] = useState(false);
+  const [segregatedMonthData, setSegregatedMonthData] = useState({});
   const [isEditStock, setisEditStock] = useState(false);
   const setval = (e, fun) => {
     fun(e.target.value);
@@ -1181,108 +1182,24 @@ const StocksContext = ({ children }) => {
     // console.log(newvalues);
     return newvalues;
   }
-  const getAllHistorySalesStockData = async (loginuserid, clientdata) => {
-    let allHistorySalesStockData = localstorage.addOrGetAllHistorySalesStockData('', 'get');
-    if (loginuserid != '' || loginuserid != null)
-      setloginuser(loginuserid);
-    let getSalesStockfromdb = await stockDb.getAllHistorySalesStockDB(loginuserid);
-    console.log('getAllHistorySalesStockDB !!!!!');
-    console.log(allHistorySalesStockData);
-    console.log(getSalesStockfromdb);
-    if (getSalesStockfromdb.status === 200) {
-      console.log(getSalesStockfromdb.data);
-      console.log('inside allHistorySalesStockData');
-      let deriveClientDetailValue = deriveClientDetail(getSalesStockfromdb.data, clientdata, "sale");
-      localstorage.addOrGetAllHistorySalesStockData(deriveClientDetailValue, 'save');
-      setSalesstockHistoryData(deriveClientDetailValue);
-      deriveSaleStockFromHistory(deriveClientDetailValue);
-      return true;
-    }
-    return false;
-  }
-
-  const deriveSaleStockFromHistory = (props) => {
-    console.log("props");
-    // console.log(salesStockHistoryData);
-    let accumalatevalue = [];
-    let totalsaleamt = 0;
-    let listofsales = props.map(data => {
-      let singllistofsales = data.list.map(innerrows => {
-        console.log("innerrows");
-        console.log(innerrows);
-        let found = false;
-        totalsaleamt = (totalsaleamt * 1) + (innerrows.amount * 1);
-        if (accumalatevalue.length > 0) {
-          for (let i = 0; i < accumalatevalue.length; i++) {
-            if (accumalatevalue[i].productid === innerrows.productid) {
-              found = true;
-              accumalatevalue[i].quantity = (accumalatevalue[i].quantity * 1) + (innerrows.quantity * 1);
-              accumalatevalue[i].amount = (accumalatevalue[i].amount * 1) + (innerrows.amount * 1);
-              accumalatevalue[i].rate = ((accumalatevalue[i].amount * 1) / (accumalatevalue[i].quantity * 1)).toFixed(2);
-              console.log(" found &&&");
-              console.log(accumalatevalue);
-            }
-          }
-          if (!found) {
-            accumalatevalue = [...accumalatevalue, innerrows];
-
-            console.log("nt found &&&");
-          }
-        } else {
-          accumalatevalue = [innerrows];
-          console.log("else &&&");
-        }
-        console.log("accumalatevalue &&&");
-        console.log(accumalatevalue);
-        // return accumalatevalue;
-      });
-
-    });
-
-    console.log("deriveSaleStockFromHistory");
-    console.log(accumalatevalue);
-    return (accumalatevalue);
-    // setallStockSalesList(accumalatevalue);
-    // setallstockssalestotalamt(totalsaleamt);
-    // allstockssalestotalamt
-  }
-
   const deriveProfitStock = (allStockListdata) => {
 
     console.log("allStockAddedList");
     console.log(allStockAddedList);
       //  let profitsum = 0;
     if (allStockListdata.length > 0) {
-     
-      // const mergedArray = singlesales.map((obj1) => {
-      //   // Find the corresponding object in array2 by Productid
-      //   const obj2 = allStockAddedList.find((item) => item.productid === obj1.productid);
-      //   console.log("obj1");
-      //   console.log(obj1);
-      //   console.log("obj2");
-      //   console.log(obj2);
-      //   // console.log("obj1.rate + " + obj1.rate * 1 + " obj2.rate " + obj2.rate);
-      //   if (obj2 !== undefined) {
-
-      //     let profits = ((obj1.quantity * 1 * (obj1.rateinctax * 1)) - ((obj1.quantity * 1 * (obj2.rate * 1))));
-      //     profitsum = profitsum + profits;
-      //     return {
-      //       productid: obj2.productid,
-      //       desc: obj2.desc,
-      //       quantity: obj2.quantity * 1,
-      //       hsn: obj2.hsn,
-      //       rate: obj2.rate * 1,
-      //       amount: (obj2.rate * 1 * obj2.quantity),
-      //       // If a match is found in array2, merge its properties
-      //       salerate: obj1 ? obj1.rateinctax * 1 : undefined,
-      //       saleamount: obj1 ? obj1.amount * 1 : undefined,
-      //       purchaceamount: obj1 ? obj1.quantity * 1 * obj2.rate : undefined,
-      //       salequantity: obj1 ? obj1.quantity * 1 : undefined,
-      //       profit: profits,
-      //     };
-      //   }
-      // }).filter(x => x !== undefined);
-     
+      allStockListdata = allStockListdata?.map((item, index) => {
+        item.amt= (item.rate*1*item.quantity).toFixed(2);
+        if(item.soldquantity > 0 && item.soldquantity )
+        {
+            item.purchaceamount=(item.rate * 1 * item.soldquantity ? item.rate * 1 * item.soldquantity : 0);
+            item.saleamount = (item.salerate * 1 * item.soldquantity).toFixed(2);
+            item.soldquantity=(item.soldquantity ? item.soldquantity : 0);
+            item.profit=(item.saleamount - item.purchaceamount ).toFixed(2);
+            return {...item , id: index + 1};
+        }
+        
+      }).filter(x => x !== undefined);;
       setAllProfitStockList(allStockListdata);
       // settotalprofiramt(profitsum.toFixed(2));
     }
@@ -1354,7 +1271,7 @@ const StocksContext = ({ children }) => {
 
     });
 
-    console.log("deriveSaleStockFromHistory");
+    console.log("deriveStockAddedFromHistory");
     console.log(accumalatevalue);
     setallStockAddedList(accumalatevalue);
     let localsum = calculateSum(accumalatevalue);
@@ -1422,9 +1339,9 @@ const StocksContext = ({ children }) => {
     singlestockitem, setsinglestockitem, desc, setdesc, productid, setproductid, allStockData, setallStockData, productIdList, setproductIdList, clientid, setclientid, clientList, setclientList,
     getAllStocks, allStockList, setallStockList, allstockstotalamt, setallstockstotalamt, calculateSum, getAllStockData, handleExportXlsx, getAllHistoryStockData, allStockHistoryEdit, saleslist, setSalesList,
     allStockSalesList, setallStockSalesList, allstockssalestotalamt, setallstockssalestotalamt, totalsalesamt, settotalsalesamt, salestockidcount, setsalestockidcount, salestockid, setsalestockid, getAllClientList,
-    availablestock, setavailablestock, salestockdate, setsalestockdate, getAllSalesCount, salesStockHistoryData, setSalesstockHistoryData, getAllHistorySalesStockData, allSaleStockHistoryEdit, handleHistoryExportXlsx,
+    availablestock, setavailablestock, salestockdate, setsalestockdate, getAllSalesCount, salesStockHistoryData, setSalesstockHistoryData, allSaleStockHistoryEdit, handleHistoryExportXlsx,
     allStockAddedList, setallStockAddedList, alladdedstockstotalamt, setaddedallstockstotalamt, isloading, setisloading, allProfitStockList, setAllProfitStockList, totalprofiramt, settotalprofiramt, salerate, setsalerate,
-    getStockIdCounter, deleteStock, isEditStock, setisEditStock, saveInvoiceFromStock
+    getStockIdCounter, deleteStock, isEditStock, setisEditStock, saveInvoiceFromStock,segregatedMonthData, setSegregatedMonthData
   };
   return <Stocks.Provider value={context}>{children}</Stocks.Provider>;
 }

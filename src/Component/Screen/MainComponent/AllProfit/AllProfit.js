@@ -12,6 +12,8 @@ import { Link } from "react-router-dom";
 import Header from "../../Header/Header";
 import YourProfits from "../YourProfits/YourProfits";
 import StyleHeader from "../../Header/StyleHeader";
+import AutoStockTable from "../../StockTable/AutoStockTable";
+import EarningScreen from "../../EarningScreen/EarningScreen";
 
 const AllProfit = (props) => {
     const tabledet = useContext(Stocks);
@@ -22,7 +24,7 @@ const AllProfit = (props) => {
     const componentRef = useRef();
     return <>
         <Box className="allstocksdisplaytable" sx={{ flexGrow: 1 }}>
-            <YourProfits />
+        <EarningScreen />
             <Card>
                 <div className="exportExcelbttn " >
                     <ReactToPrint
@@ -45,7 +47,8 @@ const AllProfit = (props) => {
                         Consolidated Profits!
                     </StyleHeader>
                     {/* <Header name="Your Profits!" /> */}
-                    <StockTable screen="allProfit" from="profit" />
+                    {/* <StockTable screen="allProfit" from="profit" /> */}
+                    <AutoStockTable screen="allProfit" from="profit" />
 
                 </div>
             </Card>

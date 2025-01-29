@@ -539,7 +539,7 @@ const AllStateContext = ({ children }) => {
   }
 
   const saveLocalInvoice = (singleinvoice) => {
-
+    let localinv= invoiceHistoryData;
     if (invoiceHistoryData !== null) {
       let iscontains = false;
       invoiceHistoryData.map((item) => {
@@ -571,6 +571,7 @@ const AllStateContext = ({ children }) => {
         setinvoiceHistoryData([
           ...invoiceHistoryData, singleinvoice
         ]);
+        localinv=[...invoiceHistoryData, singleinvoice];
         toast.success('Invoice Details are added');
       }
       else {
@@ -584,8 +585,10 @@ const AllStateContext = ({ children }) => {
       setinvoiceHistoryData([
         singleinvoice
       ]);
+      localinv=[singleinvoice];
     }
-    localstorage.addOrGetInvoiceHistoryData(invoiceHistoryData, "save");
+    localstorage.addOrGetInvoiceHistoryData(localinv, "save");
+    segregateDataByMonth(localinv);
   }
   const saveInvoice = async () => {
     console.log('saveInvoice');
@@ -772,6 +775,45 @@ const AllStateContext = ({ children }) => {
     setisEditInvoice(false);
   }
 
+  const segregateDataByMonth = (data) => {
+    console.log("segregateDataByMonth");
+    console.log(data);
+    return data.reduce((acc, item) => {
+      // Get the month and year from the salestockdate 
+      console.log("item segra");
+      console.log(item);
+      if (item.salestockdate && item.salestockdate !== "") {
+
+        const monthYear = new Date(item.salestockdate).toLocaleString('default', { month: 'short', year: 'numeric' });
+        console.log("item monthYear");
+        console.log(monthYear);
+
+        if (monthYear) {
+
+
+          console.log(acc[monthYear]);
+          // Initialize the month entry if not exists
+          if (!acc[monthYear]) {
+            acc[monthYear] = {
+              totalSalesAmount: 0,
+              totalProfit: 0,
+            };
+          }
+          console.log("item acc");
+          console.log(acc);
+          // Add the totalsalesamt to the respective month
+          acc[monthYear].totalSalesAmount += item.totalsalesamt * 1;
+          // Assuming profit is the same as totalsalesamt for simplicity; adjust as necessary
+          acc[monthYear].totalProfit += item.totalsalesamt * 1;
+          console.log("item acc");
+          console.log(acc);
+          return acc;
+        }
+      }
+    }, {});
+
+  };
+
   //   useEffect(() => {
   //     if (invoiceHistoryData !== null) {
   //         localstorage.addOrGetEstimateHistoryData(invoiceHistoryData, "save");
@@ -826,7 +868,7 @@ const AllStateContext = ({ children }) => {
     totalcentaxamt, settotalcentaxamt, totalstatetaxamt, settotalstatetaxamt, isinstallationcharge, setisinstallationcharge, otherchargedetail, setOtherchargedetail, editListRows, addOrEditOtherItems,
     invoiceid, setinvoiceid, invoicedate, setinvoicedate, paymentmode, setpaymentmode, paymentdate, setpaymentdate, invoiceidcount, setinvoiceidount, clientName, setclientName, clientPhno, setclientPhno, clientAdd, setclientAdd,
     invoiceHistoryData, setinvoiceHistoryData, invoiceHistroyUpdateFlag, setinvoiceHistroyUpdateFlag, selectedInvoiceEdit, cleartallInvoice, handleInvoiceExportXlsx, displayhsntable, setdisplayhsntable, availablestock, setavailablestock,
-    productid, setproductid, clientid, setclientid, isEditInvoice, setisEditInvoice
+    productid, setproductid, clientid, setclientid, isEditInvoice, setisEditInvoice,segregateDataByMonth
   };
   return <AllState.Provider value={context}>{children}</AllState.Provider>;
 }
