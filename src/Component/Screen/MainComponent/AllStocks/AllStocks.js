@@ -11,10 +11,9 @@ import { Stocks } from "../../../Context/StocksContex";
 import StockTable from "../../StockTable/StockTable";
 import './AllStocks.css';
 import { Link } from "react-router-dom";
-import Header from "../../Header/Header";
 import StyleHeader from "../../Header/StyleHeader";
 import { CompanyDetail } from "../../../Context/companyDetailContext";
-import * as Datas from '../../../Context/Datas';
+
 import { FiEdit } from "react-icons/fi";
 import AutoStockTable from "../../StockTable/AutoStockTable";
 
@@ -133,8 +132,6 @@ const AllStocks = (props) => {
                     {/* <StockTable screen="allstocks" from="add" iseditable={iseditable} /> */}
 
                     <AutoStockTable screen="allstocks" from="add" iseditable={iseditable} />
-
-
                 </div>
             </Card>
 

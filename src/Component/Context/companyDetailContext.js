@@ -524,7 +524,7 @@ const CompanyDetailContext = ({ children }) => {
                 localstore.addOrGetInvoiceHistoryData(getinvoicefromdb.data, 'save');
                 invociedetail.setinvoiceHistoryData(getinvoicefromdb.data);
                 console.log('inside setinvoiceHistoryData call segregateDataByMonth');
-                invociedetail.segregateDataByMonth(getinvoicefromdb.data);
+                stockDetail.deriveCalculatedProfitStock(getinvoicefromdb.data);
                 refreshdata = true;
                 // }
                 // else {

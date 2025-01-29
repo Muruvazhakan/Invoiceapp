@@ -113,8 +113,8 @@ const StocksContext = ({ children }) => {
   const [stockHistoryData, setstockHistoryData] = useState([]);
   const [salesStockHistoryData, setSalesstockHistoryData] = useState([]);
   const [invoiceHistroyUpdateFlag, setinvoiceHistroyUpdateFlag] = useState(false);
-  const [segregatedMonthData, setSegregatedMonthData] = useState({});
   const [isEditStock, setisEditStock] = useState(false);
+  const [segregatedMonthData, setSegregatedMonthData] = useState({});
   const setval = (e, fun) => {
     fun(e.target.value);
   }
@@ -148,11 +148,11 @@ const StocksContext = ({ children }) => {
   const saveInvoiceFromStock = () => {
     invociedetail.saveInvoice();
     console.log("saveInvoiceFromStock");
-    setTimeout(() => {        
+    setTimeout(() => {
       getAllStockData(loginuser, "refresh");
       console.log("after timeout");
-  }, [5000])
-    
+    }, [5000])
+
   }
   const editListRows = (item, screen, displaylist, type) => {
     // console.log("item ");
@@ -868,16 +868,16 @@ const StocksContext = ({ children }) => {
 
     }
     else if (screen === "allProfit") {
-      let localsumqty2=0, sumpurchaseamt = 0, purchaceAmount1 = 0, soldAmount1 = 0,sumSaleAmt=0,profitAmount1=0,sumProfitAmount=0;
+      let localsumqty2 = 0, sumpurchaseamt = 0, purchaceAmount1 = 0, soldAmount1 = 0, sumSaleAmt = 0, profitAmount1 = 0, sumProfitAmount = 0;
 
       filtercolumn = allProfitStockList.map((data, index) => {
-        localsumqty2 = localsumqty2 + (data.soldquantity? data.soldquantity * 1:0);
+        localsumqty2 = localsumqty2 + (data.soldquantity ? data.soldquantity * 1 : 0);
         purchaceAmount1 = (data.rate * 1 * data.soldquantity ? data.rate * 1 * data.soldquantity : 0);
         soldAmount1 = (data.salerate * 1 * data.soldquantity ? data.salerate * 1 * data.soldquantity : 0);
-        sumpurchaseamt = sumpurchaseamt + (purchaceAmount1*1);
-        profitAmount1=(soldAmount1*1)-(purchaceAmount1*1);
-        sumProfitAmount=(sumProfitAmount*1)+(profitAmount1*1);
-        console.log("soldAmount1 "+ soldAmount1);
+        sumpurchaseamt = sumpurchaseamt + (purchaceAmount1 * 1);
+        profitAmount1 = (soldAmount1 * 1) - (purchaceAmount1 * 1);
+        sumProfitAmount = (sumProfitAmount * 1) + (profitAmount1 * 1);
+        console.log("soldAmount1 " + soldAmount1);
 
         sumSaleAmt = sumSaleAmt + (soldAmount1);
         return {
@@ -887,7 +887,7 @@ const StocksContext = ({ children }) => {
           ProductDescription: data.desc,
           TotalQuantity: data.quantity,
           PurchaceRate: data.rate,
-          TotalPurchaceAmount:(data.quantity*1) * (data.rate*1),
+          TotalPurchaceAmount: (data.quantity * 1) * (data.rate * 1),
           SaleRate: data.salerate,
           SaleQuantity: data.soldquantity,
           SaleAmount: soldAmount1,
@@ -902,15 +902,15 @@ const StocksContext = ({ children }) => {
         ProductDescription: '',
         TotalQuantity: localsumqty1 + " Qty",
         PurchaceRate: '',
-        TotalPurchaceAmount: "₹"+alladdedstockstotalamt,
+        TotalPurchaceAmount: "₹" + alladdedstockstotalamt,
         SaleRate: '',
         SaleQuantity: localsumqty2 + " Qty",
-        SaleAmount: "₹"+sumSaleAmt,
-        PurchaceAmount: "₹"+sumpurchaseamt,
-        Profit: "₹"+sumProfitAmount,
+        SaleAmount: "₹" + sumSaleAmt,
+        PurchaceAmount: "₹" + sumpurchaseamt,
+        Profit: "₹" + sumProfitAmount,
       }
       filtercolumn.push(lastcolumn);
-      
+
 
     }
     console.log("filtercolumn");
@@ -1186,26 +1186,139 @@ const StocksContext = ({ children }) => {
 
     console.log("allStockAddedList");
     console.log(allStockAddedList);
-      //  let profitsum = 0;
+    //  let profitsum = 0;
     if (allStockListdata.length > 0) {
       allStockListdata = allStockListdata?.map((item, index) => {
-        item.amt= (item.rate*1*item.quantity).toFixed(2);
-        if(item.soldquantity > 0 && item.soldquantity )
-        {
-            item.purchaceamount=(item.rate * 1 * item.soldquantity ? item.rate * 1 * item.soldquantity : 0);
-            item.saleamount = (item.salerate * 1 * item.soldquantity).toFixed(2);
-            item.soldquantity=(item.soldquantity ? item.soldquantity : 0);
-            item.profit=(item.saleamount - item.purchaceamount ).toFixed(2);
-            return {...item , id: index + 1};
+        item.amt = (item.rate * 1 * item.quantity).toFixed(2);
+        if (item.soldquantity > 0 && item.soldquantity) {
+          item.purchaceamount = (item.rate * 1 * item.soldquantity ? item.rate * 1 * item.soldquantity : 0);
+          item.saleamount = (item.salerate * 1 * item.soldquantity).toFixed(2);
+          item.soldquantity = (item.soldquantity ? item.soldquantity : 0);
+          item.profit = (item.saleamount - item.purchaceamount).toFixed(2);
+          return { ...item, id: index + 1 };
         }
-        
+
       }).filter(x => x !== undefined);;
       setAllProfitStockList(allStockListdata);
       // settotalprofiramt(profitsum.toFixed(2));
     }
   }
 
+  const deriveCalculatedProfitStock = () => {
 
+    console.log("profit");
+    console.log(invociedetail.invoiceHistoryData);
+
+    console.log(allStockAddedList);
+    let profitsum = 0;
+    if (invociedetail.invoiceHistoryData.length > 0 && allStockAddedList.length > 0) {
+      const mergedArray = invociedetail.invoiceHistoryData.map((obj1) => {
+        // Find the corresponding object in array2 by Productid
+        const obj2 = allStockAddedList.find((item) => item.productid === obj1.productid);
+        console.log("obj1");
+        console.log(obj1);
+        console.log("obj2");
+        console.log(obj2);
+        // console.log("obj1.rate + " + obj1.rate * 1 + " obj2.rate " + obj2.rate);
+        if (obj2 !== undefined) {
+
+          let profits = ((obj1.quantity * 1 * (obj1.rate * 1)) - ((obj1.quantity * 1 * (obj2.rate * 1))));
+          profitsum = profitsum + profits;
+          return {
+            productid: obj2.productid,
+            desc: obj2.desc,
+            quantity: obj2.quantity * 1,
+            rate: obj2.rate * 1,
+            amount: (obj2.rate * 1 * obj2.quantity),
+            // If a match is found in array2, merge its properties
+            salerate: obj1 ? obj1.rate * 1 : undefined,
+            saleamount: obj1 ? obj1.amount * 1 : undefined,
+            purchaceamount: obj1 ? obj1.quantity * 1 * obj2.rate : undefined,
+            salequantity: obj1 ? obj1.quantity * 1 : undefined,
+            profit: profits,
+          };
+        }
+      }).filter(x => x !== undefined);
+      console.log("mergedArray");
+      console.log(mergedArray);
+      console.log("profitsum");
+      console.log(profitsum);
+      // setAllProfitStockList(mergedArray);
+      // profitsum = (Intl.NumberFormat("en-IN", { maximumFractionDigits: 2 }).format(profitsum));
+      // settotalprofiramt(profitsum.toFixed(2));
+    }
+
+    segregateDataByMonth(invociedetail.invoiceHistoryData);
+  }
+
+
+
+  const segregateDataByMonth = (data) => {
+    console.log("segregateDataByMonth");
+    console.log(data);
+    data = data.filter(data => data.invoicedate !== "");
+    console.log("after segregateDataByMonth");
+    console.log(data);
+    let valudata = [];
+    data.reduce((acc, item) => {
+      // Get the month and year from the invoicedate 
+      console.log("item segra");
+      console.log(item);
+      if (item.invoicedate && item.invoicedate !== "") {
+        const monthYear = new Date(item.invoicedate).toLocaleString('default', { month: 'short', year: 'numeric' });
+        console.log("item monthYear");
+        console.log(monthYear);
+        if (monthYear != null) {
+          console.log(acc[monthYear]);
+          // Initialize the month entry if not exists
+          if (!acc[monthYear]) {
+            acc[monthYear] = {
+              totaltaxvalueamt: 0,
+              totalProfit: 0,
+            };
+          }
+          console.log("item acc");
+          console.log(acc);
+          // Add the totalsalesamt to the respective month
+          acc[monthYear].totaltaxvalueamt += item.totaltaxvalueamt * 1;
+          // Assuming profit is the same as totalsalesamt for simplicity; adjust as necessary
+          acc[monthYear].totalProfit += item.totaltaxvalueamt * 1;
+          console.log("item acc");
+          console.log(acc);
+          valudata = acc;
+          return acc;
+        }
+      }
+    }, {});
+
+    console.log("after resultsegregateDataByMonth");
+    console.log(valudata);
+
+    valudata = sortBydate(valudata);
+    console.log("sortedDates valudata");
+    console.log(valudata);
+    setSegregatedMonthData(valudata);
+  };
+
+
+  const sortBydate = (data) => {
+    return Object.fromEntries(
+      Object.entries(data).sort((a, b) => {
+        const [monthA, yearA] = a[0].split(' ');
+        const [monthB, yearB] = b[0].split(' ');
+
+        const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+        const monthAIndex = months.indexOf(monthA);
+        const monthBIndex = months.indexOf(monthB);
+
+        if (yearA !== yearB) {
+          return yearA - yearB;  // Sort by year
+        }
+        return monthAIndex - monthBIndex;  // Sort by month if years are the same
+      })
+    );
+
+  }
   const deleteStock = async (item, screen, displaylist, type) => {
     setisloading(true);
     console.log("deleteStock");
@@ -1293,6 +1406,13 @@ const StocksContext = ({ children }) => {
   }
 
 
+
+  useEffect(() => {
+    setTimeout(() => {
+      deriveCalculatedProfitStock();
+    }, 1000)
+  }, [allStockAddedList,invociedetail.invoiceHistoryData]);
+
   useEffect(() => {
     // //console.log('local invoice history');
     let count = localstorage.addOrGetStockid('', 'get');
@@ -1341,7 +1461,7 @@ const StocksContext = ({ children }) => {
     allStockSalesList, setallStockSalesList, allstockssalestotalamt, setallstockssalestotalamt, totalsalesamt, settotalsalesamt, salestockidcount, setsalestockidcount, salestockid, setsalestockid, getAllClientList,
     availablestock, setavailablestock, salestockdate, setsalestockdate, getAllSalesCount, salesStockHistoryData, setSalesstockHistoryData, allSaleStockHistoryEdit, handleHistoryExportXlsx,
     allStockAddedList, setallStockAddedList, alladdedstockstotalamt, setaddedallstockstotalamt, isloading, setisloading, allProfitStockList, setAllProfitStockList, totalprofiramt, settotalprofiramt, salerate, setsalerate,
-    getStockIdCounter, deleteStock, isEditStock, setisEditStock, saveInvoiceFromStock,segregatedMonthData, setSegregatedMonthData
+    getStockIdCounter, deleteStock, isEditStock, setisEditStock, saveInvoiceFromStock, segregatedMonthData, setSegregatedMonthData, deriveCalculatedProfitStock
   };
   return <Stocks.Provider value={context}>{children}</Stocks.Provider>;
 }

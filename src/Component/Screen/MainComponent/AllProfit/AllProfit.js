@@ -47,8 +47,8 @@ const AllProfit = (props) => {
                         Consolidated Profits!
                     </StyleHeader>
                     {/* <Header name="Your Profits!" /> */}
-                    {/* <StockTable screen="allProfit" from="profit" /> */}
-                    <AutoStockTable screen="allProfit" from="profit" />
+                    <StockTable screen="allProfit" from="profit" />
+                    {/* <AutoStockTable screen="allProfit" from="profit" /> */}
 
                 </div>
             </Card>

@@ -3,17 +3,21 @@ import { Container, Card, CardContent, Box, Typography } from "@mui/material";
 // import { IconArrowDownRight } from "@tabler/icons";
 import Barchart from "../../charts/BarChart";
 
+
 const TotalEarningScreen = (props) => {
   // chart color
   const secondary = "rgb(27, 85, 121)";
+  console.log("totalvalueamt props.data.segregatedMonthData");
+  console.log(props.data.segregatedMonthData);
 
-  const totalProfitArray = Object.values(props.data.segregatedMonthData).map(
-    (item) => item.totalProfit
+  const totalvalueamt = Object.values(props.data.segregatedMonthData).map(
+    (item) => item.totaltaxvalueamt
   );
-
-  // const totalMonthArray = Object.values(props.data.segregatedMonthData).map(item => item.month);
+  console.log("totalvalueamt TotalEarningScreen");
+  console.log(totalvalueamt);
   const totalMonthArray = Object.keys(props.data.segregatedMonthData);
-
+  console.log("totalvalueamt totalMonthArray");
+  console.log(totalMonthArray)
   return (
     <Container maxWidth="lg">
       <Card variant="elevation">
@@ -22,7 +26,7 @@ const TotalEarningScreen = (props) => {
             Total Earning
           </Typography>
           <Typography variant="h5">
-            ₹ {props.data.allstockssalestotalamt}
+            {/* ₹ {props.data.allstockssalestotalamt} */}
           </Typography>
           <Box mt={1}>
             {/* {totalMonthArray.length > 0 && (
@@ -36,7 +40,7 @@ const TotalEarningScreen = (props) => {
 
             <Barchart
               labels={totalMonthArray}
-              datas={totalProfitArray}
+              datas={totalvalueamt}
               chartLabel={"Bar Chart"}
               chartTitle={"Total Earning per month"}
               style={{ height: "300px" }}

@@ -54,8 +54,8 @@ const Barchart = ({
       fill: {
         opacity: 1,
       },
-      backgroundColor: ["rgba(27, 85, 121)"],
-      borderColor: ["rgb(255, 99, 132)"],
+      backgroundColor: ["rgb(0, 0, 0)"],
+      borderColor: ["rgb(204, 201, 38)"],
       borderRadius: 5,
       type: "line",
       order: 0,
