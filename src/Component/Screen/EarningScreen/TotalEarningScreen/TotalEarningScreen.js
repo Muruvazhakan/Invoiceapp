@@ -3,7 +3,6 @@ import { Container, Card, CardContent, Box, Typography } from "@mui/material";
 // import { IconArrowDownRight } from "@tabler/icons";
 import Barchart from "../../charts/BarChart";
 
-
 const TotalEarningScreen = (props) => {
   // chart color
   const secondary = "rgb(27, 85, 121)";
@@ -17,7 +16,7 @@ const TotalEarningScreen = (props) => {
   console.log(totalvalueamt);
   const totalMonthArray = Object.keys(props.data.segregatedMonthData);
   console.log("totalvalueamt totalMonthArray");
-  console.log(totalMonthArray)
+  console.log(totalMonthArray);
   return (
     <Container maxWidth="lg">
       <Card variant="elevation">
@@ -26,7 +25,7 @@ const TotalEarningScreen = (props) => {
             Total Earning
           </Typography>
           <Typography variant="h5">
-            {/* ₹ {props.data.allstockssalestotalamt} */}
+            ₹ {props.data.allstockssalestotalamt}
           </Typography>
           <Box mt={1}>
             {/* {totalMonthArray.length > 0 && (

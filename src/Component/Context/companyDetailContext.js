@@ -512,31 +512,7 @@ const CompanyDetailContext = ({ children }) => {
 
             let invoiceHistoryData = localstore.addOrGetInvoiceHistoryData('', 'get');
 
-            let getinvoicefromdb = await invoiceDetailsDb.getInvoiceDB(loginuserid);
-            //console.log('invoiceHistoryData ' + invoiceHistoryData);
-            //console.log(invoiceHistoryData);
-            //console.log(getinvoicefromdb);
-            if (getinvoicefromdb.status === 200) {
-
-                // if (invoiceHistoryData === null || (invoiceHistoryData.length <= getinvoicefromdb.data.length)) {
-                //console.log(getinvoicefromdb.data);
-                //console.log('inside setinvoiceHistoryData');
-                localstore.addOrGetInvoiceHistoryData(getinvoicefromdb.data, 'save');
-                invociedetail.setinvoiceHistoryData(getinvoicefromdb.data);
-                console.log('inside setinvoiceHistoryData call segregateDataByMonth');
-                stockDetail.deriveCalculatedProfitStock(getinvoicefromdb.data);
-                refreshdata = true;
-                // }
-                // else {
-                //     estdetail.setinvoiceHistoryData(getinvoicefromdb.data);
-                // }
-
-                // let invoicedetailscontext = localstorage.addOrGetInvoiceHistoryData('', 'get');
-                //console.log('invoicedetailscontext ****');
-                // console.log(invoicedetailscontext);
-
-            }
-
+           
 
 
             let resultsgetStockIdCounter = stockDetail.getStockIdCounter(loginuserid);
