@@ -990,7 +990,7 @@ const StocksContext = ({ children }) => {
     console.log(getstockfromdb);
     setisloading(false);
     getAllClientList(loginuserid, type, getstockfromdb.data);
-    getInvoiceHistoryData(getstockfromdb.data);
+    await getInvoiceHistoryData(getstockfromdb.data, loginuserid);
     if (getstockfromdb.status === 200) {
       // if (allStockData === null || (allStockData.length <= getstockfromdb.data.length)) {
       //console.log(getstockfromdb.data);
@@ -1204,7 +1204,7 @@ const StocksContext = ({ children }) => {
     }
   };
 
-  const getInvoiceHistoryData = async (props) => {
+  const getInvoiceHistoryData = async (props, loginuser) => {
     setisloading(true);
     let getinvoicefromdb = await invoiceDetailsDb.getInvoiceDB(loginuser);
     if (getinvoicefromdb.status === 200) {

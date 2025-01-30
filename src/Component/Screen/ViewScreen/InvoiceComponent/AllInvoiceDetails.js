@@ -24,7 +24,7 @@ const AllInvoiceDetails = () => {
     console.log(
       process.env.REACT_APP_NODE_ENV + "process.env.REACT_APP_NODE_ENV"
     );
-  }, []);
+  }, [invoiceDet.invoiceHistoryData]);
 
   if (
     companydet.tier &&

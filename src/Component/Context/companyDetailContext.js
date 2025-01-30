@@ -285,7 +285,7 @@ const CompanyDetailContext = ({ children }) => {
           //console.log(userExsist.data);
           setloginstatus(true);
           // window.location.href = '/';
-          getAlldataOnLogin();
+          getAlldataOnLogin(userExsist.data.userid);
         } else if (userExsist.status === 224) {
           toast.warning("User Not Found");
         } else if (userExsist.status === 250) {
@@ -550,21 +550,6 @@ const CompanyDetailContext = ({ children }) => {
         toast.warning(companyTermsAndConditionDetailsfromDB.data);
       }
 
-      let invoiceidcounter = localstore.addOrGetInvoiceid("", "get");
-      //console.log(invoiceidcounter + 'invoiceidcounter');
-      let getInvoiceIdfromDb = await invoiceDetailsDb.getInvoiceId(loginuserid);
-
-      if (
-        getInvoiceIdfromDb.status === 200 &&
-        invoiceidcounter < getInvoiceIdfromDb.data
-      ) {
-        localstore.addOrGetInvoiceid(getInvoiceIdfromDb.data, "save");
-        invociedetail.setinvoiceidount(getInvoiceIdfromDb.data);
-        //console.log('saving setinvoiceidount ' + getInvoiceIdfromDb.data);
-      }
-
-      let invoiceHistoryData = localstore.addOrGetInvoiceHistoryData("", "get");
-
       let resultsgetAllSalesCount = stockDetail.getAllSalesCount(loginuserid);
       if (resultsgetAllSalesCount) {
         refreshdata = true;
@@ -578,10 +563,11 @@ const CompanyDetailContext = ({ children }) => {
     setisloaded(true);
   };
 
-  const getAlldataOnLogin = () => {
+  const getAlldataOnLogin = (userid) => {
     let companydetail = localstore.getCompanyHandler();
     console.log("companydetail getAlldataOnLogin");
     console.log(companydetail);
+    getAllInvoiceData(userid);
     // console.log('companydetail local2 ' + companydetail.companyImage);
     // console.log('companydetail uploadimg ' + companydetail.uploadimg);
     if (companydetail !== null) {
@@ -729,6 +715,38 @@ const CompanyDetailContext = ({ children }) => {
     setisloaded(true);
 
     toast.success("Details are saved");
+  };
+
+  const getAllInvoiceData = async (userid) => {
+    let invoiceidcounter = localstore.addOrGetInvoiceid("", "get");
+    //console.log(invoiceidcounter + 'invoiceidcounter');
+    let getInvoiceIdfromDb = await invoiceDetailsDb.getInvoiceId(userid);
+
+    if (
+      getInvoiceIdfromDb.status === 200 &&
+      invoiceidcounter < getInvoiceIdfromDb.data
+    ) {
+      localstore.addOrGetInvoiceid(getInvoiceIdfromDb.data, "save");
+      compDet.setinvoiceidount(getInvoiceIdfromDb.data);
+      //console.log('saving setinvoiceidount ' + getInvoiceIdfromDb.data);
+    }
+
+    let invoiceHistoryData = localstore.addOrGetInvoiceHistoryData("", "get");
+    let getinvoiceHistoryDataDB = await invoiceDetailsDb.getInvoiceDB(userid);
+
+    if (
+      getinvoiceHistoryDataDB.status === 200 &&
+      invoiceHistoryData < getinvoiceHistoryDataDB.data
+    ) {
+      localstore.addOrGetInvoiceHistoryData(
+        getinvoiceHistoryDataDB.data,
+        "save"
+      );
+      compDet.setinvoiceHistoryData(getinvoiceHistoryDataDB.data);
+      console.log(
+        "saving getinvoiceHistoryDataDB " + getinvoiceHistoryDataDB.data
+      );
+    }
   };
 
   const companyBankDetailHandler = async (item, type) => {
