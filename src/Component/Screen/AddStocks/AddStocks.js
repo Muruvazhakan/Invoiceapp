@@ -9,48 +9,45 @@ import StyleHeader from "../Header/StyleHeader";
 import { CompanyDetail } from "../../Context/companyDetailContext";
 
 const AddStocks = (props) => {
-    const statckdet = useContext(Stocks);
-     const logindet = useContext(CompanyDetail);
-     if (logindet.tier && logindet.tier !=="platinum") 
-        return <StyleHeader>No Access for this User</StyleHeader>
-    return <>
-
-        <Box sx={{ flexGrow: 1, width: "100%" }}>
-            <StyleHeader>
-                Add Stocks
-            </StyleHeader>
-
+  const statckdet = useContext(Stocks);
+  const logindet = useContext(CompanyDetail);
+  if (logindet.tier && logindet.tier !== "platinum")
+    return <StyleHeader>No Access for this User</StyleHeader>;
+  return (
+    <>
+      <Box sx={{ flexGrow: 1, width: "100%" }}>
+        <StyleHeader>Add Stocks</StyleHeader>
+        {/* 
             {statckdet.isloading &&
                 <Stack sx={{ color: 'grey.500' }} spacing={2} alignItems={"center"} className="spinnerstyle">
                     <CircularProgress color="success" size={30} />
                 </Stack>
-            }
+            } */}
 
-            {/* <Card className="screenHeader"> Add Stocks </Card> */}
+        {/* <Card className="screenHeader"> Add Stocks </Card> */}
 
-            <Stack
-                direction={{ xs: 'column', sm: 'row' }}
-                useFlexGap
-                spacing={{ xs: 2, sm: 1, md: 0 }}>
-                <Stack item width={window.innerWidth <= 960 ? "100%" : "60%"}  >
-                    <Card>
-                        <h2>Edit/Preview Section</h2>
-                        <StockTable screen="add" from="add" type="update" />
-                    </Card>
-                </Stack>
-                <Stack item width={window.innerWidth <= 960 ? "100%" : "40%"}  >
-                    <AddStocksForm screen="add" />
-                    <AddStocksGenDetails screen="add" />
-
-                </Stack>
-            </Stack>
-
-        </Box>
+        <Stack
+          direction={{ xs: "column", sm: "row" }}
+          useFlexGap
+          spacing={{ xs: 2, sm: 1, md: 0 }}
+        >
+          <Stack item width={window.innerWidth <= 960 ? "100%" : "60%"}>
+            <Card>
+              <h2>Edit/Preview Section</h2>
+              <StockTable screen="add" from="add" type="update" />
+            </Card>
+          </Stack>
+          <Stack item width={window.innerWidth <= 960 ? "100%" : "40%"}>
+            <AddStocksForm screen="add" />
+            <AddStocksGenDetails screen="add" />
+          </Stack>
+        </Stack>
+      </Box>
     </>
-}
+  );
+};
 
 export default AddStocks;
-
 
 // {statckdet.isloading &&
 //     <Stack sx={{ color: 'grey.500' }} spacing={2} alignItems={"center"} className="spinnerstyle">
