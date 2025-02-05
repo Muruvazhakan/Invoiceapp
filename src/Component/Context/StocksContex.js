@@ -74,6 +74,7 @@ const StocksContext = ({ children }) => {
   const [salestockdate, setsalestockdate] = useState("");
   const [paymentmode, setpaymentmode] = useState("");
   const [paymentdate, setpaymentdate] = useState("");
+  const [clientGST, setclientGST] = useState("");
   const [loginuser, setloginuser] = useState(
     localstorage.addOrGetUserdetail("", "userid", "get")
   );
@@ -1706,6 +1707,8 @@ const StocksContext = ({ children }) => {
     segregatedMonthData,
     setSegregatedMonthData,
     deriveCalculatedProfitStock,
+    clientGST,
+    setclientGST,
   };
   return <Stocks.Provider value={context}>{children}</Stocks.Provider>;
 };

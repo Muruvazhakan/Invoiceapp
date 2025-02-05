@@ -643,6 +643,7 @@ const AllStateContext = ({ children }) => {
           item.clientName = clientName;
           item.clientPhno = clientPhno;
           item.clientid = clientid;
+          item.clientGST = clientGST;
           iscontains = true;
         }
         return item;
@@ -702,6 +703,7 @@ const AllStateContext = ({ children }) => {
       clientName: clientName,
       clientPhno: clientPhno,
       clientid: clientidtemp,
+      clientGST: clientGST,
     };
     console.log(datas);
     saveLocalInvoice(datas);
@@ -755,6 +757,7 @@ const AllStateContext = ({ children }) => {
     setclientName(singleinvoice.clientName);
     setclientPhno(singleinvoice.clientPhno);
     setclientid(singleinvoice.clientid);
+    setclientGST(singleinvoice.clientGST);
     // setproductid(singleinvoice.productid);
     console.log("inside ctrate ");
     if (singleinvoice.ctrate) {
@@ -781,6 +784,7 @@ const AllStateContext = ({ children }) => {
         Client_Name: data.clientName,
         Client_PhoneNo: data.clientPhno,
         Client_Address: data.clientAdd,
+        Client_GST: data.clientGST,
         Central_taxrate: data.ctrate,
         State_taxrate: data.strate,
         Total_centralaxamt: data.totalcentaxamt,
@@ -843,6 +847,7 @@ const AllStateContext = ({ children }) => {
     setclientAdd("");
     setclientName("");
     setclientPhno("");
+    setclientGST("");
     setclientid("");
     setisEditInvoice(false);
   };

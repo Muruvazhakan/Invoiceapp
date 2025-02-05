@@ -45,6 +45,8 @@ const InvoiceGenDetails = () => {
       invoicedet.setclientPhno(filterdata.clientPhno);
       invoicedet.setclientAdd(filterdata.clientAdd);
       invoicedet.setclientid(filterdata.clientid);
+      if (filterdata.clientGST) invoicedet.setclientGST(filterdata.clientGST);
+      else invoicedet.setclientGST("");
     }
   };
   const autocompleTitle = () => {
@@ -105,6 +107,7 @@ const InvoiceGenDetails = () => {
       stockdet.setclientPhno("");
       stockdet.setclientAdd("");
       stockdet.setclientid(null);
+      stockdet.setclientGST("");
     }
 
     return filtered;
