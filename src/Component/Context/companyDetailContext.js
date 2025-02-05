@@ -727,7 +727,7 @@ const CompanyDetailContext = ({ children }) => {
       invoiceidcounter < getInvoiceIdfromDb.data
     ) {
       localstore.addOrGetInvoiceid(getInvoiceIdfromDb.data, "save");
-      compDet.setinvoiceidount(getInvoiceIdfromDb.data);
+      invociedetail.setinvoiceidount(getInvoiceIdfromDb.data);
       //console.log('saving setinvoiceidount ' + getInvoiceIdfromDb.data);
     }
 
@@ -742,7 +742,7 @@ const CompanyDetailContext = ({ children }) => {
         getinvoiceHistoryDataDB.data,
         "save"
       );
-      compDet.setinvoiceHistoryData(getinvoiceHistoryDataDB.data);
+      invociedetail.setinvoiceHistoryData(getinvoiceHistoryDataDB.data);
       console.log(
         "saving getinvoiceHistoryDataDB " + getinvoiceHistoryDataDB.data
       );

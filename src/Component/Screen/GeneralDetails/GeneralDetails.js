@@ -1,133 +1,109 @@
 import React, { useContext } from "react";
 
-
-import './GeneralDetails.css';
+import "./GeneralDetails.css";
 import { AllState } from "../../Context/allStateContext";
 import { CompanyDetail } from "../../Context/companyDetailContext";
 const GeneralDetails = () => {
+  const invoicedet = useContext(AllState);
+  const companydet = useContext(CompanyDetail);
+  return (
+    <>
+      <div className="generaldetails ">
+        <ul className="details ">
+          <li>
+            <div className="companyname big estimateheader">
+              {companydet.companyName}
+            </div>
+          </li>
+          <li>
+            <div className="companyname tagline estimateheader">
+              {companydet.companyTagLine}
+            </div>
+          </li>
+          <li>
+            <div className="estimateheader">{companydet.companyAddress}</div>
+          </li>
 
-    const invoicedet = useContext(AllState);
-    const companydet = useContext(CompanyDetail);
-    return <>
+          <li>
+            <div className="estimateheader">{companydet.companyPhno}</div>
+          </li>
+          <li>
+            <div className="estimateheader">{companydet.companymailid}</div>
+          </li>
+          <li>
+            <div className="estimateheader">
+              {companydet.companyGstin
+                ? "Gstin: " + companydet.companyGstin
+                : null}
+            </div>
+          </li>
+          <li>
+            <div className="estimateheader">
+              {companydet.companyGstinStatename
+                ? "State Name: " + companydet.companyGstinStatename
+                : null}
+            </div>
+          </li>
+          <li>
+            <div className="estimateheader">
+              {companydet.companyGstinStatename
+                ? "Msme No: " + companydet.companymsme
+                : null}
+            </div>
+          </li>
+        </ul>
+        {companydet.companyImage && (
+          <ul>
+            <img src={companydet.companyImage} width="200" height="180" />
+          </ul>
+        )}
 
-        <div className="generaldetails ">
-            <ul className="details ">
-                <li >
-                    <div className="companyname big estimateheader">
-                        {companydet.companyName}
-
-                    </div>
-                </li>
-                <li>
-                    <div className="companyname tagline estimateheader">
-                        {companydet.companyTagLine}
-
-                    </div>
-
-                </li>
-                <li>
-                    <div className="estimateheader">
-                        {companydet.companyAddress}
-                    </div>
-                </li>
-
-                <li>
-                    <div className="estimateheader">
-                        {companydet.companyPhno}
-                    </div>
-                </li>
-                <li>
-                    <div className="estimateheader">
-                        {companydet.companymailid}
-                    </div>
-                </li>
-                <li>
-                    <div className="estimateheader">
-                    {companydet.companyGstin ? 'Gstin: '+companydet.companyGstin:null }
-                    </div>
-                </li>
-                <li>
-                    <div className="estimateheader">
-                    {companydet.companyGstinStatename ? 'State Name: '+companydet.companyGstinStatename:null }
-                    </div>
-                </li>
-                <li>
-                    <div className="estimateheader">
-                    {companydet.companyGstinStatename ? 'Msme No: '+companydet.companymsme:null }
-                    </div>
-                </li>
-            </ul>
-            {companydet.companyImage &&
-                <ul>
-                    <img src={companydet.companyImage} width="200" height="180" />
-                </ul>}
-
-            {/* <li>
+        {/* <li>
              {companydet.companyGstin ? 'Gstin: '+companydet.companyGstin:null }
             </li>
             <li>
              {companydet.companyGstinStatename ? 'StateName: '+companydet.companyGstinStatename:null }
             </li> */}
+      </div>
 
-        </div>
-        
-        <div className="generaldetails">
-            <ul className="details">
-                <div className="companyname">Buyer:
-                    <li>
-                        {invoicedet.clientName}
-                    </li>
-                    <li>
-                        {invoicedet.clientPhno}
-                    </li>
-                    <li>
-                        {invoicedet.clientAdd}
-                    </li>
-                </div>
-            </ul>
+      <div className="generaldetails">
+        <ul className="details">
+          <div className="companyname">
+            Buyer:
+            <li>{invoicedet.clientName}</li>
+            <li>{invoicedet.clientPhno}</li>
+            <li>{invoicedet.clientAdd}</li>
+            {invoicedet.displayClientGST && <li>{invoicedet.clientGST}</li>}
+          </div>
+        </ul>
 
-            <ul className="details">
-                <li className="companyname">
-                    {invoicedet.companyName}
-                </li>
-                <li>
-                    {invoicedet.companyTagLine}
-                </li>
-                <li>
-                    {invoicedet.companyAddress}
-                </li>
-                <li>
-                    {invoicedet.companyName}
-                </li>
-                <li>
-                    {invoicedet.companyPhno}
-                </li>
-                <li>
-                    {invoicedet.companyGstin ? 'Gstin: ' + invoicedet.companyGstin : null}
-                </li>
-                <li>
-                    {invoicedet.companyGstinStatename ? 'StateName: ' + invoicedet.companyGstinStatename : null}
-                </li>
+        <ul className="details">
+          <li className="companyname">{invoicedet.companyName}</li>
+          <li>{invoicedet.companyTagLine}</li>
+          <li>{invoicedet.companyAddress}</li>
+          <li>{invoicedet.companyName}</li>
+          <li>{invoicedet.companyPhno}</li>
+          <li>
+            {invoicedet.companyGstin
+              ? "Gstin: " + invoicedet.companyGstin
+              : null}
+          </li>
+          <li>
+            {invoicedet.companyGstinStatename
+              ? "StateName: " + invoicedet.companyGstinStatename
+              : null}
+          </li>
+        </ul>
 
-            </ul>
-
-            <ul className="details invoicedetails">
-
-                <li>
-                    Invoice ID: {invoicedet.invoiceid}
-                </li>
-                <li>
-                    Invoice date: {invoicedet.invoicedate}
-                </li>
-                <li>
-                    Payment mode: {invoicedet.paymentmode}
-                </li>
-                <li>
-                    Payment Date: {invoicedet.paymentdate}
-                </li>
-            </ul>
-        </div>
+        <ul className="details invoicedetails">
+          <li>Invoice ID: {invoicedet.invoiceid}</li>
+          <li>Invoice date: {invoicedet.invoicedate}</li>
+          <li>Payment mode: {invoicedet.paymentmode}</li>
+          <li>Payment Date: {invoicedet.paymentdate}</li>
+        </ul>
+      </div>
     </>
-}
+  );
+};
 
 export default GeneralDetails;

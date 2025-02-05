@@ -1430,7 +1430,7 @@ const StocksContext = ({ children }) => {
               hsn: obj2.hsn,
               quantity: obj2.quantity * 1,
               rate: obj2.rate * 1,
-              amount: obj2.amount * 1,
+              amount: (obj2.amount * 1).toFixed(2),
               // If a match is found in array2, merge its properties
               salerate: ((obj1.amount * 1) / (obj1.quantity * 1)).toFixed(2),
               saleamount: saleamount,

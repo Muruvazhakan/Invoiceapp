@@ -44,6 +44,8 @@ const AllStateContext = ({ children }) => {
   const [clientPhno, setclientPhno] = useState("");
   const [clientAdd, setclientAdd] = useState("");
   const [clientid, setclientid] = useState(null);
+  const [clientGST, setclientGST] = useState("");
+  const [displayClientGST, setdisplayClientGST] = useState(false);
   const [invoiceid, setinvoiceid] = useState("");
   const [cleardetailoption, setcleardetailoption] = useState(true);
   const [gstincluded, setgstincluded] = useState(true);
@@ -997,6 +999,10 @@ const AllStateContext = ({ children }) => {
     setclientid,
     isEditInvoice,
     setisEditInvoice,
+    clientGST,
+    setclientGST,
+    displayClientGST,
+    setdisplayClientGST,
   };
   return <AllState.Provider value={context}>{children}</AllState.Provider>;
 };
