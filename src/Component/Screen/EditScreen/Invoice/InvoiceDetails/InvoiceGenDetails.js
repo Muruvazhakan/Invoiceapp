@@ -243,7 +243,7 @@ const InvoiceGenDetails = () => {
                 label="Client GST"
                 value={invoicedet.clientGST}
                 onChange={(e) => invoicedet.setval(e, invoicedet.setclientGST)}
-                color={invoicedet.setboxColors(invoicedet.clientGST, "color")}
+                // color={invoicedet.setboxColors(invoicedet.clientGST, "color")}
                 //  error={invoicedet.setboxColors(invoicedet.clientAdd,'error')}
               />
             </Box>

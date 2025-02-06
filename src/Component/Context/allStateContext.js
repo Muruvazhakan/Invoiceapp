@@ -129,9 +129,11 @@ const AllStateContext = ({ children }) => {
 
   const setboxColors = (item, field) => {
     if (field === "color") {
-      return item.length === 0 || item === 0 ? "error" : "success";
+      return item == "" || item === 0 || item.length === 0
+        ? "error"
+        : "success";
     } else {
-      return item.length === 0 || item === 0 ? true : false;
+      return item == "" || item === 0 || item.length === 0 ? true : false;
     }
   };
 
