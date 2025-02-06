@@ -155,7 +155,7 @@ const StocksContext = ({ children }) => {
     setTimeout(() => {
       getAllStockData(loginuser, "refresh");
       console.log("after timeout");
-    }, [5000]);
+    }, [2000]);
   };
   const editListRows = (item, screen, displaylist, type) => {
     // console.log("item ");

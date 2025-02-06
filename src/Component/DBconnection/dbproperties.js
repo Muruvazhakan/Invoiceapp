@@ -26,6 +26,8 @@ export const saveEstimationIdUrl = `${backendUrl}/estimate/saveestimationid`;
 
 export const getInvoiceUrl = `${backendUrl}/invoice`;
 export const saveInvoiceUrl = `${backendUrl}/invoice/createorupdateinvoice`;
+export const getEstimatedInvoiceUrl = `${backendUrl}/invoice/getestimateinvoice`;
+export const saveEstimatedInvoiceUrl = `${backendUrl}/invoice/createorupdateestimateinvoice`;
 
 export const getInvoiceIdUrl = `${backendUrl}/invoice/getinvoiceid`;
 export const saveInvoiceIdUrl = `${backendUrl}/invoice/saveinvoiceid`;

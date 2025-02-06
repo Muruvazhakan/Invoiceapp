@@ -233,9 +233,11 @@ const InvoiceGenDetails = () => {
                   label="Display Client GST"
                 />
               </Box>
-              {invoicedet.displayClientGST
-                ? "Client GST will display"
-                : "Client GST will not display"}
+              <Box>
+                {invoicedet.displayClientGST
+                  ? "Client GST will display"
+                  : "Client GST will not display"}
+              </Box>
               <TextField
                 id="outlined-required"
                 label="Client GST"

@@ -96,6 +96,9 @@ const AllStateContext = ({ children }) => {
   const [otherdescamt, setotherdescamt] = useState(0);
 
   const [invoiceHistoryData, setinvoiceHistoryData] = useState([]);
+  const [estimateinvoiceHistoryData, setestimateinvoiceHistoryData] = useState(
+    []
+  );
   const [invoiceHistroyUpdateFlag, setinvoiceHistroyUpdateFlag] =
     useState(false);
 
@@ -732,6 +735,75 @@ const AllStateContext = ({ children }) => {
     toast.success("Invoice saved");
   };
 
+  const saveEstimateInvoice = async () => {
+    console.log("saveInvoice");
+    let loginuserid = localstorage.addOrGetUserdetail("", "userid", "get");
+    console.log("loginuserid + loginuserid");
+
+    let clientidtemp;
+    if (clientid == null) {
+      clientidtemp = uuidv4();
+      setclientid(clientidtemp);
+    } else {
+      clientidtemp = clientid;
+    }
+    let datas = {
+      authorization: header,
+      ctrate: ctrate,
+      strate: strate,
+      invoiceid: invoiceid,
+      invoicedate: invoicedate,
+      invoicedate1: invoicedate,
+      paymentdate: paymentdate,
+      paymentdate1: paymentdate,
+      paymentmode: paymentmode,
+      list: list,
+      hsnlist: hsnlist,
+      otherchargedetail: otherchargedetail,
+      totalcentaxamt: totalcentaxamt,
+      totalstatetaxamt: totalstatetaxamt,
+      totalsubamt: totalsubamt,
+      totalamt: totalamt,
+      totalamtwords: totalamtwords,
+      totaltaxvalueamt: totaltaxvalueamt,
+      totalhsnamt: totalhsnamt,
+      totalhsnamtwords: totalhsnamtwords,
+      clientAdd: clientAdd,
+      clientName: clientName,
+      clientPhno: clientPhno,
+      clientid: clientidtemp,
+      clientGST: clientGST,
+    };
+    console.log(datas);
+    // saveLocalInvoice(datas);
+
+    let savedataresponse = await invoiceDb.saveEstimatedInvoiceBD(
+      datas,
+      loginuserid
+    );
+    if (savedataresponse.status !== 200) {
+      toast.warn("Issue in saving Invoice");
+      return;
+    }
+    console.log("savedataresponse");
+    console.log(savedataresponse);
+
+    localstorage.addOrGetInvoiceid(invoiceidcount, "save");
+    console.log(invoiceidcount + " invoiceidcount");
+    let saveinvoiceidcountdataresponse = await invoiceDb.saveInvoiceId(
+      invoiceidcount,
+      loginuserid
+    );
+    if (saveinvoiceidcountdataresponse.status !== 200) {
+      toast.warn("Issue in Update");
+      return;
+    }
+    console.log("saveinvoiceidcountdataresponse");
+    console.log(saveinvoiceidcountdataresponse);
+
+    toast.success("Estimated Invoice saved");
+  };
+
   const selectedInvoiceEdit = (props) => {
     console.log(props);
     setisEditInvoice(true);
@@ -941,6 +1013,7 @@ const AllStateContext = ({ children }) => {
     settotalhsnamtwords,
     totalsubamt,
     saveInvoice,
+    saveEstimateInvoice,
     addOrUpdateItemHandler,
     clearlistcontent,
     clearOtherDetails,
@@ -1008,6 +1081,8 @@ const AllStateContext = ({ children }) => {
     setclientGST,
     displayClientGST,
     setdisplayClientGST,
+    estimateinvoiceHistoryData,
+    setestimateinvoiceHistoryData,
   };
   return <AllState.Provider value={context}>{children}</AllState.Provider>;
 };

@@ -4,12 +4,13 @@ import TableForm from "../EditScreen/Invoice/TableForm/TableForm";
 import InvoiceGenDetails from "../EditScreen/Invoice/InvoiceDetails/InvoiceGenDetails";
 
 const InvoiceDeatilsEdit = (props) => {
-  return (<>
-    <TableForm />
-    {/* <YourDetails /> */}
-    <InvoiceGenDetails />
-  </>
-  )
-}
+  return (
+    <>
+      <TableForm isEstimate={props.isEstimate} />
+      {/* <YourDetails /> */}
+      <InvoiceGenDetails />
+    </>
+  );
+};
 
 export default InvoiceDeatilsEdit;

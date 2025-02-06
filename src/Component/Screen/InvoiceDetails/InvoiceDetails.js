@@ -7,18 +7,18 @@ import StyleHeader from "../Header/StyleHeader";
 import CompanyBankDetail from "../ViewScreen/CompanyotherDetail/CompanyBankDetail";
 
 const InvoiceDetails = (props) => {
-
-  return (<>
-    <Header name="Invoice" />
-    {/* <StyleHeader>
+  return (
+    <>
+      <Header name={props.isEstimate ? "Estimate" : "Invoice"} />
+      {/* <StyleHeader>
       Invoice
     </StyleHeader> */}
-    <GeneralDetails />
-    <Tables screen="new" />
-    <CompanyBankDetail  />
-    <TableFooters />
-  </>
-  )
-}
+      <GeneralDetails />
+      <Tables screen="new" />
+      <CompanyBankDetail />
+      <TableFooters />
+    </>
+  );
+};
 
 export default InvoiceDetails;
