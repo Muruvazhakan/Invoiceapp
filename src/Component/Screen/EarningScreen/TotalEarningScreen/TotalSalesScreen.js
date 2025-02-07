@@ -33,16 +33,41 @@ const TotalSalesScreen = (props) => {
   const chartLabels = props.data.allProfitStockList.map(
     (stockDetail) => stockDetail.hsn
   );
+  const netprofitmargin = (
+    (props.data.totalprofiramt / props.data.allstockssalestotalamt) *
+    100
+  ).toFixed(2);
   console.log("chartLabels");
   console.log(chartLabels);
   return (
     <Container maxWidth="lg">
       <Card variant="elevation">
         <CardContent>
-          <Typography variant="subtitle2" color="textSecondary">
-            Sales Profit
-          </Typography>
-          <Typography variant="h5">₹ {props.data.totalprofiramt}</Typography>
+          <Stack
+            direction="row"
+            mt={1}
+            alignItems="center"
+            justifyContent={"space-around"}
+          >
+            <Box>
+              <Typography variant="subtitle2" color="textSecondary">
+                Net Profit
+              </Typography>
+              <Typography variant="h5">
+                ₹ {props.data.totalprofiramt}
+              </Typography>
+            </Box>
+            <Box>
+              {netprofitmargin > 0 && (
+                <>
+                  <Typography variant="subtitle2" color="textSecondary">
+                    Net Profit Margin
+                  </Typography>
+                  <Typography variant="h5">{netprofitmargin} %</Typography>
+                </>
+              )}
+            </Box>
+          </Stack>
           {/* <Linechart
             chartLabel={"Profit per product"}
             labels={chartDatas}

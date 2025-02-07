@@ -9,7 +9,6 @@ import TotalEarningScreen from "./TotalEarningScreen/TotalEarningScreen";
 import MonthlyEarningScreen from "./TotalEarningScreen/MonthlyEarningScreen";
 import { Stack } from "@mui/material";
 import StockChart from "../charts/StockChart";
-import Card from "../../Style/Card/Card";
 
 // import Flash from 'react-reveal/Flash';
 // import Spinner from '../../Spinner/Spinner';
@@ -26,15 +25,17 @@ const EarningScreen = (props) => {
         justifyContent={"center"}
         // gap={"10px"}
       >
-        <TotalEarningScreen data={stockdet} />
-        <TotalSalesScreen data={stockdet} />
-        <Card>
+        {stockdet.allstockssalestotalamt > 0 && (
+          <TotalEarningScreen data={stockdet} />
+        )}
+        {stockdet.totalprofiramt > 0 && <TotalSalesScreen data={stockdet} />}
+        {stockdet.allStockSalesList.length > 0 && (
           <StockChart
             data={stockdet.allStockSalesList}
-            title="Sales Count"
-            chartlable="Sales per product"
+            title="Sold units"
+            chartlable="Sold per product"
           />
-        </Card>
+        )}
 
         {/* <MonthlyEarningScreen data={stockdet} /> */}
       </Stack>

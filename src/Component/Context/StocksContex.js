@@ -692,10 +692,14 @@ const StocksContext = ({ children }) => {
     console.log(getallClientDatafromdb);
     setisloading(false);
     if (getallClientDatafromdb.status === 200) {
+      const uniqueallClientDatafromdb = getallClientDatafromdb.data.filter(
+        (value, index, self) =>
+          index === self.findIndex((t) => t._id === value._id)
+      );
       // localstorage.addOrGetAllClientData(getallClientDatafromdb.data, 'save');
-      setclientList(getallClientDatafromdb.data);
+      setclientList(uniqueallClientDatafromdb);
       console.log("getallClientDatafromdb ****");
-      console.log(clientList);
+      console.log(uniqueallClientDatafromdb);
       if (type === "add") {
         getAllHistoryStockData(loginuserid, getallClientDatafromdb.data);
       } else {

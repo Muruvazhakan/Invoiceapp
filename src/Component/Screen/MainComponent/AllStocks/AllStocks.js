@@ -95,13 +95,12 @@ const AllStocks = (props) => {
               : "Click to Expand All Added Stocks"}
           </Button>
         </Card>
-        <Card>
-          <StockChart
-            data={displaylist}
-            title="Available Stock Count"
-            chartlable="Stock Available per product"
-          />
-        </Card>
+
+        <StockChart
+          data={displaylist}
+          title="Available Stock Count"
+          chartlable="Stock Available per product"
+        />
 
         {viewAllAddedStock && (
           <Card>

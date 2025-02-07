@@ -12,16 +12,22 @@ const StockChart = (props, title, chartlable) => {
 
   return (
     <>
-      <Typography variant="subtitle2" color="textSecondary">
-        {props.title}
-      </Typography>
-      <Typography variant="h5">{localsumqty1}</Typography>
-      <Linechart
-        chartLabel={props.chartlable}
-        labels={chartLabels}
-        datas={chartDatas}
-        style={{ height: "300px" }}
-      />
+      <Container maxWidth="lg">
+        <Card variant="elevation">
+          <CardContent>
+            <Typography variant="subtitle2" color="textSecondary">
+              {props.title}
+            </Typography>
+            <Typography variant="h5">{localsumqty1}</Typography>
+            <Linechart
+              chartLabel={props.chartlable}
+              labels={chartLabels}
+              datas={chartDatas}
+              style={{ height: "300px" }}
+            />
+          </CardContent>
+        </Card>
+      </Container>
     </>
   );
 };

@@ -30,9 +30,12 @@ const AllProfit = (props) => {
   return (
     <>
       <Box className="allstocksdisplaytable" sx={{ flexGrow: 1 }}>
-        <EarningScreen />
-        <Card>
-          {/* <div className="exportExcelbttn ">
+        <Box>
+          <EarningScreen />
+        </Box>
+        <Box>
+          <Card>
+            {/* <div className="exportExcelbttn ">
             <ReactToPrint
               trigger={() => (
                 <div>
@@ -59,13 +62,14 @@ const AllProfit = (props) => {
               </Button>
             </div>
           </div> */}
-          {/* <div ref={componentRef}> */}
-          <StyleHeader>Consolidated Profits!</StyleHeader>
-          {/* <Header name="Your Profits!" /> */}
-          {/* <StockTable screen="allProfit" from="profit" /> */}
-          <AutoStockTable screen="allProfit" from="profit" />
-          {/* </div> */}
-        </Card>
+            {/* <div ref={componentRef}> */}
+            <StyleHeader>Consolidated Profits!</StyleHeader>
+            {/* <Header name="Your Profits!" /> */}
+            {/* <StockTable screen="allProfit" from="profit" /> */}
+            <AutoStockTable screen="allProfit" from="profit" />
+            {/* </div> */}
+          </Card>
+        </Box>
       </Box>
     </>
   );

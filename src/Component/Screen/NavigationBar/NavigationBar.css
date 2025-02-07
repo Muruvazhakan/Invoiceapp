@@ -83,6 +83,9 @@
   text-decoration: none;
 }
 
+.nav-item .icon {
+  margin-left: 2px;  /* Adjust space between icon and text */
+}
 .nav-links:hover {
   color: #1f4a4b;
   transform: scale(1.2);
