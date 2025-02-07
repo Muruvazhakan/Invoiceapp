@@ -80,7 +80,7 @@ const Barchart = ({
     plugins: {
       title: {
         display: true,
-        text: chartTitle ?? "Title",
+        text: chartTitle ?? "",
       },
     },
   };

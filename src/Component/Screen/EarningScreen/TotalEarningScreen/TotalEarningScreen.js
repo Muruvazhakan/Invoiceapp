@@ -27,16 +27,8 @@ const TotalEarningScreen = (props) => {
           <Typography variant="h5">
             ₹ {props.data.allstockssalestotalamt}
           </Typography>
-          <Box mt={1}>
-            {/* {totalMonthArray.length > 0 && (
-              <Chart
-                options={optionscolumnchart}
-                series={seriescolumnchart}
-                type="bar"
-                // height="100px"
-              />
-            )} */}
 
+          <Box mt={1}>
             <Barchart
               labels={totalMonthArray}
               datas={totalvalueamt}

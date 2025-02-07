@@ -2,7 +2,7 @@ import React from "react";
 import "chart.js/auto";
 import { Pie } from "react-chartjs-2";
 
-const PieChart = ({ labels, datas, chartLabel, style }) => {
+const PieChart = ({ labels, datas, chartLabel, style, chartTitle }) => {
   const data = {
     labels: labels ?? [],
     datasets: [
@@ -12,7 +12,7 @@ const PieChart = ({ labels, datas, chartLabel, style }) => {
         backgroundColor: [
           "rgb(255, 159, 64)",
           "rgba(157, 155, 152)",
-          
+
           "rgba(255, 159, 64)",
           "rgb(153, 102, 255)",
           "rgb(33, 120, 157)",
@@ -25,12 +25,11 @@ const PieChart = ({ labels, datas, chartLabel, style }) => {
           "rgba(153, 102, 255)",
           "rgb(157, 155, 152)",
           "rgba(201, 203, 207)",
-          
         ],
         borderColor: [
           // "rgb(255, 255, 255)",
           "rgb(60, 60, 60)",
-          
+
           // "rgb(255, 159, 64)",
           // "rgb(255, 205, 86)",
           // "rgb(75, 192, 192)",
@@ -53,18 +52,28 @@ const PieChart = ({ labels, datas, chartLabel, style }) => {
   };
   const options = {
     maintainAspectRatio: false,
+    plugins: {
+      title: {
+        display: true,
+        text: chartTitle ?? "",
+      },
+    },
   };
   return (
     <>
-      {datas.length > 0 &&
-
+      {datas.length > 0 && (
         <div
           className="chart-container"
-          style={{ position: "relative", width: "100%", height: "100%", ...style }}
+          style={{
+            position: "relative",
+            width: "100%",
+            height: "100%",
+            ...style,
+          }}
         >
           <Pie data={data} options={options} />
         </div>
-      }
+      )}
     </>
   );
 };
