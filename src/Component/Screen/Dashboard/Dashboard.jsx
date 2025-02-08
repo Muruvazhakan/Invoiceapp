@@ -67,7 +67,7 @@ const Dashboard = (props) => {
             <DashboardTemp
               img={profitsymbbol}
               title="Total Revenue"
-              value={`₹ ${props.data.allstockssalestotalamt}`}
+              value={`₹${props.data.allstockssalestotalamt}`}
             />
             <DashboardTemp
               img={totaltranscations}
@@ -81,7 +81,7 @@ const Dashboard = (props) => {
             <DashboardTemp
               img={cashsymbbol}
               title="Net Profit"
-              value={`₹ ${props.data.totalprofiramt}`}
+              value={`₹${props.data.totalprofiramt}`}
             />
 
             <DashboardTemp
@@ -96,7 +96,7 @@ const Dashboard = (props) => {
             <DashboardTemp
               img={profiticonchat}
               title="Net Profit Margin %"
-              value={`₹ ${netprofitmargin}`}
+              value={`${netprofitmargin}%`}
             />
             <DashboardTemp
               img={toprated}

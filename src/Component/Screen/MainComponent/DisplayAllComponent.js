@@ -7,11 +7,23 @@ import { Link } from "react-router-dom";
 import "./DisplayAllComponent.css";
 import { CompanyDetail } from "../../Context/companyDetailContext";
 import { Stocks } from "../../Context/StocksContex";
+import { AllState } from "../../Context/allStateContext";
 import Dashboard from "../Dashboard/Dashboard";
 const DisplayAllComponent = (props) => {
   const logindet = useContext(CompanyDetail);
   const stockdet = useContext(Stocks);
-
+  const invoicedata = useContext(AllState);
+  let totaltransaction = 0;
+  const paymentModeCount = invoicedata.invoiceHistoryData.reduce(
+    (acc, { paymentmode }) => {
+      totaltransaction = totaltransaction + 1;
+      // If paymentmode is empty, we treat it as 'No Payment Mode'
+      const mode = paymentmode || "No Payment Mode";
+      acc[mode] = (acc[mode] || 0) + 1;
+      return acc;
+    },
+    {}
+  );
   return (
     <>
       {!logindet.isloaded && (
@@ -25,7 +37,10 @@ const DisplayAllComponent = (props) => {
         </Stack>
       )}
       <Box className=" displayelements">
-        <Dashboard data={stockdet} />
+        {invoicedata.invoiceHistoryData.length > 0 && (
+          <Dashboard data={stockdet} totaltransaction={totaltransaction} />
+        )}
+
         {Datas.navigationbarcontent.map((items, index) => {
           let tier = logindet.tier;
           if (items.tier && items.tier.includes(tier)) {
