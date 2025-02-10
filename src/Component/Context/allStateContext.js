@@ -455,22 +455,22 @@ const AllStateContext = ({ children }) => {
         let orgctrate = ((val * 1) / (1 + ctrate / 100 + strate / 100)).toFixed(
           2
         );
-        // console.log('orgctrate222%%%%');
-        // console.log(orgctrate);
+        console.log("orgctrate222%%%%");
+        console.log(orgctrate);
         setrate(orgctrate);
-
+        calamt = quantity * orgctrate;
         setamount(calamt.toFixed(2));
       } else {
         setrate(val.toFixed(2));
       }
     } else if (disc == 0 && rateinctax !== 0) {
       if (gstincluded) {
-        let calamt = quantity * rateinctax;
+        let calamt = quantity * rate;
         let orgctrate = ((val * 1) / (1 + ctrate / 100 + strate / 100)).toFixed(
           2
         );
-        //     console.log('orgctrate');
-        // console.log(orgctrate);
+        console.log("orgctrate");
+        console.log(orgctrate);
         setrate(orgctrate);
         setamount(calamt.toFixed(2));
       } else {
@@ -865,8 +865,8 @@ const AllStateContext = ({ children }) => {
         Total_statetaxamt: data.totalstatetaxamt,
         Total_amount: data.totalamt,
         Total_amountwords: data.totalamtwords,
-        Total_taxvalueamount: data.totaltaxvalueamt,
-        Total_hsnamount: data.totalhsnamt,
+        Total_taxvalueamount: data.totalamt * 1 - data.totalhsnamt * 1,
+        Total_Tax_amount: data.totalhsnamt,
         Total_hsnamountwords: data.totalhsnamtwords,
       };
     });
@@ -948,24 +948,24 @@ const AllStateContext = ({ children }) => {
     // console.log(count + 'invoice count');
   }, []);
 
-  useEffect(() => {
-    // console.log('amount');
-    // console.log(tabledet);
-    if (!gstincluded) {
-      let val;
-      if (quantity !== 0 || rateinctax !== 0 || disc !== 0 || rate !== 0) {
-        if (gstincluded) {
-          val = rateinctax * quantity;
-        } else {
-          val = rate * quantity;
-        }
+  // useEffect(() => {
+  //   // console.log('amount');
+  //   // console.log(tabledet);
+  //   if (!gstincluded) {
+  //     let val;
+  //     if (quantity !== 0 || rateinctax !== 0 || disc !== 0 || rate !== 0) {
+  //       if (gstincluded) {
+  //         val = rateinctax * quantity;
+  //       } else {
+  //         val = rate * quantity;
+  //       }
 
-        setamount(val.toFixed(2));
-      }
-    }
+  //       setamount(val.toFixed(2));
+  //     }
+  //   }
 
-    // console.log(rate + " rate " + val);
-  }, [rate, quantity]);
+  //   // console.log(rate + " rate " + val);
+  // }, [rate, quantity]);
 
   useEffect(() => {
     calculateHsn();
