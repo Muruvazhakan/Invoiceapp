@@ -38,7 +38,11 @@ const DisplayAllComponent = (props) => {
       )}
       <Box className=" displayelements">
         {invoicedata.invoiceHistoryData.length > 0 && (
-          <Dashboard data={stockdet} totaltransaction={totaltransaction} />
+          <Dashboard
+            data={stockdet}
+            totaltransaction={totaltransaction}
+            screen="display"
+          />
         )}
 
         {Datas.navigationbarcontent.map((items, index) => {

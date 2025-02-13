@@ -21,7 +21,7 @@ const TotalEarningScreen = (props) => {
   const [filteritemcount, setfilteritemcount] = useState(5);
   const [displayfilteritemcount, setdisplayfilteritemcount] = useState(false);
   const totalProfitArray = Object.values(props.data.segregatedMonthData)
-    .map((item) => item.totalProfit)
+    .map((item) => item.totalProfit.toFixed(2))
     .slice(0, filteritemcount);
   const totalProfit = Object.values(props.data.segregatedMonthData)
     .slice(0, filteritemcount)

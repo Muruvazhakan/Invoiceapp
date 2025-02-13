@@ -14,7 +14,6 @@ import YourProfits from "../YourProfits/YourProfits";
 import StyleHeader from "../../Header/StyleHeader";
 import AutoStockTable from "../../StockTable/AutoStockTable";
 import EarningScreen from "../../EarningScreen/EarningScreen";
-import Dashboard from "../../Dashboard/Dashboard";
 
 const AllProfit = (props) => {
   const tabledet = useContext(Stocks);

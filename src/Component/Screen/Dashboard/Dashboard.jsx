@@ -9,6 +9,7 @@ import totaltranscations from "../../../Image/Dashboard/totaltranscations.png";
 import toprated from "../../../Image/Dashboard/toprated-rm.png";
 
 import DashboardTemp from "./DashboardTemp";
+import LowStocks from "./LowStocks/LowStocks";
 
 const Dashboard = (props) => {
   const netprofitmargin = (
@@ -105,6 +106,9 @@ const Dashboard = (props) => {
               value={`${maxProductId} - (${maxcount} Units)`}
             />
           </Stack>
+        </Box>
+        <Box>
+          <LowStocks data={props.data} screen={props.screen} />
         </Box>
       </Stack>
     </>

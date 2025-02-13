@@ -26,6 +26,7 @@ const DashboardTemp = (props) => {
               <Typography variant="h5">{props.value}</Typography>
             </Box>
           </Stack>
+          {props.children}
         </CardContent>
       </Card>
     </>
