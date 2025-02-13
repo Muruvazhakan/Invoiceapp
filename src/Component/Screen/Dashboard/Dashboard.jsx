@@ -37,10 +37,11 @@ const Dashboard = (props) => {
     <>
       <Stack
         direction="row"
-        mt={2}
-        gap={2}
+        gap={1}
         alignItems="center"
-        justifyContent={"space-evenly"}
+        // justifyContent={"space-evenly"}
+        spacing={{ xs: 1, sm: 1 }}
+        sx={{ flexWrap: "wrap" }}
       >
         <Card>
           <Stack
@@ -67,7 +68,7 @@ const Dashboard = (props) => {
             <DashboardTemp
               img={profitsymbbol}
               title="Total Revenue"
-              value={`₹${props.data.allstockssalestotalamt}`}
+              value={`₹${props.data.allstockssalestotalamt.toFixed(2)}`}
             />
             <DashboardTemp
               img={totaltranscations}

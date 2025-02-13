@@ -37,40 +37,40 @@ const EarningScreen = (props) => {
           data={stockdet}
           invoicedata={invoicedata}
           totaltransaction={totaltransaction}
+          screen="profit"
         />
       )}
-      <Stack
+      {/* <Stack
         direction="column"
         mt={3}
         // alignItems="center"
         // justifyContent={"center"}
         gap={2}
-      >
-        <Stack direction="row">
-          {stockdet.allstockssalestotalamt > 0 && (
-            <TotalEarningScreen data={stockdet} />
-          )}
+      > */}
+      <Stack direction="row" mt={2} alignItems="center">
+        {stockdet.allstockssalestotalamt > 0 && (
+          <TotalEarningScreen data={stockdet} />
+        )}
 
-          {stockdet.totalprofiramt > 0 && <TotalSalesScreen data={stockdet} />}
-        </Stack>
-        <Stack direction="row">
-          {stockdet.allStockSalesList.length > 0 && (
-            <StockChart
-              data={stockdet.allStockSalesList}
-              title="Sold units"
-              chartlable="Sold per product"
-            />
-          )}
+        {stockdet.totalprofiramt > 0 && <TotalSalesScreen data={stockdet} />}
 
-          {invoicedata.invoiceHistoryData.length > 0 && (
-            <Paymentmode
-              data={paymentModeCount}
-              totaltransaction={totaltransaction}
-            />
-          )}
-        </Stack>
-        {/* <MonthlyEarningScreen data={stockdet} /> */}
+        {stockdet.allStockSalesList.length > 0 && (
+          <StockChart
+            data={stockdet.allStockSalesList}
+            title="Sold units"
+            chartlable="Sold per product"
+          />
+        )}
+
+        {invoicedata.invoiceHistoryData.length > 0 && (
+          <Paymentmode
+            data={paymentModeCount}
+            totaltransaction={totaltransaction}
+          />
+        )}
       </Stack>
+      {/* <MonthlyEarningScreen data={stockdet} /> */}
+      {/* </Stack> */}
     </>
   );
 };
