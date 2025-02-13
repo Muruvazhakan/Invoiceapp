@@ -46,7 +46,7 @@ const LowStocks = (props) => {
             <>
               <Stack direction={"row"} alignContent="center">
                 <Box style={{ marginLeft: "5px", marginTop: "5px" }}>
-                  Threshold value
+                  Threshold value : {filtercond}
                 </Box>
                 {displayfiltercond && (
                   <TextField
@@ -77,7 +77,7 @@ const LowStocks = (props) => {
                 )}
 
                 <Box style={{ marginLeft: "5px", marginTop: "5px" }}>
-                  Display Count
+                  Display Count : {filteritemcount}
                 </Box>
                 {displayfilteritemcount && (
                   <TextField

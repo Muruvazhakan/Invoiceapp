@@ -43,14 +43,14 @@ const TotalEarningScreen = (props) => {
           <Typography variant="h5">₹ {totalProfit.toFixed(2)}</Typography>
           <Stack direction={"row"} alignContent="center">
             <Box style={{ marginLeft: "5px", marginTop: "5px" }}>
-              No of Months:
+              No of Months: {filteritemcount}
             </Box>
             {displayfilteritemcount && (
               <TextField
                 className="alltextfiled"
                 type="number"
                 id="outlined-required"
-                label="Display Count value"
+                label="No of Months"
                 value={filteritemcount}
                 onChange={(e) => setfilteritemcount(e.target.value)}
                 size="small"
