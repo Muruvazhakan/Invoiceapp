@@ -300,22 +300,27 @@ const AllStateContext = ({ children }) => {
         item.ctrate = ctrate;
         item.strate = strate;
         if (gstincluded) {
+          // let orgctrate = (
+          //   (item.taxvalue * 1) /
+          //   (1 + ctrate / 100 + strate / 100)
+          // ).toFixed(2);
           let orgctrate = (
-            (item.taxvalue * 1) /
-            (1 + ctrate / 100 + strate / 100)
+            item.taxvalue *
+            1 *
+            (ctrate / 100 + strate / 100)
           ).toFixed(2);
           // console.log(" orgctrate after "+orgctrate);
-          item.ctamount = ((orgctrate * 1 * ctrate * 1) / 100).toFixed(2);
+          item.ctamount = ((item.taxvalue * 1 * ctrate * 1) / 100).toFixed(2);
           // console.log(" ctamount after "+item.ctamount);
-          item.stamount = ((orgctrate * 1 * strate * 1) / 100).toFixed(2);
+          item.stamount = ((item.taxvalue * 1 * strate * 1) / 100).toFixed(2);
           // console.log(" stamount after "+item.stamount);
-          item.amount = (
-            (orgctrate * 1 * ctrate * 1) / 100 +
-            (orgctrate * 1 * strate * 1) / 100
-          ).toFixed(2);
-
-          // console.log(" item ");
-          // console.log(item);
+          // item.amount = (
+          //   (orgctrate * 1 * ctrate * 1) / 100 +
+          //   (orgctrate * 1 * strate * 1) / 100
+          // ).toFixed(2);
+          item.amount = item.ctamount * 1 + item.stamount * 1;
+          console.log(" item + amount ");
+          console.log(item);
         } else {
           item.ctamount = ((item.taxvalue * 1 * ctrate * 1) / 100).toFixed(2);
           item.stamount = ((item.taxvalue * 1 * strate * 1) / 100).toFixed(2);
@@ -415,6 +420,7 @@ const AllStateContext = ({ children }) => {
       if (gstincluded) {
         totlamt = (
           collect(list.map((item) => item.amount)).sum() +
+          collect(hsnlist.map((item) => item.amount)).sum() +
           collect(allItemamount).sum()
         ).toFixed(2);
       } else {
@@ -462,19 +468,21 @@ const AllStateContext = ({ children }) => {
         setamount(calamt.toFixed(2));
       } else {
         setrate(val.toFixed(2));
+        setamount(calamt.toFixed(2));
       }
     } else if (disc == 0 && rateinctax !== 0) {
+      let calamt = quantity * rate;
       if (gstincluded) {
-        let calamt = quantity * rate;
         let orgctrate = ((val * 1) / (1 + ctrate / 100 + strate / 100)).toFixed(
           2
         );
-        console.log("orgctrate");
-        console.log(orgctrate);
+        //     console.log('orgctrate');
+        // console.log(orgctrate);
         setrate(orgctrate);
         setamount(calamt.toFixed(2));
       } else {
         setrate(rateinctax.toFixed(2));
+        setamount(calamt.toFixed(2));
       }
     }
 
@@ -676,6 +684,18 @@ const AllStateContext = ({ children }) => {
     let loginuserid = localstorage.addOrGetUserdetail("", "userid", "get");
     console.log("loginuserid + loginuserid");
 
+    if (list.length < 1) {
+      toast.error("Please include Product in Invoice ");
+      return false;
+    }
+    if (invoiceid === "") {
+      toast.error("Invoice Id is not Generate");
+      return false;
+    }
+    if (paymentdate === "") {
+      toast.error("Please provide Paymentdate in Invoice");
+      return false;
+    }
     let clientidtemp;
     if (clientid == null) {
       clientidtemp = uuidv4();

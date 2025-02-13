@@ -1452,7 +1452,7 @@ const StocksContext = ({ children }) => {
       console.log(profitsum);
       setAllProfitStockList(mergedArray);
       // profitsum = (Intl.NumberFormat("en-IN", { maximumFractionDigits: 2 }).format(profitsum));
-      settotalprofiramt(profitsum);
+      settotalprofiramt(profitsum.toFixed(2));
     }
     setisloading(false);
   };

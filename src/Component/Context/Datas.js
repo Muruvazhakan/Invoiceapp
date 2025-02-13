@@ -15,14 +15,7 @@ export const navigationbarcontent = [
     displays: true,
     tier: ["silver", "gold", "platinum"],
   },
-  {
-    screenname: "Company Detail",
-    links: "/yourdetail",
-    altname: "yourdetail",
-    displays: true,
-    image: companyperson,
-    tier: ["silver", "gold", "platinum"],
-  },
+
   // {
   //     screenname: 'Generate Invocie',
   //     links: '/geninvoice',
@@ -68,6 +61,14 @@ export const navigationbarcontent = [
     displays: true,
     image: profitsf,
     tier: ["platinum"],
+  },
+  {
+    screenname: "Company Detail",
+    links: "/yourdetail",
+    altname: "yourdetail",
+    displays: true,
+    image: companyperson,
+    tier: ["silver", "gold", "platinum"],
   },
 ];
 

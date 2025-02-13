@@ -3,8 +3,9 @@ import { Link } from "react-router-dom";
 
 import { IconContext } from "react-icons/lib";
 import * as Datas from "../../Context/Datas";
-import { FaBars, FaTimes } from "react-icons/fa";
+import { FaBars, FaTimes, FaRegUserCircle } from "react-icons/fa";
 import { IoHome, IoLogOutSharp } from "react-icons/io5";
+
 import { RiLoginBoxFill } from "react-icons/ri";
 import "./NavigationBar.css";
 import EELogo from "../../../Image/iconc.png";
@@ -76,6 +77,8 @@ const NavigationBar = (props) => {
                             >
                               {item.screenname === "Home" ? (
                                 <IoHome size={20} />
+                              ) : item.screenname === "Company Detail" ? (
+                                <FaRegUserCircle size={22} />
                               ) : (
                                 item.screenname
                               )}
