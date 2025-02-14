@@ -36,91 +36,93 @@ const LowStocks = (props) => {
     filterlowstocks.map((stockDetail) => stockDetail.productid);
   return (
     <>
-      <Box>
-        <DashboardTemp
-          img={low3}
-          title="Low Stocks"
-          value={`${filterlowstocks.length} Stocks`}
-        >
-          {props.screen === "profit" && (
-            <>
-              <Stack direction={"row"} alignContent="center">
-                <Box style={{ marginLeft: "5px", marginTop: "5px" }}>
-                  Threshold value : {filtercond}
-                </Box>
-                {displayfiltercond && (
-                  <TextField
-                    className="alltextfiled"
-                    type="number"
-                    id="outlined-required"
-                    label="Filer Threshold value"
-                    value={filtercond}
-                    onChange={(e) => setfiltercond(e.target.value)}
-                    size="small"
-                    style={{ margin: "5px" }}
-                  />
-                )}
-                {!displayfiltercond ? (
-                  <FaEdit
-                    style={{ marginLeft: "5px", marginTop: "5px" }}
-                    className="editicon"
-                    size={20}
-                    onClick={() => setdisplayfiltercond(!displayfiltercond)}
-                  />
-                ) : (
-                  <FaSave
-                    style={{ marginTop: "8px" }}
-                    className="editicon"
-                    size={25}
-                    onClick={() => setdisplayfiltercond(!displayfiltercond)}
-                  />
-                )}
+      <DashboardTemp
+        img={low3}
+        title="Low Stocks"
+        value={`${filterlowstocks.length} Stocks`}
+      >
+        {props.screen === "profit" && (
+          <>
+            <Stack
+              direction={"row"}
+              alignContent="center"
+              justifyContent="center"
+            >
+              <Box style={{ marginLeft: "5px", marginTop: "5px" }}>
+                Threshold value : {filtercond}
+              </Box>
+              {displayfiltercond && (
+                <TextField
+                  className="alltextfiled"
+                  type="number"
+                  id="outlined-required"
+                  label="Filer Threshold value"
+                  value={filtercond}
+                  onChange={(e) => setfiltercond(e.target.value)}
+                  size="small"
+                  style={{ margin: "5px" }}
+                />
+              )}
+              {!displayfiltercond ? (
+                <FaEdit
+                  style={{ marginLeft: "5px", marginTop: "5px" }}
+                  className="editicon"
+                  size={20}
+                  onClick={() => setdisplayfiltercond(!displayfiltercond)}
+                />
+              ) : (
+                <FaSave
+                  style={{ marginTop: "8px" }}
+                  className="editicon"
+                  size={25}
+                  onClick={() => setdisplayfiltercond(!displayfiltercond)}
+                />
+              )}
 
-                <Box style={{ marginLeft: "5px", marginTop: "5px" }}>
-                  Display Count : {filteritemcount}
-                </Box>
-                {displayfilteritemcount && (
-                  <TextField
-                    className="alltextfiled"
-                    type="number"
-                    id="outlined-required"
-                    label="Display Count value"
-                    value={filteritemcount}
-                    onChange={(e) => setfilteritemcount(e.target.value)}
-                    size="small"
-                    style={{ margin: "5px" }}
-                  />
-                )}
-                {!displayfilteritemcount ? (
-                  <FaEdit
-                    style={{ marginLeft: "5px", marginTop: "5px" }}
-                    className="editicon"
-                    size={20}
-                    onClick={() =>
-                      setdisplayfilteritemcount(!displayfilteritemcount)
-                    }
-                  />
-                ) : (
-                  <FaSave
-                    style={{ marginTop: "8px" }}
-                    className="editicon"
-                    size={25}
-                    onClick={() =>
-                      setdisplayfilteritemcount(!displayfilteritemcount)
-                    }
-                  />
-                )}
-              </Stack>
-              <Linechart
-                chartLabel="Low Stocks Count"
-                labels={chartLabels}
-                datas={chartDatas}
-                style={{ height: "300px" }}
-              />
-            </>
-          )}
-        </DashboardTemp>
-      </Box>
+              <Box style={{ marginLeft: "5px", marginTop: "5px" }}>
+                Display Count : {filteritemcount}
+              </Box>
+              {displayfilteritemcount && (
+                <TextField
+                  className="alltextfiled"
+                  type="number"
+                  id="outlined-required"
+                  label="Display Count value"
+                  value={filteritemcount}
+                  onChange={(e) => setfilteritemcount(e.target.value)}
+                  size="small"
+                  style={{ margin: "5px" }}
+                />
+              )}
+              {!displayfilteritemcount ? (
+                <FaEdit
+                  style={{ marginLeft: "5px", marginTop: "5px" }}
+                  className="editicon"
+                  size={20}
+                  onClick={() =>
+                    setdisplayfilteritemcount(!displayfilteritemcount)
+                  }
+                />
+              ) : (
+                <FaSave
+                  style={{ marginTop: "8px" }}
+                  className="editicon"
+                  size={25}
+                  onClick={() =>
+                    setdisplayfilteritemcount(!displayfilteritemcount)
+                  }
+                />
+              )}
+            </Stack>
+            <Linechart
+              chartLabel="Low Stocks Count"
+              labels={chartLabels}
+              datas={chartDatas}
+              style={{ height: "300px" }}
+            />
+          </>
+        )}
+      </DashboardTemp>
     </>
   );
 };

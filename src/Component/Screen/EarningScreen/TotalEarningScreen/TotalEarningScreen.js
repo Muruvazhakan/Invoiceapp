@@ -12,7 +12,8 @@ import {
 import { FaEdit, FaSave } from "react-icons/fa";
 import { useState } from "react";
 import Barchart from "../../charts/BarChart";
-
+import profitsymbbol from "../../../../Image/Dashboard/profitsymbbol-rm.png";
+import DashboardTemp from "../../Dashboard/DashboardTemp";
 const TotalEarningScreen = (props) => {
   // chart color
   const secondary = "rgb(27, 85, 121)";
@@ -34,63 +35,54 @@ const TotalEarningScreen = (props) => {
   console.log("totalvalueamt totalMonthArray");
   console.log(totalMonthArray);
   return (
-    <Container maxWidth="lg">
-      <Card variant="elevation">
-        <CardContent>
-          <Typography variant="subtitle2" color="textSecondary">
-            Total Revenue
-          </Typography>
-          <Typography variant="h5">₹ {totalProfit.toFixed(2)}</Typography>
-          <Stack direction={"row"} alignContent="center">
-            <Box style={{ marginLeft: "5px", marginTop: "5px" }}>
-              No of Months: {filteritemcount}
-            </Box>
-            {displayfilteritemcount && (
-              <TextField
-                className="alltextfiled"
-                type="number"
-                id="outlined-required"
-                label="No of Months"
-                value={filteritemcount}
-                onChange={(e) => setfilteritemcount(e.target.value)}
-                size="small"
-                style={{ margin: "5px" }}
-              />
-            )}
-            {!displayfilteritemcount ? (
-              <FaEdit
-                style={{ marginLeft: "5px", marginTop: "5px" }}
-                className="editicon"
-                size={20}
-                onClick={() =>
-                  setdisplayfilteritemcount(!displayfilteritemcount)
-                }
-              />
-            ) : (
-              <FaSave
-                style={{ marginTop: "8px" }}
-                className="editicon"
-                size={25}
-                onClick={() =>
-                  setdisplayfilteritemcount(!displayfilteritemcount)
-                }
-              />
-            )}
-          </Stack>
-          <Box mt={1}>
-            <Barchart
-              labels={totalMonthArray}
-              datas={totalProfitArray}
-              chartLabel={"Bar Chart"}
-              chartTitle={"Total Revenue per month"}
-              style={{ height: "300px" }}
-              enableLineChart={true}
-              lineChartLabel={"Line Chart"}
-            />
-          </Box>
-        </CardContent>
-      </Card>
-    </Container>
+    <DashboardTemp
+      img={profitsymbbol}
+      title="Total Revenue"
+      value={`₹${totalProfit.toFixed(2)}`}
+    >
+      <Stack direction={"row"} alignContent="center" justifyContent="center">
+        <Box style={{ marginLeft: "5px", marginTop: "5px" }}>
+          No of Months: {filteritemcount}
+        </Box>
+        {displayfilteritemcount && (
+          <TextField
+            className="alltextfiled"
+            type="number"
+            id="outlined-required"
+            label="No of Months"
+            value={filteritemcount}
+            onChange={(e) => setfilteritemcount(e.target.value)}
+            size="small"
+            style={{ margin: "5px" }}
+          />
+        )}
+        {!displayfilteritemcount ? (
+          <FaEdit
+            style={{ marginLeft: "5px", marginTop: "5px" }}
+            className="editicon"
+            size={20}
+            onClick={() => setdisplayfilteritemcount(!displayfilteritemcount)}
+          />
+        ) : (
+          <FaSave
+            style={{ marginTop: "8px" }}
+            className="editicon"
+            size={25}
+            onClick={() => setdisplayfilteritemcount(!displayfilteritemcount)}
+          />
+        )}
+      </Stack>
+
+      <Barchart
+        labels={totalMonthArray}
+        datas={totalProfitArray}
+        chartLabel={"Bar Chart"}
+        chartTitle={"Total Revenue per month"}
+        style={{ height: "300px" }}
+        enableLineChart={true}
+        lineChartLabel={"Line Chart"}
+      />
+    </DashboardTemp>
   );
 };
 

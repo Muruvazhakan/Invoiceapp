@@ -10,7 +10,7 @@ const DashboardTemp = (props) => {
             marginLeft={2}
             paddingRight={10}
             alignItems="center"
-            justifyContent={"flex-start"}
+            justifyContent={"center"}
             gap={2}
           >
             <img

@@ -107,9 +107,10 @@ const Dashboard = (props) => {
             />
           </Stack>
         </Box>
-        <Box>
+        <Box width={500} paddingTop="10px">
           <LowStocks data={props.data} screen={props.screen} />
         </Box>
+        {props.children}
       </Stack>
     </>
   );

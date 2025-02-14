@@ -38,7 +38,33 @@ const EarningScreen = (props) => {
           invoicedata={invoicedata}
           totaltransaction={totaltransaction}
           screen="profit"
-        />
+        >
+          <Box width={500}>
+            {stockdet.allstockssalestotalamt > 0 && (
+              <TotalEarningScreen data={stockdet} />
+            )}
+          </Box>
+          <Box width={500}>
+            {stockdet.totalprofiramt && <TotalSalesScreen data={stockdet} />}
+          </Box>
+          <Box width={500}>
+            {stockdet.allStockSalesList.length > 0 && (
+              <StockChart
+                data={stockdet.allStockSalesList}
+                title="Sold units"
+                chartlable="Sold per product"
+              />
+            )}
+          </Box>
+          <Box width={500}>
+            {invoicedata.invoiceHistoryData.length > 0 && (
+              <Paymentmode
+                data={paymentModeCount}
+                totaltransaction={totaltransaction}
+              />
+            )}
+          </Box>
+        </Dashboard>
       )}
       {/* <Stack
         direction="column"
@@ -47,28 +73,7 @@ const EarningScreen = (props) => {
         // justifyContent={"center"}
         gap={2}
       > */}
-      <Stack direction="row" mt={2} alignItems="center">
-        {stockdet.allstockssalestotalamt > 0 && (
-          <TotalEarningScreen data={stockdet} />
-        )}
 
-        {stockdet.totalprofiramt > 0 && <TotalSalesScreen data={stockdet} />}
-
-        {stockdet.allStockSalesList.length > 0 && (
-          <StockChart
-            data={stockdet.allStockSalesList}
-            title="Sold units"
-            chartlable="Sold per product"
-          />
-        )}
-
-        {invoicedata.invoiceHistoryData.length > 0 && (
-          <Paymentmode
-            data={paymentModeCount}
-            totaltransaction={totaltransaction}
-          />
-        )}
-      </Stack>
       {/* <MonthlyEarningScreen data={stockdet} /> */}
       {/* </Stack> */}
     </>
