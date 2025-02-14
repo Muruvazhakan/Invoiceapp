@@ -39,7 +39,7 @@ const EarningScreen = (props) => {
           totaltransaction={totaltransaction}
           screen="profit"
         >
-          <Box width={500}>
+          {/* <Box width={500}>
             {stockdet.allstockssalestotalamt > 0 && (
               <TotalEarningScreen data={stockdet} />
             )}
@@ -63,7 +63,7 @@ const EarningScreen = (props) => {
                 totaltransaction={totaltransaction}
               />
             )}
-          </Box>
+          </Box> */}
         </Dashboard>
       )}
       {/* <Stack

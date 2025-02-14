@@ -5,63 +5,102 @@ import {
   Stack,
   Box,
   Typography,
+  TextField,
 } from "@mui/material";
 import PieChart from "../../charts/PieChart";
-// import { IconArrowUpLeft } from "@tabler/icons";
-// import { IconArrowDownRight } from "@tabler/icons";
+import { FaEdit, FaSave } from "react-icons/fa";
+import StockChart from "../../charts/StockChart";
+import Linechart from "../../charts/LineChart";
+import { useState } from "react";
 
 const TotalSalesScreen = (props) => {
   // chart color
-  const chartDatas = props.data.allProfitStockList.map(
-    (stockDetail) => stockDetail.profit
-  );
-  console.log("chartDatas");
-  console.log(chartDatas);
+
+  const [filtercondnetprofit, setfiltercondnetprofit] = useState(15);
+  const [displayfiltercondnetprofit, setdisplayfiltercondnetprofit] =
+    useState(false);
+
+  const [filtercondnetprofitmargin, setfiltercondnetprofitmargin] =
+    useState(15);
+  const [
+    displayfiltercondnetprofitmargin,
+    setdisplayfiltercondnetprofitmargin,
+  ] = useState(false);
+
+  const chartDatas = props.data.allProfitStockList
+    .map((stockDetail) => stockDetail.profit)
+    .slice(0, filtercondnetprofit);
+
+  let chartDatasMargin = props.data.allProfitStockList
+    .map((stockDetail) =>
+      (
+        ((stockDetail.profit * 1) /
+          (stockDetail.salequantity * 1 * stockDetail.salerate)) *
+        100
+      ).toFixed(2)
+    )
+    .slice(0, filtercondnetprofitmargin);
+
   const chartLabels = props.data.allProfitStockList.map(
-    (stockDetail) => stockDetail.hsn
+    (stockDetail) => stockDetail.productid
+  );
+  const chartLabelsMargin = props.data.allProfitStockList.map(
+    (stockDetail) => stockDetail.productid
   );
   const netprofitmargin = (
     (props.data.totalprofiramt / props.data.allstockssalestotalamt) *
     100
   ).toFixed(2);
-  console.log("chartLabels");
-  console.log(chartLabels);
-  return (
-    <Container maxWidth="lg">
-      <Card variant="elevation">
-        <CardContent>
-          <Stack
-            direction="row"
-            mt={1}
-            alignItems="center"
-            justifyContent={"space-around"}
-          >
-            <Box>
-              <Typography variant="subtitle2" color="textSecondary">
-                Net Profit
-              </Typography>
-              <Typography variant="h5">
-                ₹ {props.data.totalprofiramt}
-              </Typography>
-            </Box>
-            {/* <Box>
-              {netprofitmargin > 0 && (
-                <>
-                  <Typography variant="subtitle2" color="textSecondary">
-                    Net Profit Margin
-                  </Typography>
-                  <Typography variant="h5">{netprofitmargin} %</Typography>
-                </>
-              )}
-            </Box> */}
-          </Stack>
-          {/* <Linechart
-            chartLabel={"Profit per product"}
-            labels={chartDatas}
-            datas={chartDatas}
-            style={{ height: "300px" }}
-          /> */}
 
+  const DisplayContent = (props) => {
+    return (
+      <>
+        <Stack direction={"row"} alignContent="center" justifyContent="center">
+          <Box style={{ marginLeft: "5px", marginTop: "5px" }}>
+            Display Count: {props.value}
+          </Box>
+          {props.disp && (
+            <TextField
+              className="alltextfiled"
+              type="number"
+              id="outlined-required"
+              label="Display Count value"
+              value={props.value}
+              onChange={(e) => props.setvalfunc(e.target.value)}
+              size="small"
+              style={{ margin: "5px" }}
+            />
+          )}
+          {!props.disp ? (
+            <FaEdit
+              style={{ marginLeft: "5px", marginTop: "5px" }}
+              className="editicon"
+              size={20}
+              onClick={() => props.setdispfunc(!props.disp)}
+            />
+          ) : (
+            <FaSave
+              style={{ marginTop: "8px" }}
+              className="editicon"
+              size={25}
+              onClick={() => props.setdispfunc(!props.disp)}
+            />
+          )}
+        </Stack>
+        {props.children}
+      </>
+    );
+  };
+
+  return (
+    <>
+      {props.screen === "Net Profit" ? (
+        <DisplayContent
+          value={filtercondnetprofit}
+          setvalfunc={setfiltercondnetprofit}
+          disp={displayfiltercondnetprofit}
+          setdispfunc={setdisplayfiltercondnetprofit}
+        >
           <PieChart
             chartLabel={"Profit per product"}
             chartTitle={"Profit per product"}
@@ -69,9 +108,23 @@ const TotalSalesScreen = (props) => {
             datas={chartDatas}
             style={{ height: "300px" }}
           />
-        </CardContent>
-      </Card>
-    </Container>
+        </DisplayContent>
+      ) : (
+        <DisplayContent
+          value={filtercondnetprofitmargin}
+          setvalfunc={setfiltercondnetprofitmargin}
+          disp={displayfiltercondnetprofitmargin}
+          setdispfunc={setdisplayfiltercondnetprofitmargin}
+        >
+          <Linechart
+            chartLabel="Net Profit Margin per product"
+            labels={chartLabelsMargin}
+            datas={chartDatasMargin}
+            style={{ height: "300px" }}
+          />
+        </DisplayContent>
+      )}
+    </>
   );
 };
 

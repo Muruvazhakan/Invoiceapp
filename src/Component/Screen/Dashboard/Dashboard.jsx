@@ -1,5 +1,5 @@
 import { Box, Card, Stack } from "@mui/material";
-import React from "react";
+import React, { useContext } from "react";
 import salesdashboard from "../../../Image/Dashboard/salesdashboard-rm.png";
 import profitsymbbol from "../../../Image/Dashboard/profitsymbbol-rm.png";
 import soldunit2 from "../../../Image/Dashboard/soldunit2.png";
@@ -10,12 +10,31 @@ import toprated from "../../../Image/Dashboard/toprated-rm.png";
 
 import DashboardTemp from "./DashboardTemp";
 import LowStocks from "./LowStocks/LowStocks";
+import TotalEarningScreen from "../EarningScreen/TotalEarningScreen/TotalEarningScreen";
+import StockChart from "../charts/StockChart";
+import TotalSalesScreen from "../EarningScreen/TotalEarningScreen/TotalSalesScreen";
+import Paymentmode from "../EarningScreen/TotalEarningScreen/Paymentmode";
+import { AllState } from "../../Context/allStateContext";
 
 const Dashboard = (props) => {
   const netprofitmargin = (
     (props.data.totalprofiramt / props.data.allstockssalestotalamt) *
     100
   ).toFixed(2);
+  const invoicedata = useContext(AllState);
+  let totaltransaction = 0;
+
+  const paymentModeCount = invoicedata.invoiceHistoryData.reduce(
+    (acc, { paymentmode }) => {
+      totaltransaction = totaltransaction + 1;
+      // If paymentmode is empty, we treat it as 'No Payment Mode'
+      const mode = paymentmode || "No Payment Mode";
+      acc[mode] = (acc[mode] || 0) + 1;
+      return acc;
+    },
+    {}
+  );
+
   let topprod, maxProductId, maxcount;
   if (props.data.allStockSalesList.length > 0) {
     topprod = props.data.allStockSalesList.reduce(
@@ -33,6 +52,16 @@ const Dashboard = (props) => {
   console.log(props.data.allStockSalesList);
   console.log("topprod");
   console.log(topprod);
+  const width = props.screen === "profit" ? 500 : 370;
+  const DisplayTag = (props) => {
+    if (props.screen !== "profit")
+      return (
+        <Stack direction={props.screen !== "profit" && "column"} gap={1}>
+          {props.children}
+        </Stack>
+      );
+    else return <>{props.children}</>;
+  };
   if (props.data.allStockSalesList.length === 0) return <></>;
   return (
     <>
@@ -53,63 +82,116 @@ const Dashboard = (props) => {
             // paddingRight={15}
             gap={2}
             justifyContent={"space-evenly"}
+            height={props.screen !== "profit" ? 200 : 390}
           >
             <img
               src={salesdashboard}
-              height={200}
-              width={200}
+              height={props.screen !== "profit" ? 200 : 300}
+              width={props.screen !== "profit" ? 200 : 300}
               alt="sales dashbboard"
             />
 
             <h2>Profit Dashboard</h2>
           </Stack>
         </Card>
-        <Box>
-          <Stack direction="column" gap={1}>
-            <DashboardTemp
+
+        <DisplayTag screen={props.screen}>
+          <Box width={width}>
+            {/* <DashboardTemp
               img={profitsymbbol}
               title="Total Revenue"
               value={`₹${props.data.allstockssalestotalamt.toFixed(2)}`}
-            />
+            > */}
+            {props.data.allstockssalestotalamt > 0 && (
+              <TotalEarningScreen data={props.data} screen={props.screen} />
+            )}
+            {/* </DashboardTemp> */}
+          </Box>
+          <Box width={width}>
             <DashboardTemp
               img={totaltranscations}
               title="Total Transaction"
-              value={props.totaltransaction}
-            />
-          </Stack>
-        </Box>
-        <Box>
-          <Stack direction="column" gap={1}>
+              value={totaltransaction ? totaltransaction : 0}
+            >
+              {invoicedata.invoiceHistoryData.length > 0 &&
+                props.screen === "profit" && (
+                  <Paymentmode
+                    data={paymentModeCount}
+                    totaltransaction={totaltransaction}
+                  />
+                )}
+            </DashboardTemp>
+          </Box>
+        </DisplayTag>
+
+        <DisplayTag screen={props.screen}>
+          <Box width={width}>
             <DashboardTemp
               img={cashsymbbol}
               title="Net Profit"
               value={`₹${props.data.totalprofiramt}`}
-            />
-
+            >
+              {props.data.totalprofiramt && props.screen === "profit" && (
+                <TotalSalesScreen data={props.data} screen="Net Profit" />
+              )}
+            </DashboardTemp>
+          </Box>
+          <Box width={width}>
             <DashboardTemp
               img={soldunit2}
               title="Sold Units"
               value={`${soldunits}`}
-            />
-          </Stack>
-        </Box>
-        <Box>
-          <Stack direction="column" gap={1}>
+            >
+              {props.data.allStockSalesList.length > 0 &&
+                props.screen === "profit" && (
+                  <StockChart
+                    data={props.data.allStockSalesList}
+                    title="Sold units"
+                    chartlable="Sold per product"
+                  />
+                )}
+            </DashboardTemp>
+          </Box>
+        </DisplayTag>
+
+        <DisplayTag screen={props.screen}>
+          <Box width={width}>
             <DashboardTemp
               img={profiticonchat}
               title="Net Profit Margin %"
               value={`${netprofitmargin}%`}
-            />
+            >
+              {props.data.totalprofiramt && props.screen === "profit" && (
+                <TotalSalesScreen
+                  data={props.data}
+                  screen="Net Profit Margin %"
+                />
+              )}
+            </DashboardTemp>
+          </Box>
+          <Box width={width}>
             <DashboardTemp
               img={toprated}
               title="Top Product"
               value={`${maxProductId} - (${maxcount} Units)`}
-            />
-          </Stack>
-        </Box>
-        <Box width={500} paddingTop="10px">
+            >
+              {" "}
+              {props.data.allStockSalesList.length > 0 &&
+                props.screen === "profit" && (
+                  <StockChart
+                    data={props.data.allStockSalesList}
+                    title="Sold units"
+                    chartlable="Sold per product"
+                  />
+                )}
+            </DashboardTemp>
+          </Box>
+        </DisplayTag>
+
+        <Box width={width}>
           <LowStocks data={props.data} screen={props.screen} />
         </Box>
+
         {props.children}
       </Stack>
     </>
