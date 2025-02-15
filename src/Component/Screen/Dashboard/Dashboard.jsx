@@ -15,6 +15,7 @@ import StockChart from "../charts/StockChart";
 import TotalSalesScreen from "../EarningScreen/TotalEarningScreen/TotalSalesScreen";
 import Paymentmode from "../EarningScreen/TotalEarningScreen/Paymentmode";
 import { AllState } from "../../Context/allStateContext";
+import TopProductScreen from "../EarningScreen/TopProductScreen/TopProductScreen";
 
 const Dashboard = (props) => {
   const netprofitmargin = (
@@ -34,24 +35,10 @@ const Dashboard = (props) => {
     },
     {}
   );
-
-  let topprod, maxProductId, maxcount;
-  if (props.data.allStockSalesList.length > 0) {
-    topprod = props.data.allStockSalesList.reduce(
-      (max, item) => (item.quantity > max.quantity ? item : max),
-      props.data.allStockSalesList[0]
-    );
-    maxProductId = topprod.hsn;
-    maxcount = topprod.quantity;
-  }
   let soldunits = 0;
   props.data.allStockSalesList.map((stockDetail) => {
     soldunits = soldunits + stockDetail.quantity * 1;
   });
-  console.log("props.data.allStockSalesList");
-  console.log(props.data.allStockSalesList);
-  console.log("topprod");
-  console.log(topprod);
   const width = props.screen === "profit" ? 500 : 370;
   const DisplayTag = (props) => {
     if (props.screen !== "profit")
@@ -170,7 +157,7 @@ const Dashboard = (props) => {
             </DashboardTemp>
           </Box>
           <Box width={width}>
-            <DashboardTemp
+            {/* <DashboardTemp
               img={toprated}
               title="Top Product"
               value={`${maxProductId} - (${maxcount} Units)`}
@@ -184,7 +171,11 @@ const Dashboard = (props) => {
                     chartlable="Sold per product"
                   />
                 )}
-            </DashboardTemp>
+            </DashboardTemp> */}
+            <TopProductScreen
+              allStockSalesList={props.data.allStockSalesList}
+              screen={props.screen}
+            />
           </Box>
         </DisplayTag>
 
