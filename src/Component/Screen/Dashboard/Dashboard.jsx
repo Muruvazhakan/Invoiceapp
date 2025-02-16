@@ -180,7 +180,7 @@ const Dashboard = (props) => {
         </DisplayTag>
 
         <Box width={width}>
-          <LowStocks data={props.data} screen={props.screen} />
+          <LowStocks data={props.data} screen={props.screen} filtercond={5} />
         </Box>
 
         {props.children}

@@ -15,7 +15,7 @@ const Paymentmode = (props) => {
   return (
     <PieChart
       chartLabel={"Paymentmode"}
-      chartTitle={"Paymentmode"}
+      chartTitle={"Payment Mode Type"}
       labels={paymentModes}
       datas={counts}
       style={{ height: "300px" }}

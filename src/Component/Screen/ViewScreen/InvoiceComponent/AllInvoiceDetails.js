@@ -14,6 +14,7 @@ import { RiAiGenerate } from "react-icons/ri";
 import StyleHeader from "../../Header/StyleHeader";
 import * as localstorage from "../../../Context/localStorageData";
 import * as invoiceDetailsDb from "../../../DBconnection/invoiceDetailBD";
+import InvoiceChart from "../../EarningScreen/InvoiceChart/InvoiceChart";
 // import img  from '.'
 
 const AllInvoiceDetails = () => {
@@ -95,6 +96,7 @@ const AllInvoiceDetails = () => {
         </>
       ) : (
         <>
+          <InvoiceChart data={invoiceDet.invoiceHistoryData} />
           <Box className="listofstickexcelbtn">
             <Button
               variant="contained"

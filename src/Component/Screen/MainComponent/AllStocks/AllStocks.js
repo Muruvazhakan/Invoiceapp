@@ -5,7 +5,7 @@ import { FaRegListAlt } from "react-icons/fa";
 import { MdAddChart } from "react-icons/md";
 import Card from "../../../Style/Card/Card";
 import ReactToPrint from "react-to-print";
-import { Box, Button } from "@mui/material";
+import { Box, Button, CardContent, Container, Typography } from "@mui/material";
 import { RiTableView } from "react-icons/ri";
 import { Stocks } from "../../../Context/StocksContex";
 import StockTable from "../../StockTable/StockTable";
@@ -17,6 +17,8 @@ import { CompanyDetail } from "../../../Context/companyDetailContext";
 import { FiEdit } from "react-icons/fi";
 import AutoStockTable from "../../StockTable/AutoStockTable";
 import StockChart from "../../charts/StockChart";
+import DashboardTemp from "../../Dashboard/DashboardTemp";
+import StocksScreenChart from "../../EarningScreen/StocksScreenChart/StocksScreenChart";
 
 const AllStocks = (props) => {
   const tabledet = useContext(Stocks);
@@ -35,20 +37,6 @@ const AllStocks = (props) => {
   //     tabledet.allStockList,
   //   ]);
 
-  let displaylist = tabledet.allStockList
-    .map((item, index) => {
-      if (
-        item.quantity === 0 ||
-        item.status === "deleted" ||
-        item.status === "Deleted"
-      ) {
-      } else {
-        // sum1 = sum1 + (item.quantity * 1 * item.rate)
-        return item;
-      }
-    })
-    .filter((x) => x !== undefined);
-  const componentRef = useRef();
   if (logindet.tier && logindet.tier !== "platinum")
     return <StyleHeader>No Access for this User</StyleHeader>;
   return (
@@ -96,12 +84,7 @@ const AllStocks = (props) => {
           </Button>
         </Card>
 
-        <StockChart
-          data={displaylist}
-          title="Available Stock Count"
-          chartlable="Stock Available per product"
-        />
-
+        <StocksScreenChart data={tabledet} />
         {viewAllAddedStock && (
           <Card>
             {/* <div className="exportExcelbttn ">

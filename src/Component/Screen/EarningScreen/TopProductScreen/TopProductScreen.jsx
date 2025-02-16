@@ -30,7 +30,7 @@ const TopProductScreen = (props) => {
       (max, item) => (item.quantity > max.quantity ? item : max),
       props.allStockSalesList[0]
     );
-    maxProductId = topprod.hsn;
+    maxProductId = topprod.productid;
     maxcount = topprod.quantity;
   }
 
@@ -83,7 +83,7 @@ const TopProductScreen = (props) => {
     <>
       <DashboardTemp
         img={toprated}
-        title="Top Product"
+        title="Top Selling Product"
         value={`${maxProductId} - (${maxcount} Units)`}
       >
         {allStockSalesList.length > 0 && props.screen === "profit" && (
@@ -95,8 +95,8 @@ const TopProductScreen = (props) => {
           >
             <StockChart
               data={allStockSalesList}
-              title="Top Products"
-              chartlable="Top Products"
+              title="Top Selling Products"
+              chartlable="Top Selling Products"
             />
           </DisplayContent>
         )}

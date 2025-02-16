@@ -10,7 +10,7 @@ const LowStocks = (props) => {
   let topprod, maxProductId, maxcount;
   const [filtercond, setfiltercond] = useState(15);
   const [displayfiltercond, setdisplayfiltercond] = useState(false);
-  const [filteritemcount, setfilteritemcount] = useState(5);
+  const [filteritemcount, setfilteritemcount] = useState(props.filtercond);
   const [displayfilteritemcount, setdisplayfilteritemcount] = useState(false);
   //   props.data.allStockData.map((stockDetail) => {
   //     soldunits = soldunits + stockDetail.quantity * 1;
