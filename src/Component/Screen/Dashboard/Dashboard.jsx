@@ -59,6 +59,7 @@ const Dashboard = (props) => {
         // justifyContent={"space-evenly"}
         spacing={{ xs: 1, sm: 1 }}
         sx={{ flexWrap: "wrap" }}
+        marginLeft={1}
       >
         <Card>
           <Stack

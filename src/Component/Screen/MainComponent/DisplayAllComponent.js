@@ -9,6 +9,7 @@ import { CompanyDetail } from "../../Context/companyDetailContext";
 import { Stocks } from "../../Context/StocksContex";
 import { AllState } from "../../Context/allStateContext";
 import Dashboard from "../Dashboard/Dashboard";
+import ActionPanel from "../ActionPanel/ActionPanel";
 const DisplayAllComponent = (props) => {
   const logindet = useContext(CompanyDetail);
   const stockdet = useContext(Stocks);
@@ -36,15 +37,30 @@ const DisplayAllComponent = (props) => {
           <CircularProgress color="success" size={30} />
         </Stack>
       )}
-      <Box className=" displayelements">
-        {invoicedata.invoiceHistoryData.length > 0 && (
-          <Dashboard
-            data={stockdet}
-            totaltransaction={totaltransaction}
-            screen="display"
-          />
-        )}
+      {logindet.tier && logindet.tier == "platinum" && (
+        <Box className=" displayelements">
+          {invoicedata.invoiceHistoryData.length > 0 && (
+            <Dashboard
+              data={stockdet}
+              totaltransaction={totaltransaction}
+              screen="display"
+            />
+          )}
 
+          <Stack
+            direction="row"
+            gap={1}
+            alignItems="center"
+            justifyContent={"center"}
+            sx={{ flexWrap: "wrap" }}
+            width={"100%"}
+            margin={2}
+          >
+            <ActionPanel />
+          </Stack>
+        </Box>
+      )}
+      <Box className=" displayelements">
         {Datas.navigationbarcontent.map((items, index) => {
           let tier = logindet.tier;
           if (items.tier && items.tier.includes(tier)) {

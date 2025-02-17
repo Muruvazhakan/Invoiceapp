@@ -96,7 +96,6 @@ const AllInvoiceDetails = () => {
         </>
       ) : (
         <>
-          <InvoiceChart data={invoiceDet.invoiceHistoryData} />
           <Box className="listofstickexcelbtn">
             <Button
               variant="contained"
@@ -108,6 +107,7 @@ const AllInvoiceDetails = () => {
               Export Invoice to Excel
             </Button>
           </Box>
+          <InvoiceChart data={invoiceDet.invoiceHistoryData} />
           <Box className="displayelements">
             {invoiceDet.invoiceHistoryData.map((item, index) => {
               // console.log('item');
