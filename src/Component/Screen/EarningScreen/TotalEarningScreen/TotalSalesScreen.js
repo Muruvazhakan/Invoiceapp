@@ -1,12 +1,4 @@
-import {
-  Container,
-  Card,
-  CardContent,
-  Stack,
-  Box,
-  Typography,
-  TextField,
-} from "@mui/material";
+import { Stack, Box, TextField } from "@mui/material";
 import PieChart from "../../charts/PieChart";
 import { FaEdit, FaSave } from "react-icons/fa";
 import StockChart from "../../charts/StockChart";

@@ -1,11 +1,3 @@
-import {
-  Container,
-  Card,
-  CardContent,
-  Stack,
-  Box,
-  Typography,
-} from "@mui/material";
 import PieChart from "../../charts/PieChart";
 
 const Paymentmode = (props) => {

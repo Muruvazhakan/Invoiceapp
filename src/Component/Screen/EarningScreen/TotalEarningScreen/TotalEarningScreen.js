@@ -1,12 +1,4 @@
-import {
-  Container,
-  Card,
-  CardContent,
-  Box,
-  Typography,
-  TextField,
-  Stack,
-} from "@mui/material";
+import { Box, TextField, Stack } from "@mui/material";
 // import { IconArrowUpLeft } from "@tabler/icons";
 // import { IconArrowDownRight } from "@tabler/icons";
 import { FaEdit, FaSave } from "react-icons/fa";
@@ -17,7 +9,6 @@ import DashboardTemp from "../../Dashboard/DashboardTemp";
 
 const TotalEarningScreen = (props) => {
   // chart color
-  const secondary = "rgb(27, 85, 121)";
   console.log("totalvalueamt props.data.segregatedMonthData");
   console.log(props.data.segregatedMonthData);
   const [filteritemcount, setfilteritemcount] = useState(5);
@@ -25,7 +16,8 @@ const TotalEarningScreen = (props) => {
 
   const totalProfitArray = Object.values(props.data.segregatedMonthData)
     .map((item) => item.totalProfit.toFixed(2))
-    .slice(0, filteritemcount);
+    .slice(0, filteritemcount)
+    .filter((x) => x !== undefined);
   const totalProfit = Object.values(props.data.segregatedMonthData)
     .slice(0, filteritemcount)
     .reduce(
