@@ -74,8 +74,10 @@ const DisplayAllComponent = (props) => {
                   >
                     <img
                       src={items.image}
-                      height={350}
-                      width={350}
+                      style={{
+                        maxHeight: "200px",
+                        maxWidth: "200px",
+                      }}
                       alt={items.altname}
                     />
                     {/* <div className="cardline">

@@ -19,7 +19,7 @@ const ActionPanel = () => {
       />
       <ActionPanelTemplate
         img={availablecount2}
-        title="View List of Stocks"
+        title="Stock History"
         link={"/listofaddedstocks"}
         type=""
       />

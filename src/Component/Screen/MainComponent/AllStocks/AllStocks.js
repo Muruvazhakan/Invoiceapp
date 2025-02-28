@@ -66,7 +66,7 @@ const AllStocks = (props) => {
               color="secondary"
               endIcon={<FaRegListAlt />}
             >
-              View List of added Stocks
+              Stock History
             </Button>
           </Link>
         </Card>

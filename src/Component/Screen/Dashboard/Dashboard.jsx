@@ -71,6 +71,7 @@ const Dashboard = (props) => {
             gap={2}
             justifyContent={"space-evenly"}
             height={props.screen !== "profit" ? 200 : 390}
+            flexWrap={"wrap"}
           >
             <img
               src={salesdashboard}
