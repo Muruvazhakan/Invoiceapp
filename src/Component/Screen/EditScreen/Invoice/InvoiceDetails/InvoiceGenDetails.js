@@ -57,8 +57,16 @@ const InvoiceGenDetails = () => {
       });
       // console.log(clientName);
       clientName = [].concat.apply([], clientName);
-
-      setit(clientName);
+      const uniqueNames = [
+        ...new Map(
+          clientName
+            .map((item) => [item.clientName, item])
+            .filter((item) => item[0] !== "")
+        ).values(),
+      ];
+      console.log(uniqueNames);
+      console.log("unique autocompleTitle invoice");
+      setit(uniqueNames);
     }
   };
 
@@ -128,6 +136,8 @@ const InvoiceGenDetails = () => {
 
   const renderOptionOnAutoComplete = (props, option) => {
     const { key, ...optionProps } = props;
+    console.log("props renderOptionOnAutoComplete ");
+    console.log(props);
     return (
       <li key={key} {...optionProps}>
         {option.clientName}

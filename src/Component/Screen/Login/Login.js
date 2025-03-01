@@ -1,14 +1,33 @@
-import { Box, Button, CircularProgress, Stack, TextField } from "@mui/material";
-import React, { useContext } from "react";
+import {
+  Box,
+  Button,
+  CircularProgress,
+  OutlinedInput,
+  Stack,
+  TextField,
+  IconButton,
+  InputAdornment,
+  InputLabel,
+  FormControl,
+} from "@mui/material";
+import React, { useContext, useState } from "react";
 import "./Login.css";
 import { MdLogin } from "react-icons/md";
 
 import Card from "../../Style/Card/Card";
 import { CompanyDetail } from "../../Context/companyDetailContext";
 import { ToastContainer } from "react-toastify";
-
+import { MdVisibilityOff, MdVisibility } from "react-icons/md";
 const Login = (props) => {
   const logindet = useContext(CompanyDetail);
+  const [showPassword, setShowPassword] = useState(false);
+
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
+
   if (!logindet.isloaded) {
     return (
       <Stack
@@ -47,16 +66,41 @@ const Login = (props) => {
               error={logindet.setboxColors(logindet.loginuser, "error")}
             />
           </div>
-          <TextField
-            required
-            id="outlined-required"
-            label="Password"
-            value={logindet.loginUserPassword}
-            type="password"
-            onChange={(e) => logindet.setval(e, logindet.setloginUserPassword)}
-            color={logindet.setboxColors(logindet.loginUserPassword, "color")}
-            error={logindet.setboxColors(logindet.loginUserPassword, "error")}
-          />
+
+          <FormControl sx={{ m: 1.5, width: "35ch" }} variant="outlined">
+            <InputLabel required htmlFor="outlined-adornment-password">
+              Password
+            </InputLabel>
+            <OutlinedInput
+              required
+              id="outlined-adornment-password"
+              type={showPassword ? "text" : "password"}
+              onChange={(e) =>
+                logindet.setval(e, logindet.setloginUserPassword)
+              }
+              value={logindet.loginUserPassword}
+              color={logindet.setboxColors(logindet.loginUserPassword, "color")}
+              error={logindet.setboxColors(logindet.loginUserPassword, "error")}
+              endAdornment={
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label={
+                      showPassword
+                        ? "hide the password"
+                        : "display the password"
+                    }
+                    onClick={handleClickShowPassword}
+                    onMouseDown={handleMouseDownPassword}
+                    // onMouseUp={handleMouseUpPassword}
+                    edge="end"
+                  >
+                    {showPassword ? <MdVisibilityOff /> : <MdVisibility />}
+                  </IconButton>
+                </InputAdornment>
+              }
+              label="Password"
+            />
+          </FormControl>
           <div className="loginbutton">
             <Button
               variant="contained"

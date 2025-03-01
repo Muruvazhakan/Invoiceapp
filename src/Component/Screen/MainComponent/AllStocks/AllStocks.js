@@ -1,23 +1,18 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
-import { BsFileEarmarkPdfFill, BsFiletypeXlsx } from "react-icons/bs";
 
 import { FaRegListAlt } from "react-icons/fa";
 import { MdAddChart } from "react-icons/md";
 import Card from "../../../Style/Card/Card";
 import ReactToPrint from "react-to-print";
-import { Box, Button, CardContent, Container, Typography } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import { RiTableView } from "react-icons/ri";
 import { Stocks } from "../../../Context/StocksContex";
-import StockTable from "../../StockTable/StockTable";
 import "./AllStocks.css";
 import { Link } from "react-router-dom";
 import StyleHeader from "../../Header/StyleHeader";
 import { CompanyDetail } from "../../../Context/companyDetailContext";
 
-import { FiEdit } from "react-icons/fi";
 import AutoStockTable from "../../StockTable/AutoStockTable";
-import StockChart from "../../charts/StockChart";
-import DashboardTemp from "../../Dashboard/DashboardTemp";
 import StocksScreenChart from "../../EarningScreen/StocksScreenChart/StocksScreenChart";
 
 const AllStocks = (props) => {
@@ -79,8 +74,8 @@ const AllStocks = (props) => {
             endIcon={<RiTableView />}
           >
             {viewAllAddedStock
-              ? "Click to hide All Added Stocks"
-              : "Click to Expand All Added Stocks"}
+              ? "Hide All Added Stocks"
+              : "View All Added Stocks"}
           </Button>
         </Card>
 

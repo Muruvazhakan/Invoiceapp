@@ -5,17 +5,28 @@ import {
   MenuItem,
   Select,
   TextField,
+  IconButton,
+  InputAdornment,
+  FormControl,
+  OutlinedInput,
 } from "@mui/material";
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import "./Login.css";
 import { RiUserAddLine } from "react-icons/ri";
 
 import Card from "../../Style/Card/Card";
 import { CompanyDetail } from "../../Context/companyDetailContext";
 import { ToastContainer } from "react-toastify";
-
+import { MdVisibilityOff, MdVisibility } from "react-icons/md";
 const SignUp = (props) => {
   const logindet = useContext(CompanyDetail);
+  const [showPassword, setShowPassword] = useState(false);
+
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
   return (
     <Box className="displaycontent">
       <ToastContainer
@@ -52,24 +63,46 @@ const SignUp = (props) => {
             error={logindet.setboxColors(logindet.loginUserPassword, "error")}
           />
           <div>
-            <TextField
-              required
-              id="outlined-required"
-              label="Confirm Password"
-              value={logindet.loginUserConfirmPassword}
-              type="password"
-              onChange={(e) =>
-                logindet.setval(e, logindet.setloginUserConfirmPassword)
-              }
-              color={logindet.setboxColors(
-                logindet.loginUserConfirmPassword,
-                "color"
-              )}
-              error={logindet.setboxColors(
-                logindet.loginUserConfirmPassword,
-                "error"
-              )}
-            />
+            <FormControl sx={{ m: 1.5, width: "35ch" }} variant="outlined">
+              <InputLabel required htmlFor="outlined-adornment-password">
+                Confirm Password
+              </InputLabel>
+              <OutlinedInput
+                required
+                id="outlined-adornment-password"
+                type={showPassword ? "text" : "password"}
+                onChange={(e) =>
+                  logindet.setval(e, logindet.setloginUserConfirmPassword)
+                }
+                value={logindet.loginUserConfirmPassword}
+                color={logindet.setboxColors(
+                  logindet.loginUserConfirmPassword,
+                  "color"
+                )}
+                error={logindet.setboxColors(
+                  logindet.loginUserConfirmPassword,
+                  "error"
+                )}
+                endAdornment={
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label={
+                        showPassword
+                          ? "hide the password"
+                          : "display the password"
+                      }
+                      onClick={handleClickShowPassword}
+                      onMouseDown={handleMouseDownPassword}
+                      // onMouseUp={handleMouseUpPassword}
+                      edge="end"
+                    >
+                      {showPassword ? <MdVisibilityOff /> : <MdVisibility />}
+                    </IconButton>
+                  </InputAdornment>
+                }
+                label="Confirm Password"
+              />
+            </FormControl>
           </div>
           <TextField
             required
