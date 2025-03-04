@@ -2,7 +2,8 @@ import React from "react";
 import "chart.js/auto";
 import { Pie } from "react-chartjs-2";
 
-const PieChart = ({ labels, datas, chartLabel, style, chartTitle }) => {
+const PieChart = ({ labels, datas, chartLabel, style, chartTitle, symbol }) => {
+  let symbols = symbol ? symbol : "";
   const data = {
     labels: labels ?? [],
     datasets: [
@@ -63,8 +64,34 @@ const PieChart = ({ labels, datas, chartLabel, style, chartTitle }) => {
         display: true,
         text: chartTitle ?? "",
       },
+      legend: {
+        position: "top",
+      },
+      tooltip: {
+        callbacks: {
+          label: (tooltipItem) => ` ${symbols}${tooltipItem.raw}`, // Format the tooltip
+        },
+      },
     },
   };
+  // const options = {
+  //   responsive: true,
+  //   plugins: {
+  //     title: {
+  //       display: true,
+  //       text: chartTitle ?? "",
+  //     },
+  //     legend: {
+  //       position: "top",
+  //     },
+  //     // tooltip: {
+  //     //   callbacks: {
+  //     //     label: (tooltipItem) => `${tooltipItem.raw.toFixed(2)}`, // Format the tooltip
+  //     //   },
+  //     // },
+  //   },
+  // };
+
   return (
     <>
       {datas.length > 0 && (

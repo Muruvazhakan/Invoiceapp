@@ -231,7 +231,12 @@ const CompanyDetailContext = ({ children }) => {
   };
 
   const loginHandler = async (logintype) => {
-    //console.log('login handler' + loginuser.length +'loginuser.length ' +loginUserPassword.length );
+    console.log(
+      "login handler" +
+        loginuser.length +
+        "loginuser.length " +
+        loginUserPassword.length
+    );
 
     if (loginuser.length > 0 && loginUserPassword.length > 0) {
       let userExsist = "";

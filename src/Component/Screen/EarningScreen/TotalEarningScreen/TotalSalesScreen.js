@@ -99,6 +99,7 @@ const TotalSalesScreen = (props) => {
             labels={chartLabels}
             datas={chartDatas}
             style={{ height: "300px" }}
+            symbol="₹"
           />
         </DisplayContent>
       ) : (

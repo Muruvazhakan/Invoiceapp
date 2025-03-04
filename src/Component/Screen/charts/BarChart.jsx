@@ -82,6 +82,11 @@ const Barchart = ({
         display: true,
         text: chartTitle ?? "",
       },
+      tooltip: {
+        callbacks: {
+          label: (tooltipItem) => ` ₹${tooltipItem.raw}`, // Format the tooltip
+        },
+      },
     },
   };
   return (

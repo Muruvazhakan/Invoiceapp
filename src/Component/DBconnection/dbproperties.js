@@ -2,8 +2,8 @@ export const isbackendconnect = true;
 
 export const imageBaseUrl =
   "https://storage.googleapis.com/helpone-9bf33.appspot.com";
-// export const backendUrl = "http://localhost:4000";
-export const backendUrl = "https://billedgebackend.onrender.com";
+export const backendUrl = "http://localhost:4000";
+// export const backendUrl = "https://billedgebackend.onrender.com";
 export const userLoginUrl = `${backendUrl}/user/login`;
 export const userSigninUrl = `${backendUrl}/user/signin`;
 export const passwordResetUrl = `${backendUrl}/user/passwordReset`;
@@ -47,6 +47,8 @@ export const saveSalesStockIdUrl = `${backendUrl}/stock/savesalesstockid`;
 
 export const saveStockUrl = `${backendUrl}/stock/savestock`;
 export const saveSaleStockUrl = `${backendUrl}/stock/savesalesstock`;
+
+export const expenseUrl = `${backendUrl}/expense/expenses`;
 
 // router.post('/:userid',invoicecont.getallinvoice);
 // router.post('/createorupdateinvoice/:userid',invoicecont.createorupdateinvoice);

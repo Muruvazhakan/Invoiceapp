@@ -1,0 +1,27 @@
+/* 
+  form div {
+    margin: 10px 0;
+  }
+   */
+  input,
+  select {
+    padding: 8px;
+    margin-left: 10px;
+  }
+  
+  button {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: #45a049;
+  }
+  
+  ul {
+    list-style-type: none;
+    padding-left: 0;
+  }

@@ -1423,7 +1423,7 @@ const StocksContext = ({ children }) => {
           console.log(obj1);
           console.log("obj2");
           console.log(obj2);
-          console.log("obj1.rate + " + obj1.rate + " obj2.rate " + obj2.rate);
+          // console.log("obj1.rate + " + obj1.rate + " obj2.rate " + obj2.rate);
           if (obj2 !== undefined) {
             let purchaceamount1 = (obj1.quantity * 1 * obj2.rate).toFixed(2);
             let saleamount = (obj1.amount * 1).toFixed(2);

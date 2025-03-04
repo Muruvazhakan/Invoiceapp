@@ -4,6 +4,7 @@ import { Stack } from "@mui/material";
 import addicon from "../../../Image/Dashboard/addicon.png";
 import estimateicon from "../../../Image/Dashboard/estimateicon.png";
 import availablecount2 from "../../../Image/Dashboard/availablecount2.png";
+import expense3 from "../../../Image/Dashboard/expense3.png";
 import invoiceicon from "../../../Image/Dashboard/invoiceicon.png";
 import { AllState } from "../../Context/allStateContext";
 import { estimateState } from "../../Context/EstimatestateContext";
@@ -35,6 +36,13 @@ const ActionPanel = () => {
         img={estimateicon}
         title="Generate Estimate"
         link={"/genestimate"}
+        type=""
+      />
+
+      <ActionPanelTemplate
+        img={expense3}
+        title="Expense Tracker"
+        link={"/expansetracker"}
         type=""
       />
 

@@ -108,3 +108,19 @@ export const userLoginname = [
     userPass: "jrmodular123",
   },
 ];
+
+export const expenseList = [
+  "Food",
+  "Entertainment",
+  "Bills",
+  "Groceries",
+  "Rent",
+  "Utilities",
+  "Transportation",
+  "Internet Bill",
+  "Gym Membership",
+  "Others",
+  "⁠HARDWARE",
+  "MATERIAL",
+  "⁠LABOUR",
+];
