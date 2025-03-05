@@ -59,3 +59,56 @@ export const deleteExpenseDB = async (id, userid) => {
     return err;
   }
 };
+
+export const getServiceDB = async (userid) => {
+  // console.log(`${dbprop.getServiceUrl}/${userid}` + ' dbprop.userLoginUrl');
+  // const data = {
+  //     username: username,
+  //     password: userpassword
+  // };
+  // console.log(data);
+  let response;
+  try {
+    response = await axios.get(`${dbprop.serviceUrl}/${userid}`, config);
+    console.log(response);
+    return response;
+  } catch (err) {
+    console.log(err);
+    return err;
+  }
+};
+
+export const saveServiceDB = async (service, userid) => {
+  // console.log(`${dbprop.saveEstimateUrl}/${userid}` + ' dbprop.userLoginUrl');
+  const data = {
+    service,
+  };
+  console.log(data);
+  let response;
+  try {
+    response = await axios.post(`${dbprop.serviceUrl}/${userid}`, data, config);
+    // console.log(response);
+    return response;
+  } catch (err) {
+    console.log(err);
+    return err;
+  }
+};
+
+export const deleteServiceDB = async (id, userid) => {
+  // console.log(`${dbprop.saveEstimateUrl}/${userid}` + ' dbprop.userLoginUrl');
+
+  console.log(id);
+  let response;
+  try {
+    response = await axios.delete(
+      `${dbprop.serviceUrl}/${userid}/${id}`,
+      config
+    );
+    // console.log(response);
+    return response;
+  } catch (err) {
+    console.log(err);
+    return err;
+  }
+};

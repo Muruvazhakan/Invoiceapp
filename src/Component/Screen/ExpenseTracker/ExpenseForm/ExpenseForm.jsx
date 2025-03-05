@@ -7,6 +7,7 @@ const ExpenseForm = ({ addExpense, editingExpense }) => {
   const [description, setDescription] = useState("");
   const [amount, setAmount] = useState("");
   const [category, setCategory] = useState("");
+  const [linkedTo, setlinkedTo] = useState("");
   const [date, setDate] = useState(new Date()); // New state for the date
 
   // If there's an expense being edited, fill the form with its data
@@ -20,6 +21,7 @@ const ExpenseForm = ({ addExpense, editingExpense }) => {
       const formattedDate = new Date(editingExpense.date)
         .toISOString()
         .split("T")[0]; // Convert to YYYY-MM-DD
+      setlinkedTo(editingExpense.linkedTo ? editingExpense.linkedTo : "");
       setDate(formattedDate); // Set date if editing
     }
   }, [editingExpense]);
@@ -36,12 +38,14 @@ const ExpenseForm = ({ addExpense, editingExpense }) => {
       amount: parseFloat(amount),
       category,
       date, // Include the date in the expense object
+      linkedTo,
       id: editingExpense ? editingExpense.id : new Date().getTime(), // Use existing ID for editing
     };
     addExpense(expense);
     setDescription("");
     setAmount("");
     setCategory("");
+    setlinkedTo("");
     setDate(new Date().getTime()); // Clear the date after submitting
   };
 
@@ -54,24 +58,21 @@ const ExpenseForm = ({ addExpense, editingExpense }) => {
         autoClose={10}
       />
       <Stack alignItems={"center"} justifyContent={"flex-start"} gap={1}>
-        <Box>
-          {/* <label>Description:</label>
+        {/* <label>Description:</label>
           <input
             type="text"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
           /> */}
-          <TextField
-            required
-            id="outlined-required"
-            label="Description"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            color={description !== "" && "success"}
-            error={description === ""}
-          />
-        </Box>
-
+        <TextField
+          required
+          id="outlined-required"
+          label="Description"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+          color={description !== "" && "success"}
+          error={description === ""}
+        />
         {/* <label>Amount:</label>
           <input
             type="number"
@@ -88,7 +89,6 @@ const ExpenseForm = ({ addExpense, editingExpense }) => {
           color={amount !== "" && "success"}
           error={amount === ""}
         />
-
         <Box>
           <label>Category:</label>
           <select
@@ -119,6 +119,15 @@ const ExpenseForm = ({ addExpense, editingExpense }) => {
           onChange={(e) => setDate(e.target.value)}
           color={date !== "" && "success"}
           error={date === ""}
+        />
+        <TextField
+          required
+          id="outlined-required"
+          label="Linked To"
+          value={linkedTo}
+          onChange={(e) => setlinkedTo(e.target.value)}
+          color={linkedTo !== "" && "success"}
+          error={linkedTo === ""}
         />
         <Button
           type="submit"

@@ -8,17 +8,29 @@ import { Box, Button, CircularProgress, Stack } from "@mui/material";
 import StyleHeader from "../Header/StyleHeader";
 import {
   deleteExpenseDB,
+  deleteServiceDB,
   getExpenseDB,
+  getServiceDB,
   saveExpenseDB,
+  saveServiceDB,
 } from "../../DBconnection/expenseDetailsDB";
 import * as localstorage from "../../Context/localStorageData";
 import { toast, ToastContainer } from "react-toastify";
 import { GrOverview } from "react-icons/gr";
 import { BiHide } from "react-icons/bi";
+import ServiceForm from "./Services/ServiceForm";
+import ServicesList from "./Services/ServicesList/ServicesList";
+import SingleServicesList from "./Services/ServicesList/SingleServicesList";
 const ExpenseTracker = (props) => {
   const [expenses, setExpenses] = useState([]);
   const [editingExpense, setEditingExpense] = useState(null);
   const [viewExpenseForm, setviewExpenseForm] = useState(false);
+  const [viewExpenseList, setviewExpenseList] = useState(false);
+  const [services, setservices] = useState([]);
+  const [editingService, setEditingService] = useState(null);
+  const [viewServiceForm, setviewServiceForm] = useState(false);
+  const [viewServiceList, setviewServiceList] = useState(false);
+  const [selectedService, setselectedService] = useState(null);
   const [loading, setloading] = useState(false);
   let loginuserid = localstorage.addOrGetUserdetail("", "userid", "get");
   const addExpense = async (expense) => {
@@ -70,6 +82,7 @@ const ExpenseTracker = (props) => {
 
   const editExpense = (expense) => {
     setEditingExpense(expense); // Set the expense to be edited
+    setviewExpenseForm(true);
   };
 
   const getExpense = async () => {
@@ -85,7 +98,80 @@ const ExpenseTracker = (props) => {
     }
     setloading(false);
   };
+
+  const addService = async (service) => {
+    setloading(true);
+    console.log("service");
+    console.log(service);
+    let response = await saveServiceDB(service, loginuserid);
+    console.log("response");
+    console.log(response);
+
+    if (response.status === 200) {
+      if (editingService) {
+        toast.success("Service Updated");
+      } else toast.success("Service added");
+      if (editingService) {
+        // If we're editing an service, we replace it in the list
+        setservices((prevService) =>
+          prevService.map((exp) =>
+            exp.id === editingService.id ? service : exp
+          )
+        );
+        setEditingExpense(null); // Clear editing state
+      } else {
+        // Otherwise, we add a new service
+        setservices((prevService) => [...prevService, service]);
+      }
+    } else {
+      toast.warn(response.data);
+    }
+    setloading(false);
+    //need to add db code
+  };
+  const deleteService = async (id) => {
+    setloading(true);
+    console.log("id");
+    console.log(id);
+    let response = await deleteServiceDB(id, loginuserid);
+    console.log("response");
+    console.log(response);
+
+    if (response.status === 200) {
+      toast.success(response.data.message);
+      setservices((prevService) =>
+        prevService.filter((service) => service.id !== id)
+      );
+    } else toast.warn(response.response.data.message);
+    setloading(false);
+  };
+
+  const editService = (services) => {
+    setEditingService(services); // Set the expense to be edited
+    setviewServiceForm(true);
+  };
+
+  const getService = async () => {
+    setloading(true);
+    let response = await getServiceDB(loginuserid);
+    console.log("response getService");
+    console.log(response);
+
+    if (response.status === 200) {
+      setservices(response.data);
+    } else {
+      toast.warn(response.data);
+    }
+    setloading(false);
+  };
+
+  const viewExpenseHandler = (props) => {
+    setselectedService(props);
+    setviewServiceList(false);
+    setviewExpenseList(false);
+  };
   useEffect(() => {
+    getService();
     getExpense();
   }, []);
 
@@ -110,10 +196,11 @@ const ExpenseTracker = (props) => {
       <StyleHeader>Expense Tracker</StyleHeader>
       <Stack
         //   sx={{ color: "grey.500" }}
+        direction={"row"}
         spacing={1}
         alignItems={"center"}
         justifyContent={"center"}
-        marginBottom={"5px"}
+        marginBottom={"10px"}
         //   className="spinnerstyle"
       >
         <Button
@@ -128,7 +215,52 @@ const ExpenseTracker = (props) => {
             </>
           ) : (
             <>
-              {"View Expense Form "} <GrOverview size={20} />
+              {"Expense Form "} <GrOverview size={20} />
+            </>
+          )}
+        </Button>
+        <Button
+          variant="contained"
+          color={!viewServiceForm ? "success" : "black"}
+          onClick={() => setviewServiceForm(!viewServiceForm)}
+        >
+          {viewServiceForm ? (
+            <>
+              {"Hide Service Form "} <BiHide size={20} />
+            </>
+          ) : (
+            <>
+              {"Service Form "} <GrOverview size={20} />
+            </>
+          )}
+        </Button>
+        <Button
+          variant="contained"
+          color={!viewExpenseList ? "success" : "black"}
+          onClick={() => setviewExpenseList(!viewExpenseList)}
+        >
+          {viewExpenseList ? (
+            <>
+              {"Hide Expense List "} <BiHide size={20} />
+            </>
+          ) : (
+            <>
+              {"Expense List "} <GrOverview size={20} />
+            </>
+          )}
+        </Button>
+        <Button
+          variant="contained"
+          color={!viewServiceList ? "success" : "black"}
+          onClick={() => setviewServiceList(!viewServiceList)}
+        >
+          {viewServiceList ? (
+            <>
+              {"Hide Service List "} <BiHide size={20} />
+            </>
+          ) : (
+            <>
+              {"Service List "} <GrOverview size={20} />
             </>
           )}
         </Button>
@@ -153,16 +285,51 @@ const ExpenseTracker = (props) => {
             </Card>
           </Box>
         )}
+        {viewServiceForm && (
+          <Box width={"350px"}>
+            <Card>
+              <h3>Service Form</h3>
+              <ServiceForm
+                addService={addService}
+                editingService={editingService}
+              />
+            </Card>
+          </Box>
+        )}
         {expenses.length > 0 && (
           <Box>
             <ExpenseChart expenses={expenses} />
           </Box>
         )}
       </Stack>
-      {expenses.length > 0 && (
+      {expenses.length > 0 && viewExpenseList && (
         <Card>
+          <StyleHeader>Expense List</StyleHeader>
           <ExpenseList
             expenses={expenses}
+            deleteExpense={deleteExpense}
+            editExpense={editExpense}
+          />
+        </Card>
+      )}
+      {services.length > 0 && viewServiceList && (
+        <Card>
+          <ServicesList
+            services={services}
+            expenses={expenses}
+            deleteServices={deleteService}
+            editServices={editService}
+            viewExpenseHandler={viewExpenseHandler}
+          />
+        </Card>
+      )}
+      {selectedService && (
+        <Card>
+          <SingleServicesList
+            selectedService={selectedService}
+            expenses={expenses}
+            deleteServices={deleteService}
+            editServices={editService}
             deleteExpense={deleteExpense}
             editExpense={editExpense}
           />
