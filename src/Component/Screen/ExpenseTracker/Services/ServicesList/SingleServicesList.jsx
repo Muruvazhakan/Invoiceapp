@@ -5,6 +5,7 @@ import StyleHeader from "../../../Header/StyleHeader";
 import { toast } from "react-toastify";
 import ExpenseList from "../../ExpenseList/ExpenseList";
 import NoData from "../../../NoData/NoData";
+import ExpenseChart from "../../ExpenseChart/ExpenseChart";
 
 function SingleServicesList({
   selectedService,
@@ -49,6 +50,7 @@ function SingleServicesList({
   return (
     <>
       <StyleHeader>Selected Services</StyleHeader>
+
       <Box className="displayelements">
         <Card>
           <Stack
@@ -101,7 +103,13 @@ function SingleServicesList({
             </Button>
           </Stack>
         </Card>
+        {filterexpense.length > 0 && (
+          <Box margin={"1%"}>
+            <ExpenseChart expenses={filterexpense} />
+          </Box>
+        )}
       </Box>
+
       <Stack
         display={"grid"}
         direction={"row"}

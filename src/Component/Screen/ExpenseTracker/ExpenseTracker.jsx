@@ -21,6 +21,8 @@ import { BiHide } from "react-icons/bi";
 import ServiceForm from "./Services/ServiceForm";
 import ServicesList from "./Services/ServicesList/ServicesList";
 import SingleServicesList from "./Services/ServicesList/SingleServicesList";
+import ServicesChart from "./Services/ServicesChart/ServicesChart";
+import TotalEarningScreen from "../EarningScreen/TotalEarningScreen/TotalEarningScreen";
 const ExpenseTracker = (props) => {
   const [expenses, setExpenses] = useState([]);
   const [editingExpense, setEditingExpense] = useState(null);
@@ -79,6 +81,54 @@ const ExpenseTracker = (props) => {
     } else toast.warn(response.response.data.message);
     setloading(false);
   };
+
+  const matchingExpenses = expenses.filter((expense) =>
+    services.some((service) => service.id === expense.linkedTo)
+  );
+
+  // Calculate total matching expenses amount
+  const totalMatchingExpenses = matchingExpenses.reduce(
+    (total, expense) => total + expense.amount,
+    0
+  );
+
+  // Calculate total service amount (all services, for comparison)
+  const totalServiceAmount = services.reduce(
+    (total, service) => total + service.amount,
+    0
+  );
+
+  // Calculate profit for matched services and expenses
+  const profit = totalServiceAmount - totalMatchingExpenses;
+
+  // console.log("matchingExpenses");
+  // console.log(matchingExpenses);
+  // console.log(profit);
+  // console.log(totalMatchingExpenses);
+  // console.log(totalMatchingExpenses);
+
+  const matchingExpenses1 = expenses.filter((expense) =>
+    services.some((service) => service.id === expense.linkedTo)
+  );
+
+  // 2. Group expenses by service id
+  const segregatedMonthData = services.map((service) => {
+    const serviceExpenses = matchingExpenses.filter(
+      (expense) => expense.linkedTo === service.id
+    );
+    const totalExpense = serviceExpenses.reduce(
+      (total, expense) => total + expense.amount,
+      0
+    );
+    return {
+      serviceId: service.id,
+      serviceAmount: service.amount,
+      totalExpense: totalExpense,
+      totalProfit: service.amount - totalExpense,
+    };
+  });
+  console.log(`segregatedMonthData`);
+  console.log(segregatedMonthData);
 
   const editExpense = (expense) => {
     setEditingExpense(expense); // Set the expense to be edited
@@ -299,6 +349,13 @@ const ExpenseTracker = (props) => {
         {expenses.length > 0 && (
           <Box>
             <ExpenseChart expenses={expenses} />
+          </Box>
+        )}
+        {services.length > 0 && (
+          <Box>
+            <ServicesChart services={services} />
+
+            {/* <TotalEarningScreen data={segregatedMonthData} screen="profit" /> */}
           </Box>
         )}
       </Stack>
