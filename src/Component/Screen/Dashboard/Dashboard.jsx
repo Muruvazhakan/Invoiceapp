@@ -92,7 +92,11 @@ const Dashboard = (props) => {
               value={`₹${props.data.allstockssalestotalamt.toFixed(2)}`}
             > */}
             {props.data.allstockssalestotalamt > 0 && (
-              <TotalEarningScreen data={props.data} screen={props.screen} />
+              <TotalEarningScreen
+                data={props.data}
+                screen={props.screen}
+                title="Total Revenue"
+              />
             )}
             {/* </DashboardTemp> */}
           </Box>

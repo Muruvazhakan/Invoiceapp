@@ -36,7 +36,7 @@ const TotalEarningScreen = (props) => {
     <>
       <DashboardTemp
         img={profitsymbbol}
-        title="Total Revenue"
+        title={props.title}
         value={`₹${totalProfitArraySum.toFixed(2)}`}
       >
         {props.screen === "profit" && (
@@ -91,7 +91,7 @@ const TotalEarningScreen = (props) => {
               labels={totalMonthArray}
               datas={totalProfitArray}
               chartLabel={"Bar Chart"}
-              chartTitle={"Total Revenue per month"}
+              chartTitle={`${props.title} per month`}
               style={{ height: "300px" }}
               enableLineChart={true}
               lineChartLabel={"Line Chart"}

@@ -416,7 +416,11 @@ const ExpenseTracker = (props) => {
             </Box>
             {inptdata !== null && inptdata.allstockssalestotalamt > 0 && (
               <Box>
-                <TotalEarningScreen data={inptdata} screen="profit" />
+                <TotalEarningScreen
+                  data={inptdata}
+                  screen="profit"
+                  title="Total Expense"
+                />
               </Box>
             )}
           </>

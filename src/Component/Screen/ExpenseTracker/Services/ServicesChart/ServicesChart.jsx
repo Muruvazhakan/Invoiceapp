@@ -34,8 +34,8 @@ function ServicesChart({ services }) {
         value={totaltransaction ? `₹${totaltransaction}` : 0}
       >
         <PieChart
-          chartLabel={"Services Breakdown by Porject Name"}
-          chartTitle={"Services Breakdown by Porject Name"}
+          chartLabel={"Services Breakdown by Project Name"}
+          chartTitle={"Services Breakdown by Project Name"}
           labels={Object.keys(descriptions)}
           datas={Object.values(descriptions)}
           style={{ height: "300px" }}
