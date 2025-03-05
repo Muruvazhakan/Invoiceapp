@@ -6,6 +6,7 @@ import {
   Box,
   Typography,
   TextField,
+  InputLabel,
 } from "@mui/material";
 import PieChart from "../../charts/PieChart";
 import { FaEdit, FaSave } from "react-icons/fa";
@@ -43,8 +44,8 @@ const TopProductScreen = (props) => {
     return (
       <>
         <Stack direction={"row"} alignContent="center" justifyContent="center">
-          <Box style={{ marginLeft: "5px", marginTop: "5px" }}>
-            Display Count: {props.value}
+          <Box paddingTop={1} paddingRight={2} paddingLeft={2}>
+            <InputLabel>Display Count: {props.value}</InputLabel>
           </Box>
           {props.disp && (
             <TextField
@@ -60,14 +61,14 @@ const TopProductScreen = (props) => {
           )}
           {!props.disp ? (
             <FaEdit
-              style={{ marginLeft: "5px", marginTop: "5px" }}
+              style={{ marginLeft: "5px", marginTop: "8px" }}
               className="editicon"
               size={20}
               onClick={() => props.setdispfunc(!props.disp)}
             />
           ) : (
             <FaSave
-              style={{ marginTop: "8px" }}
+              style={{ marginTop: "10px" }}
               className="editicon"
               size={25}
               onClick={() => props.setdispfunc(!props.disp)}

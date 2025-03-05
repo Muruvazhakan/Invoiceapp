@@ -1713,6 +1713,7 @@ const StocksContext = ({ children }) => {
     deriveCalculatedProfitStock,
     clientGST,
     setclientGST,
+    sortBydate,
   };
   return <Stocks.Provider value={context}>{children}</Stocks.Provider>;
 };

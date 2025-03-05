@@ -1,4 +1,4 @@
-import { Stack, Box, TextField } from "@mui/material";
+import { Stack, Box, TextField, InputLabel } from "@mui/material";
 import PieChart from "../../charts/PieChart";
 import { FaEdit, FaSave } from "react-icons/fa";
 import StockChart from "../../charts/StockChart";
@@ -7,7 +7,8 @@ import { useState } from "react";
 
 const TotalSalesScreen = (props) => {
   // chart color
-
+  console.log("TotalSalesScreen");
+  console.log(props);
   const [filtercondnetprofit, setfiltercondnetprofit] = useState(15);
   const [displayfiltercondnetprofit, setdisplayfiltercondnetprofit] =
     useState(false);
@@ -48,9 +49,10 @@ const TotalSalesScreen = (props) => {
     return (
       <>
         <Stack direction={"row"} alignContent="center" justifyContent="center">
-          <Box style={{ marginLeft: "5px", marginTop: "5px" }}>
-            Display Count: {props.value}
+          <Box paddingTop={1} paddingRight={2} paddingLeft={2}>
+            <InputLabel>Display Count: {props.value}</InputLabel>
           </Box>
+
           {props.disp && (
             <TextField
               className="alltextfiled"
@@ -65,14 +67,14 @@ const TotalSalesScreen = (props) => {
           )}
           {!props.disp ? (
             <FaEdit
-              style={{ marginLeft: "5px", marginTop: "5px" }}
+              style={{ marginLeft: "5px", marginTop: "8px" }}
               className="editicon"
               size={20}
               onClick={() => props.setdispfunc(!props.disp)}
             />
           ) : (
             <FaSave
-              style={{ marginTop: "8px" }}
+              style={{ marginTop: "10px" }}
               className="editicon"
               size={25}
               onClick={() => props.setdispfunc(!props.disp)}

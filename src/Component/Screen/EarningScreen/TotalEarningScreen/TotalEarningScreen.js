@@ -1,4 +1,4 @@
-import { Box, TextField, Stack } from "@mui/material";
+import { Box, TextField, Stack, InputLabel } from "@mui/material";
 // import { IconArrowUpLeft } from "@tabler/icons";
 // import { IconArrowDownRight } from "@tabler/icons";
 import { FaEdit, FaSave } from "react-icons/fa";
@@ -18,12 +18,12 @@ const TotalEarningScreen = (props) => {
     .map((item) => item.totalProfit.toFixed(2))
     .slice(0, filteritemcount)
     .filter((x) => x !== undefined);
-  const totalProfit = Object.values(props.data.segregatedMonthData)
-    .slice(0, filteritemcount)
-    .reduce(
-      (accum, item) => accum + (item.totalProfit ? item.totalProfit : 0),
-      0
-    );
+  // const totalProfit = Object.values(props.data.segregatedMonthData)
+  //   .slice(0, filteritemcount)
+  //   .reduce(
+  //     (accum, item) => accum + (item.totalProfit ? item.totalProfit : 0),
+  //     0
+  //   );
   const totalProfitArraySum =
     props.screen === "profit"
       ? totalProfitArray.reduce((accum, profit) => accum + profit * 1, 0)
@@ -46,11 +46,13 @@ const TotalEarningScreen = (props) => {
               alignContent="center"
               justifyContent="center"
             >
-              <Box style={{ marginLeft: "5px", marginTop: "5px" }}>
-                No of Months:{" "}
-                {filteritemcount < totalProfitArray.length
-                  ? filteritemcount
-                  : totalProfitArray.length}
+              <Box paddingTop={1} paddingRight={2} paddingLeft={2}>
+                <InputLabel>
+                  No of Months:{" "}
+                  {filteritemcount < totalProfitArray.length
+                    ? filteritemcount
+                    : totalProfitArray.length}
+                </InputLabel>
               </Box>
               {displayfilteritemcount && (
                 <TextField
@@ -66,7 +68,7 @@ const TotalEarningScreen = (props) => {
               )}
               {!displayfilteritemcount ? (
                 <FaEdit
-                  style={{ marginLeft: "5px", marginTop: "5px" }}
+                  style={{ marginLeft: "5px", marginTop: "8px" }}
                   className="editicon"
                   size={20}
                   onClick={() =>
@@ -75,7 +77,7 @@ const TotalEarningScreen = (props) => {
                 />
               ) : (
                 <FaSave
-                  style={{ marginTop: "8px" }}
+                  style={{ marginTop: "10px" }}
                   className="editicon"
                   size={25}
                   onClick={() =>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import ExpenseForm from "./ExpenseForm/ExpenseForm";
 import ExpenseList from "./ExpenseList/ExpenseList";
 import "./ExpenseTracker.css";
@@ -23,7 +23,11 @@ import ServicesList from "./Services/ServicesList/ServicesList";
 import SingleServicesList from "./Services/ServicesList/SingleServicesList";
 import ServicesChart from "./Services/ServicesChart/ServicesChart";
 import TotalEarningScreen from "../EarningScreen/TotalEarningScreen/TotalEarningScreen";
+import TotalServiceEarningScreen from "./Services/ServicesChart/TotalServiceEarningScreen";
+import { Stocks } from "../../Context/StocksContex";
 const ExpenseTracker = (props) => {
+  const stockdata = useContext(Stocks);
+
   const [expenses, setExpenses] = useState([]);
   const [editingExpense, setEditingExpense] = useState(null);
   const [viewExpenseForm, setviewExpenseForm] = useState(false);
@@ -34,7 +38,10 @@ const ExpenseTracker = (props) => {
   const [viewServiceList, setviewServiceList] = useState(false);
   const [selectedService, setselectedService] = useState(null);
   const [loading, setloading] = useState(false);
+  const [segregatedMonthData, setSegregatedMonthData] = useState({});
+  const [inptdata, setinptdata] = useState(null);
   let loginuserid = localstorage.addOrGetUserdetail("", "userid", "get");
+
   const addExpense = async (expense) => {
     setloading(true);
     console.log("expense");
@@ -63,6 +70,8 @@ const ExpenseTracker = (props) => {
       toast.warn(response.data);
     }
     setloading(false);
+    getExpense();
+    getService();
     //need to add db code
   };
   const deleteExpense = async (id) => {
@@ -82,54 +91,6 @@ const ExpenseTracker = (props) => {
     setloading(false);
   };
 
-  const matchingExpenses = expenses.filter((expense) =>
-    services.some((service) => service.id === expense.linkedTo)
-  );
-
-  // Calculate total matching expenses amount
-  const totalMatchingExpenses = matchingExpenses.reduce(
-    (total, expense) => total + expense.amount,
-    0
-  );
-
-  // Calculate total service amount (all services, for comparison)
-  const totalServiceAmount = services.reduce(
-    (total, service) => total + service.amount,
-    0
-  );
-
-  // Calculate profit for matched services and expenses
-  const profit = totalServiceAmount - totalMatchingExpenses;
-
-  // console.log("matchingExpenses");
-  // console.log(matchingExpenses);
-  // console.log(profit);
-  // console.log(totalMatchingExpenses);
-  // console.log(totalMatchingExpenses);
-
-  const matchingExpenses1 = expenses.filter((expense) =>
-    services.some((service) => service.id === expense.linkedTo)
-  );
-
-  // 2. Group expenses by service id
-  const segregatedMonthData = services.map((service) => {
-    const serviceExpenses = matchingExpenses.filter(
-      (expense) => expense.linkedTo === service.id
-    );
-    const totalExpense = serviceExpenses.reduce(
-      (total, expense) => total + expense.amount,
-      0
-    );
-    return {
-      serviceId: service.id,
-      serviceAmount: service.amount,
-      totalExpense: totalExpense,
-      totalProfit: service.amount - totalExpense,
-    };
-  });
-  console.log(`segregatedMonthData`);
-  console.log(segregatedMonthData);
-
   const editExpense = (expense) => {
     setEditingExpense(expense); // Set the expense to be edited
     setviewExpenseForm(true);
@@ -143,6 +104,7 @@ const ExpenseTracker = (props) => {
 
     if (response.status === 200) {
       setExpenses(response.data);
+      segregateDataByMonth(response.data);
     } else {
       toast.warn(response.data);
     }
@@ -168,7 +130,7 @@ const ExpenseTracker = (props) => {
             exp.id === editingService.id ? service : exp
           )
         );
-        setEditingExpense(null); // Clear editing state
+        setEditingService(null); // Clear editing state
       } else {
         // Otherwise, we add a new service
         setservices((prevService) => [...prevService, service]);
@@ -215,6 +177,100 @@ const ExpenseTracker = (props) => {
     setloading(false);
   };
 
+  const matchingExpenses = expenses.filter((expense) =>
+    services.some((service) => service.id === expense.linkedTo)
+  );
+
+  // Calculate total matching expenses amount
+  const totalMatchingExpenses = matchingExpenses.reduce(
+    (total, expense) => total + expense.amount,
+    0
+  );
+
+  // Calculate total service amount (all services, for comparison)
+  const totalServiceAmount = services.reduce(
+    (total, service) => total + service.amount,
+    0
+  );
+
+  // Calculate profit for matched services and expenses
+  const profit = totalServiceAmount - totalMatchingExpenses;
+
+  // console.log("matchingExpenses");
+  // console.log(matchingExpenses);
+  // console.log(profit);
+  // console.log(totalMatchingExpenses);
+  // console.log(totalMatchingExpenses);
+
+  // 2. Group expenses by service id
+  const groupbyexpensedata = services.map((service) => {
+    const serviceExpenses = matchingExpenses.filter(
+      (expense) => expense.linkedTo === service.id
+    );
+    const totalExpense = serviceExpenses.reduce(
+      (total, expense) => total + expense.amount,
+      0
+    );
+    return {
+      serviceId: service.id,
+      serviceAmount: service.amount,
+      totalExpense: totalExpense,
+      totalProfit: service.amount - totalExpense,
+    };
+  });
+
+  const segregateDataByMonth = (inpexpenses) => {
+    // console.log("segregateDataByMonth");
+    let totalsum = 0;
+    let data = inpexpenses.filter((data) => data.date !== "");
+    // console.log("after segregateDataByMonth");
+    // console.log(data);
+    let valudata = [];
+    data.reduce((acc, item) => {
+      // Get the month and year from the date
+      // console.log("item segra");
+      // console.log(item);
+      if (item.date && item.date !== "") {
+        const monthYear = new Date(item.date).toLocaleString("default", {
+          month: "short",
+          year: "numeric",
+        });
+        // console.log("item monthYear");
+        // console.log(monthYear);
+        if (monthYear != null) {
+          // console.log(acc[monthYear]);
+          // Initialize the month entry if not exists
+          if (!acc[monthYear]) {
+            acc[monthYear] = {
+              totalProfit: 0,
+            };
+          }
+          // console.log("item acc");
+          // console.log(acc);
+          // Add the totalsalesamt to the respective month
+          acc[monthYear].totalProfit += item.amount * 1;
+          totalsum = item.amount * 1;
+          // Assuming profit is the same as totalsalesamt for simplicity; adjust as necessary
+          console.log("item acc");
+          console.log(acc);
+          valudata = acc;
+          return acc;
+        }
+      }
+    }, {});
+    console.log("after resultsegregateDataByMonth");
+    console.log(valudata);
+
+    valudata = stockdata.sortBydate(valudata);
+    console.log("sortedDates valudata");
+    console.log(valudata);
+    setSegregatedMonthData(valudata);
+    setinptdata({
+      segregatedMonthData: valudata,
+      allstockssalestotalamt: totalsum,
+    });
+  };
+
   const viewExpenseHandler = (props) => {
     setselectedService(props);
     setviewServiceList(false);
@@ -243,7 +299,7 @@ const ExpenseTracker = (props) => {
         containerId="Login"
         autoClose={10}
       />
-      <StyleHeader>Expense Tracker</StyleHeader>
+      <StyleHeader>Service & Expense Tracker</StyleHeader>
       <Stack
         //   sx={{ color: "grey.500" }}
         direction={"row"}
@@ -251,6 +307,7 @@ const ExpenseTracker = (props) => {
         alignItems={"center"}
         justifyContent={"center"}
         marginBottom={"10px"}
+        flexWrap={"wrap"}
         //   className="spinnerstyle"
       >
         <Button
@@ -322,6 +379,7 @@ const ExpenseTracker = (props) => {
         alignItems={"center"}
         justifyContent={"center"}
         gap={2}
+        flexWrap={"wrap"}
         //   className="spinnerstyle"
       >
         {viewExpenseForm && (
@@ -352,12 +410,33 @@ const ExpenseTracker = (props) => {
           </Box>
         )}
         {services.length > 0 && (
-          <Box>
-            <ServicesChart services={services} />
-
-            {/* <TotalEarningScreen data={segregatedMonthData} screen="profit" /> */}
-          </Box>
+          <>
+            <Box>
+              <ServicesChart services={services} />
+            </Box>
+            {inptdata !== null && inptdata.allstockssalestotalamt > 0 && (
+              <Box>
+                <TotalEarningScreen data={inptdata} screen="profit" />
+              </Box>
+            )}
+          </>
         )}
+      </Stack>
+      <Stack
+        // sx={{ color: "grey.500" }}
+        spacing={1}
+        // alignItems={"center"}
+        justifyContent={"center"}
+        // gap={2}
+        margin={2}
+        // padding={2}
+      >
+        <Box>
+          <TotalServiceEarningScreen
+            data={groupbyexpensedata}
+            screen="profit"
+          />
+        </Box>
       </Stack>
       {expenses.length > 0 && viewExpenseList && (
         <Card>
