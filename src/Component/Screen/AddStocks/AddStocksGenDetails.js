@@ -68,6 +68,10 @@ const AddStocksGenDetails = (props) => {
     // console.log("event");
 
     // console.log(event);
+    if (newValue === null) {
+      setValue(null);
+      return;
+    }
     if (newValue && newValue.inputValue) {
       // Create a new value from the user input
       setValue({

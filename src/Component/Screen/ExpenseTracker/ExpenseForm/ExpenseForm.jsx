@@ -121,7 +121,6 @@ const ExpenseForm = ({ addExpense, editingExpense }) => {
           error={date === ""}
         />
         <TextField
-          required
           id="outlined-required"
           label="Linked To"
           value={linkedTo}

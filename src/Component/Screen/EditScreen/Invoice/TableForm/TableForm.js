@@ -58,7 +58,11 @@ const TableForm = (props) => {
   const autocompleTitle = () => {
     if (stockedet.allStockData !== null && stockedet.allStockData.length > 0) {
       // console.log('autocompleTitle title');
-      let productid = stockedet.allStockData.map((row) => {
+      let allStockData = stockedet.allStockData.filter(
+        (data) => data != undefined
+      );
+
+      let productid = allStockData.map((row) => {
         return { productid: row.productid };
       });
       // console.log(productid);
@@ -77,11 +81,15 @@ const TableForm = (props) => {
     }
   };
   const onChangeOnAutoComplete = (event, newValue, type) => {
-    // console.log("newValue");
-    // console.log(newValue);
+    console.log("newValue");
+    console.log(newValue);
     // console.log("event");
 
     // console.log(event);
+    if (newValue === null) {
+      setValue(null);
+      return;
+    }
     if (newValue && newValue.inputValue) {
       // Create a new value from the user input
       setValue({
@@ -214,7 +222,7 @@ const TableForm = (props) => {
                   }
                   // sx={{ width: 300 }}
                   freeSolo
-                  disabled={tabledet.isEditInvoice && tabledet.invoiceid !== ""}
+                  // disabled={tabledet.isEditInvoice && tabledet.invoiceid !== ""} //commented this will disable during editing the old invoice
                   renderInput={(params) => (
                     // <TextField label="Title" />
                     <TextField

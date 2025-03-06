@@ -5,6 +5,8 @@ import "./ExpenseTracker.css";
 import Card from "../../Style/Card/Card";
 import ExpenseChart from "./ExpenseChart/ExpenseChart";
 import { Box, Button, CircularProgress, Stack } from "@mui/material";
+import { FaWpforms } from "react-icons/fa6";
+import { FaRegListAlt, FaChartPie } from "react-icons/fa";
 import StyleHeader from "../Header/StyleHeader";
 import {
   deleteExpenseDB,
@@ -16,7 +18,6 @@ import {
 } from "../../DBconnection/expenseDetailsDB";
 import * as localstorage from "../../Context/localStorageData";
 import { toast, ToastContainer } from "react-toastify";
-import { GrOverview } from "react-icons/gr";
 import { BiHide } from "react-icons/bi";
 import ServiceForm from "./Services/ServiceForm";
 import ServicesList from "./Services/ServicesList/ServicesList";
@@ -36,9 +37,9 @@ const ExpenseTracker = (props) => {
   const [editingService, setEditingService] = useState(null);
   const [viewServiceForm, setviewServiceForm] = useState(false);
   const [viewServiceList, setviewServiceList] = useState(false);
+  const [viewCharts, setviewCharts] = useState(true);
   const [selectedService, setselectedService] = useState(null);
   const [loading, setloading] = useState(false);
-  const [segregatedMonthData, setSegregatedMonthData] = useState({});
   const [inptdata, setinptdata] = useState(null);
   let loginuserid = localstorage.addOrGetUserdetail("", "userid", "get");
 
@@ -264,7 +265,6 @@ const ExpenseTracker = (props) => {
     valudata = stockdata.sortBydate(valudata);
     console.log("sortedDates valudata");
     console.log(valudata);
-    setSegregatedMonthData(valudata);
     setinptdata({
       segregatedMonthData: valudata,
       allstockssalestotalamt: totalsum,
@@ -304,6 +304,7 @@ const ExpenseTracker = (props) => {
         //   sx={{ color: "grey.500" }}
         direction={"row"}
         spacing={1}
+        gap={1}
         alignItems={"center"}
         justifyContent={"center"}
         marginBottom={"10px"}
@@ -312,62 +313,85 @@ const ExpenseTracker = (props) => {
       >
         <Button
           variant="contained"
-          color={!viewExpenseForm ? "success" : "black"}
+          color={!viewExpenseForm ? "inherit" : "black"}
           // endIcon={<RiUserAddLine />}
           onClick={() => setviewExpenseForm(!viewExpenseForm)}
         >
           {viewExpenseForm ? (
             <>
-              {"Hide Expense Form "} <BiHide size={20} />
+              {"Hide Expense Form "}{" "}
+              <BiHide style={{ marginLeft: "5px" }} size={20} />
             </>
           ) : (
             <>
-              {"Expense Form "} <GrOverview size={20} />
+              {"Expense Form "}{" "}
+              <FaWpforms style={{ marginLeft: "5px" }} size={20} />
             </>
           )}
         </Button>
         <Button
-          variant="contained"
-          color={!viewServiceForm ? "success" : "black"}
+          variant="outlined"
+          color={!viewServiceForm ? "inherit" : "black"}
           onClick={() => setviewServiceForm(!viewServiceForm)}
         >
           {viewServiceForm ? (
             <>
-              {"Hide Service Form "} <BiHide size={20} />
+              {"Hide Service Form "}{" "}
+              <BiHide style={{ marginLeft: "5px" }} size={20} />
             </>
           ) : (
             <>
-              {"Service Form "} <GrOverview size={20} />
+              {"Service Form "}{" "}
+              <FaWpforms style={{ marginLeft: "5px" }} size={20} />
             </>
           )}
         </Button>
         <Button
           variant="contained"
-          color={!viewExpenseList ? "success" : "black"}
+          color={!viewExpenseList ? "inherit" : "black"}
           onClick={() => setviewExpenseList(!viewExpenseList)}
         >
           {viewExpenseList ? (
             <>
-              {"Hide Expense List "} <BiHide size={20} />
+              {"Hide Expense List "}{" "}
+              <BiHide style={{ marginLeft: "5px" }} size={20} />
             </>
           ) : (
             <>
-              {"Expense List "} <GrOverview size={20} />
+              {"Expense List "}{" "}
+              <FaRegListAlt style={{ marginLeft: "5px" }} size={20} />
+            </>
+          )}
+        </Button>
+        <Button
+          variant="outlined"
+          color={!viewServiceList ? "inherit" : "black"}
+          onClick={() => setviewServiceList(!viewServiceList)}
+        >
+          {viewServiceList ? (
+            <>
+              {"Hide Service List "}{" "}
+              <BiHide style={{ marginLeft: "5px" }} size={20} />
+            </>
+          ) : (
+            <>
+              {"Service List "}{" "}
+              <FaRegListAlt style={{ marginLeft: "5px" }} size={20} />
             </>
           )}
         </Button>
         <Button
           variant="contained"
-          color={!viewServiceList ? "success" : "black"}
-          onClick={() => setviewServiceList(!viewServiceList)}
+          color={!viewCharts ? "inherit" : "black"}
+          onClick={() => setviewCharts(!viewCharts)}
         >
-          {viewServiceList ? (
+          {viewCharts ? (
             <>
-              {"Hide Service List "} <BiHide size={20} />
+              {"Hide Graph "} <BiHide style={{ marginLeft: "5px" }} size={20} />
             </>
           ) : (
             <>
-              {"Service List "} <GrOverview size={20} />
+              {"Graph "} <FaChartPie style={{ marginLeft: "5px" }} size={20} />
             </>
           )}
         </Button>
@@ -404,44 +428,50 @@ const ExpenseTracker = (props) => {
             </Card>
           </Box>
         )}
-        {expenses.length > 0 && (
-          <Box>
-            <ExpenseChart expenses={expenses} />
-          </Box>
-        )}
-        {services.length > 0 && (
+        {viewCharts && (
           <>
-            <Box>
-              <ServicesChart services={services} />
-            </Box>
-            {inptdata !== null && inptdata.allstockssalestotalamt > 0 && (
+            {expenses.length > 0 && (
               <Box>
-                <TotalEarningScreen
-                  data={inptdata}
-                  screen="profit"
-                  title="Total Expense"
-                />
+                <ExpenseChart expenses={expenses} />
               </Box>
+            )}
+            {services.length > 0 && (
+              <>
+                <Box>
+                  <ServicesChart services={services} />
+                </Box>
+                {inptdata !== null && inptdata.allstockssalestotalamt > 0 && (
+                  <Box>
+                    <TotalEarningScreen
+                      data={inptdata}
+                      screen="profit"
+                      title="Total Expense"
+                    />
+                  </Box>
+                )}
+              </>
             )}
           </>
         )}
       </Stack>
-      <Stack
-        // sx={{ color: "grey.500" }}
-        spacing={1}
-        // alignItems={"center"}
-        justifyContent={"center"}
-        // gap={2}
-        margin={2}
-        // padding={2}
-      >
-        <Box>
-          <TotalServiceEarningScreen
-            data={groupbyexpensedata}
-            screen="profit"
-          />
-        </Box>
-      </Stack>
+      {viewCharts && (
+        <Stack
+          // sx={{ color: "grey.500" }}
+          spacing={1}
+          // alignItems={"center"}
+          justifyContent={"center"}
+          // gap={2}
+          margin={2}
+          // padding={2}
+        >
+          <Box>
+            <TotalServiceEarningScreen
+              data={groupbyexpensedata}
+              screen="profit"
+            />
+          </Box>
+        </Stack>
+      )}
       {expenses.length > 0 && viewExpenseList && (
         <Card>
           <StyleHeader>Expense List</StyleHeader>
