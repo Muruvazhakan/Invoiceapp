@@ -194,10 +194,7 @@ const AllInvoiceDetails = () => {
 
       {invoiceDet.estimateinvoiceHistoryData.length > 0 && (
         <Box>
-          <StyleHeader>
-            {/* <Header name="Current Stocks" /> */}
-            Estimated Invoice
-          </StyleHeader>
+          <StyleHeader>Estimated Invoice</StyleHeader>
           <Box className="displayelements">
             {invoiceDet.estimateinvoiceHistoryData.map((item, index) => {
               // console.log('item');

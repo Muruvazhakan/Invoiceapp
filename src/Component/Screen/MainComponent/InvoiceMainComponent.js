@@ -21,10 +21,7 @@ const InvoiceMainComponent = (props) => {
     return <StyleHeader>No Access for this User</StyleHeader>;
   return (
     <>
-      <StyleHeader>
-        {/* <Header name="Current Stocks" /> */}
-        Generate Invoice
-      </StyleHeader>
+      <StyleHeader>Generate Invoice</StyleHeader>
 
       <Box sx={{ flexGrow: 1 }}>
         <Stack

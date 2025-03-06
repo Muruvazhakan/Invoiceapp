@@ -20,7 +20,7 @@ const AllStocks = (props) => {
   const [viewAllAddedStock, setviewAllAddedStock] = useState(false);
 
   const logindet = useContext(CompanyDetail);
-  const [iseditable, setiseditable] = useState(false);
+  const [iseditable, setiseditable] = useState(true);
 
   //   useEffect(() => {
   //     console.log(" useEffect AllStocks ");

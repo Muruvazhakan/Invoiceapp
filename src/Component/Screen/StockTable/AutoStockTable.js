@@ -2,9 +2,13 @@ import React, { useContext, useState } from "react";
 import { Stocks } from "../../Context/StocksContex";
 
 import "./StockTable.css";
-import { Box } from "@mui/material";
+import { Box, Button, IconButton, Stack } from "@mui/material";
 import AutoTable from "../AutoTable/AutoTable";
-
+import EditIcon from "@mui/icons-material/Edit";
+import { GridDeleteIcon } from "@mui/x-data-grid";
+import { toast } from "react-toastify";
+import { deleteStockBD } from "../../DBconnection/stockDetailBD";
+import * as localstorage from "../../Context/localStorageData";
 const AutoStockTable = (props) => {
   const basiccolumns = [
     { field: "id", headerName: "S.NO", width: 90 },
@@ -43,6 +47,82 @@ const AutoStockTable = (props) => {
       field: "amt",
       headerName: "Amount (₹)",
       width: 150,
+    },
+  ];
+
+  const stockcolumns = [
+    { field: "id", headerName: "S.NO", width: 90 },
+    {
+      field: "productid",
+      headerName: "Product Id",
+      width: 150,
+    },
+    {
+      field: "hsn",
+      headerName: "HSN/SAC",
+      width: 150,
+    },
+    {
+      field: "desc",
+      headerName: "Product Description",
+      width: 350,
+    },
+    {
+      field: "status",
+      headerName: "Status",
+      width: 150,
+    },
+    {
+      field: "quantity",
+      // headerName: (props.from === "add" || props.from === "profit" ? "Purchace Rate (₹)" : "Sales Rate (₹)"),
+      headerName: "Quantity",
+      width: 150,
+    },
+    {
+      field: "rate",
+      headerName: "Rate",
+      width: 150,
+    },
+    {
+      field: "amt",
+      headerName: "Amount (₹)",
+      width: 150,
+    },
+    {
+      field: "",
+      headerName: "Action",
+      width: 150,
+      filterable: false,
+      hideSortIcons: false,
+      disableColumnMenu: false,
+      renderCell: (params) => {
+        const { row } = params;
+        return (
+          <Stack
+            direction={"row"}
+            alignItems={"center"}
+            justifyContent={"start"}
+            gap={3}
+            height={"100%"}
+          >
+            {/* <IconButton
+              sx={{ height: "16px", width: "16px" }}
+              onClick={() => handleEdit(row)}
+              title="Edit"
+            >
+              <EditIcon />
+            </IconButton> */}
+            <IconButton
+              sx={{ height: "16px", width: "16px" }}
+              // onClick={() => handleDelete(row)}
+              onClick={() => showConfirmationToast(row)}
+              title="Delete"
+            >
+              <GridDeleteIcon />
+            </IconButton>
+          </Stack>
+        );
+      },
     },
   ];
 
@@ -94,6 +174,37 @@ const AutoStockTable = (props) => {
       width: 150,
     },
   ];
+
+  const handleEdit = (row) => {
+    // if (!itemIsUpdate) setitemIsUpdate(true);
+    // setStock({ ...row });
+    console.log(row);
+  };
+
+  const showConfirmationToast = (row) => {
+    const confirmToast = toast(
+      <Stack gap={0.5}>
+        <p>Are you sure you want to delete Stock?</p>
+        <Button
+          variant="outlined"
+          color="warning"
+          onClick={() => handleDelete(row)}
+        >
+          Confirm
+        </Button>
+        <Button variant="outlined" color="primary">
+          Cancel
+        </Button>
+      </Stack>,
+      {
+        position: "top-center",
+        autoClose: true, // Keep the toast open until action is taken
+        closeOnClick: true, // Disable closing by clicking the toast
+        draggable: true, // Disable dragging
+        hideProgressBar: true, // Hide the progress bar
+      }
+    );
+  };
 
   const tabledetails = useContext(Stocks);
   // useEffect(() => {
@@ -199,6 +310,20 @@ const AutoStockTable = (props) => {
   let from = props.from;
   const digit2options = { maximumFractionDigits: 2 };
 
+  const handleDelete = async (row) => {
+    tabledetails.setisloading(true);
+    let loginuserid = localstorage.addOrGetUserdetail("", "userid", "get");
+    let response = await deleteStockBD(row, loginuserid);
+    console.log("response");
+    console.log(response);
+    if (response.status === 200) {
+      toast.success(response.data.message);
+      const newData = displaylist.filter((f) => f.productid !== row.productid);
+      tabledetails.setallStockList(newData);
+    } else toast.warn(response.response.data.message);
+    tabledetails.setisloading(false);
+  };
+
   return (
     <>
       <Box
@@ -215,12 +340,19 @@ const AutoStockTable = (props) => {
       >
         <AutoTable
           loading={tabledetails.isloading}
-          columns={props.screen !== "allProfit" ? basiccolumns : profitcolumns}
+          columns={
+            props.screen !== "allProfit"
+              ? props.iseditable
+                ? stockcolumns
+                : basiccolumns
+              : profitcolumns
+          }
           data={displaylist.length ? displaylist : []}
           pageSize={10}
           enableExportAndPrint={true}
           totalQuantity={localsumqty1}
           totalPrice={localsum}
+          iseditable={props.iseditable ? props.iseditable : false}
         />
       </Box>
     </>
