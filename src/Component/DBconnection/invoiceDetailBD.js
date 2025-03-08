@@ -127,3 +127,47 @@ export const saveEstimatedInvoiceBD = async (invoice, userid) => {
     return err;
   }
 };
+
+export const deleteInvoiceDB = async (invoice, userid) => {
+  // console.log(`${dbprop.saveEstimateUrl}/${userid}` + ' dbprop.userLoginUrl');
+
+  let response;
+  const data = {
+    invoice,
+  };
+  console.log(data);
+  try {
+    response = await axios.post(
+      `${dbprop.deleteInvoiceUrl}/${userid}`,
+      data,
+      config
+    );
+    // console.log(response);
+    return response;
+  } catch (err) {
+    console.log(err);
+    return err;
+  }
+};
+
+export const deleteInvoiceEstimateDB = async (invoice, userid) => {
+  // console.log(`${dbprop.saveEstimateUrl}/${userid}` + ' dbprop.userLoginUrl');
+
+  let response;
+  const data = {
+    invoice,
+  };
+  console.log(data);
+  try {
+    response = await axios.post(
+      `${dbprop.deleteInvoiceEstimateUrl}/${userid}`,
+      data,
+      config
+    );
+    // console.log(response);
+    return response;
+  } catch (err) {
+    console.log(err);
+    return err;
+  }
+};

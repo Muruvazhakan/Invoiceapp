@@ -870,6 +870,42 @@ const AllStateContext = ({ children }) => {
     // setcolumns(singleinvoice.columns);
   };
 
+  const deleteselectedInvoice = async (props) => {
+    console.log("deleteselectedInvoice");
+    console.log(props);
+    let filterinvoice = invoiceHistoryData.filter(
+      (data) => data.invoiceid !== props.invoiceid
+    );
+    let loginuserid = localstorage.addOrGetUserdetail("", "userid", "get");
+
+    let response = await invoiceDb.deleteInvoiceDB(props, loginuserid);
+    console.log("response");
+    console.log(response);
+
+    if (response.status === 200) {
+      toast.success(response.data.message);
+      setinvoiceHistoryData(filterinvoice);
+    } else toast.warn(response.response.data.message);
+  };
+
+  const deleteInvoiceEstimate = async (props) => {
+    console.log("deleteInvoiceEstimate");
+    console.log(props);
+    let filterinvoiceest = estimateinvoiceHistoryData.filter(
+      (data) => data.invoiceid !== props.invoiceid
+    );
+    let loginuserid = localstorage.addOrGetUserdetail("", "userid", "get");
+
+    let response = await invoiceDb.deleteInvoiceEstimateDB(props, loginuserid);
+    console.log("response");
+    console.log(response);
+
+    if (response.status === 200) {
+      toast.success(response.data.message);
+      setestimateinvoiceHistoryData(filterinvoiceest);
+    } else toast.warn(response.response.data.message);
+  };
+
   const handleInvoiceExportXlsx = () => {
     let filtercolumn = invoiceHistoryData.map((data) => {
       return {
@@ -1107,6 +1143,8 @@ const AllStateContext = ({ children }) => {
     setdisplayClientGST,
     estimateinvoiceHistoryData,
     setestimateinvoiceHistoryData,
+    deleteselectedInvoice,
+    deleteInvoiceEstimate,
   };
   return <AllState.Provider value={context}>{children}</AllState.Provider>;
 };

@@ -6,6 +6,7 @@ import Card from "../../../Style/Card/Card";
 import NoData from "../../NoData/NoData";
 import { Box, Button, CircularProgress, Stack } from "@mui/material";
 import { RiEditCircleFill } from "react-icons/ri";
+import { MdDelete } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { CompanyDetail } from "../../../Context/companyDetailContext";
 import { BsFiletypeXlsx } from "react-icons/bs";
@@ -15,6 +16,7 @@ import StyleHeader from "../../Header/StyleHeader";
 import * as localstorage from "../../../Context/localStorageData";
 import * as invoiceDetailsDb from "../../../DBconnection/invoiceDetailBD";
 import InvoiceChart from "../../EarningScreen/InvoiceChart/InvoiceChart";
+import { toast } from "react-toastify";
 // import img  from '.'
 
 const AllInvoiceDetails = () => {
@@ -47,28 +49,74 @@ const AllInvoiceDetails = () => {
     getEstimatedInvoiceHistoryData();
   }, [invoiceDet.invoiceHistoryData]);
 
+  const deleteInvoice = async (item, screen) => {
+    companydet.setisloaded(false);
+    try {
+      if (screen === "invoice") await invoiceDet.deleteselectedInvoice(item);
+      else await invoiceDet.deleteInvoiceEstimate(item);
+    } finally {
+      companydet.setisloaded(true);
+    }
+  };
   if (
     companydet.tier &&
     companydet.tier !== "gold" &&
     companydet.tier !== "platinum"
   )
     return <StyleHeader>No Access for this User</StyleHeader>;
-  if (!companydet.isloaded) {
-    return (
-      <Stack
-        sx={{ color: "grey.500" }}
-        spacing={2}
-        alignItems={"center"}
-        className="spinnerstyle"
-      >
-        <CircularProgress color="success" size={30} />
-      </Stack>
+
+  const showConfirmationToast = (row, screen) => {
+    const confirmToast = toast(
+      <Stack gap={0.5}>
+        <p>Are you sure you want to delete Invoice?</p>
+        <Button
+          variant="outlined"
+          color="warning"
+          onClick={() => deleteInvoice(row, screen)}
+        >
+          Confirm
+        </Button>
+        <Button variant="outlined" color="primary">
+          Cancel
+        </Button>
+      </Stack>,
+      {
+        position: "top-center",
+        autoClose: true, // Keep the toast open until action is taken
+        closeOnClick: true, // Disable closing by clicking the toast
+        draggable: true, // Disable dragging
+        hideProgressBar: true, // Hide the progress bar
+      }
     );
-  }
+  };
 
   return (
     <>
       <StyleHeader>Invoice Details</StyleHeader>
+      {!companydet.isloaded && (
+        <>
+          <Stack
+            sx={{
+              color: "grey.500",
+              transform: "translate(-50%, -50%)",
+              position: "fixed",
+            }}
+            spacing={2}
+            alignItems={"center"}
+            className="spinnerstyle"
+          >
+            <CircularProgress
+              color="success"
+              size={30}
+              sx={{
+                color: "grey.500",
+                transform: "translate(-50%, -50%)",
+                position: "fixed",
+              }}
+            />
+          </Stack>
+        </>
+      )}
       <Box className="displayelements">
         <Link
           className="nav-links"
@@ -184,6 +232,17 @@ const AllInvoiceDetails = () => {
                       </Link>
                       {/* </div> */}
                     </ul>
+                    <ul>
+                      <Button
+                        className="gen-invoice"
+                        variant="outlined"
+                        color="error"
+                        onClick={() => showConfirmationToast(item, "invoice")}
+                        endIcon={<MdDelete />}
+                      >
+                        Delete Invoice
+                      </Button>
+                    </ul>
                   </Card>
                 </>
               );
@@ -270,6 +329,17 @@ const AllInvoiceDetails = () => {
                         </Button>
                       </Link>
                       {/* </div> */}
+                    </ul>
+                    <ul>
+                      <Button
+                        className="gen-invoice"
+                        variant="outlined"
+                        color="error"
+                        onClick={() => showConfirmationToast(item, "estimate")}
+                        endIcon={<MdDelete />}
+                      >
+                        Delete Invoice Estimate
+                      </Button>
                     </ul>
                   </Card>
                 </>

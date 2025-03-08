@@ -36,7 +36,15 @@ const Login = (props) => {
         alignItems={"center"}
         className="spinnerstyle"
       >
-        <CircularProgress color="success" size={30} />
+        <CircularProgress
+          color="success"
+          size={30}
+          sx={{
+            color: "grey.500",
+            transform: "translate(-50%, -50%)",
+            position: "fixed",
+          }}
+        />
       </Stack>
     );
   }

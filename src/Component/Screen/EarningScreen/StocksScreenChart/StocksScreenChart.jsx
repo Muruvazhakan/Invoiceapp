@@ -73,11 +73,7 @@ const StocksScreenChart = (props, title, chartlable) => {
           </DashboardTemp>
         </Box>
         <Box width={screenWidth > 700 ? screenWidth / 2.1 : screenWidth}>
-          <LowStocks
-            data={props.data}
-            screen="profit"
-            filtercond={props.data.allStockList.length}
-          />
+          <LowStocks data={props.data} screen="profit" filtercond={5} />
         </Box>
       </Stack>
       <Stack

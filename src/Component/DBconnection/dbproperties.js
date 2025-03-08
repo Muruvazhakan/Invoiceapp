@@ -2,8 +2,8 @@ export const isbackendconnect = true;
 
 export const imageBaseUrl =
   "https://storage.googleapis.com/helpone-9bf33.appspot.com";
-export const backendUrl = "http://localhost:4000";
-// export const backendUrl = "https://billedgebackend.onrender.com";
+// export const backendUrl = "http://localhost:4000";
+export const backendUrl = "https://billedgebackend.onrender.com";
 export const userLoginUrl = `${backendUrl}/user/login`;
 export const userSigninUrl = `${backendUrl}/user/signin`;
 export const passwordResetUrl = `${backendUrl}/user/passwordReset`;
@@ -20,14 +20,18 @@ export const uploadCompanyLogo = `${backendUrl}/uploadCompanyLogo`;
 // export const uploadCompanyLogo = `${backendUrl}/upload`;
 export const getEstimateUrl = `${backendUrl}/estimate`;
 export const saveEstimateUrl = `${backendUrl}/estimate/createorupateestimate`;
+export const deleteEstimateUrl = `${backendUrl}/estimate/deleteestimate`;
 
 export const getEstimationIdUrl = `${backendUrl}/estimate/getestimationid`;
 export const saveEstimationIdUrl = `${backendUrl}/estimate/saveestimationid`;
 
 export const getInvoiceUrl = `${backendUrl}/invoice`;
 export const saveInvoiceUrl = `${backendUrl}/invoice/createorupdateinvoice`;
+export const deleteInvoiceUrl = `${backendUrl}/invoice/deleteinvoice`;
+
 export const getEstimatedInvoiceUrl = `${backendUrl}/invoice/getestimateinvoice`;
 export const saveEstimatedInvoiceUrl = `${backendUrl}/invoice/createorupdateestimateinvoice`;
+export const deleteInvoiceEstimateUrl = `${backendUrl}/invoice/deleteinvoiceestimate`;
 
 export const getInvoiceIdUrl = `${backendUrl}/invoice/getinvoiceid`;
 export const saveInvoiceIdUrl = `${backendUrl}/invoice/saveinvoiceid`;
