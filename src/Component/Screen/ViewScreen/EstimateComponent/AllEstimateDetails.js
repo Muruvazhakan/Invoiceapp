@@ -21,10 +21,10 @@ const AllEstimateDetails = () => {
   const estimatedet = useContext(estimateState);
   const companydet = useContext(CompanyDetail);
 
-  // useEffect(()=>{
-  //     console.log('AllEstimateDetails');
-  //     console.log(estimatedet.estimateHistoryData);
-  // },[])
+  useEffect(() => {
+    console.log("AllEstimateDetails");
+    console.log(estimatedet.estimateHistoryData);
+  }, []);
   const deleteEstimates = async (item, screen) => {
     companydet.setisloaded(false);
     try {
@@ -102,7 +102,8 @@ const AllEstimateDetails = () => {
           </Button>
         </Link>
       </div>
-      {estimatedet.estimateHistoryData === null ? (
+      {estimatedet.estimateHistoryData.length &&
+      estimatedet.estimateHistoryData.length === 0 ? (
         <>
           <NoData details="Estimation Found" />
         </>

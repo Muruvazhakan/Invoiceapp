@@ -72,7 +72,7 @@ const EstimatestateContext = ({ children }) => {
   const [woodcostpsf, setwoodcostpsf] = useState(0);
   const [totalwoodcost, settotalwoodcost] = useState(0);
   const [remarks, setremarks] = useState("");
-  const [estimateHistoryData, setestimateHistoryData] = useState(null);
+  const [estimateHistoryData, setestimateHistoryData] = useState([]);
   const [estimateHistroyUpdateFlag, setestimateHistroyUpdateFlag] =
     useState(false);
   const [estimateSingleData, setestimateSingleData] = useState(null);
@@ -506,17 +506,16 @@ const EstimatestateContext = ({ children }) => {
   const deleteEstimate = async (props) => {
     console.log("deleteInvoiceEstimate");
     console.log(props);
-    let filterinvoiceest = estimateHistoryData.filter(
-      (data) => data.estimateid !== props.estimateid
-    );
     let loginuserid = localstorage.addOrGetUserdetail("", "userid", "get");
-
     let response = await estimateDetailsDb.deleteEstimateDB(props, loginuserid);
     console.log("response");
     console.log(response);
 
     if (response.status === 200) {
       toast.success(response.data.message);
+      let filterinvoiceest = estimateHistoryData.filter(
+        (data) => data.estimateid !== props.estimateid
+      );
       setestimateHistoryData(filterinvoiceest);
     } else toast.warn(response.response.data.message);
   };
