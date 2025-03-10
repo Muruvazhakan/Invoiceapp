@@ -6,3 +6,9 @@
 .MuiDataGrid-filler {
   background: linear-gradient(#e1e23e, #8fd3cf94);
 }
+
+.highlight-footer-row {
+  background-color: #f5f5f5; /* Light gray background for footer */
+  font-weight: bold;
+  color: #333; /* Text color */
+}

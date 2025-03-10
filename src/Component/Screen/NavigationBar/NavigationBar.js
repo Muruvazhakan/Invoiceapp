@@ -5,10 +5,9 @@ import { IconContext } from "react-icons/lib";
 import * as Datas from "../../Context/Datas";
 import { FaBars, FaTimes, FaRegUserCircle } from "react-icons/fa";
 import { IoHome, IoLogOutSharp } from "react-icons/io5";
-
-import { RiLoginBoxFill } from "react-icons/ri";
 import "./NavigationBar.css";
 import EELogo from "../../../Image/iconc.png";
+
 import { CompanyDetail } from "../../Context/companyDetailContext";
 
 const NavigationBar = (props) => {

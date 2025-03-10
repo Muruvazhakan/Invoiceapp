@@ -26,6 +26,7 @@ import ServicesChart from "./Services/ServicesChart/ServicesChart";
 import TotalEarningScreen from "../EarningScreen/TotalEarningScreen/TotalEarningScreen";
 import TotalServiceEarningScreen from "./Services/ServicesChart/TotalServiceEarningScreen";
 import { Stocks } from "../../Context/StocksContex";
+import AutoTable from "../AutoTable/AutoTable";
 const ExpenseTracker = (props) => {
   const stockdata = useContext(Stocks);
 
@@ -34,13 +35,17 @@ const ExpenseTracker = (props) => {
   const [viewExpenseForm, setviewExpenseForm] = useState(false);
   const [viewExpenseList, setviewExpenseList] = useState(false);
   const [services, setservices] = useState([]);
+  const [conservsandexp, setconservsandexp] = useState([]);
   const [editingService, setEditingService] = useState(null);
   const [viewServiceForm, setviewServiceForm] = useState(false);
   const [viewServiceList, setviewServiceList] = useState(false);
-  const [viewCharts, setviewCharts] = useState(true);
+  const [viewCharts, setviewCharts] = useState(false);
   const [selectedService, setselectedService] = useState(null);
   const [loading, setloading] = useState(false);
   const [inptdata, setinptdata] = useState(null);
+  let tabletotalServiceAmount = 0,
+    taletotalTotalProfit = 0;
+  let tabletotalTotalExpense = 0;
   let loginuserid = localstorage.addOrGetUserdetail("", "userid", "get");
 
   const addExpense = async (expense) => {
@@ -71,7 +76,6 @@ const ExpenseTracker = (props) => {
       toast.warn(response.data);
     }
     setloading(false);
-    getExpense();
     getService();
     //need to add db code
   };
@@ -97,7 +101,7 @@ const ExpenseTracker = (props) => {
     setviewExpenseForm(true);
   };
 
-  const getExpense = async () => {
+  const getExpense = async (services) => {
     setloading(true);
     let response = await getExpenseDB(loginuserid);
     console.log("response");
@@ -106,6 +110,7 @@ const ExpenseTracker = (props) => {
     if (response.status === 200) {
       setExpenses(response.data);
       segregateDataByMonth(response.data);
+      compabainExpensesService(services, response.data);
     } else {
       toast.warn(response.data);
     }
@@ -172,6 +177,7 @@ const ExpenseTracker = (props) => {
 
     if (response.status === 200) {
       setservices(response.data);
+      getExpense(response.data);
     } else {
       toast.warn(response.data);
     }
@@ -252,19 +258,19 @@ const ExpenseTracker = (props) => {
           acc[monthYear].totalProfit += item.amount * 1;
           totalsum = item.amount * 1;
           // Assuming profit is the same as totalsalesamt for simplicity; adjust as necessary
-          console.log("item acc");
-          console.log(acc);
+          // console.log("item acc");
+          // console.log(acc);
           valudata = acc;
           return acc;
         }
       }
     }, {});
     console.log("after resultsegregateDataByMonth");
-    console.log(valudata);
+    // console.log(valudata);
 
     valudata = stockdata.sortBydate(valudata);
-    console.log("sortedDates valudata");
-    console.log(valudata);
+    // console.log("sortedDates valudata");
+    // console.log(valudata);
     setinptdata({
       segregatedMonthData: valudata,
       allstockssalestotalamt: totalsum,
@@ -276,9 +282,104 @@ const ExpenseTracker = (props) => {
     setviewServiceList(false);
     setviewExpenseList(false);
   };
+
+  const compabainExpensesService = (services, expenses) => {
+    // Logic to combine expenses and services, including default "no service" for unmatched expenses
+    console.log("combinedData before ^&&");
+    console.log(services);
+    console.log(expenses);
+    let counter = 0;
+
+    const combinedData = services.map((service) => {
+      // Filter expenses linked to the current service
+      const serviceExpenses = expenses.filter(
+        (expense) => expense.linkedTo === service.id
+      );
+
+      // Calculate total expenses for the service (optional, if you want a sum)
+      const totalServiceExpense = serviceExpenses.reduce(
+        (sum, expense) => sum + expense.amount,
+        0
+      );
+
+      return {
+        id: counter++,
+        serviceId: service.id,
+        serviceAmount: service.amount,
+        totalExpense: totalServiceExpense,
+        totalProfit: service.amount - totalServiceExpense,
+        expenseDetails: serviceExpenses
+          .map((expense) => `${expense.description}: ₹${expense.amount}`)
+          .join(", "),
+        // expenses: serviceExpenses, // Attach expenses
+        // Sum of all expenses for this service
+      };
+    });
+    console.log("combinedData ^&&");
+    console.log(combinedData);
+
+    // Handle expenses with no matching service
+    const unlinkedExpenses = expenses.filter(
+      (expense) => expense.linkedTo === null || expense.linkedTo === ""
+    );
+    console.log("unlinkedExpenses ^&&");
+    console.log(unlinkedExpenses);
+    // If there are unlinked expenses, add them as a "No Service" entry
+    if (unlinkedExpenses.length > 0) {
+      combinedData.push({
+        id: counter++,
+        serviceId: "Other Service",
+        serviceAmount: 0,
+        totalProfit: 0,
+        expenses: unlinkedExpenses,
+        totalExpense: unlinkedExpenses.reduce(
+          (sum, expense) => sum + expense.amount,
+          0
+        ),
+        expenseDetails: unlinkedExpenses
+          .map((expense) => `${expense.description}: ₹${expense.amount}`)
+          .join(", "),
+      });
+    }
+    // Calculate totals for the footer
+    tabletotalServiceAmount = combinedData.reduce(
+      (acc, row) => acc + row.serviceAmount,
+      0
+    );
+    tabletotalTotalExpense = combinedData.reduce(
+      (acc, row) => acc + row.totalExpense,
+      0
+    );
+    taletotalTotalProfit = combinedData.reduce(
+      (acc, row) => acc + row.totalProfit,
+      0
+    );
+
+    combinedData.push({
+      id: "",
+      serviceId: "Total",
+      serviceAmount: tabletotalServiceAmount,
+      totalProfit: taletotalTotalProfit,
+      expenses: "",
+      totalExpense: tabletotalTotalExpense,
+      expenseDetails: "",
+    });
+    setconservsandexp(combinedData);
+    console.log(combinedData);
+  };
+
+  const expensecolumns = [
+    { field: "id", headerName: "S.NO", width: 150 },
+    { field: "serviceId", headerName: "Service ID", width: 200 },
+    { field: "serviceAmount", headerName: "Service Amount", width: 150 },
+    { field: "totalExpense", headerName: "Total Expense", width: 180 },
+    { field: "totalProfit", headerName: "Total Profit", width: 180 },
+    { field: "expenseDetails", headerName: "Expense Details", width: 300 },
+    // { field: "description", headerName: "Description", width: 250 },
+  ];
+
   useEffect(() => {
     getService();
-    getExpense();
   }, []);
 
   return (
@@ -513,6 +614,21 @@ const ExpenseTracker = (props) => {
           />
         </Card>
       )}
+      <Card>
+        <StyleHeader>Service & Expense Tracker Table</StyleHeader>
+        <AutoTable
+          loading={loading}
+          // rows={rows}
+          columns={expensecolumns}
+          data={conservsandexp.length > 0 ? [...conservsandexp] : []}
+          // data={rows}
+          pageSize={10}
+          enableExportAndPrint={true}
+          totalQuantity={0}
+          totalPrice={0}
+          iseditable={props.iseditable ? props.iseditable : false}
+        />
+      </Card>
     </>
   );
 };

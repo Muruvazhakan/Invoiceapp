@@ -256,7 +256,6 @@ const AutoStockTable = (props) => {
       : tabledetails.allStockSalesList;
   displaylist = displaylist?.map((item, index) => {
     item.amt = (item.rate * 1 * item.quantity).toFixed(2);
-
     item.status = item.status ? item.status : "Active";
     if (
       (item.quantity === 0 ||
@@ -267,6 +266,7 @@ const AutoStockTable = (props) => {
       return null;
     return { ...item, id: index + 1 };
   });
+
   // console.log("displaylist  " + " props.screen ^^^ " + props.screen);
   // console.log(displaylist)
   let localsum =
@@ -297,16 +297,6 @@ const AutoStockTable = (props) => {
   //     localtotal1 = localtotal1 + (item.quantity * 1 * item.rate);
   // });
 
-  console.log(
-    props.screen +
-      " props.screen" +
-      localsum +
-      " localsum  " +
-      displaylist +
-      " displaylist",
-    +" localsumqty ++ " + localsumqty1
-  );
-
   let from = props.from;
   const digit2options = { maximumFractionDigits: 2 };
 
@@ -324,6 +314,34 @@ const AutoStockTable = (props) => {
     tabledetails.setisloading(false);
   };
 
+  let totalqty = displaylist.reduce((sum1, row) => sum1 + row.quantity * 1, 0);
+  let totalamt = displaylist.reduce((sum1, row) => sum1 + row.amt * 1, 0);
+  let totalprofit = displaylist.reduce((sum1, row) => sum1 + row.profit * 1, 0);
+
+  let totalpurchaceamount = displaylist.reduce(
+    (sum1, row) => sum1 + row.purchaceamount * 1,
+    0
+  );
+  let totalsalequantity = displaylist.reduce(
+    (sum1, row) => sum1 + row.salequantity * 1,
+    0
+  );
+  let totalsaleamount = displaylist.reduce(
+    (sum1, row) => sum1 + row.saleamount * 1,
+    0
+  );
+  // let totalprofit = displaylist.reduce((sum1, row) => sum1 + row.profit * 1, 0);
+
+  displaylist.push({
+    id: "",
+    productid: "Total",
+    amt: totalamt,
+    quantity: totalqty,
+    profit: totalprofit,
+    salequantity: totalsalequantity,
+    purchaceamount: totalpurchaceamount,
+    saleamount: totalsaleamount,
+  });
   return (
     <>
       <Box
